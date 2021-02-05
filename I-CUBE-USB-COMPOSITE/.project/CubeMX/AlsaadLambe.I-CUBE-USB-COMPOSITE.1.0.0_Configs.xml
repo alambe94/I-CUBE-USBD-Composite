@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<IP xmlns="http://mcd.rou.st.com/modules.php?name=mcu" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" DBVersion="V4.0" Name="I-CUBE-USB-COMPOSITE" RootFolder="Packs/AlsaadLambe/I-CUBE-USB-COMPOSITE/1.0.0/" Version="1.0.0" ns0:schemaLocation="http://mcd.rou.st.com/modules.php?name=mcu ../../../../../../../doc/V4/Development/Specifications/db/thirdPartyDb.xsd">
+    <RefConfig Name="USBJjComposite">
+        <Component Name="CompositeCcUSB:COMPOSITE:Core:$CompositeCcUSBJjCOMPOSITEJjCore"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:CDCIiACM:$CompositeCcUSBJjCOMPOSITEJjCDCIiACM"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:CDCIiRNDIS:$CompositeCcUSBJjCOMPOSITEJjCDCIiRNDIS"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:HIDIiMOUSE:$CompositeCcUSBJjCOMPOSITEJjHIDIiMOUSE"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:HIDIiKEYBOARD:$CompositeCcUSBJjCOMPOSITEJjHIDIiKEYBOARD"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:HIDIiCUSTOM:$CompositeCcUSBJjCOMPOSITEJjHIDIiCUSTOM"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:MSCIiBOT:$CompositeCcUSBJjCOMPOSITEJjMSCIiBOT"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:UACIiMIC:$CompositeCcUSBJjCOMPOSITEJjUACIiMIC"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:UACIiSPKR:$CompositeCcUSBJjCOMPOSITEJjUACIiSPKR"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:UVC:$CompositeCcUSBJjCOMPOSITEJjUVC"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:DFU:$CompositeCcUSBJjCOMPOSITEJjDFU"/>
+        <ConfigFile Name="USBJjComposite_conf"/>
+    </RefConfig>
+    <RefConfigFile Added="true" Name="USBJjComposite_conf" Template="default_conf.ftl">
+        <File Category="header" Condition="all" Name="./AlsaadLambe.I-CUBE-USB-COMPOSITE_conf.h"/>
+        <Argument AddressOf="false" Comment="ENABLE_USB_CDC_ACM" GenericType="simple" Name="ENABLE_USB_CDC_ACM" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_CMD_ITF_NBR" GenericType="simple" Name="USB_CDC_ACM_CMD_ITF_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_COM_ITF_NBR" GenericType="simple" Name="USB_CDC_ACM_COM_ITF_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_CMD_EP_NBR" GenericType="simple" Name="USB_CDC_ACM_CMD_EP_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_IN_EP_NBR" GenericType="simple" Name="USB_CDC_ACM_IN_EP_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_OUT_EP_NBR" GenericType="simple" Name="USB_CDC_ACM_OUT_EP_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_CMD_EP_SIZE" GenericType="simple" Name="USB_CDC_ACM_CMD_EP_SIZE" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_IN_EP_SIZE" GenericType="simple" Name="USB_CDC_ACM_IN_EP_SIZE" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_ACM_OUT_EP_SIZE" GenericType="simple" Name="USB_CDC_ACM_OUT_EP_SIZE" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="ENABLE_USB_CDC_RNDIS" GenericType="simple" Name="ENABLE_USB_CDC_RNDIS" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_CMD_ITF_NBR" GenericType="simple" Name="USB_CDC_RNDIS_CMD_ITF_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_COM_ITF_NBR" GenericType="simple" Name="USB_CDC_RNDIS_COM_ITF_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_CMD_EP_NBR" GenericType="simple" Name="USB_CDC_RNDIS_CMD_EP_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_IN_EP_NBR" GenericType="simple" Name="USB_CDC_RNDIS_IN_EP_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_OUT_EP_NBR" GenericType="simple" Name="USB_CDC_RNDIS_OUT_EP_NBR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_CMD_EP_SIZE" GenericType="simple" Name="USB_CDC_RNDIS_CMD_EP_SIZE" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_IN_EP_SIZE" GenericType="simple" Name="USB_CDC_RNDIS_IN_EP_SIZE" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="USB_CDC_RNDIS_OUT_EP_SIZE" GenericType="simple" Name="USB_CDC_RNDIS_OUT_EP_SIZE" OptimizationCondition="equal"/>
+    </RefConfigFile>
+    <RefComponent Cclass="CompositeCcUSB" Cgroup="COMPOSITE" Cversion="1Gg0Gg0">
+        <SubComponent Csub="Core" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_conf_template.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_core.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_ctlreq.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_def.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_desc_template.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_ioreq.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_conf_template.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_core.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_ctlreq.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_desc_template.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_ioreq.c"/>
+        </SubComponent>
+        <SubComponent Csub="CDCIiACM" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Inc/usbd_cdc.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Inc/usbd_cdc_if_template.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Src/usbd_cdc.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Src/usbd_cdc_if_template.c"/>
+        </SubComponent>
+        <SubComponent Csub="CDCIiRNDIS" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="HIDIiMOUSE" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="HIDIiKEYBOARD" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="HIDIiCUSTOM" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="MSCIiBOT" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="UACIiMIC" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="UACIiSPKR" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="UVC" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="DFU" Cvariant="true" Cversion="1Gg0Gg0"/>
+    </RefComponent>
+</IP>
