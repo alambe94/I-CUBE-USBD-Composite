@@ -12,6 +12,7 @@
         <Component Name="CompositeCcUSB:COMPOSITE:UACIiSPKR:$CompositeCcUSBJjCOMPOSITEJjUACIiSPKR"/>
         <Component Name="CompositeCcUSB:COMPOSITE:UVC:$CompositeCcUSBJjCOMPOSITEJjUVC"/>
         <Component Name="CompositeCcUSB:COMPOSITE:DFU:$CompositeCcUSBJjCOMPOSITEJjDFU"/>
+        <Component Name="CompositeCcUSB:COMPOSITE:CDCIiECM:$CompositeCcUSBJjCOMPOSITEJjCDCIiECM"/>
         <ConfigFile Name="USBJjComposite_conf"/>
     </RefConfig>
     <RefConfigFile Added="true" Name="USBJjComposite_conf" Template="default_conf.ftl">
@@ -37,32 +38,63 @@
     </RefConfigFile>
     <RefComponent Cclass="CompositeCcUSB" Cgroup="COMPOSITE" Cversion="1Gg0Gg0">
         <SubComponent Csub="Core" Cvariant="true" Cversion="1Gg0Gg0">
-            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_conf_template.h"/>
             <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_core.h"/>
             <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_ctlreq.h"/>
             <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_def.h"/>
-            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_desc_template.h"/>
             <File Category="header" Condition="" Name="Middlewares/ST/Composite/Core/Inc/usbd_ioreq.h"/>
-            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_conf_template.c"/>
             <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_core.c"/>
             <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_ctlreq.c"/>
-            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_desc_template.c"/>
             <File Category="source" Condition="" Name="Middlewares/ST/Composite/Core/Src/usbd_ioreq.c"/>
         </SubComponent>
         <SubComponent Csub="CDCIiACM" Cvariant="true" Cversion="1Gg0Gg0">
-            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Inc/usbd_cdc.h"/>
-            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Inc/usbd_cdc_if_template.h"/>
-            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Src/usbd_cdc.c"/>
-            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/CDC/Src/usbd_cdc_if_template.c"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/CDC_ACM/Inc/usbd_cdc_acm.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/CDC_ACM/Src/usbd_cdc_acm.c"/>
         </SubComponent>
-        <SubComponent Csub="CDCIiRNDIS" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="HIDIiMOUSE" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="HIDIiKEYBOARD" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="HIDIiCUSTOM" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="MSCIiBOT" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="UACIiMIC" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="UACIiSPKR" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="UVC" Cvariant="true" Cversion="1Gg0Gg0"/>
-        <SubComponent Csub="DFU" Cvariant="true" Cversion="1Gg0Gg0"/>
+        <SubComponent Csub="CDCIiRNDIS" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/CDC_RNDIS/Inc/usbd_cdc_rndis.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/CDC_RNDIS/Src/usbd_cdc_rndis.c"/>
+        </SubComponent>
+        <SubComponent Csub="HIDIiMOUSE" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/HID_MOUSE/Inc/usbd_hid_mouse.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/HID_MOUSE/Src/usbd_hid_mouse.c"/>
+        </SubComponent>
+        <SubComponent Csub="HIDIiKEYBOARD" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/HID_KEYBOARD/Inc/usbd_hid_keyboard.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/HID_KEYBOARD/Src/usbd_hid_kayboard.c"/>
+        </SubComponent>
+        <SubComponent Csub="HIDIiCUSTOM" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/HID_CUSTOM/Inc/usbd_hid_custom.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/HID_CUSTOM/Src/usbd_hid_custom.c"/>
+        </SubComponent>
+        <SubComponent Csub="MSCIiBOT" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc_bot.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc_data.h"/>
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc_scsi.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc_bot.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc_data.c"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc_scsi.c"/>
+        </SubComponent>
+        <SubComponent Csub="UACIiMIC" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/AUDIO_MIC/Inc/usbd_audio_in.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/AUDIO_MIC/Src/usbd_audio_in.c"/>
+        </SubComponent>
+        <SubComponent Csub="UACIiSPKR" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/AUDIO_SPKR/Inc/usbd_audio_out.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/AUDIO_SPKR/Src/usbd_audio_out.c"/>
+        </SubComponent>
+        <SubComponent Csub="UVC" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/stm32_mw_usb_device/Class/VIDEO/Inc/usbd_video.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/stm32_mw_usb_device/Class/VIDEO/Src/usbd_video.c"/>
+        </SubComponent>
+        <SubComponent Csub="DFU" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/DFU/Inc/usbd_dfu.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/DFU/Src/usbd_dfu.c"/>
+        </SubComponent>
+        <SubComponent Csub="CDCIiECM" Cvariant="true" Cversion="1Gg0Gg0">
+            <File Category="header" Condition="" Name="Middlewares/ST/Composite/Class/CDC_ECM/Inc/usbd_cdc_ecm.h"/>
+            <File Category="source" Condition="" Name="Middlewares/ST/Composite/Class/CDC_ECM/Src/usbd_cdc_ecm.c"/>
+        </SubComponent>
     </RefComponent>
 </IP>
