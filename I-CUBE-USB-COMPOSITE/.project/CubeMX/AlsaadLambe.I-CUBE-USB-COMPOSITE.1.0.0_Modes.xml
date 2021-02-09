@@ -15,6 +15,7 @@
         <Parameter Name="CompositeCcUSBJjCOMPOSITEJjUVC"/>
         <Parameter Name="CompositeCcUSBJjCOMPOSITEJjDFU"/>
         <Parameter Name="CompositeCcUSBJjCOMPOSITEJjCDCIiECM"/>
+        <Parameter Name="CompositeCcUSBJjCOMPOSITEJjCOMPOSITE"/>
         <Parameter Added="true" Name="ENABLE_USB_CDC_ACM">
             <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjCDCIiACM" Name="USE_CDC_ACM"/>
         </Parameter>
@@ -128,6 +129,10 @@
     </RefParameter>
     <RefParameter Comment="Ethernet over USB NCM" DefaultValue="false" Group="Software component selection" Name="CompositeCcUSBJjCOMPOSITEJjCDCIiECM" TabName="USBJjComposite" Type="boolean" Visible="false">
         <PossibleValue Comment="ENABLE" Semaphore="SEMCompositeCcUSBJjCOMPOSITEJjCDCIiECM" Value="true"/>
+        <PossibleValue Comment="DISABLE" Value="false"/>
+    </RefParameter>
+    <RefParameter Comment="Combination of classes" DefaultValue="false" Group="Software component selection" Name="CompositeCcUSBJjCOMPOSITEJjCOMPOSITE" TabName="USBJjComposite" Type="boolean" Visible="false">
+        <PossibleValue Comment="ENABLE" Semaphore="SEMCompositeCcUSBJjCOMPOSITEJjCOMPOSITE" Value="true"/>
         <PossibleValue Comment="DISABLE" Value="false"/>
     </RefParameter>
     <RefParameter Comment="Condition Ii Use Ii Cdc Ii Rndis" DefaultValue="true" Name="CONDITIONIiUSEIiCDCIiRNDIS" Type="boolean" Visible="false"/>

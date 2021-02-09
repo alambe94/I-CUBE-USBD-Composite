@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    usbd_template_core.h
+  * @file    usbd_composite.h
   * @author  MCD Application Team
-  * @brief   Header file for the usbd_template_core.c file.
+  * @brief   Header file for the usbd_composite.c file.
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_COMPOSITE_CORE_H
-#define __USB_COMPOSITE_CORE_H
+#ifndef __USB_COMPOSITE_H
+#define __USB_COMPOSITE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,7 +33,7 @@ extern "C" {
   */
 
 /** @defgroup USBD_COMPOSITE
-  * @brief This file is the header file for usbd_template_core.c
+  * @brief This file is the header file for usbd_composite.c
   * @{
   */
 
@@ -61,7 +61,7 @@ extern "C" {
   */
 
 
-/** @defgroup USBD_CORE_Exported_TypesDefinitions
+/** @defgroup USBD_COMPOSITE_Exported_TypesDefinitions
   * @{
   */
 
@@ -71,7 +71,7 @@ extern "C" {
 
 
 
-/** @defgroup USBD_CORE_Exported_Macros
+/** @defgroup USBD_COMPOSITE_Exported_Macros
   * @{
   */
 
@@ -79,7 +79,7 @@ extern "C" {
   * @}
   */
 
-/** @defgroup USBD_CORE_Exported_Variables
+/** @defgroup USBD_COMPOSITE_Exported_Variables
   * @{
   */
 
@@ -99,7 +99,7 @@ extern USBD_ClassTypeDef USBD_COMPOSITE;
 }
 #endif
 
-#endif  /* __USB_COMPOSITE_CORE_H */
+#endif  /* __USB_COMPOSITE_H */
 /**
   * @}
   */
