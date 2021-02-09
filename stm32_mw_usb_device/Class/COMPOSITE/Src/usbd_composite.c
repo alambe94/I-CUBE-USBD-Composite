@@ -289,8 +289,7 @@ __ALIGN_BEGIN static uint8_t USBD_COMPOSITE_HSCfgDesc[USB_COMPOSITE_CONFIG_DESC_
         0x01, /* bSourceID: input is connected to output unit ID 1 */
         0x00, /* iTerminal: index of string descriptor relative to this item */
 
-        /* Standard VS (Video Streaming) Interface Descriptor = interface 1, alternate setting 0 = Zero Bandwidth
-    (when no data are sent from the device) */
+        /* Standard VS (Video Streaming) Interface Descriptor = interface 1, alternate setting 0 = Zero Bandwidth (when no data are sent from the device) */
         USB_IF_DESC_SIZE,        /* bLength: interface descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType */
         UVC_VS_IF_NUM,           /* bInterfaceNumber */

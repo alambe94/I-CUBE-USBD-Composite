@@ -173,7 +173,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   /* USB Speaker Standard interface descriptor */
   AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
   USB_DESC_TYPE_INTERFACE,              /* bDescriptorType */
-  0x00,                                 /* bInterfaceNumber */
+  AUDIO_OUT_AC_ITF_NBR,                 /* bInterfaceNumber */
   0x00,                                 /* bAlternateSetting */
   0x00,                                 /* bNumEndpoints */
   USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
@@ -191,7 +191,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   0x27,                                 /* wTotalLength = 39*/
   0x00,
   0x01,                                 /* bInCollection */
-  0x01,                                 /* baInterfaceNr */
+  AUDIO_OUT_AS_ITF_NBR,                 /* baInterfaceNr */
   /* 09 byte*/
 
   /* USB Speaker Input Terminal Descriptor */
@@ -237,7 +237,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   /* Interface 1, Alternate Setting 0                                             */
   AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
   USB_DESC_TYPE_INTERFACE,              /* bDescriptorType */
-  0x01,                                 /* bInterfaceNumber */
+  AUDIO_OUT_AS_ITF_NBR,                 /* bInterfaceNumber */
   0x00,                                 /* bAlternateSetting */
   0x00,                                 /* bNumEndpoints */
   USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
@@ -250,7 +250,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   /* Interface 1, Alternate Setting 1                                           */
   AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
   USB_DESC_TYPE_INTERFACE,              /* bDescriptorType */
-  0x01,                                 /* bInterfaceNumber */
+  AUDIO_OUT_AS_ITF_NBR,                 /* bInterfaceNumber */
   0x01,                                 /* bAlternateSetting */
   0x01,                                 /* bNumEndpoints */
   USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
