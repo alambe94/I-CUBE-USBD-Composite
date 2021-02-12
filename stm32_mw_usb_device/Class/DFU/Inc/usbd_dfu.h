@@ -208,7 +208,7 @@ typedef struct
   */
 
 extern USBD_ClassTypeDef USBD_DFU;
-#define USBD_DFU_CLASS &USBD_DFU
+
 /**
   * @}
   */

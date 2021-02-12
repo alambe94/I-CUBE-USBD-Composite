@@ -438,7 +438,7 @@ typedef struct
 } __PACKED USBD_VideoControlTypeDef;
 
 extern USBD_ClassTypeDef    USBD_VIDEO;
-#define USBD_VIDEO_CLASS    &USBD_VIDEO
+
 /**
   * @}
   */
