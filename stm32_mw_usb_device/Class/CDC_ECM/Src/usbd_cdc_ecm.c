@@ -33,10 +33,7 @@ EndBSPDependencies */
 #include "usbd_cdc_ecm.h"
 #include "usbd_ctlreq.h"
 
-#ifndef __USBD_CDC_ECM_IF_H
-#include "usbd_cdc_ecm_if_template.h"
-#endif
-
+#include "usbd_cdc_ecm_if.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{

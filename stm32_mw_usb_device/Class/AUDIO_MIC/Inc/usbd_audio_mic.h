@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_AUDIO_H
-#define __USB_AUDIO_H
+#ifndef __USB_AUDIO_MIC_H
+#define __USB_AUDIO_MIC_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,6 +41,13 @@ extern "C" {
 /** @defgroup USBD_AUDIO_Exported_Defines
   * @{
   */
+
+
+#define USBD_AUDIO_IN_CHANNELS                        2
+#define USBD_AUDIO_SMPL_FREQ                          2
+#define AUDIO_IN_EP                                   0x81
+#define USB_AUDIO_MIC_CONFIG_DESC_SIZ                 200
+
 #ifndef USBD_AUDIO_FREQ
 /* AUDIO Class Config */
 #define USBD_AUDIO_FREQ                               48000U
@@ -118,7 +125,7 @@ typedef enum
   AUDIO_CMD_START = 1,
   AUDIO_CMD_PLAY,
   AUDIO_CMD_STOP,
-} AUDIO_CMD_TypeDef;
+} AUDIO_MIC_CMD_TypeDef;
 
 
 typedef enum
@@ -127,7 +134,7 @@ typedef enum
   AUDIO_OFFSET_HALF,
   AUDIO_OFFSET_FULL,
   AUDIO_OFFSET_UNKNOWN,
-} AUDIO_OffsetTypeDef;
+} AUDIO_MIC_OffsetTypeDef;
 /**
   * @}
   */
@@ -142,19 +149,19 @@ typedef struct
   uint8_t data[USB_MAX_EP0_SIZE];
   uint8_t len;
   uint8_t unit;
-} USBD_AUDIO_ControlTypeDef;
+} USBD_AUDIO_MIC_ControlTypeDef;
 
 
 typedef struct
 {
   uint32_t alt_setting;
   uint8_t buffer[AUDIO_TOTAL_BUF_SIZE];
-  AUDIO_OffsetTypeDef offset;
+  AUDIO_MIC_OffsetTypeDef offset;
   uint8_t rd_enable;
   uint16_t rd_ptr;
   uint16_t wr_ptr;
-  USBD_AUDIO_ControlTypeDef control;
-} USBD_AUDIO_HandleTypeDef;
+  USBD_AUDIO_MIC_ControlTypeDef control;
+} USBD_AUDIO_MIC_HandleTypeDef;
 
 
 typedef struct
@@ -166,7 +173,7 @@ typedef struct
   int8_t (*MuteCtl)(uint8_t cmd);
   int8_t (*PeriodicTC)(uint8_t *pbuf, uint32_t size, uint8_t cmd);
   int8_t (*GetState)(void);
-} USBD_AUDIO_ItfTypeDef;
+} USBD_AUDIO_MIC_ItfTypeDef;
 /**
   * @}
   */
@@ -194,10 +201,10 @@ extern USBD_ClassTypeDef USBD_AUDIO_MIC;
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
-uint8_t USBD_AUDIO_RegisterInterface(USBD_HandleTypeDef *pdev,
-                                     USBD_AUDIO_ItfTypeDef *fops);
+uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev,
+                                         USBD_AUDIO_MIC_ItfTypeDef *fops);
 
-void USBD_AUDIO_Sync(USBD_HandleTypeDef *pdev, AUDIO_OffsetTypeDef offset);
+void USBD_AUDIO_MIC_Sync(USBD_HandleTypeDef *pdev, AUDIO_MIC_OffsetTypeDef offset);
 /**
   * @}
   */
@@ -206,7 +213,7 @@ void USBD_AUDIO_Sync(USBD_HandleTypeDef *pdev, AUDIO_OffsetTypeDef offset);
 }
 #endif
 
-#endif  /* __USB_AUDIO_H */
+#endif  /* __USB_AUDIO_MIC_H */
 /**
   * @}
   */

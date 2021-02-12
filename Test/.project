@@ -30,4 +30,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>stm32_mw_usb_device</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/stm32_mw_usb_device</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

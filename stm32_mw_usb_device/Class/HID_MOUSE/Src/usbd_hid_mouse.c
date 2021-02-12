@@ -44,7 +44,7 @@
 EndBSPDependencies */
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_hid.h"
+#include "usbd_hid_mouse.h"
 #include "usbd_ctlreq.h"
 
 
@@ -565,7 +565,7 @@ static uint8_t USBD_HID_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *re
   * @param  buff: pointer to report
   * @retval status
   */
-uint8_t USBD_HID_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len)
+uint8_t USBD_HID_Mouse_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len)
 {
   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassData;
 
@@ -592,7 +592,7 @@ uint8_t USBD_HID_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t 
   * @param  pdev: device instance
   * @retval polling interval
   */
-uint32_t USBD_HID_GetPollingInterval(USBD_HandleTypeDef *pdev)
+uint32_t USBD_HID_Mouse_GetPollingInterval(USBD_HandleTypeDef *pdev)
 {
   uint32_t polling_interval;
 

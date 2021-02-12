@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_HID_KEYBAORD_H
-#define __USB_HID_KEYBAORD_H
+#ifndef __USB_HID_H
+#define __USB_HID_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,14 +41,14 @@ extern "C" {
 /** @defgroup USBD_HID_Exported_Defines
   * @{
   */
-#define HID_KEYBOARD_EPIN_ADDR                     0x81U
-#define HID_KEYBOARD_EPIN_SIZE                     0x08U
+#define HID_EPIN_ADDR                              0x81U
+#define HID_EPIN_SIZE                              0x04U
 
-#define HID_KEYBOARD_ITF_NBR                       0x00
+#define HID_ITF_NBR                                0x00
 
 #define USB_HID_CONFIG_DESC_SIZ                    34U
 #define USB_HID_DESC_SIZ                           9U
-#define HID_KEYBOARD_REPORT_DESC_SIZE              250U
+#define HID_MOUSE_REPORT_DESC_SIZE                 74U
 
 #define HID_DESCRIPTOR_TYPE                        0x21U
 #define HID_REPORT_DESC                            0x22U
@@ -79,9 +79,9 @@ extern "C" {
   */
 typedef enum
 {
-  KEYBOARD_HID_IDLE = 0,
-  KEYBOARD_HID_BUSY,
-} HID_Keyboard_StateTypeDef;
+  HID_IDLE = 0,
+  HID_BUSY,
+} HID_StateTypeDef;
 
 
 typedef struct
@@ -89,8 +89,8 @@ typedef struct
   uint32_t Protocol;
   uint32_t IdleState;
   uint32_t AltSetting;
-  HID_Keyboard_StateTypeDef state;
-} USBD_HID_Keyboard_HandleTypeDef;
+  HID_StateTypeDef state;
+} USBD_HID_HandleTypeDef;
 /**
   * @}
   */
@@ -109,8 +109,8 @@ typedef struct
   * @{
   */
 
-extern USBD_ClassTypeDef USBD_HID_KEYBOARD;
-
+extern USBD_ClassTypeDef USBD_HID;
+#define USBD_HID_CLASS &USBD_HID
 /**
   * @}
   */
@@ -129,7 +129,7 @@ uint32_t USBD_HID_GetPollingInterval(USBD_HandleTypeDef *pdev);
 }
 #endif
 
-#endif  /* __USB_HID_KEYBAORD_H */
+#endif  /* __USB_HID_H */
 /**
   * @}
   */

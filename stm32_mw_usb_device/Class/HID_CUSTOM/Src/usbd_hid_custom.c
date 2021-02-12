@@ -43,7 +43,7 @@
 EndBSPDependencies */
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_customhid.h"
+#include "usbd_hid_custom.h"
 #include "usbd_ctlreq.h"
 
 

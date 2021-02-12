@@ -54,9 +54,8 @@
 #include "usbd_cdc_rndis.h"
 #include "usbd_ctlreq.h"
 
-#ifndef __USBD_CDC_RNDIS_IF_H
-#include "usbd_cdc_rndis_if_template.h"
-#endif
+#include "usbd_cdc_rndis_if.h"
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -840,7 +839,7 @@ static uint8_t USBD_CDC_RNDIS_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
   {
     if (hcdc->NotificationStatus != 0U)
     {
-      (void)USBD_CDC_RNDIS_SendNotification(pdev, CONNECTION_SPEED_CHANGE,
+      (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_CONNECTION_SPEED_CHANGE,
                                             0U, (uint8_t *)ConnSpeedTab);
 
       hcdc->NotificationStatus = 0U;
@@ -1199,7 +1198,7 @@ uint8_t USBD_CDC_RNDIS_SendNotification(USBD_HandleTypeDef *pdev,
 
   switch (Notif)
   {
-    case RESPONSE_AVAILABLE:
+    case RNDIS_RESPONSE_AVAILABLE:
       (hcdc->Req).wValue = 0U;
       (hcdc->Req).wIndex = CDC_RNDIS_CMD_ITF_NBR;
       (hcdc->Req).wLength = 0U;
@@ -1342,7 +1341,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessInitMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1421,7 +1420,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessKeepAliveMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1566,7 +1565,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessQueryMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1627,7 +1626,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessSetMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1678,7 +1677,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessResetMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1760,7 +1759,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessUnsupportedMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   UNUSED(Msg);
 
