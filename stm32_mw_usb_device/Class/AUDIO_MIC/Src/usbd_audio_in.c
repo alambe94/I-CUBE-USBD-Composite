@@ -154,153 +154,176 @@ USBD_ClassTypeDef USBD_AUDIO =
 /* USB AUDIO device Configuration Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALIGN_END =
 {
-  /* Configuration 1 */
-  0x09,                                 /* bLength */
-  USB_DESC_TYPE_CONFIGURATION,          /* bDescriptorType */
-  LOBYTE(USB_AUDIO_CONFIG_DESC_SIZ),    /* wTotalLength  109 bytes*/
-  HIBYTE(USB_AUDIO_CONFIG_DESC_SIZ),
-  0x02,                                 /* bNumInterfaces */
-  0x01,                                 /* bConfigurationValue */
-  0x00,                                 /* iConfiguration */
-#if (USBD_SELF_POWERED == 1U)
-  0xC0,                                 /* bmAttributes: Bus Powered according to user configuration */
+  0x09;                                                /* bLength */
+  0x02;                                                /* bDescriptorType */
+  ((USB_AUDIO_CONFIG_DESC_SIZ + Channels - 1) & 0xff); /* wTotalLength */
+  ((USB_AUDIO_CONFIG_DESC_SIZ + Channels - 1) >> 8);
+  0x02; /* bNumInterfaces */
+  0x01; /* bConfigurationValue */
+  0x00; /* iConfiguration */
+  0x80; /* bmAttributes  BUS Powered*/
+  0x32; /* bMaxPower = 100 mA*/
+
+  /* USB Microphone Standard interface descriptor */
+  9;                              /* bLength */
+  USB_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  0x00;                          /* bInterfaceNumber */
+  0x00;                          /* bAlternateSetting */
+  0x00;                          /* bNumEndpoints */
+  USB_DEVICE_CLASS_AUDIO;        /* bInterfaceClass */
+  AUDIO_SUBCLASS_AUDIOCONTROL;   /* bInterfaceSubClass */
+  AUDIO_PROTOCOL_UNDEFINED;      /* bInterfaceProtocol */
+  0x00;                          /* iInterface */
+
+  /* USB Microphone Class-specific AC Interface Descriptor */
+  9;                               /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  AUDIO_CONTROL_HEADER;            /* bDescriptorSubtype */
+  0x00; /* 1.00 */                 /* bcdADC */
+  0x01;
+  0x25 + Channels; /* wTotalLength = 37+AUDIO_CHANNELS*/
+  0x00;
+  0x01; /* bInCollection */
+  0x01; /* baInterfaceNr */
+
+  /* USB Microphone Input Terminal Descriptor */
+  AUDIO_INPUT_TERMINAL_DESC_SIZE;  /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  AUDIO_CONTROL_INPUT_TERMINAL;    /* bDescriptorSubtype */
+  0x01;                            /* bTerminalID */
+  0x01;                            /* wTerminalType AUDIO_TERMINAL_USB_MICROPHONE   0x0201 */
+  0x02;
+  0x00;     /* bAssocTerminal */
+  Channels; /* bNrChannels */
+#if (USBD_AUDIO_IN_CHANNELS == 1)
+  0x00; /* wChannelConfig 0x0000  Mono */
+  0x00;
 #else
-  0x80,                                 /* bmAttributes: Bus Powered according to user configuration */
+  0x03; /* wChannelConfig 0x0003  Stereo */
+  0x00;
 #endif
-  USBD_MAX_POWER,                       /* bMaxPower = 100 mA */
-  /* 09 byte*/
+  0x00; /* iChannelNames */
+  0x00; /* iTerminal */
 
-  /* USB Speaker Standard interface descriptor */
-  AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
-  USB_DESC_TYPE_INTERFACE,              /* bDescriptorType */
-  0x00,                                 /* bInterfaceNumber */
-  0x00,                                 /* bAlternateSetting */
-  0x00,                                 /* bNumEndpoints */
-  USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
-  AUDIO_SUBCLASS_AUDIOCONTROL,          /* bInterfaceSubClass */
-  AUDIO_PROTOCOL_UNDEFINED,             /* bInterfaceProtocol */
-  0x00,                                 /* iInterface */
-  /* 09 byte*/
+  /* USB Microphone Audio Feature Unit Descriptor */
+  0x07 + Channels + 1;             /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  AUDIO_CONTROL_FEATURE_UNIT;      /* bDescriptorSubtype */
+  0x02;                            /* bUnitID */
+  0x01;                            /* bSourceID */
+  0x01;                            /* bControlSize */
+  index = 47;
 
-  /* USB Speaker Class-specific AC Interface Descriptor */
-  AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
-  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
-  AUDIO_CONTROL_HEADER,                 /* bDescriptorSubtype */
-  0x00,          /* 1.00 */             /* bcdADC */
-  0x01,
-  0x27,                                 /* wTotalLength = 39*/
-  0x00,
-  0x01,                                 /* bInCollection */
-  0x01,                                 /* baInterfaceNr */
-  /* 09 byte*/
+#if (USBD_AUDIO_IN_CHANNELS == 1)
+  0x02;
+  0x00;
+#else
+  0x00;
+  0x02;
+  0x02;
+#endif
 
-  /* USB Speaker Input Terminal Descriptor */
-  AUDIO_INPUT_TERMINAL_DESC_SIZE,       /* bLength */
-  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
-  AUDIO_CONTROL_INPUT_TERMINAL,         /* bDescriptorSubtype */
-  0x01,                                 /* bTerminalID */
-  0x01,                                 /* wTerminalType AUDIO_TERMINAL_USB_STREAMING   0x0101 */
-  0x01,
-  0x00,                                 /* bAssocTerminal */
-  0x01,                                 /* bNrChannels */
-  0x00,                                 /* wChannelConfig 0x0000  Mono */
-  0x00,
-  0x00,                                 /* iChannelNames */
-  0x00,                                 /* iTerminal */
-  /* 12 byte*/
+#if (USBD_AUDIO_IN_CHANNELS > 2)
+  0x02;
+#endif
 
-  /* USB Speaker Audio Feature Unit Descriptor */
-  0x09,                                 /* bLength */
-  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
-  AUDIO_CONTROL_FEATURE_UNIT,           /* bDescriptorSubtype */
-  AUDIO_OUT_STREAMING_CTRL,             /* bUnitID */
-  0x01,                                 /* bSourceID */
-  0x01,                                 /* bControlSize */
-  AUDIO_CONTROL_MUTE,                   /* bmaControls(0) */
-  0x00,                                 /* bmaControls(1) */
-  0x00,                                 /* iTerminal */
-  /* 09 byte*/
+#if (USBD_AUDIO_IN_CHANNELS > 3)
+  0x02;
+#endif
 
-  /*USB Speaker Output Terminal Descriptor */
-  0x09,      /* bLength */
-  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
-  AUDIO_CONTROL_OUTPUT_TERMINAL,        /* bDescriptorSubtype */
-  0x03,                                 /* bTerminalID */
-  0x01,                                 /* wTerminalType  0x0301*/
-  0x03,
-  0x00,                                 /* bAssocTerminal */
-  0x02,                                 /* bSourceID */
-  0x00,                                 /* iTerminal */
-  /* 09 byte*/
+#if (USBD_AUDIO_IN_CHANNELS > 4)
+  0x02;
+#endif
 
-  /* USB Speaker Standard AS Interface Descriptor - Audio Streaming Zero Bandwidth */
+#if (USBD_AUDIO_IN_CHANNELS > 5)
+  0x02;
+#endif
+
+#if (USBD_AUDIO_IN_CHANNELS > 6)
+  0x02;
+#endif
+
+#if (USBD_AUDIO_IN_CHANNELS > 7)
+  0x02;
+#endif
+  0x00; /* iTerminal */
+
+  /*USB Microphone Output Terminal Descriptor */
+  0x09;                            /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  AUDIO_CONTROL_OUTPUT_TERMINAL;   /* bDescriptorSubtype */
+  0x03;                            /* bTerminalID */
+  0x01;                            /* wTerminalType AUDIO_TERMINAL_USB_STREAMING 0x0101*/
+  0x01;
+  0x00;
+  0x02;
+  0x00;
+
+  /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Zero Bandwith */
   /* Interface 1, Alternate Setting 0                                             */
-  AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
-  USB_DESC_TYPE_INTERFACE,              /* bDescriptorType */
-  0x01,                                 /* bInterfaceNumber */
-  0x00,                                 /* bAlternateSetting */
-  0x00,                                 /* bNumEndpoints */
-  USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
-  AUDIO_SUBCLASS_AUDIOSTREAMING,        /* bInterfaceSubClass */
-  AUDIO_PROTOCOL_UNDEFINED,             /* bInterfaceProtocol */
-  0x00,                                 /* iInterface */
-  /* 09 byte*/
+  9;                             /* bLength */
+  USB_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  0x01;                          /* bInterfaceNumber */
+  0x00;                          /* bAlternateSetting */
+  0x00;                          /* bNumEndpoints */
+  USB_DEVICE_CLASS_AUDIO;        /* bInterfaceClass */
+  AUDIO_SUBCLASS_AUDIOSTREAMING; /* bInterfaceSubClass */
+  AUDIO_PROTOCOL_UNDEFINED;      /* bInterfaceProtocol */
+  0x00;
+  /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Operational */
 
-  /* USB Speaker Standard AS Interface Descriptor - Audio Streaming Operational */
   /* Interface 1, Alternate Setting 1                                           */
-  AUDIO_INTERFACE_DESC_SIZE,            /* bLength */
-  USB_DESC_TYPE_INTERFACE,              /* bDescriptorType */
-  0x01,                                 /* bInterfaceNumber */
-  0x01,                                 /* bAlternateSetting */
-  0x01,                                 /* bNumEndpoints */
-  USB_DEVICE_CLASS_AUDIO,               /* bInterfaceClass */
-  AUDIO_SUBCLASS_AUDIOSTREAMING,        /* bInterfaceSubClass */
-  AUDIO_PROTOCOL_UNDEFINED,             /* bInterfaceProtocol */
-  0x00,                                 /* iInterface */
-  /* 09 byte*/
+  9;                             /* bLength */
+  USB_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  0x01;                          /* bInterfaceNumber */
+  0x01;                          /* bAlternateSetting */
+  0x01;                          /* bNumEndpoints */
+  USB_DEVICE_CLASS_AUDIO;        /* bInterfaceClass */
+  AUDIO_SUBCLASS_AUDIOSTREAMING; /* bInterfaceSubClass */
+  AUDIO_PROTOCOL_UNDEFINED;      /* bInterfaceProtocol */
+  0x00;                          /* iInterface */
 
-  /* USB Speaker Audio Streaming Interface Descriptor */
-  AUDIO_STREAMING_INTERFACE_DESC_SIZE,  /* bLength */
-  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
-  AUDIO_STREAMING_GENERAL,              /* bDescriptorSubtype */
-  0x01,                                 /* bTerminalLink */
-  0x01,                                 /* bDelay */
-  0x01,                                 /* wFormatTag AUDIO_FORMAT_PCM  0x0001 */
-  0x00,
-  /* 07 byte*/
+  /* USB Microphone Audio Streaming Interface Descriptor */
+  AUDIO_STREAMING_INTERFACE_DESC_SIZE; /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE;     /* bDescriptorType */
+  AUDIO_STREAMING_GENERAL;             /* bDescriptorSubtype */
+  0x03;                                /* bTerminalLink */
+  0x01;                                /* bDelay */
+  0x01;                                /* wFormatTag AUDIO_FORMAT_PCM  0x0001*/
+  0x00;
 
-  /* USB Speaker Audio Type III Format Interface Descriptor */
-  0x0B,                                 /* bLength */
-  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
-  AUDIO_STREAMING_FORMAT_TYPE,          /* bDescriptorSubtype */
-  AUDIO_FORMAT_TYPE_I,                  /* bFormatType */
-  0x02,                                 /* bNrChannels */
-  0x02,                                 /* bSubFrameSize :  2 Bytes per frame (16bits) */
-  16,                                   /* bBitResolution (16-bits per sample) */
-  0x01,                                 /* bSamFreqType only one frequency supported */
-  AUDIO_SAMPLE_FREQ(USBD_AUDIO_FREQ),   /* Audio sampling frequency coded on 3 bytes */
-  /* 11 byte*/
+  /* USB Microphone Audio Type I Format Interface Descriptor */
+  0x0B;                            /* bLength */
+  AUDIO_INTERFACE_DESCRIPTOR_TYPE; /* bDescriptorType */
+  AUDIO_STREAMING_FORMAT_TYPE;     /* bDescriptorSubtype */
+  AUDIO_FORMAT_TYPE_I;             /* bFormatType */
+  Channels;                        /* bNrChannels */
+  0x02;                            /* bSubFrameSize */
+  16;                              /* bBitResolution */
+  0x01;                            /* bSamFreqType */
+  samplingFrequency & 0xff;        /* tSamFreq 8000 = 0x1F40 */
+  (samplingFrequency >> 8) & 0xff;
+  samplingFrequency >> 16;
 
   /* Endpoint 1 - Standard Descriptor */
-  AUDIO_STANDARD_ENDPOINT_DESC_SIZE,    /* bLength */
-  USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType */
-  AUDIO_OUT_EP,                         /* bEndpointAddress 1 out endpoint */
-  USBD_EP_TYPE_ISOC,                    /* bmAttributes */
-  AUDIO_PACKET_SZE(USBD_AUDIO_FREQ),    /* wMaxPacketSize in Bytes (Freq(Samples)*2(Stereo)*2(HalfWord)) */
-  AUDIO_FS_BINTERVAL,                   /* bInterval */
-  0x00,                                 /* bRefresh */
-  0x00,                                 /* bSynchAddress */
-  /* 09 byte*/
+  AUDIO_STANDARD_ENDPOINT_DESC_SIZE;                      /* bLength */
+  0x05;                                                   /* bDescriptorType */
+  AUDIO_IN_EP;                                            /* bEndpointAddress 1 in endpoint*/
+  0x05;                                                   /* bmAttributes */
+  ((samplingFrequency / 1000 + 2) * Channels * 2) & 0xFF; /* wMaxPacketSize */
+  ((samplingFrequency / 1000 + 2) * Channels * 2) >> 8;
+  0x01; /* bInterval */
+  0x00; /* bRefresh */
+  0x00; /* bSynchAddress */
 
   /* Endpoint - Audio Streaming Descriptor*/
-  AUDIO_STREAMING_ENDPOINT_DESC_SIZE,   /* bLength */
-  AUDIO_ENDPOINT_DESCRIPTOR_TYPE,       /* bDescriptorType */
-  AUDIO_ENDPOINT_GENERAL,               /* bDescriptor */
-  0x00,                                 /* bmAttributes */
-  0x00,                                 /* bLockDelayUnits */
-  0x00,                                 /* wLockDelay */
-  0x00,
-  /* 07 byte*/
+  AUDIO_STREAMING_ENDPOINT_DESC_SIZE; /* bLength */
+  AUDIO_ENDPOINT_DESCRIPTOR_TYPE;     /* bDescriptorType */
+  AUDIO_ENDPOINT_GENERAL;             /* bDescriptor */
+  0x00;                               /* bmAttributes */
+  0x00;                               /* bLockDelayUnits */
+  0x00;                               /* wLockDelay */
+  0x00;
 } ;
 
 /* USB Standard Device Descriptor */
