@@ -31,7 +31,7 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-extern USBD_AUDIO_MIC_ItfTypeDef  USBD_AUDIO_Template_fops;
+extern USBD_AUDIO_MIC_ItfTypeDef  USBD_AUDIO_MIC_Template_fops;
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */

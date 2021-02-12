@@ -24,7 +24,7 @@
 EndBSPDependencies */
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_audio_spkr.h"
+#include "usbd_audio_spkr_if.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -73,7 +73,7 @@ static int8_t  TEMPLATE_MuteCtl(uint8_t cmd);
 static int8_t  TEMPLATE_PeriodicTC(uint8_t *pbuf, uint32_t size, uint8_t cmd);
 static int8_t  TEMPLATE_GetState(void);
 
-USBD_AUDIO_SPKR_ItfTypeDef USBD_AUDIO_Template_fops =
+USBD_AUDIO_SPKR_ItfTypeDef USBD_AUDIO_SPKR_Template_fops =
 {
   TEMPLATE_Init,
   TEMPLATE_DeInit,

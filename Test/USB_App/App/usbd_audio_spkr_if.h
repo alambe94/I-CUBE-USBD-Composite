@@ -26,12 +26,12 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_audio.h"
+#include "usbd_audio_spkr.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-extern USBD_AUDIO_ItfTypeDef  USBD_AUDIO_Template_fops;
+extern USBD_AUDIO_SPKR_ItfTypeDef  USBD_AUDIO_SPKR_Template_fops;
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */

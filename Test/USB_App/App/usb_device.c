@@ -25,7 +25,12 @@
 #include "usbd_core.h"
 #include "usbd_desc.h"
 #include "usbd_composite.h"
+#include "usbd_cdc_acm_if.h"
 #include "usbd_cdc_rndis_if.h"
+#include "usbd_cdc_ecm_if.h"
+#include "usbd_hid_custom_if.h"
+#include "usbd_audio_mic_if.h"
+#include "usbd_audio_spkr.h"
 #include "usbd_video_if.h"
 #include "usbd_msc_if.h"
 
@@ -75,22 +80,42 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
-//  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC_RNDIS) != USBD_OK)
-//  {
-//    Error_Handler();
-//  }
-//  if (USBD_CDC_RNDIS_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_RNDIS_fops) != USBD_OK)
-//  {
-//    Error_Handler();
-//  }
-//  if (USBD_VIDEO_RegisterInterface(&hUsbDeviceHS, &USBD_VIDEO_fops_FS) != USBD_OK)
-//  {
-//    Error_Handler();
-//  }
-//  if (USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_MSC_Template_fops) != USBD_OK)
-//  {
-//    Error_Handler();
-//  }
+  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC_RNDIS) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_CDC_ACM_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_ACM_Template_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_CDC_RNDIS_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_RNDIS_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_CDC_ECM_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_ECM_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceHS, &USBD_CustomHID_template_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_VIDEO_RegisterInterface(&hUsbDeviceHS, &USBD_VIDEO_fops_FS) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_MSC_Template_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_AUDIO_SPKR_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_SPKR_Template_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+  if (USBD_AUDIO_MIC_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_MIC_Template_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
   if (USBD_Start(&hUsbDeviceHS) != USBD_OK)
   {
     Error_Handler();

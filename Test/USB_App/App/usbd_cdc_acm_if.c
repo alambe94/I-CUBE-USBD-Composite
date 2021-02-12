@@ -70,7 +70,7 @@ static int8_t TEMPLATE_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length);
 static int8_t TEMPLATE_Receive(uint8_t *pbuf, uint32_t *Len);
 static int8_t TEMPLATE_TransmitCplt(uint8_t *pbuf, uint32_t *Len, uint8_t epnum);
 
-USBD_CDC_ItfTypeDef USBD_CDC_Template_fops =
+USBD_CDC_ACM_ItfTypeDef USBD_CDC_ACM_Template_fops =
 {
   TEMPLATE_Init,
   TEMPLATE_DeInit,
@@ -79,7 +79,7 @@ USBD_CDC_ItfTypeDef USBD_CDC_Template_fops =
   TEMPLATE_TransmitCplt
 };
 
-USBD_CDC_LineCodingTypeDef linecoding =
+USBD_CDC_ACM_LineCodingTypeDef linecoding =
 {
   115200, /* baud rate*/
   0x00,   /* stop bits-1*/

@@ -867,7 +867,7 @@ static uint8_t *USBD_AUDIO_GetDeviceQualifierDesc(uint16_t *length)
   * @retval status
   */
 uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev,
-                                     USBD_AUDIO_MIC_ItfTypeDef *fops)
+                                         USBD_AUDIO_MIC_ItfTypeDef *fops)
 {
   if (fops == NULL)
   {

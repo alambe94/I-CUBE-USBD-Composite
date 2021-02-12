@@ -33,6 +33,8 @@
 
 #include "usbd_cdc_rndis_if.h"
 
+extern USBD_HandleTypeDef hUsbDeviceHS;
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -48,10 +50,6 @@ __ALIGN_BEGIN uint8_t UserRxBuffer[CDC_RNDIS_ETH_MAX_SEGSZE + 100] __ALIGN_END; 
 __ALIGN_BEGIN static uint8_t UserTxBuffer[CDC_RNDIS_ETH_MAX_SEGSZE + 100] __ALIGN_END; /* Received Data over CDC_RNDIS (CDC_RNDIS interface) are stored in this buffer */
 
 static uint8_t CDC_RNDISInitialized = 0U;
-
-/* USB handler declaration */
-extern USBD_HandleTypeDef  USBD_Device;
-
 
 /* Private function prototypes -----------------------------------------------*/
 static int8_t CDC_RNDIS_Itf_Init(void);
@@ -94,8 +92,8 @@ static int8_t CDC_RNDIS_Itf_Init(void)
   }
 
   /* Set Application Buffers */
-  (void)USBD_CDC_RNDIS_SetTxBuffer(&USBD_Device, UserTxBuffer, 0U);
-  (void)USBD_CDC_RNDIS_SetRxBuffer(&USBD_Device, UserRxBuffer);
+  (void)USBD_CDC_RNDIS_SetTxBuffer(&hUsbDeviceHS, UserTxBuffer, 0U);
+  (void)USBD_CDC_RNDIS_SetRxBuffer(&hUsbDeviceHS, UserRxBuffer);
 
   return (0);
 }
@@ -108,7 +106,7 @@ static int8_t CDC_RNDIS_Itf_Init(void)
   */
 static int8_t CDC_RNDIS_Itf_DeInit(void)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(USBD_Device.pClassData);
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDeviceHS.pClassData);
 
   /*
      Add your code here
@@ -130,7 +128,7 @@ static int8_t CDC_RNDIS_Itf_DeInit(void)
   */
 static int8_t CDC_RNDIS_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(USBD_Device.pClassData);
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDeviceHS.pClassData);
 
   switch (cmd)
   {
@@ -173,7 +171,7 @@ static int8_t CDC_RNDIS_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 static int8_t CDC_RNDIS_Itf_Receive(uint8_t *Buf, uint32_t *Len)
 {
   /* Get the CDC_RNDIS handler pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(USBD_Device.pClassData);
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDeviceHS.pClassData);
 
   /* Call Eth buffer processing */
   hcdc_cdc_rndis->RxState = 1U;
