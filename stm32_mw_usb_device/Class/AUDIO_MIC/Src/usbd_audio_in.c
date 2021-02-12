@@ -156,8 +156,8 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
 {
   0x09,                                                /* bLength */
   0x02,                                                /* bDescriptorType */
-  ((USB_AUDIO_CONFIG_DESC_SIZ + Channels - 1) & 0xff), /* wTotalLength */
-  ((USB_AUDIO_CONFIG_DESC_SIZ + Channels - 1) >> 8),
+  ((USB_AUDIO_CONFIG_DESC_SIZ + USBD_AUDIO_IN_CHANNELS - 1) & 0xff), /* wTotalLength */
+  ((USB_AUDIO_CONFIG_DESC_SIZ + USBD_AUDIO_IN_CHANNELS - 1) >> 8),
   0x02, /* bNumInterfaces */
   0x01, /* bConfigurationValue */
   0x00, /* iConfiguration */
@@ -165,7 +165,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   0x32, /* bMaxPower = 100 mA*/
 
   /* USB Microphone Standard interface descriptor */
-  9,                              /* bLength */
+  0x09,                          /* bLength */
   USB_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
   0x00,                          /* bInterfaceNumber */
   0x00,                          /* bAlternateSetting */
@@ -176,12 +176,12 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   0x00,                          /* iInterface */
 
   /* USB Microphone Class-specific AC Interface Descriptor */
-  9,                               /* bLength */
+  0x09,                            /* bLength */
   AUDIO_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
   AUDIO_CONTROL_HEADER,            /* bDescriptorSubtype */
   0x00, /* 1.00 */                 /* bcdADC */
   0x01,
-  0x25 + Channels, /* wTotalLength = 37+AUDIO_CHANNELS*/
+  0x25 + USBD_AUDIO_IN_CHANNELS,   /* wTotalLength = 37+AUDIO_CHANNELS*/
   0x00,
   0x01, /* bInCollection */
   0x01, /* baInterfaceNr */
@@ -194,7 +194,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   0x01,                            /* wTerminalType AUDIO_TERMINAL_USB_MICROPHONE   0x0201 */
   0x02,
   0x00,     /* bAssocTerminal */
-  Channels, /* bNrChannels */
+  USBD_AUDIO_IN_CHANNELS, /* bNrChannels */
 #if (USBD_AUDIO_IN_CHANNELS == 1)
   0x00, /* wChannelConfig 0x0000  Mono */
   0x00,
@@ -206,7 +206,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   0x00, /* iTerminal */
 
   /* USB Microphone Audio Feature Unit Descriptor */
-  0x07 + Channels + 1,             /* bLength */
+  0x07 + USBD_AUDIO_IN_CHANNELS + 1,             /* bLength */
   AUDIO_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
   AUDIO_CONTROL_FEATURE_UNIT,      /* bDescriptorSubtype */
   0x02,                            /* bUnitID */
@@ -297,7 +297,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   AUDIO_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
   AUDIO_STREAMING_FORMAT_TYPE,     /* bDescriptorSubtype */
   AUDIO_FORMAT_TYPE_I,             /* bFormatType */
-  Channels,                        /* bNrChannels */
+  USBD_AUDIO_IN_CHANNELS,                        /* bNrChannels */
   0x02,                            /* bSubFrameSize */
   16,                              /* bBitResolution */
   0x01,                            /* bSamFreqType */
@@ -310,8 +310,8 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   0x05,                                                   /* bDescriptorType */
   AUDIO_IN_EP,                                            /* bEndpointAddress 1 in endpoint*/
   0x05,                                                   /* bmAttributes */
-  ((samplingFrequency / 1000 + 2) * Channels * 2) & 0xFF, /* wMaxPacketSize */
-  ((samplingFrequency / 1000 + 2) * Channels * 2) >> 8,
+  ((samplingFrequency / 1000 + 2) * USBD_AUDIO_IN_CHANNELS * 2) & 0xFF, /* wMaxPacketSize */
+  ((samplingFrequency / 1000 + 2) * USBD_AUDIO_IN_CHANNELS * 2) >> 8,
   0x01, /* bInterval */
   0x00, /* bRefresh */
   0x00, /* bSynchAddress */
