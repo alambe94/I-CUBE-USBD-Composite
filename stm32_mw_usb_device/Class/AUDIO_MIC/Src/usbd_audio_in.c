@@ -133,7 +133,7 @@ static void AUDIO_REQ_SetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef 
   * @{
   */
 
-USBD_ClassTypeDef USBD_AUDIO =
+USBD_ClassTypeDef USBD_AUDIO_MIC =
 {
   USBD_AUDIO_Init,
   USBD_AUDIO_DeInit,

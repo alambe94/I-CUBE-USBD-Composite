@@ -185,8 +185,8 @@ typedef struct
   * @{
   */
 
-extern USBD_ClassTypeDef USBD_AUDIO;
-#define USBD_AUDIO_CLASS &USBD_AUDIO
+extern USBD_ClassTypeDef USBD_AUDIO_MIC;
+
 /**
   * @}
   */

@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_AUDIO_H
-#define __USB_AUDIO_H
+#ifndef __USB_AUDIO_SPKR_H
+#define __USB_AUDIO_SPKR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -189,8 +189,8 @@ typedef struct
   * @{
   */
 
-extern USBD_ClassTypeDef USBD_AUDIO;
-#define USBD_AUDIO_CLASS &USBD_AUDIO
+extern USBD_ClassTypeDef USBD_AUDIO_SPKR;
+
 /**
   * @}
   */
@@ -210,7 +210,7 @@ void USBD_AUDIO_Sync(USBD_HandleTypeDef *pdev, AUDIO_OffsetTypeDef offset);
 }
 #endif
 
-#endif  /* __USB_AUDIO_H */
+#endif  /* __USB_AUDIO_SPKR_H */
 /**
   * @}
   */

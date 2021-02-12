@@ -104,7 +104,7 @@ static uint8_t *USBD_HID_GetDeviceQualifierDesc(uint16_t *length);
   * @{
   */
 
-USBD_ClassTypeDef USBD_HID =
+USBD_ClassTypeDef USBD_HID_KEYBOARD =
 {
   USBD_HID_Init,
   USBD_HID_DeInit,

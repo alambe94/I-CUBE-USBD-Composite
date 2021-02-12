@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_HID_H
-#define __USB_HID_H
+#ifndef __USB_HID_KEYBAORD_H
+#define __USB_HID_KEYBAORD_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -109,8 +109,8 @@ typedef struct
   * @{
   */
 
-extern USBD_ClassTypeDef USBD_HID;
-#define USBD_HID_CLASS &USBD_HID
+extern USBD_ClassTypeDef USBD_HID_KEYBOARD;
+
 /**
   * @}
   */
@@ -129,7 +129,7 @@ uint32_t USBD_HID_GetPollingInterval(USBD_HandleTypeDef *pdev);
 }
 #endif
 
-#endif  /* __USB_HID_H */
+#endif  /* __USB_HID_KEYBAORD_H */
 /**
   * @}
   */

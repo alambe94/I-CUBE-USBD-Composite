@@ -109,8 +109,8 @@ typedef struct
   * @{
   */
 
-extern USBD_ClassTypeDef USBD_HID;
-#define USBD_HID_CLASS &USBD_HID
+extern USBD_ClassTypeDef USBD_HID_MOUSE;
+
 /**
   * @}
   */
