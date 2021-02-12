@@ -261,7 +261,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
 
   /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Zero Bandwith */
   /* Interface 1, Alternate Setting 0                                             */
-  9,                             /* bLength */
+  0x09,                          /* bLength */
   USB_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
   0x01,                          /* bInterfaceNumber */
   0x00,                          /* bAlternateSetting */
@@ -273,7 +273,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
   /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Operational */
 
   /* Interface 1, Alternate Setting 1                                           */
-  9,                             /* bLength */
+  0x09,                          /* bLength */
   USB_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
   0x01,                          /* bInterfaceNumber */
   0x01,                          /* bAlternateSetting */

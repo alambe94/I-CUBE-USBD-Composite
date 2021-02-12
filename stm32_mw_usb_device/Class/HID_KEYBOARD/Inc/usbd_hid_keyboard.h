@@ -42,13 +42,13 @@ extern "C" {
   * @{
   */
 #define HID_EPIN_ADDR                              0x81U
-#define HID_EPIN_SIZE                              0x04U
+#define HID_EPIN_SIZE                              0x08U
 
 #define HID_ITF_NBR                                0x00
 
 #define USB_HID_CONFIG_DESC_SIZ                    34U
 #define USB_HID_DESC_SIZ                           9U
-#define HID_KEYBOARD_REPORT_DESC_SIZE              137Us
+#define HID_KEYBOARD_REPORT_DESC_SIZE              137U
 
 #define HID_DESCRIPTOR_TYPE                        0x21U
 #define HID_REPORT_DESC                            0x22U
