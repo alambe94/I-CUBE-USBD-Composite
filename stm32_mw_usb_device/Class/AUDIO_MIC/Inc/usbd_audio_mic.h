@@ -43,8 +43,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 
-#ifndef __USBD_AUDIO_MIC_H_
-#define __USBD_AUDIO_MIC_H_
+#ifndef __USBD_AUDIO_IN_H_
+#define __USBD_AUDIO_IN_H_
 
 #include "usbd_ioreq.h"
 
@@ -60,8 +60,8 @@
 * @{
 */
 
-#define USBD_AUDIO_IN_CHANNELS                        0x01
-#define USBD_AUDIO_SMPL_FREQ                          16000
+#define USBD_AUDIO_IN_CHANNELS                        1
+#define USBD_AUDIO_SMPL_FREQ                          1600
 
 #define USB_AUDIO_CONFIG_DESC_SIZE                    109
 #define AUDIO_INTERFACE_DESC_SIZE                     9
@@ -115,10 +115,10 @@ typedef enum
   STATE_USB_REQUESTS_STARTED = 2,
   STATE_USB_BUFFER_WRITE_STARTED = 3,
 }
-AUDIO_StatesTypeDef;
+AUDIO_MIC_StatesTypeDef;
 
 /* Number of sub-packets in the audio transfer buffer.*/
-#define AUDIO_IN_PACKET_NUM                            6
+#define AUDIO_IN_PACKET_NUM                            20
 
 #define TIMEOUT_VALUE                                   200
 
@@ -157,7 +157,7 @@ typedef struct
   uint8_t len;
   uint8_t unit;
 }
-USBD_AUDIO_MIC_ControlTypeDef;
+USBD_AUDIO_ControlTypeDef;
 
 
 typedef struct
@@ -174,7 +174,7 @@ typedef struct
   uint16_t                   wr_ptr;
   uint8_t                    upper_treshold;
   uint8_t                    lower_treshold;
-  USBD_AUDIO_MIC_ControlTypeDef control;
+  USBD_AUDIO_ControlTypeDef control;
   uint8_t  *                 buffer;
 }
 USBD_AUDIO_MIC_HandleTypeDef;
@@ -216,20 +216,22 @@ extern USBD_ClassTypeDef  USBD_AUDIO_MIC;
 /** @defgroup USBD_AUDIO_IN_Exported_Functions
 * @{
 */
-
-uint8_t  USBD_AUDIO_MIC_RegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
-
-/**
-* @}
-*/
+uint8_t  USBD_AUDIO_MICRegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
+void USBD_AUDIO_MICInit_Microphone_Descriptor(USBD_HandleTypeDef   *pdev, uint32_t samplingFrequency, uint8_t Channels);
+uint8_t  USBD_AUDIO_MICData_Transfer (USBD_HandleTypeDef *pdev, int16_t * audioData, uint16_t dataAmount);
 
 
 /**
 * @}
 */
 
+
 /**
 * @}
 */
-#endif  // __USBD_AUDIO_MIC_H_
+
+/**
+* @}
+*/
+#endif  // __USBD_AUDIO_IN_H_
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
