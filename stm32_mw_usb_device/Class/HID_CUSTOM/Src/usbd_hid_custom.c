@@ -105,7 +105,7 @@ static uint8_t *USBD_CUSTOM_HID_GetDeviceQualifierDesc(uint16_t *length);
   * @{
   */
 
-USBD_ClassTypeDef  USBD_CUSTOM_HID =
+USBD_ClassTypeDef  USBD_HID_CUSTOM =
 {
   USBD_CUSTOM_HID_Init,
   USBD_CUSTOM_HID_DeInit,

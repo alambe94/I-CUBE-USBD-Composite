@@ -135,7 +135,7 @@ typedef struct
   * @{
   */
 
-extern USBD_ClassTypeDef USBD_CUSTOM_HID;
+extern USBD_ClassTypeDef USBD_HID_CUSTOM;
 
 /**
   * @}

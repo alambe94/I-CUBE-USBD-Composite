@@ -43,83 +43,24 @@ extern "C" {
   */
 
 #define USBD_USE_CDC_ACM                                            1
-#define USBD_CDC_ACM_COUNT                                          1 //max 3
+#define USBD_CDC_ACM_COUNT                                          3 //max 3
 
-#define USBD_USE_CDC_RNDIS                                          1
-#define USBD_USE_CDC_ECM                                            1
+#define USBD_USE_CDC_RNDIS                                          0
+#define USBD_USE_CDC_ECM                                            0
 
-#define USBD_USE_HID_MOUSE                                          1
-#define USBD_USE_HID_KEYBOARD                                       1
-#define USBD_USE_HID_CUSTOM                                         1
+#define USBD_USE_HID_MOUSE                                          0
+#define USBD_USE_HID_KEYBOARD                                       0
+#define USBD_USE_HID_CUSTOM                                         0
 
-#define USBD_USE_UAC_MIC                                            1
+#define USBD_USE_UAC_MIC                                            0
 
-#define USBD_USE_UAC_SPKR                                           1
+#define USBD_USE_UAC_SPKR                                           0
 
-#define USBD_USE_UVC                                                1
+#define USBD_USE_UVC                                                0
 
-#define USBD_USE_MSC                                                1
+#define USBD_USE_MSC                                                0
 
-#define USBD_USE_DFU                                                1
-
-
-#define COMPOSITE_CDC_ACM_CMD_EP                                    0x81
-#define COMPOSITE_CDC_ACM_IN_EP                                     0x82
-#define COMPOSITE_CDC_ACM_OUT_EP                                    0x01
-
-#define COMPOSITE_CDC_RNDIS_IN_EP                                   0x81U
-#define COMPOSITE_CDC_RNDIS_OUT_EP                                  0x01U
-#define COMPOSITE_CDC_RNDIS_CMD_EP                                  0x82U
-
-#define COMPOSITE_CDC_ECM_IN_EP                                     0x81U
-#define COMPOSITE_CDC_ECM_OUT_EP                                    0x01U
-#define COMPOSITE_CDC_ECM_CMD_EP                                    0x82U
-
-#define COMPOSITE_HID_MOUSE_IN_EP                                   0x81U
-#define COMPOSITE_HID_KEYBOARD_IN_EP                                0x81U
-#define COMPOSITE_HID_CUSTOM_IN_EP                                  0x81U
-#define COMPOSITE_HID_CUSTOM_OUT_EP                                 0x01U
-
-#define COMPOSITE_UAC_MIC_IN_EP                                     0x84U
-
-#define COMPOSITE_UAC_SPKR_OUT_EP                                   0x02U
-
-#define COMPOSITE_UVC_IN_EP                                         0x83U
-
-#define COMPOSITE_MSC_IN_EP                                         0x84U
-#define COMPOSITE_MSC_OUT_EP                                        0x02U
-
-
-
-/////////////////////////////////// Interfaces /////////////////////////
-#define COMPOSITE_CDC_ACM_CMD_ITF_NBR                               0x00
-#define COMPOSITE_CDC_ACM_COM_ITF_NBR                               0x01
-
-#define COMPOSITE_CDC_RNDIS_CMD_ITF_NBR                             0x00U
-#define COMPOSITE_CDC_RNDIS_COM_ITF_NBR                             0x01U
-
-#define COMPOSITE_CDC_ECM_CMD_ITF_NBR                               0x00U
-#define COMPOSITE_CDC_ECM_COM_ITF_NBR                               0x01U
-
-#define COMPOSITE_HID_MOUSE_ITF_NBR                                 0x00U
-
-#define COMPOSITE_HID_KEYBOARD_ITF_NBR                              0x04U
-
-#define COMPOSITE_HID_CUSTOM_ITF_NBR                                0x04U
-
-#define COMPOSITE_UAC_MIC_AC_IF_NUM                                 0x04U
-#define COMPOSITE_UAC_MIC_AS_IF_NUM                                 0x04U
-
-#define COMPOSITE_UAC_SPKR_AC_IF_NUM                                0x04U
-#define COMPOSITE_UAC_SPKR_AS_IF_NUM                                0x04U
-
-#define COMPOSITE_UVC_VC_IF_NUM                                     0x02U
-#define COMPOSITE_UVC_VS_IF_NUM                                     0x03U
-
-#define COMPOSITE_MSC_ITF_NBR                                       0x04U
-
-#define COMPOSITE_DFU_ITF_NBR                                       0x04U
-
+#define USBD_USE_DFU                                                0
 /**
   * @}
   */
