@@ -73,7 +73,7 @@ extern "C" {
 #define CDC_ECM_DATA_FS_MAX_PACKET_SIZE                 64U   /* Endpoint IN & OUT Packet size */
 #define CDC_ECM_CMD_PACKET_SIZE                         16U    /* Control Endpoint Packet size */
 
-#define CDC_ECM_CONFIG_DESC_SIZ                         79U
+#define CDC_ECM_CONFIG_DESC_SIZE                        79U
 
 #define CDC_ECM_DATA_BUFFER_SIZE                        2000U
 

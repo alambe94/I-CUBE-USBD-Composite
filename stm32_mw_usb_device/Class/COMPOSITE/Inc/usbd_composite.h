@@ -42,11 +42,11 @@ extern "C" {
   * @{
   */
 
-#define USBD_USE_CDC_ACM                                            1
+#define USBD_USE_CDC_ACM                                            0
 #define USBD_CDC_ACM_COUNT                                          3 //max 3
 
 #define USBD_USE_CDC_RNDIS                                          0
-#define USBD_USE_CDC_ECM                                            0
+#define USBD_USE_CDC_ECM                                            1
 
 #define USBD_USE_HID_MOUSE                                          0
 #define USBD_USE_HID_KEYBOARD                                       0
