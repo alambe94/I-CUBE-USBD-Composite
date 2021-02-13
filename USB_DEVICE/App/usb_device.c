@@ -113,7 +113,7 @@ void MX_USB_DEVICE_Init(void)
   }
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  if (USBD_AUDIO_MIC_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_MIC_Template_fops) != USBD_OK)
+  if (USBD_AUDIO_MIC_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_MIC_fops_FS) != USBD_OK)
   {
     Error_Handler();
   }

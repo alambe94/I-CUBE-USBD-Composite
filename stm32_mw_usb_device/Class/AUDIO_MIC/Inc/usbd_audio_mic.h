@@ -208,7 +208,7 @@ typedef struct
 * @{
 */
 
-extern USBD_ClassTypeDef  USBD_AUDIO;
+extern USBD_ClassTypeDef  USBD_AUDIO_MIC;
 /**
 * @}
 */
@@ -216,7 +216,7 @@ extern USBD_ClassTypeDef  USBD_AUDIO;
 /** @defgroup USBD_AUDIO_IN_Exported_Functions
 * @{
 */
-uint8_t  USBD_AUDIO_RegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
+uint8_t  USBD_AUDIO_MIC_RegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
 uint8_t  USBD_AUDIO_Data_Transfer (USBD_HandleTypeDef *pdev, int16_t * audioData, uint16_t dataAmount);
 
 

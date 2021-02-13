@@ -363,7 +363,7 @@ static uint8_t USBD_AUDIO_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   pdev->ep_out[AUDIO_OUT_EP & 0xFU].is_used = 1U;
 
   haudio->alt_setting = 0U;
-  haudio->offset = SPKR_AUDIO_OFFSET_UNKNOWN;
+  haudio->offset = AUDIO_SPKR_OFFSET_UNKNOWN;
   haudio->wr_ptr = 0U;
   haudio->rd_ptr = 0U;
   haudio->rd_enable = 0U;
@@ -676,11 +676,11 @@ void USBD_AUDIO_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset)
     }
   }
 
-  if (haudio->offset == SPKR_AUDIO_OFFSET_FULL)
+  if (haudio->offset == AUDIO_SPKR_OFFSET_FULL)
   {
     ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->AudioCmd(&haudio->buffer[0],
-                                                         BufferSize, SPKR_AUDIO_CMD_PLAY);
-    haudio->offset = SPKR_AUDIO_OFFSET_NONE;
+                                                         BufferSize, AUDIO_SPKR_CMD_PLAY);
+    haudio->offset = AUDIO_SPKR_OFFSET_NONE;
   }
 }
 
@@ -748,12 +748,12 @@ static uint8_t USBD_AUDIO_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
       /* All buffers are full: roll back */
       haudio->wr_ptr = 0U;
 
-      if (haudio->offset == SPKR_AUDIO_OFFSET_UNKNOWN)
+      if (haudio->offset == AUDIO_SPKR_OFFSET_UNKNOWN)
       {
         ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->AudioCmd(&haudio->buffer[0],
                                                              AUDIO_TOTAL_BUF_SIZE / 2U,
-															 SPKR_AUDIO_CMD_START);
-        haudio->offset = SPKR_AUDIO_OFFSET_NONE;
+															 AUDIO_SPKR_CMD_START);
+        haudio->offset = AUDIO_SPKR_OFFSET_NONE;
       }
     }
 

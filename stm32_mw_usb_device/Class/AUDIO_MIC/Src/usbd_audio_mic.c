@@ -138,9 +138,7 @@ static uint8_t IsocInBuffDummy[48 * 4 * 2];
 static int16_t VOL_CUR;
 static USBD_AUDIO_MIC_HandleTypeDef haudioInstance;
 
-extern int16_t Sine_Wave[];
-
-USBD_ClassTypeDef USBD_AUDIO =
+USBD_ClassTypeDef USBD_AUDIO_MIC =
     {
         USBD_AUDIO_Init,
         USBD_AUDIO_DeInit,
@@ -163,8 +161,8 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
 {
   0x09,                                                /* bLength */
   0x02,                                                /* bDescriptorType */
-  ((USB_AUDIO_CONFIG_DESC_SIZ + USB_AUDIO_CONFIG_DESC_SIZ - 1) & 0xff), /* wTotalLength */
-  ((USB_AUDIO_CONFIG_DESC_SIZ + USB_AUDIO_CONFIG_DESC_SIZ - 1) >> 8),
+  ((USB_AUDIO_CONFIG_DESC_SIZ + USBD_AUDIO_IN_CHANNELS - 1) & 0xff), /* wTotalLength */
+  ((USB_AUDIO_CONFIG_DESC_SIZ + USBD_AUDIO_IN_CHANNELS - 1) >> 8),
   0x02, /* bNumInterfaces */
   0x01, /* bConfigurationValue */
   0x00, /* iConfiguration */
@@ -751,7 +749,7 @@ static void AUDIO_REQ_SetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef 
 * @param  fops: Audio interface callback
 * @retval status
 */
-uint8_t USBD_AUDIO_RegisterInterface(USBD_HandleTypeDef *pdev,
+uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev,
                                      USBD_AUDIO_MIC_ItfTypeDef *fops)
 {
   if (fops != NULL)
