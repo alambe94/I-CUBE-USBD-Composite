@@ -32,6 +32,7 @@
 #include "usbd_audio_spkr_if.h"
 #include "usbd_video_if.h"
 #include "usbd_msc_if.h"
+#include "usbd_dfu_if.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -79,42 +80,68 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
-  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC_RNDIS) != USBD_OK)
+  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_COMPOSITE) != USBD_OK)
   {
     Error_Handler();
   }
+#if (USBD_USE_CDC_ACM == 1)
   if (USBD_CDC_ACM_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_ACM_Template_fops) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_CDC_RNDIS == 1)
   if (USBD_CDC_RNDIS_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_RNDIS_fops) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_CDC_ECM == 1)
   if (USBD_CDC_ECM_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_ECM_fops) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_HID_MOUSE == 1)
+#endif
+#if (USBD_USE_HID_KEYBOARD == 1)
+#endif
+#if (USBD_USE_HID_CUSTOM == 1)
   if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceHS, &USBD_CustomHID_template_fops) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_UVC == 1)
   if (USBD_VIDEO_RegisterInterface(&hUsbDeviceHS, &USBD_VIDEO_fops_FS) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_MSC == 1)
   if (USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_MSC_Template_fops) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_UAC_SPKR == 1)
   if (USBD_AUDIO_SPKR_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_SPKR_Template_fops) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_UAC_MIC == 1)
   if (USBD_AUDIO_MIC_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_MIC_Template_fops) != USBD_OK)
   {
     Error_Handler();
   }
+#endif
+#if (USBD_USE_UAC_DFU == 1)
+  if (USBD_DFU_RegisterMedia(&hUsbDeviceHS, &USBD_DFU_MEDIA_Template_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+#endif
   if (USBD_Start(&hUsbDeviceHS) != USBD_OK)
   {
     Error_Handler();

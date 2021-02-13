@@ -307,7 +307,7 @@ static uint8_t USBD_COMPOSITE_Setup(USBD_HandleTypeDef *pdev,
                                     USBD_SetupReqTypedef *req)
 {
 #if (USBD_USE_CDC_ACM == 1)
-  if (req->wIndex == COMPOSITE_CDC_ECM_CMD_ITF_NBR || req->wIndex == COMPOSITE_CDC_ECM_COM_ITF_NBR)
+  if (req->wIndex == COMPOSITE_CDC_ACM_CMD_ITF_NBR || req->wIndex == COMPOSITE_CDC_ACM_COM_ITF_NBR)
   {
     return USBD_CDC_ACM.Setup(pdev, req);
   }
@@ -456,33 +456,33 @@ static uint8_t USBD_COMPOSITE_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
 static uint8_t USBD_COMPOSITE_EP0_RxReady(USBD_HandleTypeDef *pdev)
 {
 #if (USBD_USE_CDC_ACM == 1)
-  USBD_CDC_ACM.RxReady(pdev);
+  USBD_CDC_ACM.EP0_RxReady(pdev);
 #endif
 #if (USBD_USE_CDC_ECM == 1)
-  USBD_CDC_ECM.RxReady(pdev);
+  USBD_CDC_ECM.EP0_RxReady(pdev);
 #endif
 #if (USBD_USE_CDC_RNDIS == 1)
-  USBD_CDC_RNDIS.RxReady(pdev);
+  USBD_CDC_RNDIS.EP0_RxReady(pdev);
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
 #endif
 #if (USBD_USE_HID_KEYBOARD == 1)
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
-  USBD_CUSTOM_HID.RxReady(pdev);
+  USBD_CUSTOM_HID.EP0_RxReady(pdev);
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  USBD_AUDIO_MIC.RxReady(pdev);
+  USBD_AUDIO_MIC.EP0_RxReady(pdev);
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  USBD_AUDIO_SPKR.RxReady(pdev);
+  USBD_AUDIO_SPKR.EP0_RxReady(pdev);
 #endif
 #if (USBD_USE_UVC == 1)
 #endif
 #if (USBD_USE_MSC == 1)
 #endif
 #if (USBD_USE_DFU == 1)
-  USBD_DFU.RxReady(pdev);
+  USBD_DFU.EP0_RxReady(pdev);
 #endif
 
   return (uint8_t)USBD_OK;
@@ -509,17 +509,17 @@ static uint8_t USBD_COMPOSITE_EP0_TxReady(USBD_HandleTypeDef *pdev)
 #if (USBD_USE_HID_CUSTOM == 1)
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  USBD_AUDIO_MIC.TxReady(pdev);
+  USBD_AUDIO_MIC.EP0_TxSent(pdev);
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  USBD_AUDIO_SPKR.TxReady(pdev);
+  USBD_AUDIO_SPKR.EP0_TxSent(pdev);
 #endif
 #if (USBD_USE_UVC == 1)
 #endif
 #if (USBD_USE_MSC == 1)
 #endif
 #if (USBD_USE_DFU == 1)
-  USBD_DFU.TxReady(pdev);
+  USBD_DFU.EP0_TxSent(pdev);
 #endif
 
   return (uint8_t)USBD_OK;
@@ -623,10 +623,10 @@ static uint8_t USBD_COMPOSITE_IsoOutIncomplete(USBD_HandleTypeDef *pdev, uint8_t
 #if (USBD_USE_HID_CUSTOM == 1)
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  USBD_AUDIO_MIC.IsoOutIncomplete(pdev, epnum);
+  USBD_AUDIO_MIC.IsoOUTIncomplete(pdev, epnum);
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  USBD_AUDIO_SPKR.IsoOutIncomplete(pdev, epnum);
+  USBD_AUDIO_SPKR.IsoOUTIncomplete(pdev, epnum);
 #endif
 #if (USBD_USE_UVC == 1)
 #endif
@@ -677,12 +677,12 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_UAC_MIC == 1)
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
+  if (epnum == COMPOSITE_UAC_SPKR_OUT_EP)
+  {
+    return USBD_AUDIO_SPKR.DataOut(pdev, epnum);
+  }
 #endif
 #if (USBD_USE_UVC == 1)
-  if (epnum == COMPOSITE_UVC_OUT_EP)
-  {
-    return USBD_VIDEO.DataOut(pdev, epnum);
-  }
 #endif
 #if (USBD_USE_MSC == 1)
   if (epnum == COMPOSITE_MSC_OUT_EP)

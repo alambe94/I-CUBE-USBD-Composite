@@ -41,20 +41,79 @@ extern "C" {
 /** @defgroup USBD_COMPOSITE_Exported_Defines
   * @{
   */
-#define COMPOSITE_CDC_RNDIS_IN_EP                                   0x81U  /* EP1 for data IN */
-#define COMPOSITE_CDC_RNDIS_OUT_EP                                  0x01U  /* EP1 for data OUT */
-#define COMPOSITE_CDC_RNDIS_CMD_EP                                  0x82U  /* EP2 for CDC_RNDIS commands */
-#define COMPOSITE_UVC_IN_EP                                         0x83U
-#define COMPOSITE_MSC_EPIN_ADDR                                     0x84U
-#define COMPOSITE_MSC_EPOUT_ADDR                                    0x02U
 
-#define COMPOSITE_CDC_RNDIS_CMD_ITF_NBR                             0x00U /* Command Interface Number 0 */
-#define COMPOSITE_CDC_RNDIS_COM_ITF_NBR                             0x01U /* Communication Interface Number 0 */
+#define USBD_USE_CDC_ACM                                            1
+#define USBD_USE_CDC_RNDIS                                          1
+#define USBD_USE_CDC_ECM                                            1
+
+#define USBD_USE_HID_MOUSE                                          1
+#define USBD_USE_HID_KEYBOARD                                       1
+#define USBD_USE_HID_CUSTOM                                         1
+
+#define USBD_USE_UVC                                                1
+
+#define USBD_USE_MSC                                                1
+
+#define USBD_USE_UAC_SPKR                                           1
+#define USBD_USE_UAC_MIC                                            1
+
+#define USBD_USE_DFU                                                1
+
+
+#define COMPOSITE_CDC_ACM_CMD_EP                                    0x81
+#define COMPOSITE_CDC_ACM_IN_EP                                     0x82
+#define COMPOSITE_CDC_ACM_OUT_EP                                    0x01
+
+#define COMPOSITE_CDC_RNDIS_IN_EP                                   0x81U
+#define COMPOSITE_CDC_RNDIS_OUT_EP                                  0x01U
+#define COMPOSITE_CDC_RNDIS_CMD_EP                                  0x82U
+
+#define COMPOSITE_CDC_ECM_IN_EP                                     0x81U
+#define COMPOSITE_CDC_ECM_OUT_EP                                    0x01U
+#define COMPOSITE_CDC_ECM_CMD_EP                                    0x82U
+
+#define COMPOSITE_HID_MOUSE_IN_EP                                   0x81U
+#define COMPOSITE_HID_KEYBOARD_IN_EP                                0x81U
+#define COMPOSITE_HID_CUSTOM_IN_EP                                  0x81U
+#define COMPOSITE_HID_CUSTOM_OUT_EP                                 0x01U
+
+#define COMPOSITE_UVC_IN_EP                                         0x83U
+
+#define COMPOSITE_MSC_IN_EP                                         0x84U
+#define COMPOSITE_MSC_OUT_EP                                        0x02U
+
+#define COMPOSITE_UAC_SPKR_OUT_EP                                   0x02U
+
+#define COMPOSITE_UAC_MIC_IN_EP                                     0x84U
+
+/////////////////////////////////// Interfaces /////////////////////////
+#define COMPOSITE_CDC_ACM_CMD_ITF_NBR                               0x00
+#define COMPOSITE_CDC_ACM_COM_ITF_NBR                               0x01
+
+#define COMPOSITE_CDC_RNDIS_CMD_ITF_NBR                             0x00U
+#define COMPOSITE_CDC_RNDIS_COM_ITF_NBR                             0x01U
+
+#define COMPOSITE_CDC_ECM_CMD_ITF_NBR                               0x00U
+#define COMPOSITE_CDC_ECM_COM_ITF_NBR                               0x01U
+
+#define COMPOSITE_HID_MOUSE_ITF_NBR                                 0x00U
+
 #define COMPOSITE_UVC_VC_IF_NUM                                     0x02U
 #define COMPOSITE_UVC_VS_IF_NUM                                     0x03U
+
 #define COMPOSITE_MSC_ITF_NBR                                       0x04U
 
-#define USB_COMPOSITE_CONFIG_DESC_SIZ                               (UVC_CONFIG_DESC_SIZ + CDC_RNDIS_CONFIG_DESC_SIZ + USB_MSC_CONFIG_DESC_SIZ - 0x09)
+#define COMPOSITE_HID_KEYBOARD_ITF_NBR                              0x04U
+
+#define COMPOSITE_HID_CUSTOM_ITF_NBR                                0x04U
+
+#define COMPOSITE_UAC_SPKR_AC_IF_NUM                                0x04U
+#define COMPOSITE_UAC_SPKR_AS_IF_NUM                                0x04U
+
+#define COMPOSITE_UAC_MIC_AC_IF_NUM                                 0x04U
+#define COMPOSITE_UAC_MIC_AS_IF_NUM                                 0x04U
+
+#define COMPOSITE_DFU_ITF_NBR                                       0x04U
 
 /**
   * @}
