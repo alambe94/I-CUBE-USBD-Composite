@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    usbd_cdc_if_template.h
+  * @file    usbd_audio_if_template.h
   * @author  MCD Application Team
-  * @brief   Header for usbd_cdc_if_template.c file.
+  * @brief   Header for usbd_audio_if_template.c file.
   ******************************************************************************
   * @attention
   *
@@ -18,20 +18,20 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBD_CDC_IF_TEMPLATE_H
-#define __USBD_CDC_IF_TEMPLATE_H
+#ifndef __USBD_AUDIO_MIC_IF_TEMPLATE_H
+#define __USBD_AUDIO_MIC_IF_TEMPLATE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_cdc_acm.h"
+#include "usbd_audio_mic.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-extern USBD_CDC_ACM_ItfTypeDef  USBD_CDC_ACM_Template_fops;
+extern USBD_AUDIO_MIC_ItfTypeDef  USBD_AUDIO_MIC_Template_fops;
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
@@ -40,6 +40,6 @@ extern USBD_CDC_ACM_ItfTypeDef  USBD_CDC_ACM_Template_fops;
 }
 #endif
 
-#endif /* __USBD_CDC_IF_TEMPLATE_H */
+#endif /* __USBD_AUDIO_MIC_IF_TEMPLATE_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

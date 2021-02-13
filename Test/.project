@@ -32,6 +32,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>USB_DEVICE</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USB_DEVICE</locationURI>
+		</link>
+		<link>
 			<name>stm32_mw_usb_device</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/stm32_mw_usb_device</locationURI>

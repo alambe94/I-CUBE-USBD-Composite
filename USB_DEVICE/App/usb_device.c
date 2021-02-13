@@ -22,7 +22,6 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "usb_device.h"
-#include "usbd_core.h"
 #include "usbd_desc.h"
 #include "usbd_composite.h"
 #include "usbd_cdc_acm_if.h"
@@ -30,7 +29,7 @@
 #include "usbd_cdc_ecm_if.h"
 #include "usbd_hid_custom_if.h"
 #include "usbd_audio_mic_if.h"
-#include "usbd_audio_spkr.h"
+#include "usbd_audio_spkr_if.h"
 #include "usbd_video_if.h"
 #include "usbd_msc_if.h"
 

@@ -131,44 +131,52 @@ USBD_ClassTypeDef USBD_COMPOSITE =
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
 #endif
-/* USB COMPOSITE device Configuration Descriptor */
-__ALIGN_BEGIN static uint8_t USBD_COMPOSITE_HSCfgDesc[1024] __ALIGN_END =
-    {
-        /* Configuration Descriptor */
-        USB_CONF_DESC_SIZE,                    /* bLength: Configuration Descriptor size */
-        USB_DESC_TYPE_CONFIGURATION,           /* bDescriptorType: Configuration */
-        LOBYTE(USB_COMPOSITE_CONFIG_DESC_SIZ), /* wTotalLength: no of returned bytes */
-        HIBYTE(USB_COMPOSITE_CONFIG_DESC_SIZ),
-        0x05, /* bNumInterfaces: 5 interface */
-        0x01, /* bConfigurationValue: Configuration value */
-        0x00, /* iConfiguration: Index of string descriptor describing the configuration */
-#if (USBD_SELF_POWERED == 1U)
-        0xC0, /* bmAttributes: Bus Powered according to user configuration */
-#else
-        0x80, /* bmAttributes: Bus Powered according to user configuration */
+typedef struct __attribute__((packed, aligned(4))) USBD_COMPOSITE_CFG_DESC_t
+{
+  uint8_t CONFIG_DESC[USB_CONF_DESC_SIZE];
+#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 0)
+  uint8_t USBD_CDC_ACM0_DESC[USB_CDC_CONFIG_DESC_SIZ];
 #endif
-        USBD_MAX_POWER, /* bMaxPower in mA according to user configuration */
-};
+#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 1)
+  uint8_t USBD_CDC_ACM1_DESC[USB_CDC_CONFIG_DESC_SIZ];
+#endif
+#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 2)
+  uint8_t USBD_CDC_ACM2_DESC[USB_CDC_CONFIG_DESC_SIZ];
+#endif
+#if (USBD_USE_CDC_ECM == 1)
+  uint8_t USBD_CDC_ECM_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_CDC_RNDIS == 1)
+  uint8_t USBD_CDC_RNDIS_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_HID_MOUSE == 1)
+  uint8_t USBD_HID_MOUSE_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_HID_KEYBOARD == 1)
+  uint8_t USBD_HID_KEYBOARD_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_HID_CUSTOM == 1)
+  uint8_t USBD_HID_CUSTOM_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_UAC_MIC == 1)
+  uint8_t USBD_UAV_MIC_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_UAC_SPKR == 1)
+  uint8_t USBD_UAV_SPKR_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_UVC == 1)
+  uint8_t USBD_UVC_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_MSC == 1)
+  uint8_t USBD_MSC_DESC[USB_CONF_DESC_SIZE];
+#endif
+#if (USBD_USE_DFU == 1)
+  uint8_t USBD_DFU_DESC[USB_CONF_DESC_SIZE];
+#endif
 
-///////////////////////////////////////// FS /////////////////////////////////////////////////////
-__ALIGN_BEGIN static uint8_t USBD_COMPOSITE_FSCfgDesc[1024] __ALIGN_END =
-    {
-        /* Configuration Descriptor */
-        USB_CONF_DESC_SIZE,                    /* bLength: Configuration Descriptor size */
-        USB_DESC_TYPE_CONFIGURATION,           /* bDescriptorType: Configuration */
-        LOBYTE(USB_COMPOSITE_CONFIG_DESC_SIZ), /* wTotalLength: no of returned bytes */
-        HIBYTE(USB_COMPOSITE_CONFIG_DESC_SIZ),
-        0x05, /* bNumInterfaces: 5 interface */
-        0x01, /* bConfigurationValue: Configuration value */
-        0x00, /* iConfiguration: Index of string descriptor describing the configuration */
-#if (USBD_SELF_POWERED == 1U)
-        0xC0, /* bmAttributes: Bus Powered according to user configuration */
-#else
-        0x80, /* bmAttributes: Bus Powered according to user configuration */
-#endif
-        USBD_MAX_POWER, /* bMaxPower in mA according to user configuration */
-};
-///////////////////////////////////////// FS /////////////////////////////////////////////////////
+} USBD_COMPOSITE_CFG_DESC_t;
+
+USBD_COMPOSITE_CFG_DESC_t USBD_COMPOSITE_FSCfgDesc, USBD_COMPOSITE_HSCfgDesc;
 
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
@@ -697,7 +705,7 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 static uint8_t *USBD_COMPOSITE_GetHSCfgDesc(uint16_t *length)
 {
   *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
-  return USBD_COMPOSITE_HSCfgDesc;
+  return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
 }
 
 /**
@@ -709,7 +717,7 @@ static uint8_t *USBD_COMPOSITE_GetHSCfgDesc(uint16_t *length)
 static uint8_t *USBD_COMPOSITE_GetFSCfgDesc(uint16_t *length)
 {
   *length = (uint16_t)sizeof(USBD_COMPOSITE_FSCfgDesc);
-  return USBD_COMPOSITE_FSCfgDesc;
+  return (uint8_t *)&USBD_COMPOSITE_FSCfgDesc;
 }
 
 /**
@@ -723,11 +731,11 @@ static uint8_t *USBD_COMPOSITE_GetOtherSpeedCfgDesc(uint16_t *length)
   //TODOif (pdev->dev_speed == USBD_SPEED_HIGH)
   {
     *length = (uint16_t)sizeof(USBD_COMPOSITE_FSCfgDesc);
-    return USBD_COMPOSITE_FSCfgDesc;
+    return (uint8_t *)&USBD_COMPOSITE_FSCfgDesc;
   }
 
   *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
-  return USBD_COMPOSITE_HSCfgDesc;
+  return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
 }
 
 /**

@@ -18,20 +18,20 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBD_AUDIO_IF_TEMPLATE_H
-#define __USBD_AUDIO_IF_TEMPLATE_H
+#ifndef __USBD_AUDIO_SPKR_IF_TEMPLATE_H
+#define __USBD_AUDIO_SPKR_IF_TEMPLATE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_audio_mic.h"
+#include "usbd_audio_spkr.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-extern USBD_AUDIO_MIC_ItfTypeDef  USBD_AUDIO_MIC_Template_fops;
+extern USBD_AUDIO_SPKR_ItfTypeDef  USBD_AUDIO_SPKR_Template_fops;
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
@@ -40,6 +40,6 @@ extern USBD_AUDIO_MIC_ItfTypeDef  USBD_AUDIO_MIC_Template_fops;
 }
 #endif
 
-#endif /* __USBD_AUDIO_IF_TEMPLATE_H */
+#endif /* __USBD_AUDIO_SPKR_IF_TEMPLATE_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

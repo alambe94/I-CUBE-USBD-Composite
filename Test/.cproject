@@ -60,8 +60,8 @@
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/VIDEO/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/BILL_BOARD/Inc"/>
-									<listOptionValue builtIn="false" value="../USB_App/Target"/>
-									<listOptionValue builtIn="false" value="../USB_App/App"/>
+									<listOptionValue builtIn="false" value="../../USB_DEVICE/Target"/>
+									<listOptionValue builtIn="false" value="../../USB_DEVICE/App"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1462665093" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -123,8 +123,8 @@
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/VIDEO/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/BILL_BOARD/Inc"/>
-									<listOptionValue builtIn="false" value="../USB_App/Target"/>
-									<listOptionValue builtIn="false" value="../USB_App/App"/>
+									<listOptionValue builtIn="false" value="../../USB_DEVICE/Target"/>
+									<listOptionValue builtIn="false" value="../../USB_DEVICE/App"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.890476917" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -177,8 +177,8 @@
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/VIDEO/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/BILL_BOARD/Inc"/>
-									<listOptionValue builtIn="false" value="../USB_App/Target"/>
-									<listOptionValue builtIn="false" value="../USB_App/App"/>
+									<listOptionValue builtIn="false" value="../../USB_DEVICE/Target"/>
+									<listOptionValue builtIn="false" value="../../USB_DEVICE/App"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.135548605" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -206,6 +206,7 @@
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.271311117.1035760229.564615426" name="Floating-point ABI" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.271311117.1035760229"/>
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.2039281860.1013811041.161102201" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.2039281860.1013811041"/>
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1528853412.385681040.26838979" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1528853412.385681040"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.969393600" name="MCU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.98021255">
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.2054421775" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -229,7 +230,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="APP"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="USB_App"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="USB_DEVICE"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="stm32_mw_usb_device"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="wolfSSL"/>
 					</sourceEntries>
