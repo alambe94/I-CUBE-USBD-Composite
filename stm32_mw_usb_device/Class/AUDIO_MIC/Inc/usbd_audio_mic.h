@@ -63,7 +63,7 @@
 #define USBD_AUDIO_IN_CHANNELS                        0x01
 #define USBD_AUDIO_SMPL_FREQ                          16000
 
-#define USB_AUDIO_CONFIG_DESC_SIZ                     109
+#define USB_AUDIO_CONFIG_DESC_SIZE                    109
 #define AUDIO_INTERFACE_DESC_SIZE                     9
 #define USB_AUDIO_DESC_SIZ                            0x09
 #define AUDIO_STANDARD_ENDPOINT_DESC_SIZE             0x09
@@ -216,9 +216,8 @@ extern USBD_ClassTypeDef  USBD_AUDIO_MIC;
 /** @defgroup USBD_AUDIO_IN_Exported_Functions
 * @{
 */
-uint8_t  USBD_AUDIO_MIC_RegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
-uint8_t  USBD_AUDIO_Data_Transfer (USBD_HandleTypeDef *pdev, int16_t * audioData, uint16_t dataAmount);
 
+uint8_t  USBD_AUDIO_MIC_RegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
 
 /**
 * @}

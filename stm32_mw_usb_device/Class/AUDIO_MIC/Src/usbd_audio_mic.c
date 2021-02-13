@@ -157,12 +157,12 @@ USBD_ClassTypeDef USBD_AUDIO_MIC =
 };
 
 /* USB AUDIO device Configuration Descriptor */
-__ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALIGN_END =
+__ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZE] __ALIGN_END =
 {
   0x09,                                                /* bLength */
   0x02,                                                /* bDescriptorType */
-  ((USB_AUDIO_CONFIG_DESC_SIZ + USBD_AUDIO_IN_CHANNELS - 1) & 0xff), /* wTotalLength */
-  ((USB_AUDIO_CONFIG_DESC_SIZ + USBD_AUDIO_IN_CHANNELS - 1) >> 8),
+  ((USB_AUDIO_CONFIG_DESC_SIZE + USBD_AUDIO_IN_CHANNELS - 1) & 0xff), /* wTotalLength */
+  ((USB_AUDIO_CONFIG_DESC_SIZE + USBD_AUDIO_IN_CHANNELS - 1) >> 8),
   0x02, /* bNumInterfaces */
   0x01, /* bConfigurationValue */
   0x00, /* iConfiguration */

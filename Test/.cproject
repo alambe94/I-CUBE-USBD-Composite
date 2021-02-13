@@ -60,6 +60,7 @@
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/VIDEO/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/BILL_BOARD/Inc"/>
+									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/PRINTER/Inc"/>
 									<listOptionValue builtIn="false" value="../../USB_DEVICE/Target"/>
 									<listOptionValue builtIn="false" value="../../USB_DEVICE/App"/>
 								</option>
@@ -123,6 +124,7 @@
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/VIDEO/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/BILL_BOARD/Inc"/>
+									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/PRINTER/Inc"/>
 									<listOptionValue builtIn="false" value="../../USB_DEVICE/Target"/>
 									<listOptionValue builtIn="false" value="../../USB_DEVICE/App"/>
 								</option>
@@ -177,6 +179,7 @@
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/MSC/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/VIDEO/Inc"/>
 									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/BILL_BOARD/Inc"/>
+									<listOptionValue builtIn="false" value="../../stm32_mw_usb_device/Class/PRINTER/Inc"/>
 									<listOptionValue builtIn="false" value="../../USB_DEVICE/Target"/>
 									<listOptionValue builtIn="false" value="../../USB_DEVICE/App"/>
 								</option>
@@ -224,36 +227,6 @@
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.763680719" name="MCU Output Converter Verilog" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.1134061363"/>
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.1100070733" name="MCU Output Converter Motorola S-rec" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.1266804292"/>
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.580224859" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.1740818622"/>
-						</toolChain>
-					</folderInfo>
-					<folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.2107143232.1281432923" name="/" resourcePath="stm32_mw_usb_device/Class/BILL_BOARD">
-						<toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug.1391120817" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug" unusedChildren="">
-							<option id="com.st.stm32cube.ide.mcu.option.internal.toolchain.type.191303507.827516231.341085483" name="Internal Toolchain Type" superClass="com.st.stm32cube.ide.mcu.option.internal.toolchain.type.191303507.827516231"/>
-							<option id="com.st.stm32cube.ide.mcu.option.internal.toolchain.version.1102104205.1266491151.2025562311" name="Internal Toolchain Version" superClass="com.st.stm32cube.ide.mcu.option.internal.toolchain.version.1102104205.1266491151"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.1174735664.1700785879.1372635282" name="Mcu" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.1174735664.1700785879"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid.1927924958.2091870540.552494568" name="CpuId" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid.1927924958.2091870540"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid.1507925577.1771099230.400133392" name="CpuCoreId" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid.1507925577.1771099230"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.1105285048.1203149489.1143191498" name="Floating-point unit" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.1105285048.1203149489"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.271311117.1035760229.1479369061" name="Floating-point ABI" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.271311117.1035760229"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.2039281860.1013811041.698630819" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.2039281860.1013811041"/>
-							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1528853412.385681040.1471777670" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1528853412.385681040"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.2070545240" name="MCU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.98021255">
-								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1092415564" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
-							</tool>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1478873017" name="MCU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.504879875">
-								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1475310174" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
-							</tool>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.184986540" name="MCU G++ Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.1848359184"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.1171768916" name="MCU GCC Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.1733283877"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.388161286" name="MCU G++ Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.623912334"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver.1768543025" name="MCU GCC Archiver" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver.1614658162"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size.1833325736" name="MCU Size" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size.812712918"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile.1692817311" name="MCU Output Converter list file" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile.1993160405"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex.360804226" name="MCU Output Converter Hex" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex.242153282"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary.41620452" name="MCU Output Converter Binary" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary.1683699754"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.594646156" name="MCU Output Converter Verilog" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.1134061363"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.671820459" name="MCU Output Converter Motorola S-rec" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.1266804292"/>
-							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.1975281751" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.1740818622"/>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
