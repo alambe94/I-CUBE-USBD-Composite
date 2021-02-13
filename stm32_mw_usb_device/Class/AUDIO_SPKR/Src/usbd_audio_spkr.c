@@ -343,11 +343,11 @@ static uint8_t USBD_AUDIO_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   if (haudio == NULL)
   {
-    pdev->pClassData = NULL;
+    pdev->pClassData_UAC_SPKR = NULL;
     return (uint8_t)USBD_EMEM;
   }
 
-  pdev->pClassData = (void *)haudio;
+  pdev->pClassData_UAC_SPKR = (void *)haudio;
 
   if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
@@ -369,7 +369,7 @@ static uint8_t USBD_AUDIO_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   haudio->rd_enable = 0U;
 
   /* Initialize the Audio output Hardware layer */
-  if (((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData)->Init(USBD_AUDIO_FREQ,
+  if (((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->Init(USBD_AUDIO_FREQ,
                                                             AUDIO_DEFAULT_VOLUME,
                                                             0U) != 0U)
   {
@@ -400,11 +400,11 @@ static uint8_t USBD_AUDIO_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   pdev->ep_out[AUDIO_OUT_EP & 0xFU].bInterval = 0U;
 
   /* DeInit  physical Interface components */
-  if (pdev->pClassData != NULL)
+  if (pdev->pClassData_UAC_SPKR != NULL)
   {
-    ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData)->DeInit(0U);
-    (void)USBD_free(pdev->pClassData);
-    pdev->pClassData = NULL;
+    ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->DeInit(0U);
+    (void)USBD_free(pdev->pClassData_UAC_SPKR);
+    pdev->pClassData_UAC_SPKR = NULL;
   }
 
   return (uint8_t)USBD_OK;
@@ -426,7 +426,7 @@ static uint8_t USBD_AUDIO_Setup(USBD_HandleTypeDef *pdev,
   uint16_t status_info = 0U;
   USBD_StatusTypeDef ret = USBD_OK;
 
-  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData;
+  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData_UAC_SPKR;
 
   if (haudio == NULL)
   {
@@ -569,7 +569,7 @@ static uint8_t USBD_AUDIO_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
 static uint8_t USBD_AUDIO_EP0_RxReady(USBD_HandleTypeDef *pdev)
 {
   USBD_AUDIO_SPKR_HandleTypeDef *haudio;
-  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData;
+  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData_UAC_SPKR;
 
   if (haudio == NULL)
   {
@@ -582,7 +582,7 @@ static uint8_t USBD_AUDIO_EP0_RxReady(USBD_HandleTypeDef *pdev)
 
     if (haudio->control.unit == AUDIO_OUT_STREAMING_CTRL)
     {
-      ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData)->MuteCtl(haudio->control.data[0]);
+      ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->MuteCtl(haudio->control.data[0]);
       haudio->control.cmd = 0U;
       haudio->control.len = 0U;
     }
@@ -627,12 +627,12 @@ void USBD_AUDIO_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset)
   USBD_AUDIO_SPKR_HandleTypeDef *haudio;
   uint32_t BufferSize = AUDIO_TOTAL_BUF_SIZE / 2U;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_UAC_SPKR == NULL)
   {
     return;
   }
 
-  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData;
+  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData_UAC_SPKR;
 
   haudio->offset = offset;
 
@@ -678,7 +678,7 @@ void USBD_AUDIO_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset)
 
   if (haudio->offset == SPKR_AUDIO_OFFSET_FULL)
   {
-    ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData)->AudioCmd(&haudio->buffer[0],
+    ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->AudioCmd(&haudio->buffer[0],
                                                          BufferSize, SPKR_AUDIO_CMD_PLAY);
     haudio->offset = SPKR_AUDIO_OFFSET_NONE;
   }
@@ -724,7 +724,7 @@ static uint8_t USBD_AUDIO_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
   uint16_t PacketSize;
   USBD_AUDIO_SPKR_HandleTypeDef *haudio;
 
-  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData;
+  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData_UAC_SPKR;
 
   if (haudio == NULL)
   {
@@ -737,7 +737,7 @@ static uint8_t USBD_AUDIO_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
     PacketSize = (uint16_t)USBD_LL_GetRxDataSize(pdev, epnum);
 
     /* Packet received Callback */
-    ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData)->PeriodicTC(&haudio->buffer[haudio->wr_ptr],
+    ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->PeriodicTC(&haudio->buffer[haudio->wr_ptr],
                                                            PacketSize, AUDIO_OUT_TC);
 
     /* Increment the Buffer pointer or roll it back when all buffers are full */
@@ -750,7 +750,7 @@ static uint8_t USBD_AUDIO_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 
       if (haudio->offset == SPKR_AUDIO_OFFSET_UNKNOWN)
       {
-        ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData)->AudioCmd(&haudio->buffer[0],
+        ((USBD_AUDIO_SPKR_ItfTypeDef *)pdev->pUserData_UAC_SPKR)->AudioCmd(&haudio->buffer[0],
                                                              AUDIO_TOTAL_BUF_SIZE / 2U,
 															 SPKR_AUDIO_CMD_START);
         haudio->offset = SPKR_AUDIO_OFFSET_NONE;
@@ -784,7 +784,7 @@ static uint8_t USBD_AUDIO_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 static void AUDIO_REQ_GetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
   USBD_AUDIO_SPKR_HandleTypeDef *haudio;
-  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData;
+  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData_UAC_SPKR;
 
   if (haudio == NULL)
   {
@@ -807,7 +807,7 @@ static void AUDIO_REQ_GetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef 
 static void AUDIO_REQ_SetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
   USBD_AUDIO_SPKR_HandleTypeDef *haudio;
-  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData;
+  haudio = (USBD_AUDIO_SPKR_HandleTypeDef *)pdev->pClassData_UAC_SPKR;
 
   if (haudio == NULL)
   {
@@ -852,7 +852,7 @@ uint8_t USBD_AUDIO_SPKR_RegisterInterface(USBD_HandleTypeDef *pdev,
     return (uint8_t)USBD_FAIL;
   }
 
-  pdev->pUserData = fops;
+  pdev->pUserData_UAC_SPKR = fops;
 
   return (uint8_t)USBD_OK;
 }

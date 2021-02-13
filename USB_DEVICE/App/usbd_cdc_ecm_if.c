@@ -97,7 +97,7 @@ static int8_t CDC_ECM_Itf_Init(void)
   */
 static int8_t CDC_ECM_Itf_DeInit(void)
 {
-  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData);
+  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_ECM);
 
   /* Notify application layer that link is down */
   hcdc_cdc_ecm->LinkStatus = 0U;
@@ -115,7 +115,7 @@ static int8_t CDC_ECM_Itf_DeInit(void)
   */
 static int8_t CDC_ECM_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 {
-  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData);
+  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_ECM);
 
   switch (cmd)
   {
@@ -186,7 +186,7 @@ static int8_t CDC_ECM_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 static int8_t CDC_ECM_Itf_Receive(uint8_t *Buf, uint32_t *Len)
 {
   /* Get the CDC_ECM handler pointer */
-  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData);
+  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_ECM);
 
   /* Call Eth buffer processing */
   hcdc_cdc_ecm->RxState = 1U;
@@ -228,7 +228,7 @@ static int8_t CDC_ECM_Itf_TransmitCplt(uint8_t *Buf, uint32_t *Len, uint8_t epnu
 static int8_t CDC_ECM_Itf_Process(USBD_HandleTypeDef *pdev)
 {
   /* Get the CDC_ECM handler pointer */
-  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(pdev->pClassData);
+  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(pdev->pClassData_CDC_ECM);
 
   if ((hcdc_cdc_ecm != NULL) && (hcdc_cdc_ecm->LinkStatus != 0U))
   {

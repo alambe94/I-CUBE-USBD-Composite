@@ -383,11 +383,11 @@ static uint8_t USBD_HID_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   if (hhid == NULL)
   {
-    pdev->pClassData = NULL;
+    pdev->pClassData_HID_Mouse = NULL;
     return (uint8_t)USBD_EMEM;
   }
 
-  pdev->pClassData = (void *)hhid;
+  pdev->pClassData_HID_Mouse = (void *)hhid;
 
   if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
@@ -424,10 +424,10 @@ static uint8_t USBD_HID_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   pdev->ep_in[HID_EPIN_ADDR & 0xFU].bInterval = 0U;
 
   /* Free allocated memory */
-  if (pdev->pClassData != NULL)
+  if (pdev->pClassData_HID_Mouse != NULL)
   {
-    (void)USBD_free(pdev->pClassData);
-    pdev->pClassData = NULL;
+    (void)USBD_free(pdev->pClassData_HID_Mouse);
+    pdev->pClassData_HID_Mouse = NULL;
   }
 
   return (uint8_t)USBD_OK;
@@ -442,7 +442,7 @@ static uint8_t USBD_HID_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   */
 static uint8_t USBD_HID_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
-  USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassData;
+  USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassData_HID_Mouse;
   USBD_StatusTypeDef ret = USBD_OK;
   uint16_t len;
   uint8_t *pbuf;
@@ -567,7 +567,7 @@ static uint8_t USBD_HID_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *re
   */
 uint8_t USBD_HID_Mouse_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len)
 {
-  USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassData;
+  USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassData_HID_Mouse;
 
   if (hhid == NULL)
   {
@@ -668,7 +668,7 @@ static uint8_t USBD_HID_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
   UNUSED(epnum);
   /* Ensure that the FIFO is empty before a new transfer, this condition could
   be caused by  a new transfer before the end of the previous transfer */
-  ((USBD_HID_HandleTypeDef *)pdev->pClassData)->state = HID_IDLE;
+  ((USBD_HID_HandleTypeDef *)pdev->pClassData_HID_Mouse)->state = HID_IDLE;
 
   return (uint8_t)USBD_OK;
 }

@@ -112,14 +112,8 @@ void MX_USB_DEVICE_Init(void)
     Error_Handler();
   }
 #endif
-#if (USBD_USE_UVC == 1)
-  if (USBD_VIDEO_RegisterInterface(&hUsbDeviceHS, &USBD_VIDEO_fops_FS) != USBD_OK)
-  {
-    Error_Handler();
-  }
-#endif
-#if (USBD_USE_MSC == 1)
-  if (USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_MSC_Template_fops) != USBD_OK)
+#if (USBD_USE_UAC_MIC == 1)
+  if (USBD_AUDIO_MIC_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_MIC_Template_fops) != USBD_OK)
   {
     Error_Handler();
   }
@@ -130,8 +124,14 @@ void MX_USB_DEVICE_Init(void)
     Error_Handler();
   }
 #endif
-#if (USBD_USE_UAC_MIC == 1)
-  if (USBD_AUDIO_MIC_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_MIC_Template_fops) != USBD_OK)
+#if (USBD_USE_UVC == 1)
+  if (USBD_VIDEO_RegisterInterface(&hUsbDeviceHS, &USBD_VIDEO_fops_FS) != USBD_OK)
+  {
+    Error_Handler();
+  }
+#endif
+#if (USBD_USE_MSC == 1)
+  if (USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_MSC_Template_fops) != USBD_OK)
   {
     Error_Handler();
   }

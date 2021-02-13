@@ -557,11 +557,11 @@ static uint8_t USBD_CDC_RNDIS_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   if (hcdc == NULL)
   {
-    pdev->pClassData = NULL;
+    pdev->pClassData_CDC_RNDIS = NULL;
     return (uint8_t)USBD_EMEM;
   }
 
-  pdev->pClassData = (void *)hcdc;
+  pdev->pClassData_CDC_RNDIS = (void *)hcdc;
 
   if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
@@ -603,7 +603,7 @@ static uint8_t USBD_CDC_RNDIS_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   pdev->ep_in[CDC_RNDIS_CMD_EP & 0xFU].is_used = 1U;
 
   /* Init  physical Interface components */
-  ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->Init();
+  ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Init();
 
   /* Init the CDC_RNDIS state */
   hcdc->State = CDC_RNDIS_STATE_BUS_INITIALIZED;
@@ -649,11 +649,11 @@ static uint8_t USBD_CDC_RNDIS_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   pdev->ep_in[CDC_RNDIS_CMD_EP & 0xFU].bInterval = 0U;
 
   /* DeInit  physical Interface components */
-  if (pdev->pClassData != NULL)
+  if (pdev->pClassData_CDC_RNDIS != NULL)
   {
-    ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->DeInit();
-    USBD_free(pdev->pClassData);
-    pdev->pClassData = NULL;
+    ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->DeInit();
+    USBD_free(pdev->pClassData_CDC_RNDIS);
+    pdev->pClassData_CDC_RNDIS = NULL;
   }
 
   return (uint8_t)USBD_OK;
@@ -669,7 +669,7 @@ static uint8_t USBD_CDC_RNDIS_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 static uint8_t USBD_CDC_RNDIS_Setup(USBD_HandleTypeDef *pdev,
                                     USBD_SetupReqTypedef *req)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
   USBD_CDC_RNDIS_CtrlMsgTypeDef *Msg = (USBD_CDC_RNDIS_CtrlMsgTypeDef *)(void *)hcdc->data;
   uint8_t ifalt = 0U;
   uint16_t status_info = 0U;
@@ -702,7 +702,7 @@ static uint8_t USBD_CDC_RNDIS_Setup(USBD_HandleTypeDef *pdev,
           }
 
           /* Allow application layer to pre-process data or add own processing before sending response */
-          ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->Control(req->bRequest,
+          ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Control(req->bRequest,
                                                                   (uint8_t *)hcdc->data,
                                                                   req->wLength);
           /* Check if Response is ready */
@@ -736,7 +736,7 @@ static uint8_t USBD_CDC_RNDIS_Setup(USBD_HandleTypeDef *pdev,
       so let application layer manage this case */
       else
       {
-        ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->Control(req->bRequest,
+        ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Control(req->bRequest,
                                                                 (uint8_t *)req, 0U);
       }
       break;
@@ -807,12 +807,12 @@ static uint8_t USBD_CDC_RNDIS_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
   USBD_CDC_RNDIS_HandleTypeDef *hcdc;
   PCD_HandleTypeDef *hpcd = pdev->pData;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_CDC_RNDIS == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   if (epnum == (CDC_RNDIS_IN_EP & 0x7FU))
   {
@@ -829,9 +829,9 @@ static uint8_t USBD_CDC_RNDIS_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
     {
       hcdc->TxState = 0U;
 
-      if (((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->TransmitCplt != NULL)
+      if (((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->TransmitCplt != NULL)
       {
-        ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->TransmitCplt(hcdc->TxBuffer, &hcdc->TxLength, epnum);
+        ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->TransmitCplt(hcdc->TxBuffer, &hcdc->TxLength, epnum);
       }
     }
   }
@@ -865,12 +865,12 @@ static uint8_t USBD_CDC_RNDIS_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
   USBD_CDC_RNDIS_HandleTypeDef *hcdc;
   uint32_t CurrPcktLen;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_CDC_RNDIS == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   if (epnum == CDC_RNDIS_OUT_EP)
   {
@@ -914,14 +914,14 @@ static uint8_t USBD_CDC_RNDIS_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
   */
 static uint8_t USBD_CDC_RNDIS_EP0_RxReady(USBD_HandleTypeDef *pdev)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   if (hcdc == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  if ((pdev->pUserData != NULL) && (hcdc->CmdOpCode != 0xFFU))
+  if ((pdev->pUserData_CDC_RNDIS != NULL) && (hcdc->CmdOpCode != 0xFFU))
   {
     /* Check if the received command is SendEncapsulated command */
     if (hcdc->CmdOpCode == CDC_RNDIS_SEND_ENCAPSULATED_COMMAND)
@@ -1014,7 +1014,7 @@ uint8_t USBD_CDC_RNDIS_RegisterInterface(USBD_HandleTypeDef *pdev,
     return (uint8_t)USBD_FAIL;
   }
 
-  pdev->pUserData = fops;
+  pdev->pUserData_CDC_RNDIS = fops;
 
   return (uint8_t)USBD_OK;
 }
@@ -1036,7 +1036,7 @@ static uint8_t *USBD_CDC_RNDIS_USRStringDescriptor(USBD_HandleTypeDef *pdev, uin
   /* Check if the requested string interface is supported */
   if (index == CDC_RNDIS_MAC_STRING_INDEX)
   {
-    USBD_GetString((uint8_t *)((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->pStrDesc, USBD_StrDesc, length);
+    USBD_GetString((uint8_t *)((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->pStrDesc, USBD_StrDesc, length);
     return USBD_StrDesc;
   }
   /* Not supported Interface Descriptor index */
@@ -1055,7 +1055,7 @@ static uint8_t *USBD_CDC_RNDIS_USRStringDescriptor(USBD_HandleTypeDef *pdev, uin
   */
 uint8_t USBD_CDC_RNDIS_SetTxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff, uint32_t length)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   if (hcdc == NULL)
   {
@@ -1077,7 +1077,7 @@ uint8_t USBD_CDC_RNDIS_SetTxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff, uin
   */
 uint8_t USBD_CDC_RNDIS_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   if (hcdc == NULL)
   {
@@ -1102,12 +1102,12 @@ uint8_t USBD_CDC_RNDIS_TransmitPacket(USBD_HandleTypeDef *pdev)
   USBD_CDC_RNDIS_PacketMsgTypeDef *PacketMsg;
   USBD_StatusTypeDef ret = USBD_BUSY;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_CDC_RNDIS == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
   PacketMsg = (USBD_CDC_RNDIS_PacketMsgTypeDef *)(void *)hcdc->TxBuffer;
 
   if (hcdc->TxState == 0U)
@@ -1151,12 +1151,12 @@ uint8_t USBD_CDC_RNDIS_ReceivePacket(USBD_HandleTypeDef *pdev)
 {
   USBD_CDC_RNDIS_HandleTypeDef *hcdc;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_CDC_RNDIS == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   /* Prepare Out endpoint to receive next packet */
   (void)USBD_LL_PrepareReceive(pdev, CDC_RNDIS_OUT_EP,
@@ -1181,7 +1181,7 @@ uint8_t USBD_CDC_RNDIS_SendNotification(USBD_HandleTypeDef *pdev,
 {
   uint32_t Idx;
   uint16_t ReqSize = 0U;
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
   USBD_StatusTypeDef ret = USBD_OK;
 
   UNUSED(bVal);
@@ -1293,7 +1293,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessInitMsg(USBD_HandleTypeDef *pdev,
                                              USBD_CDC_RNDIS_InitMsgTypeDef *Msg)
 {
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   /* Get and format the Msg input */
   USBD_CDC_RNDIS_InitMsgTypeDef *InitMessage = (USBD_CDC_RNDIS_InitMsgTypeDef *)Msg;
@@ -1358,7 +1358,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessHaltMsg(USBD_HandleTypeDef *pdev,
                                              USBD_CDC_RNDIS_HaltMsgTypeDef *Msg)
 {
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   if (hcdc == NULL)
   {
@@ -1387,7 +1387,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessKeepAliveMsg(USBD_HandleTypeDef *pdev,
                                                   USBD_CDC_RNDIS_KpAliveMsgTypeDef *Msg)
 {
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   /* Use same Msg input buffer as response buffer */
   USBD_CDC_RNDIS_KpAliveCpltMsgTypeDef *InitResponse = (USBD_CDC_RNDIS_KpAliveCpltMsgTypeDef *)(void *)Msg;
@@ -1437,7 +1437,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessQueryMsg(USBD_HandleTypeDef *pdev,
                                               USBD_CDC_RNDIS_QueryMsgTypeDef *Msg)
 {
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   /* Use same Msg input buffer as response buffer */
   USBD_CDC_RNDIS_QueryCpltMsgTypeDef *QueryResponse = (USBD_CDC_RNDIS_QueryCpltMsgTypeDef *)(void *)Msg;
@@ -1582,7 +1582,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessSetMsg(USBD_HandleTypeDef *pdev,
                                             USBD_CDC_RNDIS_SetMsgTypeDef *Msg)
 {
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   /* Get and format the Msg input */
   USBD_CDC_RNDIS_SetMsgTypeDef *SetMessage = (USBD_CDC_RNDIS_SetMsgTypeDef *)Msg;
@@ -1645,7 +1645,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessResetMsg(USBD_HandleTypeDef *pdev,
   /* Get and format the Msg input */
   USBD_CDC_RNDIS_ResetMsgTypeDef *ResetMessage = (USBD_CDC_RNDIS_ResetMsgTypeDef *)Msg;
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
   /* Use same Msg input buffer as response buffer */
   USBD_CDC_RNDIS_ResetCpltMsgTypeDef *ResetResponse = (USBD_CDC_RNDIS_ResetCpltMsgTypeDef *)(void *)Msg;
 
@@ -1696,7 +1696,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessPacketMsg(USBD_HandleTypeDef *pdev,
   uint32_t tmp1, tmp2;
 
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   /* Get and format the Msg input */
   USBD_CDC_RNDIS_PacketMsgTypeDef *PacketMsg = (USBD_CDC_RNDIS_PacketMsgTypeDef *)Msg;
@@ -1721,7 +1721,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessPacketMsg(USBD_HandleTypeDef *pdev,
   hcdc->RxLength = PacketMsg->DataLength;
 
   /* Process data by application */
-  ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData)->Receive(hcdc->RxBuffer, &hcdc->RxLength);
+  ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Receive(hcdc->RxBuffer, &hcdc->RxLength);
 
   return (uint8_t)USBD_OK;
 }
@@ -1738,7 +1738,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessUnsupportedMsg(USBD_HandleTypeDef *pdev,
                                                     USBD_CDC_RNDIS_CtrlMsgTypeDef *Msg)
 {
   /* Get the CDC_RNDIS handle pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData;
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc = (USBD_CDC_RNDIS_HandleTypeDef *)pdev->pClassData_CDC_RNDIS;
 
   /* Use same Msg input buffer as response buffer */
   USBD_CDC_RNDIS_StsChangeMsgTypeDef *Response = (USBD_CDC_RNDIS_StsChangeMsgTypeDef *)(void *)Msg;

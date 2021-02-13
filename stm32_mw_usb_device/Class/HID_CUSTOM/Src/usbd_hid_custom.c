@@ -357,11 +357,11 @@ static uint8_t USBD_CUSTOM_HID_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   if (hhid == NULL)
   {
-    pdev->pClassData = NULL;
+    pdev->pClassData_HID_Custom = NULL;
     return (uint8_t)USBD_EMEM;
   }
 
-  pdev->pClassData = (void *)hhid;
+  pdev->pClassData_HID_Custom = (void *)hhid;
 
   if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
@@ -388,7 +388,7 @@ static uint8_t USBD_CUSTOM_HID_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   hhid->state = CUSTOM_HID_IDLE;
 
-  ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData)->Init();
+  ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData_HID_Custom)->Init();
 
   /* Prepare Out endpoint to receive 1st packet */
   (void)USBD_LL_PrepareReceive(pdev, CUSTOM_HID_EPOUT_ADDR, hhid->Report_buf,
@@ -419,11 +419,11 @@ static uint8_t USBD_CUSTOM_HID_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   pdev->ep_out[CUSTOM_HID_EPOUT_ADDR & 0xFU].bInterval = 0U;
 
   /* Free allocated memory */
-  if (pdev->pClassData != NULL)
+  if (pdev->pClassData_HID_Custom != NULL)
   {
-    ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData)->DeInit();
-    USBD_free(pdev->pClassData);
-    pdev->pClassData = NULL;
+    ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData_HID_Custom)->DeInit();
+    USBD_free(pdev->pClassData_HID_Custom);
+    pdev->pClassData_HID_Custom = NULL;
   }
 
   return (uint8_t)USBD_OK;
@@ -439,7 +439,7 @@ static uint8_t USBD_CUSTOM_HID_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 static uint8_t USBD_CUSTOM_HID_Setup(USBD_HandleTypeDef *pdev,
                                      USBD_SetupReqTypedef *req)
 {
-  USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData;
+  USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData_HID_Custom;
   uint16_t len = 0U;
   uint8_t  *pbuf = NULL;
   uint16_t status_info = 0U;
@@ -502,7 +502,7 @@ static uint8_t USBD_CUSTOM_HID_Setup(USBD_HandleTypeDef *pdev,
           if ((req->wValue >> 8) == CUSTOM_HID_REPORT_DESC)
           {
             len = MIN(USBD_CUSTOM_HID_REPORT_DESC_SIZE, req->wLength);
-            pbuf = ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData)->pReport;
+            pbuf = ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData_HID_Custom)->pReport;
           }
           else
           {
@@ -570,12 +570,12 @@ uint8_t USBD_CUSTOM_HID_SendReport(USBD_HandleTypeDef *pdev,
 {
   USBD_CUSTOM_HID_HandleTypeDef *hhid;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_HID_Custom == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData;
+  hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData_HID_Custom;
 
   if (pdev->dev_state == USBD_STATE_CONFIGURED)
   {
@@ -647,7 +647,7 @@ static uint8_t USBD_CUSTOM_HID_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
 
   /* Ensure that the FIFO is empty before a new transfer, this condition could
   be caused by  a new transfer before the end of the previous transfer */
-  ((USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData)->state = CUSTOM_HID_IDLE;
+  ((USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData_HID_Custom)->state = CUSTOM_HID_IDLE;
 
   return (uint8_t)USBD_OK;
 }
@@ -664,16 +664,16 @@ static uint8_t USBD_CUSTOM_HID_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
   UNUSED(epnum);
   USBD_CUSTOM_HID_HandleTypeDef *hhid;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_HID_Custom == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData;
+  hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData_HID_Custom;
 
   /* USB data will be immediately processed, this allow next USB traffic being
   NAKed till the end of the application processing */
-  ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData)->OutEvent(hhid->Report_buf[0],
+  ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData_HID_Custom)->OutEvent(hhid->Report_buf[0],
                                                             hhid->Report_buf[1]);
 
   return (uint8_t)USBD_OK;
@@ -690,12 +690,12 @@ uint8_t USBD_CUSTOM_HID_ReceivePacket(USBD_HandleTypeDef *pdev)
 {
   USBD_CUSTOM_HID_HandleTypeDef *hhid;
 
-  if (pdev->pClassData == NULL)
+  if (pdev->pClassData_HID_Custom == NULL)
   {
     return (uint8_t)USBD_FAIL;
   }
 
-  hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData;
+  hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData_HID_Custom;
 
   /* Resume USB Out process */
   (void)USBD_LL_PrepareReceive(pdev, CUSTOM_HID_EPOUT_ADDR, hhid->Report_buf,
@@ -713,7 +713,7 @@ uint8_t USBD_CUSTOM_HID_ReceivePacket(USBD_HandleTypeDef *pdev)
   */
 static uint8_t USBD_CUSTOM_HID_EP0_RxReady(USBD_HandleTypeDef *pdev)
 {
-  USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData;
+  USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData_HID_Custom;
 
   if (hhid == NULL)
   {
@@ -722,7 +722,7 @@ static uint8_t USBD_CUSTOM_HID_EP0_RxReady(USBD_HandleTypeDef *pdev)
 
   if (hhid->IsReportAvailable == 1U)
   {
-    ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData)->OutEvent(hhid->Report_buf[0],
+    ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData_HID_Custom)->OutEvent(hhid->Report_buf[0],
                                                               hhid->Report_buf[1]);
     hhid->IsReportAvailable = 0U;
   }
@@ -757,7 +757,7 @@ uint8_t USBD_CUSTOM_HID_RegisterInterface(USBD_HandleTypeDef *pdev,
     return (uint8_t)USBD_FAIL;
   }
 
-  pdev->pUserData = fops;
+  pdev->pUserData_HID_Custom = fops;
 
   return (uint8_t)USBD_OK;
 }
