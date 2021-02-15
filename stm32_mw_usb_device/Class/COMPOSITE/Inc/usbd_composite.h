@@ -48,13 +48,13 @@ extern "C" {
 #define USBD_USE_CDC_RNDIS                                          0
 #define USBD_USE_CDC_ECM                                            0
 
-#define USBD_USE_HID_MOUSE                                          0
-#define USBD_USE_HID_KEYBOARD                                       0
+#define USBD_USE_HID_MOUSE                                          1
+#define USBD_USE_HID_KEYBOARD                                       1
 #define USBD_USE_HID_CUSTOM                                         0
 
 #define USBD_USE_UAC_MIC                                            1
 
-#define USBD_USE_UAC_SPKR                                           0
+#define USBD_USE_UAC_SPKR                                           1
 
 #define USBD_USE_UVC                                                0
 

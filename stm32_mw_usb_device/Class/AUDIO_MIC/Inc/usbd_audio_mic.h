@@ -60,52 +60,54 @@
 * @{
 */
 
-#define USBD_AUDIO_IN_CHANNELS                        1
-#define USBD_AUDIO_SMPL_FREQ                          1600
-
-#define USB_AUDIO_CONFIG_DESC_SIZE                    109
-#define AUDIO_INTERFACE_DESC_SIZE                     9
-#define USB_AUDIO_DESC_SIZ                            0x09
-#define AUDIO_STANDARD_ENDPOINT_DESC_SIZE             0x09
-#define AUDIO_STREAMING_ENDPOINT_DESC_SIZE            0x07
-#define AUDIO_DESCRIPTOR_TYPE                         0x21
-#define USB_DEVICE_CLASS_AUDIO                        0x01
-#define AUDIO_SUBCLASS_AUDIOCONTROL                   0x01
-#define AUDIO_SUBCLASS_AUDIOSTREAMING                 0x02
-#define AUDIO_PROTOCOL_UNDEFINED                      0x00
-#define AUDIO_STREAMING_GENERAL                       0x01
-#define AUDIO_STREAMING_FORMAT_TYPE                   0x02
-/* Audio Descriptor Types */
-#define AUDIO_INTERFACE_DESCRIPTOR_TYPE               0x24
-#define AUDIO_ENDPOINT_DESCRIPTOR_TYPE                0x25
-/* Audio Control Interface Descriptor Subtypes */
-#define AUDIO_CONTROL_HEADER                          0x01
-#define AUDIO_CONTROL_INPUT_TERMINAL                  0x02
-#define AUDIO_CONTROL_OUTPUT_TERMINAL                 0x03
-#define AUDIO_CONTROL_FEATURE_UNIT                    0x06
-#define AUDIO_INPUT_TERMINAL_DESC_SIZE                0x0C
-#define AUDIO_OUTPUT_TERMINAL_DESC_SIZE               0x09
-#define AUDIO_STREAMING_INTERFACE_DESC_SIZE           0x07
-#define AUDIO_CONTROL_MUTE                            0x0002
-#define AUDIO_FORMAT_TYPE_I                           0x01
-#define AUDIO_FORMAT_TYPE_III                         0x03
-#define AUDIO_ENDPOINT_GENERAL                        0x01
-#define AUDIO_REQ_GET_CUR                             0x81
-#define AUDIO_REQ_GET_MIN                             0x82
-#define AUDIO_REQ_GET_MAX                             0x83
-#define AUDIO_REQ_GET_RES                             0x84
-#define AUDIO_REQ_SET_CUR                             0x01
-#define AUDIO_OUT_STREAMING_CTRL                      0x02
-#define VOL_MIN                                       0xDBE0
-#define VOL_RES                                       0x0023
-#define VOL_MAX                                       0x0000
-#define AUDIO_IN_PACKET                  (uint32_t)((((48000/1000)+2)*8)*2)
-#define MIC_IN_TERMINAL_ID                            1
-#define MIC_FU_ID                                     2
-#define MIC_OUT_TERMINAL_ID                           3
-#define USB_INTERFACE_DESCRIPTOR_TYPE                 0x04
 /* Audio Data in endpoint */
-#define AUDIO_IN_EP                                   0x81
+#define AUDIO_MIC_EP                                  0x81
+
+#define AUDIO_MIC_CHANNELS                            0x01
+#define AUDIO_MIC_SMPL_FREQ                           1600
+
+#define AUDIO_MIC_CONFIG_DESC_SIZE                    109
+
+#define AUDIO_MIC_INTERFACE_DESC_SIZE                     0x09
+#define AUDIO_MIC_DESC_SIZE                               0x09
+#define AUDIO_MIC_STANDARD_ENDPOINT_DESC_SIZE             0x09
+#define AUDIO_MIC_STREAMING_ENDPOINT_DESC_SIZE            0x07
+#define AUDIO_MIC_DESCRIPTOR_TYPE                         0x21
+#define AUDIO_MIC_DEVICE_CLASS                            0x01
+#define AUDIO_MIC_SUBCLASS_AUDIOCONTROL                   0x01
+#define AUDIO_MIC_SUBCLASS_AUDIOSTREAMING                 0x02
+#define AUDIO_MIC_PROTOCOL_UNDEFINED                      0x00
+#define AUDIO_MIC_STREAMING_GENERAL                       0x01
+#define AUDIO_MIC_STREAMING_FORMAT_TYPE                   0x02
+/* Audio Descriptor Types */
+#define AUDIO_MIC_INTERFACE_DESCRIPTOR_TYPE               0x24
+#define AUDIO_MIC_ENDPOINT_DESCRIPTOR_TYPE                0x25
+/* Audio Control Interface Descriptor Subtypes */
+#define AUDIO_MIC_CONTROL_HEADER                          0x01
+#define AUDIO_MIC_CONTROL_INPUT_TERMINAL                  0x02
+#define AUDIO_MIC_CONTROL_OUTPUT_TERMINAL                 0x03
+#define AUDIO_MIC_CONTROL_FEATURE_UNIT                    0x06
+#define AUDIO_MIC_INPUT_TERMINAL_DESC_SIZE                0x0C
+#define AUDIO_MIC_OUTPUT_TERMINAL_DESC_SIZE               0x09
+#define AUDIO_MIC_STREAMING_INTERFACE_DESC_SIZE           0x07
+#define AUDIO_MIC_CONTROL_MUTE                            0x0002
+#define AUDIO_MIC_FORMAT_TYPE_I                           0x01
+#define AUDIO_MIC_FORMAT_TYPE_III                         0x03
+#define AUDIO_MIC_ENDPOINT_GENERAL                        0x01
+#define AUDIO_MIC_REQ_GET_CUR                             0x81
+#define AUDIO_MIC_REQ_GET_MIN                             0x82
+#define AUDIO_MIC_REQ_GET_MAX                             0x83
+#define AUDIO_MIC_REQ_GET_RES                             0x84
+#define AUDIO_MIC_REQ_SET_CUR                             0x01
+#define AUDIO_MIC_OUT_STREAMING_CTRL                      0x02
+
+#define AUDIO_MIC_VOL_MIN                             0xDBE0
+#define AUDIO_MIC_VOL_RES                             0x0023
+#define AUDIO_MIC_VOL_MAX                             0x0000
+#define AUDIO_MIC_PACKET                              (uint32_t)((((AUDIO_MIC_SMPL_FREQ/1000)+2)*8)*2)
+#define AUDIO_MIC_TERMINAL_ID                         1
+#define AUDIO_MIC_FU_ID                               2
+#define AUDIO_MIC_OUT_TERMINAL_ID                     3
 
 /* Buffering state definitions */
 typedef enum
@@ -118,9 +120,9 @@ typedef enum
 AUDIO_MIC_StatesTypeDef;
 
 /* Number of sub-packets in the audio transfer buffer.*/
-#define AUDIO_IN_PACKET_NUM                            20
+#define AUDIO_MIC_PACKET_NUM                            20
 
-#define TIMEOUT_VALUE                                   200
+#define TIMEOUT_VALUE                                  200
 
 
 /* Audio Commands enmueration */
@@ -216,7 +218,7 @@ extern USBD_ClassTypeDef  USBD_AUDIO_MIC;
 /** @defgroup USBD_AUDIO_IN_Exported_Functions
 * @{
 */
-uint8_t  USBD_AUDIO_MICRegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
+uint8_t  USBD_AUDIO_MIC_RegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
 void USBD_AUDIO_MICInit_Microphone_Descriptor(USBD_HandleTypeDef   *pdev, uint32_t samplingFrequency, uint8_t Channels);
 uint8_t  USBD_AUDIO_MICData_Transfer (USBD_HandleTypeDef *pdev, int16_t * audioData, uint16_t dataAmount);
 

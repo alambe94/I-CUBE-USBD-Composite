@@ -118,8 +118,8 @@ extern USBD_ClassTypeDef USBD_HID_MOUSE;
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
-uint8_t USBD_HID_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len);
-uint32_t USBD_HID_GetPollingInterval(USBD_HandleTypeDef *pdev);
+uint8_t USBD_HID_Mouse_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len);
+uint32_t USBD_HID_Mouse_GetPollingInterval(USBD_HandleTypeDef *pdev);
 
 /**
   * @}
