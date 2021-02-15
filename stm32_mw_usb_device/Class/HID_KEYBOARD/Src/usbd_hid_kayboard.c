@@ -553,62 +553,6 @@ static uint8_t USBD_HID_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *re
 }
 
 /**
-  * @brief  USBD_HID_SendReport
-  *         Send HID Report
-  * @param  pdev: device instance
-  * @param  buff: pointer to report
-  * @retval status
-  */
-uint8_t USBD_HID_Keybaord_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len)
-{
-  USBD_HID_Keyboard_HandleTypeDef *hhid = (USBD_HID_Keyboard_HandleTypeDef *)pdev->pClassData_HID_Keyboard;
-
-  if (hhid == NULL)
-  {
-    return (uint8_t)USBD_FAIL;
-  }
-
-  if (pdev->dev_state == USBD_STATE_CONFIGURED)
-  {
-    if (hhid->state == KEYBOARD_HID_IDLE)
-    {
-      hhid->state = KEYBOARD_HID_BUSY;
-      (void)USBD_LL_Transmit(pdev, HID_KEYBOARD_EPIN_ADDR, report, len);
-    }
-  }
-
-  return (uint8_t)USBD_OK;
-}
-
-/**
-  * @brief  USBD_HID_GetPollingInterval
-  *         return polling interval from endpoint descriptor
-  * @param  pdev: device instance
-  * @retval polling interval
-  */
-uint32_t USBD_HID_Keyboard_GetPollingInterval(USBD_HandleTypeDef *pdev)
-{
-  uint32_t polling_interval;
-
-  /* HIGH-speed endpoints */
-  if (pdev->dev_speed == USBD_SPEED_HIGH)
-  {
-    /* Sets the data transfer polling interval for high speed transfers.
-     Values between 1..16 are allowed. Values correspond to interval
-     of 2 ^ (bInterval-1). This option (8 ms, corresponds to HID_HS_BINTERVAL */
-    polling_interval = (((1U << (HID_KEYBOARD_HS_BINTERVAL - 1U))) / 8U);
-  }
-  else   /* LOW and FULL-speed endpoints */
-  {
-    /* Sets the data transfer polling interval for low and full
-    speed transfers */
-    polling_interval =  HID_KEYBOARD_FS_BINTERVAL;
-  }
-
-  return ((uint32_t)(polling_interval));
-}
-
-/**
   * @brief  USBD_HID_GetCfgFSDesc
   *         return FS configuration descriptor
   * @param  speed : current device speed
@@ -681,6 +625,61 @@ static uint8_t *USBD_HID_GetDeviceQualifierDesc(uint16_t *length)
   return USBD_HID_DeviceQualifierDesc;
 }
 
+/**
+  * @brief  USBD_HID_SendReport
+  *         Send HID Report
+  * @param  pdev: device instance
+  * @param  buff: pointer to report
+  * @retval status
+  */
+uint8_t USBD_HID_Keybaord_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len)
+{
+  USBD_HID_Keyboard_HandleTypeDef *hhid = (USBD_HID_Keyboard_HandleTypeDef *)pdev->pClassData_HID_Keyboard;
+
+  if (hhid == NULL)
+  {
+    return (uint8_t)USBD_FAIL;
+  }
+
+  if (pdev->dev_state == USBD_STATE_CONFIGURED)
+  {
+    if (hhid->state == KEYBOARD_HID_IDLE)
+    {
+      hhid->state = KEYBOARD_HID_BUSY;
+      (void)USBD_LL_Transmit(pdev, HID_KEYBOARD_EPIN_ADDR, report, len);
+    }
+  }
+
+  return (uint8_t)USBD_OK;
+}
+
+/**
+  * @brief  USBD_HID_GetPollingInterval
+  *         return polling interval from endpoint descriptor
+  * @param  pdev: device instance
+  * @retval polling interval
+  */
+uint32_t USBD_HID_Keyboard_GetPollingInterval(USBD_HandleTypeDef *pdev)
+{
+  uint32_t polling_interval;
+
+  /* HIGH-speed endpoints */
+  if (pdev->dev_speed == USBD_SPEED_HIGH)
+  {
+    /* Sets the data transfer polling interval for high speed transfers.
+     Values between 1..16 are allowed. Values correspond to interval
+     of 2 ^ (bInterval-1). This option (8 ms, corresponds to HID_HS_BINTERVAL */
+    polling_interval = (((1U << (HID_KEYBOARD_HS_BINTERVAL - 1U))) / 8U);
+  }
+  else   /* LOW and FULL-speed endpoints */
+  {
+    /* Sets the data transfer polling interval for low and full
+    speed transfers */
+    polling_interval =  HID_KEYBOARD_FS_BINTERVAL;
+  }
+
+  return ((uint32_t)(polling_interval));
+}
 /**
   * @}
   */
