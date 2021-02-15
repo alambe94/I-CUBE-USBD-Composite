@@ -1,1 +1,1 @@
-# I-CUBE-USB-Composite
+# I-CUBE-USBD-Composite
