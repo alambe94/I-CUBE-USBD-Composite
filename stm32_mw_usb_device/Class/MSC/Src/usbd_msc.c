@@ -129,14 +129,14 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ]  __ALIG
 
   0x00,
   0x01,                                            /* bNumInterfaces: 1 interface */
-  0x01,                                            /* bConfigurationValue: */
-  0x04,                                            /* iConfiguration: */
+  0x01,                                            /* bConfigurationValue */
+  0x04,                                            /* iConfiguration */
 #if (USBD_SELF_POWERED == 1U)
   0xC0,                                            /* bmAttributes: Bus Powered according to user configuration */
 #else
   0x80,                                            /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                                  /* MaxPower 100 mA */
+  USBD_MAX_POWER,                                  /* MaxPower (mA) */
 
   /********************  Mass Storage interface ********************/
   0x09,                                            /* bLength: Interface Descriptor size */
@@ -147,7 +147,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ]  __ALIG
   0x08,                                            /* bInterfaceClass: MSC Class */
   0x06,                                            /* bInterfaceSubClass : SCSI transparent */
   0x50,                                            /* nInterfaceProtocol */
-  0x05,                                            /* iInterface: */
+  0x05,                                            /* iInterface */
   /********************  Mass Storage Endpoints ********************/
   0x07,                                            /* Endpoint descriptor length = 7 */
   0x05,                                            /* Endpoint descriptor type */
@@ -176,14 +176,14 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgFSDesc[USB_MSC_CONFIG_DESC_SIZ]  __ALIG
 
   0x00,
   0x01,                                            /* bNumInterfaces: 1 interface */
-  0x01,                                            /* bConfigurationValue: */
-  0x04,                                            /* iConfiguration: */
+  0x01,                                            /* bConfigurationValue */
+  0x04,                                            /* iConfiguration */
 #if (USBD_SELF_POWERED == 1U)
   0xC0,                                            /* bmAttributes: Bus Powered according to user configuration */
 #else
   0x80,                                            /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                                  /* MaxPower 100 mA */
+  USBD_MAX_POWER,                                  /* MaxPower (mA) */
 
   /********************  Mass Storage interface ********************/
   0x09,                                            /* bLength: Interface Descriptor size */
@@ -221,14 +221,14 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_OtherSpeedCfgDesc[USB_MSC_CONFIG_DESC_SIZ]
 
   0x00,
   0x01,                                           /* bNumInterfaces: 1 interface */
-  0x01,                                           /* bConfigurationValue: */
-  0x04,                                           /* iConfiguration: */
+  0x01,                                           /* bConfigurationValue */
+  0x04,                                           /* iConfiguration */
 #if (USBD_SELF_POWERED == 1U)
   0xC0,                                           /* bmAttributes: Bus Powered according to user configuration */
 #else
   0x80,                                           /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                                 /* MaxPower 100 mA */
+  USBD_MAX_POWER,                                 /* MaxPower (mA) */
 
   /********************  Mass Storage interface ********************/
   0x09,                                           /* bLength: Interface Descriptor size */
@@ -239,7 +239,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_OtherSpeedCfgDesc[USB_MSC_CONFIG_DESC_SIZ]
   0x08,                                           /* bInterfaceClass: MSC Class */
   0x06,                                           /* bInterfaceSubClass : SCSI transparent command set */
   0x50,                                           /* nInterfaceProtocol */
-  0x05,                                           /* iInterface: */
+  0x05,                                           /* iInterface */
   /********************  Mass Storage Endpoints ********************/
   0x07,                                           /* Endpoint descriptor length = 7 */
   0x05,                                           /* Endpoint descriptor type */
@@ -293,7 +293,7 @@ uint8_t USBD_MSC_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   UNUSED(cfgidx);
   USBD_MSC_BOT_HandleTypeDef *hmsc;
 
-  hmsc = USBD_malloc(sizeof(USBD_MSC_BOT_HandleTypeDef));
+  hmsc = (USBD_MSC_BOT_HandleTypeDef *)USBD_malloc(sizeof(USBD_MSC_BOT_HandleTypeDef));
 
   if (hmsc == NULL)
   {

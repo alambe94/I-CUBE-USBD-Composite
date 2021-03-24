@@ -243,7 +243,7 @@ typedef struct
 
 typedef struct
 {
-  uint32_t        data[2000 / 4]; /* Force 32bits alignment */
+  uint32_t        data[CDC_RNDIS_MAX_DATA_SZE / 4U]; /* Force 32-bit alignment */
   uint8_t         CmdOpCode;
   uint8_t         CmdLength;
   uint8_t         ResponseRdy;     /* Indicates if the Device Response to an CDC_RNDIS msg is ready */
@@ -268,9 +268,9 @@ typedef struct
 
 typedef enum
 {
-  RNDIS_NETWORK_CONNECTION = 0x00,
-  RNDIS_RESPONSE_AVAILABLE = 0x01,
-  RNDIS_CONNECTION_SPEED_CHANGE = 0x2A
+  NETWORK_CONNECTION = 0x00,
+  RESPONSE_AVAILABLE = 0x01,
+  CONNECTION_SPEED_CHANGE = 0x2A
 } USBD_CDC_RNDIS_NotifCodeTypeDef;
 
 
