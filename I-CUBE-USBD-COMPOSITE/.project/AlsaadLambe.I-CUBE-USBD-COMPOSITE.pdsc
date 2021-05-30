@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<package schemaVersion="1.6.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
+    <vendor>AlsaadLambe</vendor>
+    <name>I-CUBE-USBD-COMPOSITE</name>
+    <description>Create STM32 USB composite devices with ease.</description>
+    <url>https://github.com/alambe94/I-CUBE-USB-Composite/</url>
+    <license>I-CUBE-USBD-Composite/LICENSE.txt</license>
+    <supportContact>lambealsaad@gmail.com</supportContact>
+    <releases>
+        <release date="2020-01-29" version="1.0.0">6.1.1</release>
+    </releases>
+    <keywords>
+        <keyword>CUBE_RULES_COMPLIANT</keyword>
+        <keyword>Cortex-M</keyword>
+        <keyword>STMicroelectronics</keyword>
+        <keyword>IMPLEMENTED_WITH_STM32CUBEMX</keyword>
+    </keywords>
+    <taxonomy>
+        <description Cclass="USB">USB</description>
+    </taxonomy>
+    <conditions>
+        <condition id="STM32_CPU">
+            <require Cvendor="STMicroelectronics"/>
+        </condition>
+        <condition id="USB_CORE">
+            <require condition="STM32_CPU"/>
+        </condition>
+        <condition id="USE_CDC_ACM">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_CDC_RNDIS">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_HID_MOUSE">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_HID_KEYBOARD">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_HID_CUSTOM">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_MSC_BOT">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_UAC_MIC">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_UAC_SPKR">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_UVC">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_DFU">
+            <require condition="USB_CORE"/>
+        </condition>
+        <condition id="USE_PRNTR">
+            <require condition="USB_CORE"/>
+        </condition>
+    </conditions>
+    <components>
+        <bundle Cbundle="Composite" Cclass="USB" Cvendor="STMicroelectronics" Cversion="1.0.0">
+            <description>Composite</description>
+            <doc>I-CUBE-USBD-Composite/README.md</doc>
+            <component Cgroup="COMPOSITE" Csub="Core" maxInstances="1">
+                <description>Core</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Core/Inc/usbd_core.h"/>
+                    <file category="header" name="Middlewares/ST/Composite/Core/Inc/usbd_ctlreq.h"/>
+                    <file category="header" name="Middlewares/ST/Composite/Core/Inc/usbd_def.h"/>
+                    <file category="header" name="Middlewares/ST/Composite/Core/Inc/usbd_ioreq.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Core/Src/usbd_core.c"/>
+                    <file category="source" name="Middlewares/ST/Composite/Core/Src/usbd_ctlreq.c"/>
+                    <file category="source" name="Middlewares/ST/Composite/Core/Src/usbd_ioreq.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="CDC_ACM" maxInstances="1">
+                <description>USB to serial virtual comport</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/CDC_ACM/Inc/usbd_cdc_acm.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/CDC_ACM/Src/usbd_cdc_acm.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="CDC_RNDIS" maxInstances="1">
+                <description>Ethernet over USB</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/CDC_RNDIS/Inc/usbd_cdc_rndis.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/CDC_RNDIS/Src/usbd_cdc_rndis.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="HID_MOUSE" maxInstances="1">
+                <description>USB Mouse</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/HID_MOUSE/Inc/usbd_hid_mouse.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/HID_MOUSE/Src/usbd_hid_mouse.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="HID_KEYBOARD" maxInstances="1">
+                <description>USB Keyboard</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/HID_KEYBOARD/Inc/usbd_hid_keyboard.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/HID_KEYBOARD/Src/usbd_hid_kayboard.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="HID_CUSTOM" maxInstances="1">
+                <description>USB HID Custom class</description>
+                <files>
+                    <file category="source" name="Middlewares/ST/Composite/Class/HID_CUSTOM/Src/usbd_hid_custom.c"/>
+                    <file category="header" name="Middlewares/ST/Composite/Class/HID_CUSTOM/Inc/usbd_hid_custom.h"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="MSC_BOT" maxInstances="1">
+                <description>USB Mass storage class</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc.h"/>
+                    <file category="header" name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc_bot.h"/>
+                    <file category="header" name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc_data.h"/>
+                    <file category="header" name="Middlewares/ST/Composite/Class/MSC/Inc/usbd_msc_scsi.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc.c"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc_bot.c"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc_data.c"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/MSC/Src/usbd_msc_scsi.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="UAC_MIC" maxInstances="1">
+                <description>USB Microphone</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/AUDIO_MIC/Inc/usbd_audio_mic.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/AUDIO_MIC/Src/usbd_audio_mic.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="UAC_SPKR" maxInstances="1">
+                <description>USB Speaker</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/AUDIO_SPKR/Inc/usbd_audio_spkr.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/AUDIO_SPKR/Src/usbd_audio_spkr.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="UVC" maxInstances="1">
+                <description>USB Video class</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/VIDEO/Inc/usbd_video.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/VIDEO/Src/usbd_video.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="DFU" maxInstances="1">
+                <description>USB DFU Bottloader</description>
+                <files>
+                    <file category="source" name="Middlewares/ST/Composite/Class/DFU/Src/usbd_dfu.c"/>
+                    <file category="header" name="Middlewares/ST/Composite/Class/DFU/Inc/usbd_dfu.h"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="CDC_ECM" maxInstances="1">
+                <description>Ethernet over USB NCM</description>
+                <files>
+                    <file category="source" name="Middlewares/ST/Composite/Class/CDC_ECM/Src/usbd_cdc_ecm.c"/>
+                    <file category="header" name="Middlewares/ST/Composite/Class/CDC_ECM/Inc/usbd_cdc_ecm.h"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="COMPOSITE" maxInstances="1">
+                <description>Combination of classes</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/COMPOSITE/Inc/usbd_composite.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/COMPOSITE/Src/usbd_composite.c"/>
+                </files>
+            </component>
+            <component Cgroup="COMPOSITE" Csub="PRINTER" maxInstances="1">
+                <description>USB Printer class</description>
+                <files>
+                    <file category="header" name="Middlewares/ST/Composite/Class/PRINTER/Inc/usbd_printer.h"/>
+                    <file category="source" name="Middlewares/ST/Composite/Class/PRINTER/Src/usbd_printer.c"/>
+                </files>
+            </component>
+        </bundle>
+    </components>
+</package>
