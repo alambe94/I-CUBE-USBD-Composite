@@ -41,10 +41,7 @@ extern "C" {
 /** @defgroup USBD_HID_Exported_Defines
   * @{
   */
-#define HID_KEYBOARD_EPIN_ADDR                              0x81U
 #define HID_KEYBOARD_EPIN_SIZE                              0x08U
-
-#define HID_KEYBOARD_ITF_NBR                                0x00
 
 #define HID_KEYBOARD_CONFIG_DESC_SIZE                       34U
 #define HID_KEYBOARD_DESC_SIZE                              9U
@@ -108,6 +105,9 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_HID_KEYBOARD;
 
+extern uint8_t HID_KEYBOARD_EPIN_ADDR;
+extern uint8_t HID_KEYBOARD_ITF_NBR;
+
 /**
   * @}
   */
@@ -117,6 +117,8 @@ extern USBD_ClassTypeDef USBD_HID_KEYBOARD;
   */
 uint8_t USBD_HID_Keybaord_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len);
 uint32_t USBD_HID_Keyboard_GetPollingInterval(USBD_HandleTypeDef *pdev);
+
+void USBD_Update_HID_KBD_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep);
 
 /**
   * @}

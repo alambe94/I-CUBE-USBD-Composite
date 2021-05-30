@@ -46,6 +46,14 @@ EndBSPDependencies */
 #include "usbd_hid_custom.h"
 #include "usbd_ctlreq.h"
 
+#define _CUSTOM_HID_EPIN_ADDR 0x81U
+#define _CUSTOM_HID_EPOUT_ADDR 0x01U
+#define _CUSTOM_HID_ITF_NBR 0x00U
+
+uint8_t CUSTOM_HID_EPIN_ADDR = _CUSTOM_HID_EPIN_ADDR;
+uint8_t CUSTOM_HID_EPOUT_ADDR = _CUSTOM_HID_EPOUT_ADDR;
+uint8_t CUSTOM_HID_ITF_NBR = _CUSTOM_HID_ITF_NBR;
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -143,7 +151,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 09 */
         0x09,                    /* bLength: Interface Descriptor size*/
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
+        _CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints*/
         0x03,                    /* bInterfaceClass: CUSTOM_HID */
@@ -165,7 +173,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Byte max */
         0x00,
@@ -174,7 +182,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max  */
         0x00,
@@ -203,7 +211,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 09 */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
+        _CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints */
         0x03,                    /* bInterfaceClass: CUSTOM_HID */
@@ -225,7 +233,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Byte max */
         0x00,
@@ -234,7 +242,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max  */
         0x00,
@@ -263,7 +271,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
         /* 09 */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
+        _CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints */
         0x03,                    /* bInterfaceClass: CUSTOM_HID */
@@ -285,7 +293,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Bytes max */
         0x00,
@@ -294,7 +302,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max */
         0x00,
@@ -758,6 +766,18 @@ uint8_t USBD_CUSTOM_HID_RegisterInterface(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
+
+void USBD_Update_HID_Custom_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep)
+{
+  desc[11] = itf_no;
+  desc[29] = in_ep;
+  desc[36] = out_ep;
+
+  CUSTOM_HID_EPIN_ADDR = in_ep;
+  CUSTOM_HID_EPOUT_ADDR = out_ep;
+  CUSTOM_HID_ITF_NBR = itf_no;
+}
+
 /**
   * @}
   */

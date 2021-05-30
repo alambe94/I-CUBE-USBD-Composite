@@ -41,19 +41,8 @@ extern "C" {
 /** @defgroup USBD_CUSTOM_HID_Exported_Defines
   * @{
   */
-#define CUSTOM_HID_EPIN_ADDR                         0x81U
-
-#ifndef CUSTOM_HID_EPIN_SIZE
 #define CUSTOM_HID_EPIN_SIZE                         0x02U
-#endif
-
-#define CUSTOM_HID_EPOUT_ADDR                        0x01U
-
-#ifndef CUSTOM_HID_EPOUT_SIZE
 #define CUSTOM_HID_EPOUT_SIZE                        0x02U
-#endif
-
-#define CUSTOM_HID_ITF_NBR                           0x00U
 
 #define USB_CUSTOM_HID_CONFIG_DESC_SIZ               41U
 #define USB_CUSTOM_HID_DESC_SIZ                      9U
@@ -134,6 +123,10 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_HID_CUSTOM;
 
+extern uint8_t CUSTOM_HID_EPIN_ADDR;
+extern uint8_t CUSTOM_HID_EPOUT_ADDR;
+extern uint8_t CUSTOM_HID_ITF_NBR;
+
 /**
   * @}
   */
@@ -148,6 +141,8 @@ uint8_t USBD_CUSTOM_HID_ReceivePacket(USBD_HandleTypeDef *pdev);
 
 uint8_t USBD_CUSTOM_HID_RegisterInterface(USBD_HandleTypeDef *pdev,
                                           USBD_CUSTOM_HID_ItfTypeDef *fops);
+
+void USBD_Update_HID_Custom_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep);
 
 /**
   * @}

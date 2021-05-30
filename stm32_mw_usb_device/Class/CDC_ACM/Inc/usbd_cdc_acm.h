@@ -41,13 +41,6 @@ extern "C" {
 /** @defgroup usbd_cdc_Exported_Defines
   * @{
   */
-#define CDC_IN_EP                                   0x81U  /* EP1 for data IN */
-#define CDC_OUT_EP                                  0x01U  /* EP1 for data OUT */
-#define CDC_CMD_EP                                  0x82U  /* EP2 for CDC commands */
-
-#define CDC_CMD_ITF_NBR                             0x00U /* Command Interface Number */
-#define CDC_COM_ITF_NBR                             0x01U /* Communication Interface Number */
-
 #ifndef CDC_HS_BINTERVAL
 #define CDC_HS_BINTERVAL                            0x10U
 #endif /* CDC_HS_BINTERVAL */
@@ -138,6 +131,13 @@ extern "C" {
 
   extern USBD_ClassTypeDef USBD_CDC_ACM;
 
+  extern uint8_t CDC_IN_EP;  /* EP1 for data IN */
+  extern uint8_t CDC_OUT_EP; /* EP1 for data OUT */
+  extern uint8_t CDC_CMD_EP; /* EP2 for CDC commands */
+
+  extern uint8_t CDC_CMD_ITF_NBR; /* Command Interface Number */
+  extern uint8_t CDC_COM_ITF_NBR; /* Communication Interface Number */
+
   /**
   * @}
   */
@@ -154,6 +154,13 @@ extern "C" {
   uint8_t USBD_CDC_ACM_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff);
   uint8_t USBD_CDC_ACM_ReceivePacket(USBD_HandleTypeDef *pdev);
   uint8_t USBD_CDC_ACM_TransmitPacket(USBD_HandleTypeDef *pdev);
+
+  void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
+                                uint8_t cmd_itf,
+                                uint8_t com_itf,
+                                uint8_t cmd_ep,
+                                uint8_t in_ep,
+                                uint8_t out_ep);
   /**
   * @}
   */

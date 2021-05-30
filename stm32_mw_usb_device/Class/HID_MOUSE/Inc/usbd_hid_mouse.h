@@ -41,10 +41,7 @@ extern "C" {
 /** @defgroup USBD_HID_Exported_Defines
   * @{
   */
-#define HID_EPIN_ADDR                              0x81U
 #define HID_EPIN_SIZE                              0x04U
-
-#define HID_ITF_NBR                                0x00
 
 #define USB_HID_CONFIG_DESC_SIZ                    34U
 #define USB_HID_DESC_SIZ                           9U
@@ -107,6 +104,9 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_HID_MOUSE;
 
+extern uint8_t HID_EPIN_ADDR;
+extern uint8_t HID_ITF_NBR;
+
 /**
   * @}
   */
@@ -116,6 +116,8 @@ extern USBD_ClassTypeDef USBD_HID_MOUSE;
   */
 uint8_t USBD_HID_Mouse_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len);
 uint32_t USBD_HID_Mouse_GetPollingInterval(USBD_HandleTypeDef *pdev);
+
+void USBD_Update_HID_Mouse_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep);
 
 /**
   * @}

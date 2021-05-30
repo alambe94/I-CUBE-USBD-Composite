@@ -43,19 +43,6 @@ extern "C" {
   */
 /* Comment this define in order to disable the CDC ECM Notification pipe */
 
-
-#define CDC_ECM_IN_EP                                   0x81U  /* EP1 for data IN */
-#define CDC_ECM_OUT_EP                                  0x01U  /* EP1 for data OUT */
-#define CDC_ECM_CMD_EP                                  0x82U  /* EP2 for CDC ECM commands */
-
-#ifndef CDC_ECM_CMD_ITF_NBR
-#define CDC_ECM_CMD_ITF_NBR                             0x00U /* Command Interface Number 0 */
-#endif /* CDC_ECM_CMD_ITF_NBR */
-
-#ifndef CDC_ECM_COM_ITF_NBR
-#define CDC_ECM_COM_ITF_NBR                             0x01U /* Communication Interface Number 0 */
-#endif /* CDC_ECM_CMD_ITF_NBR */
-
 #ifndef CDC_ECM_HS_BINTERVAL
 #define CDC_ECM_HS_BINTERVAL                            0x10U
 #endif /* CDC_ECM_HS_BINTERVAL */
@@ -236,6 +223,14 @@ uint8_t USBD_CDC_ECM_TransmitPacket(USBD_HandleTypeDef *pdev);
 uint8_t USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
                                       USBD_CDC_ECM_NotifCodeTypeDef Notif,
                                       uint16_t bVal, uint8_t *pData);
+
+void USBD_Update_CDC_ECM_DESC(uint8_t *desc,
+                              uint8_t cmd_itf,
+                              uint8_t com_itf,
+                              uint8_t cmd_ep,
+                              uint8_t in_ep,
+                              uint8_t out_ep);
+
 /**
   * @}
   */

@@ -41,19 +41,7 @@ extern "C" {
 /** @defgroup usbd_cdc_rndis_Exported_Defines
   * @{
   */
-
-#define CDC_RNDIS_IN_EP                                   0x81U  /* EP1 for data IN */
-#define CDC_RNDIS_OUT_EP                                  0x01U  /* EP1 for data OUT */
-#define CDC_RNDIS_CMD_EP                                  0x82U  /* EP2 for CDC_RNDIS commands */
-
-#ifndef CDC_RNDIS_CMD_ITF_NBR
-#define CDC_RNDIS_CMD_ITF_NBR                             0x00U /* Command Interface Number 0 */
-#endif /* CDC_RNDIS_CMD_ITF_NBR */
-
-#ifndef CDC_RNDIS_COM_ITF_NBR
-#define CDC_RNDIS_COM_ITF_NBR                             0x01U /* Communication Interface Number 0 */
-#endif /* CDC_RNDIS_CMD_ITF_NBR */
-
+ 
 #ifndef CDC_RNDIS_HS_BINTERVAL
 #define CDC_RNDIS_HS_BINTERVAL                            0x10U
 #endif /* CDC_RNDIS_HS_BINTERVAL */
@@ -482,6 +470,13 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_CDC_RNDIS;
 
+extern uint8_t CDC_RNDIS_IN_EP;
+extern uint8_t CDC_RNDIS_OUT_EP;
+extern uint8_t CDC_RNDIS_CMD_EP;
+
+extern uint8_t CDC_RNDIS_CMD_ITF_NBR;
+extern uint8_t CDC_RNDIS_COM_ITF_NBR;
+
 /**
   * @}
   */
@@ -502,6 +497,14 @@ uint8_t USBD_CDC_RNDIS_SetTxBuffer(USBD_HandleTypeDef *pdev,
 uint8_t USBD_CDC_RNDIS_SendNotification(USBD_HandleTypeDef *pdev,
                                         USBD_CDC_RNDIS_NotifCodeTypeDef Notif,
                                         uint16_t bVal, uint8_t *pData);
+
+void USBD_Update_CDC_RNDIS_DESC(uint8_t *desc,
+                                uint8_t cmd_itf,
+                                uint8_t com_itf,
+                                uint8_t cmd_ep,
+                                uint8_t in_ep,
+                                uint8_t out_ep);
+
 /**
   * @}
   */

@@ -47,6 +47,12 @@ EndBSPDependencies */
 #include "usbd_hid_mouse.h"
 #include "usbd_ctlreq.h"
 
+#define _HID_EPIN_ADDR 0x81U
+#define _HID_ITF_NBR 0x00
+
+uint8_t HID_EPIN_ADDR = _HID_EPIN_ADDR;
+uint8_t HID_ITF_NBR = _HID_EPIN_ADDR;
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -141,7 +147,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_CfgFSDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN
         /* 09 */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        HID_ITF_NBR,             /* bInterfaceNumber: Number of Interface */
+        _HID_ITF_NBR,             /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x01,                    /* bNumEndpoints */
         0x03,                    /* bInterfaceClass: HID */
@@ -163,7 +169,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_CfgFSDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType:*/
-        HID_EPIN_ADDR,          /* bEndpointAddress: Endpoint Address (IN) */
+        _HID_EPIN_ADDR,          /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         HID_EPIN_SIZE,          /* wMaxPacketSize: 4 Byte max */
         0x00,
@@ -192,7 +198,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_CfgHSDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN
         /* 09 */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        HID_ITF_NBR,             /* bInterfaceNumber: Number of Interface */
+        _HID_ITF_NBR,             /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x01,                    /* bNumEndpoints */
         0x03,                    /* bInterfaceClass: HID */
@@ -214,7 +220,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_CfgHSDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        HID_EPIN_ADDR,          /* bEndpointAddress: Endpoint Address (IN) */
+        _HID_EPIN_ADDR,          /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         HID_EPIN_SIZE,          /* wMaxPacketSize: 4 Byte max */
         0x00,
@@ -629,6 +635,15 @@ uint32_t USBD_HID_Mouse_GetPollingInterval(USBD_HandleTypeDef *pdev)
   }
 
   return ((uint32_t)(polling_interval));
+}
+
+void USBD_Update_HID_Mouse_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep)
+{
+  desc[11] = itf_no;
+  desc[29] = in_ep;
+
+  HID_EPIN_ADDR = in_ep;
+  HID_ITF_NBR = itf_no;
 }
 
 /**
