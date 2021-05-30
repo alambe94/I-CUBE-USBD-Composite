@@ -94,7 +94,7 @@ uint8_t *USBD_MSC_GetDeviceQualifierDescriptor(uint16_t *length);
   * @{
   */
 
-static USBD_MSC_BOT_HandleTypeDef &USBD_MSC_Instance;
+static USBD_MSC_BOT_HandleTypeDef USBD_MSC_Instance;
 
 USBD_ClassTypeDef USBD_MSC =
     {

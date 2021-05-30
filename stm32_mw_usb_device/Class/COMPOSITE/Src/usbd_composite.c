@@ -50,6 +50,7 @@
 #include "usbd_video.h"
 #include "usbd_msc.h"
 #include "usbd_dfu.h"
+#include "usbd_printer.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -146,6 +147,7 @@ uint8_t COMPOSITE_UVC_VC_IF_NUM = 0x00U;
 uint8_t COMPOSITE_UVC_VS_IF_NUM = 0x01U;
 uint8_t COMPOSITE_MSC_ITF_NBR = 0x00U;
 uint8_t COMPOSITE_DFU_ITF_NBR = 0x00U;
+uint8_t COMPOSITE_PRNTR_ITF_NBR = 0x00U;
 
 uint8_t COMPOSITE_CDC_ACM_CMD_EP = 0x81;
 uint8_t COMPOSITE_CDC_ACM_IN_EP = 0x82;
@@ -171,6 +173,9 @@ uint8_t COMPOSITE_UVC_IN_EP = 0x83U;
 
 uint8_t COMPOSITE_MSC_IN_EP = 0x84U;
 uint8_t COMPOSITE_MSC_OUT_EP = 0x02U;
+
+uint8_t COMPOSITE_PRNTR_IN_EP = 0x84U;
+uint8_t COMPOSITE_PRNTR_OUT_EP = 0x02U;
 
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
@@ -209,7 +214,7 @@ typedef struct __attribute__((packed, aligned(4))) USBD_COMPOSITE_CFG_DESC_t
   uint8_t USBD_UAC_SPKR_DESC[USB_AUDIO_CONFIG_DESC_SIZ - 0x09];
 #endif
 #if (USBD_USE_UVC == 1)
-  uint8_t USBD_UVC_DESC[USB_CONF_DESC_SIZE - 0x09];//todo
+  uint8_t USBD_UVC_DESC[UVC_CONFIG_DESC_SIZE - 0x09];
 #endif
 #if (USBD_USE_MSC == 1)
   uint8_t USBD_MSC_DESC[USB_MSC_CONFIG_DESC_SIZ - 0x09];
@@ -218,7 +223,7 @@ typedef struct __attribute__((packed, aligned(4))) USBD_COMPOSITE_CFG_DESC_t
   uint8_t USBD_DFU_DESC[USB_DFU_CONFIG_DESC_SIZ - 0x09];
 #endif
 #if (USBD_USE_PRNTR == 1)
-  uint8_t USBD_PRNTR_DESC[USB_CONF_DESC_SIZE - 0x09];
+  uint8_t USBD_PRNTR_DESC[USB_PRNT_CONFIG_DESC_SIZE - 0x09];
 #endif
 
 } USBD_COMPOSITE_CFG_DESC_t;
@@ -293,6 +298,9 @@ static uint8_t USBD_COMPOSITE_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 #if (USBD_USE_DFU == 1)
   USBD_DFU.Init(pdev, cfgidx);
 #endif
+#if (USBD_USE_PRNTR == 1)
+  USBD_PRNT.Init(pdev, cfgidx);
+#endif
 
   return (uint8_t)USBD_OK;
 }
@@ -338,6 +346,9 @@ static uint8_t USBD_COMPOSITE_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 #endif
 #if (USBD_USE_DFU == 1)
   USBD_DFU.DeInit(pdev, cfgidx);
+#endif
+#if (USBD_USE_PRNTR == 1)
+  USBD_PRNT.DeInit(pdev, cfgidx);
 #endif
 
   return (uint8_t)USBD_OK;
@@ -419,6 +430,12 @@ static uint8_t USBD_COMPOSITE_Setup(USBD_HandleTypeDef *pdev,
     return USBD_DFU.Setup(pdev, req);
   }
 #endif
+#if (USBD_USE_PRNTR == 1)
+  if (req->wIndex == COMPOSITE_PRNTR_ITF_NBR)
+  {
+    USBD_PRNT.Setup(pdev, req);
+  }
+#endif
 
   return USBD_FAIL;
 }
@@ -490,6 +507,12 @@ static uint8_t USBD_COMPOSITE_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #endif
 #if (USBD_USE_DFU == 1)
 #endif
+#if (USBD_USE_PRNTR == 1)
+  if (epnum == (COMPOSITE_PRNTR_IN_EP & 0x7F))
+  {
+    USBD_PRNT.DataIn(pdev, epnum);
+  }
+#endif
 
   return USBD_FAIL;
 }
@@ -531,6 +554,8 @@ static uint8_t USBD_COMPOSITE_EP0_RxReady(USBD_HandleTypeDef *pdev)
 #if (USBD_USE_DFU == 1)
   USBD_DFU.EP0_RxReady(pdev);
 #endif
+#if (USBD_USE_PRNTR == 1)
+#endif
 
   return (uint8_t)USBD_OK;
 }
@@ -567,6 +592,8 @@ static uint8_t USBD_COMPOSITE_EP0_TxReady(USBD_HandleTypeDef *pdev)
 #endif
 #if (USBD_USE_DFU == 1)
   USBD_DFU.EP0_TxSent(pdev);
+#endif
+#if (USBD_USE_PRNTR == 1)
 #endif
 
   return (uint8_t)USBD_OK;
@@ -606,6 +633,8 @@ static uint8_t USBD_COMPOSITE_SOF(USBD_HandleTypeDef *pdev)
 #if (USBD_USE_DFU == 1)
   USBD_DFU.SOF(pdev);
 #endif
+#if (USBD_USE_PRNTR == 1)
+#endif
 
   return (uint8_t)USBD_OK;
 }
@@ -644,6 +673,8 @@ static uint8_t USBD_COMPOSITE_IsoINIncomplete(USBD_HandleTypeDef *pdev, uint8_t 
 #endif
 #if (USBD_USE_DFU == 1)
 #endif
+#if (USBD_USE_PRNTR == 1)
+#endif
 
   return (uint8_t)USBD_OK;
 }
@@ -680,6 +711,8 @@ static uint8_t USBD_COMPOSITE_IsoOutIncomplete(USBD_HandleTypeDef *pdev, uint8_t
 #if (USBD_USE_MSC == 1)
 #endif
 #if (USBD_USE_DFU == 1)
+#endif
+#if (USBD_USE_PRNTR == 1)
 #endif
 
   return (uint8_t)USBD_OK;
@@ -738,6 +771,12 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
   }
 #endif
 #if (USBD_USE_DFU == 1)
+#endif
+#if (USBD_USE_PRNTR == 1)
+  if (epnum == COMPOSITE_PRNTR_OUT_EP)
+  {
+    USBD_PRNT.DataOut(pdev, epnum);
+  }
 #endif
 
   return USBD_FAIL;
@@ -1046,6 +1085,14 @@ void USBD_COMPOSITE_Mount_Class(void)
 
   ptr = USBD_DFU.GetHSConfigDescriptor(&len);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
+  interface_count += 1;
+#endif
+#if (USBD_USE_PRNTR == 1)
+  ptr = USBD_PRNT.GetFSConfigDescriptor(&len);
+  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
+
+  ptr = USBD_PRNT.GetHSConfigDescriptor(&len);
+  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
   interface_count += 1;
 #endif
 }

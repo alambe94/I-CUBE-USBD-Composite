@@ -291,8 +291,8 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         /* Configuration Descriptor */
         0x09,                              /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION,       /* bDescriptorType: Configuration */
-        LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZ), /* wTotalLength: Total size of the Config descriptor */
-        HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),
+        LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZE), /* wTotalLength: Total size of the Config descriptor */
+        HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces: 2 interfaces */
         0x01, /* bConfigurationValue: Configuration value */
         0x00, /* iConfiguration: Index of string descriptor describing the configuration */
@@ -398,8 +398,8 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         /* Configuration Descriptor */
         0x09,                              /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION,       /* bDescriptorType: Configuration */
-        LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZ), /* wTotalLength:no of returned bytes */
-        HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),
+        LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZE), /* wTotalLength:no of returned bytes */
+        HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces: 2 interfaces */
         0x01, /* bConfigurationValue: Configuration value */
         0x04, /* iConfiguration: Index of string descriptor describing the configuration */
@@ -831,7 +831,7 @@ static uint8_t USBD_CDC_RNDIS_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
   {
     if (hcdc->NotificationStatus != 0U)
     {
-      (void)USBD_CDC_RNDIS_SendNotification(pdev, CONNECTION_SPEED_CHANGE,
+      (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_CONNECTION_SPEED_CHANGE,
                                             0U, (uint8_t *)ConnSpeedTab);
 
       hcdc->NotificationStatus = 0U;
@@ -1326,7 +1326,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessInitMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1403,7 +1403,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessKeepAliveMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1547,7 +1547,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessQueryMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1607,7 +1607,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessSetMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1657,7 +1657,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessResetMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   return (uint8_t)USBD_OK;
 }
@@ -1737,7 +1737,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessUnsupportedMsg(USBD_HandleTypeDef *pdev,
   hcdc->ResponseRdy = 1U;
 
   /* Send Notification on Interrupt EP to inform Host that response is ready */
-  (void)USBD_CDC_RNDIS_SendNotification(pdev, RESPONSE_AVAILABLE, 0U, NULL);
+  (void)USBD_CDC_RNDIS_SendNotification(pdev, RNDIS_RESPONSE_AVAILABLE, 0U, NULL);
 
   UNUSED(Msg);
 

@@ -129,13 +129,13 @@ USBD_ClassTypeDef USBD_VIDEO =
 };
 
 /* USB VIDEO device Configuration Descriptor (same for all speeds thanks to user defines) */
-__ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[] __ALIGN_END =
+__ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_END =
     {
         /* Configuration 1 */
         USB_CONF_DESC_SIZE,          /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
-        LOBYTE(UVC_CONFIG_DESC_SIZ), /* wTotalLength: no of returned bytes */
-        HIBYTE(UVC_CONFIG_DESC_SIZ),
+        LOBYTE(UVC_CONFIG_DESC_SIZE), /* wTotalLength: no of returned bytes */
+        HIBYTE(UVC_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces: 2 interfaces */
         0x01, /* bConfigurationValue: Configuration value */
         0x00, /* iConfiguration: Index of string descriptor describing the configuration */

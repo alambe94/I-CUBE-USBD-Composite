@@ -128,9 +128,9 @@ extern "C" {
 #define UVC_TOTAL_IF_NUM                              0x02U
 
 #ifdef USBD_UVC_FORMAT_UNCOMPRESSED
-#define UVC_CONFIG_DESC_SIZ                           (0x88U + 0x16U)
+#define UVC_CONFIG_DESC_SIZE                           (0x88U + 0x16U)
 #else
-#define UVC_CONFIG_DESC_SIZ                           0x88U
+#define UVC_CONFIG_DESC_SIZE                           0x88U
 #endif
 
 #define UVC_TOTAL_BUF_SIZE                            0x04U

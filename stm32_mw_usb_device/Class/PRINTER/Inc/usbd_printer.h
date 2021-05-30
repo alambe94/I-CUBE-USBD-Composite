@@ -57,7 +57,7 @@ extern "C" {
 #define PRNT_DATA_FS_MAX_PACKET_SIZE                 64U   /* Endpoint IN & OUT Packet size */
 #endif /* PRNT_DATA_FS_MAX_PACKET_SIZE */
 
-#define USB_PRNT_CONFIG_DESC_SIZ                     32U
+#define USB_PRNT_CONFIG_DESC_SIZE                    32U
 #define PRNT_DATA_HS_IN_PACKET_SIZE                  PRNT_DATA_HS_MAX_PACKET_SIZE
 #define PRNT_DATA_HS_OUT_PACKET_SIZE                 PRNT_DATA_HS_MAX_PACKET_SIZE
 

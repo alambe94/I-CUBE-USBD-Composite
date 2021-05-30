@@ -152,7 +152,7 @@ static int8_t CDC_ECM_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
         if (hcdc_cdc_ecm->NotificationStatus == 0U)
         {
           /* Send notification: NETWORK_CONNECTION Event */
-          (void)USBD_CDC_ECM_SendNotification(&hUsbDeviceHS, NETWORK_CONNECTION,
+          (void)USBD_CDC_ECM_SendNotification(&hUsbDeviceHS, ECM_NETWORK_CONNECTION,
                                               CDC_ECM_NET_CONNECTED, NULL);
 
           /* Prepare for sending Connection Speed Change notification */

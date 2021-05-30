@@ -42,27 +42,27 @@ extern "C" {
   * @{
   */
 
-#define USBD_USE_CDC_ACM                                            0
+#define USBD_USE_CDC_ACM                                            1
 #define USBD_CDC_ACM_COUNT                                          3 //max 3
 
-#define USBD_USE_CDC_RNDIS                                          0
-#define USBD_USE_CDC_ECM                                            0
+#define USBD_USE_CDC_RNDIS                                          1
+#define USBD_USE_CDC_ECM                                            1
 
 #define USBD_USE_HID_MOUSE                                          1
 #define USBD_USE_HID_KEYBOARD                                       1
-#define USBD_USE_HID_CUSTOM                                         0
+#define USBD_USE_HID_CUSTOM                                         1
 
 #define USBD_USE_UAC_MIC                                            1
 
 #define USBD_USE_UAC_SPKR                                           1
 
-#define USBD_USE_UVC                                                0
+#define USBD_USE_UVC                                                1
 
-#define USBD_USE_MSC                                                0
+#define USBD_USE_MSC                                                1
 
-#define USBD_USE_DFU                                                0
+#define USBD_USE_DFU                                                1
 
-#define USBD_USE_PRNTR                                              0
+#define USBD_USE_PRNTR                                              1
 /**
   * @}
   */

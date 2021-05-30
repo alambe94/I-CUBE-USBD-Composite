@@ -367,8 +367,8 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[] __ALIGN_END =
         /* Configuration Descriptor */
         0x09,                            /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION,     /* bDescriptorType: Configuration */
-        LOBYTE(CDC_ECM_CONFIG_DESC_SIZ), /* wTotalLength */
-        HIBYTE(CDC_ECM_CONFIG_DESC_SIZ),
+        LOBYTE(CDC_ECM_CONFIG_DESC_SIZE), /* wTotalLength */
+        HIBYTE(CDC_ECM_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces: 2 interfaces */
         0x01, /* bConfigurationValue: Configuration value */
         0x04, /* iConfiguration: Index of string descriptor describing the configuration */
@@ -740,7 +740,7 @@ static uint8_t USBD_CDC_ECM_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
   {
     if (hcdc->NotificationStatus != 0U)
     {
-      (void)USBD_CDC_ECM_SendNotification(pdev, CONNECTION_SPEED_CHANGE,
+      (void)USBD_CDC_ECM_SendNotification(pdev, ECM_CONNECTION_SPEED_CHANGE,
                                           0U, (uint8_t *)ConnSpeedTab);
 
       hcdc->NotificationStatus = 0U;
@@ -1053,7 +1053,7 @@ uint8_t USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
 
   switch ((hcdc->Req).bRequest)
   {
-  case NETWORK_CONNECTION:
+  case ECM_NETWORK_CONNECTION:
     (hcdc->Req).wValue = bVal;
     (hcdc->Req).wIndex = CDC_ECM_CMD_ITF_NBR;
     (hcdc->Req).wLength = 0U;
@@ -1065,7 +1065,7 @@ uint8_t USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
     ReqSize = 8U;
     break;
 
-  case RESPONSE_AVAILABLE:
+  case ECM_RESPONSE_AVAILABLE:
     (hcdc->Req).wValue = 0U;
     (hcdc->Req).wIndex = CDC_ECM_CMD_ITF_NBR;
     (hcdc->Req).wLength = 0U;
@@ -1076,7 +1076,7 @@ uint8_t USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
     ReqSize = 8U;
     break;
 
-  case CONNECTION_SPEED_CHANGE:
+  case ECM_CONNECTION_SPEED_CHANGE:
     (hcdc->Req).wValue = 0U;
     (hcdc->Req).wIndex = CDC_ECM_CMD_ITF_NBR;
     (hcdc->Req).wLength = 0x0008U;
