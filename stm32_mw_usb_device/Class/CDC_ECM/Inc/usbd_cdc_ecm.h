@@ -143,7 +143,6 @@ extern "C" {
   * @}
   */
 
-
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
   * @{
   */
@@ -154,44 +153,44 @@ extern "C" {
 
 typedef struct
 {
-  int8_t (* Init)(void);
-  int8_t (* DeInit)(void);
-  int8_t (* Control)(uint8_t cmd, uint8_t *pbuf, uint16_t length);
-  int8_t (* Receive)(uint8_t *Buf, uint32_t *Len);
-  int8_t (* TransmitCplt)(uint8_t *Buf, uint32_t *Len, uint8_t epnum);
-  int8_t (* Process)(USBD_HandleTypeDef *pdev);
+  int8_t (*Init)(void);
+  int8_t (*DeInit)(void);
+  int8_t (*Control)(uint8_t cmd, uint8_t *pbuf, uint16_t length);
+  int8_t (*Receive)(uint8_t *Buf, uint32_t *Len);
+  int8_t (*TransmitCplt)(uint8_t *Buf, uint32_t *Len, uint8_t epnum);
+  int8_t (*Process)(USBD_HandleTypeDef *pdev);
   const uint8_t *pStrDesc;
 } USBD_CDC_ECM_ItfTypeDef;
 
 typedef struct
 {
-  uint8_t   bmRequest;
-  uint8_t   bRequest;
-  uint16_t  wValue;
-  uint16_t  wIndex;
-  uint16_t  wLength;
-  uint8_t   data[8];
+  uint8_t bmRequest;
+  uint8_t bRequest;
+  uint16_t wValue;
+  uint16_t wIndex;
+  uint16_t wLength;
+  uint8_t data[8];
 } USBD_CDC_ECM_NotifTypeDef;
 
 typedef struct
 {
-  uint32_t data[CDC_ECM_DATA_BUFFER_SIZE / 4U];      /* Force 32-bit alignment */
-  uint8_t  CmdOpCode;
-  uint8_t  CmdLength;
-  uint8_t  Reserved1;  /* Reserved Byte to force 4 bytes alignment of following fields */
-  uint8_t  Reserved2;  /* Reserved Byte to force 4 bytes alignment of following fields */
-  uint8_t  *RxBuffer;
-  uint8_t  *TxBuffer;
+  uint32_t data[CDC_ECM_DATA_BUFFER_SIZE / 4U]; /* Force 32-bit alignment */
+  uint8_t CmdOpCode;
+  uint8_t CmdLength;
+  uint8_t Reserved1; /* Reserved Byte to force 4 bytes alignment of following fields */
+  uint8_t Reserved2; /* Reserved Byte to force 4 bytes alignment of following fields */
+  uint8_t *RxBuffer;
+  uint8_t *TxBuffer;
   uint32_t RxLength;
   uint32_t TxLength;
 
   __IO uint32_t TxState;
   __IO uint32_t RxState;
 
-  __IO uint32_t  MaxPcktLen;
-  __IO uint32_t  LinkStatus;
-  __IO uint32_t  NotificationStatus;
-  USBD_CDC_ECM_NotifTypeDef   Req;
+  __IO uint32_t MaxPcktLen;
+  __IO uint32_t LinkStatus;
+  __IO uint32_t NotificationStatus;
+  USBD_CDC_ECM_NotifTypeDef Req;
 } USBD_CDC_ECM_HandleTypeDef;
 
 typedef enum
@@ -213,8 +212,8 @@ typedef enum
   * @{
   */
 
-extern USBD_ClassTypeDef  USBD_CDC_ECM;
-#define USBD_CDC_ECM_CLASS &USBD_CDC_ECM
+extern USBD_ClassTypeDef USBD_CDC_ECM;
+
 /**
   * @}
   */
@@ -222,21 +221,21 @@ extern USBD_ClassTypeDef  USBD_CDC_ECM;
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
-uint8_t  USBD_CDC_ECM_RegisterInterface(USBD_HandleTypeDef *pdev,
-                                        USBD_CDC_ECM_ItfTypeDef *fops);
+uint8_t USBD_CDC_ECM_RegisterInterface(USBD_HandleTypeDef *pdev,
+                                       USBD_CDC_ECM_ItfTypeDef *fops);
 
-uint8_t  USBD_CDC_ECM_SetTxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff,
-                                  uint32_t length);
+uint8_t USBD_CDC_ECM_SetTxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff,
+                                 uint32_t length);
 
-uint8_t  USBD_CDC_ECM_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff);
+uint8_t USBD_CDC_ECM_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff);
 
-uint8_t  USBD_CDC_ECM_ReceivePacket(USBD_HandleTypeDef *pdev);
+uint8_t USBD_CDC_ECM_ReceivePacket(USBD_HandleTypeDef *pdev);
 
-uint8_t  USBD_CDC_ECM_TransmitPacket(USBD_HandleTypeDef *pdev);
+uint8_t USBD_CDC_ECM_TransmitPacket(USBD_HandleTypeDef *pdev);
 
-uint8_t  USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
-                                       USBD_CDC_ECM_NotifCodeTypeDef  Notif,
-                                       uint16_t bVal, uint8_t *pData);
+uint8_t USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
+                                      USBD_CDC_ECM_NotifCodeTypeDef Notif,
+                                      uint16_t bVal, uint8_t *pData);
 /**
   * @}
   */
@@ -245,7 +244,7 @@ uint8_t  USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
 }
 #endif
 
-#endif  /* __USB_CDC_ECM_H */
+#endif /* __USB_CDC_ECM_H */
 /**
   * @}
   */

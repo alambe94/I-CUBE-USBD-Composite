@@ -84,7 +84,6 @@ extern "C" {
   * @}
   */
 
-
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
   * @{
   */
@@ -95,16 +94,16 @@ extern "C" {
 
 typedef struct _USBD_PRNT_Itf
 {
-  int8_t (* Init)(void);
-  int8_t (* DeInit)(void);
-  int8_t (* Control_req)(uint8_t req, uint8_t *pbuf, uint16_t *length);
-  int8_t (* Receive)(uint8_t *Buf, uint32_t *Len);
+  int8_t (*Init)(void);
+  int8_t (*DeInit)(void);
+  int8_t (*Control_req)(uint8_t req, uint8_t *pbuf, uint16_t *length);
+  int8_t (*Receive)(uint8_t *Buf, uint32_t *Len);
 
 } USBD_PRNT_ItfTypeDef;
 
 typedef struct
 {
-  uint32_t data[PRNT_DATA_HS_MAX_PACKET_SIZE / 4U];  /* Force 32-bit alignment */
+  uint32_t data[PRNT_DATA_HS_MAX_PACKET_SIZE / 4U]; /* Force 32-bit alignment */
   uint8_t CmdOpCode;
   uint8_t CmdLength;
   uint8_t *RxBuffer;
@@ -114,10 +113,7 @@ typedef struct
 
   __IO uint32_t TxState;
   __IO uint32_t RxState;
-}
-USBD_PRNT_HandleTypeDef;
-
-
+} USBD_PRNT_HandleTypeDef;
 
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
@@ -131,8 +127,8 @@ USBD_PRNT_HandleTypeDef;
   * @{
   */
 
-extern USBD_ClassTypeDef   USBD_PRNT;
-#define USBD_PRNT_CLASS    &USBD_PRNT
+extern USBD_ClassTypeDef USBD_PRNT;
+#define USBD_PRNT_CLASS &USBD_PRNT
 /**
   * @}
   */
@@ -140,9 +136,9 @@ extern USBD_ClassTypeDef   USBD_PRNT;
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
-uint8_t  USBD_PRNT_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_PRNT_ItfTypeDef *fops);
-uint8_t  USBD_PRNT_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff);
-uint8_t  USBD_PRNT_ReceivePacket(USBD_HandleTypeDef *pdev);
+uint8_t USBD_PRNT_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_PRNT_ItfTypeDef *fops);
+uint8_t USBD_PRNT_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff);
+uint8_t USBD_PRNT_ReceivePacket(USBD_HandleTypeDef *pdev);
 
 /**
   * @}
@@ -152,7 +148,7 @@ uint8_t  USBD_PRNT_ReceivePacket(USBD_HandleTypeDef *pdev);
 }
 #endif
 
-#endif  /* __USB_PRNT_H */
+#endif /* __USB_PRNT_H */
 /**
   * @}
   */

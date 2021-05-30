@@ -347,109 +347,108 @@ extern "C" {
 #define SVIDEO_CONNECTOR                               0x0402U
 #define COMPONENT_CONNECTOR                            0x0403U
 
+  /* VIDEO Commands enumeration */
+  typedef enum
+  {
+    VIDEO_CMD_START = 1U,
+    VIDEO_CMD_PLAY,
+    VIDEO_CMD_STOP,
+  } VIDEO_CMD_TypeDef;
 
-/* VIDEO Commands enumeration */
-typedef enum
-{
-  VIDEO_CMD_START = 1U,
-  VIDEO_CMD_PLAY,
-  VIDEO_CMD_STOP,
-} VIDEO_CMD_TypeDef;
+  typedef enum
+  {
+    VIDEO_OFFSET_NONE = 0U,
+    VIDEO_OFFSET_HALF,
+    VIDEO_OFFSET_FULL,
+    VIDEO_OFFSET_UNKNOWN,
+  } VIDEO_OffsetTypeDef;
 
-typedef enum
-{
-  VIDEO_OFFSET_NONE = 0U,
-  VIDEO_OFFSET_HALF,
-  VIDEO_OFFSET_FULL,
-  VIDEO_OFFSET_UNKNOWN,
-} VIDEO_OffsetTypeDef;
+  typedef struct _VIDEO_DescHeader
+  {
+    uint8_t bLength;
+    uint8_t bDescriptorType;
+    uint8_t bDescriptorSubType;
+  } USBD_VIDEO_DescHeader_t;
 
-typedef  struct  _VIDEO_DescHeader
-{
-  uint8_t  bLength;
-  uint8_t  bDescriptorType;
-  uint8_t  bDescriptorSubType;
-} USBD_VIDEO_DescHeader_t;
+  typedef struct
+  {
+    uint8_t bLength;
+    uint8_t bDescriptorType;
+    uint8_t bDescriptorSubType;
+    uint8_t bFrameIndex;
+    uint8_t bmCapabilities;
+    uint16_t wWidth;
+    uint16_t wHeight;
+    uint32_t dwMinBitRate;
+    uint32_t dwMaxBitRate;
+    uint32_t dwMaxVideoFrameBufSize;
+    uint32_t dwDefaultFrameInterval;
+    uint8_t bFrameIntervalType;
+    uint32_t dwMinFrameInterval;
+    uint32_t dwMaxFrameInterval;
+    uint32_t dwFrameIntervalStep;
+  } __PACKED USBD_VIDEO_VSFrameDescTypeDef;
 
-typedef struct
-{
-  uint8_t  bLength;
-  uint8_t  bDescriptorType;
-  uint8_t  bDescriptorSubType;
-  uint8_t  bFrameIndex;
-  uint8_t  bmCapabilities;
-  uint16_t wWidth;
-  uint16_t wHeight;
-  uint32_t dwMinBitRate;
-  uint32_t dwMaxBitRate;
-  uint32_t dwMaxVideoFrameBufSize;
-  uint32_t dwDefaultFrameInterval;
-  uint8_t  bFrameIntervalType;
-  uint32_t dwMinFrameInterval;
-  uint32_t dwMaxFrameInterval;
-  uint32_t dwFrameIntervalStep;
-} __PACKED USBD_VIDEO_VSFrameDescTypeDef;
+  typedef struct
+  {
+    uint8_t cmd;
+    uint8_t data[USB_MAX_EP0_SIZE];
+    uint8_t len;
+    uint8_t unit;
+  } USBD_VIDEO_ControlTypeDef;
 
-typedef struct
-{
-  uint8_t cmd;
-  uint8_t data[USB_MAX_EP0_SIZE];
-  uint8_t len;
-  uint8_t unit;
-} USBD_VIDEO_ControlTypeDef;
+  typedef struct
+  {
+    uint32_t interface;
+    uint32_t uvc_state;
+    uint8_t buffer[UVC_TOTAL_BUF_SIZE];
+    VIDEO_OffsetTypeDef offset;
+    USBD_VIDEO_ControlTypeDef control;
+  } USBD_VIDEO_HandleTypeDef;
 
-typedef struct
-{
-  uint32_t                   interface;
-  uint32_t                   uvc_state;
-  uint8_t                    buffer[UVC_TOTAL_BUF_SIZE];
-  VIDEO_OffsetTypeDef        offset;
-  USBD_VIDEO_ControlTypeDef  control;
-} USBD_VIDEO_HandleTypeDef;
+  typedef struct
+  {
+    int8_t (*Init)(void);
+    int8_t (*DeInit)(void);
+    int8_t (*Control)(uint8_t, uint8_t *, uint16_t);
+    int8_t (*Data)(uint8_t **, uint16_t *, uint16_t *);
+    uint8_t *pStrDesc;
+  } USBD_VIDEO_ItfTypeDef;
 
-typedef struct
-{
-  int8_t (* Init)(void);
-  int8_t (* DeInit)(void);
-  int8_t (* Control)(uint8_t, uint8_t *, uint16_t);
-  int8_t (* Data)(uint8_t **, uint16_t *, uint16_t *);
-  uint8_t  *pStrDesc;
-} USBD_VIDEO_ItfTypeDef;
+  /* UVC uses only 26 first bytes */
+  typedef struct
+  {
+    uint16_t bmHint;
+    uint8_t bFormatIndex;
+    uint8_t bFrameIndex;
+    uint32_t dwFrameInterval;
+    uint16_t wKeyFrameRate;
+    uint16_t wPFrameRate;
+    uint16_t wCompQuality;
+    uint16_t wCompWindowSize;
+    uint16_t wDelay;
+    uint32_t dwMaxVideoFrameSize;
+    uint32_t dwMaxPayloadTransferSize;
+    uint32_t dwClockFrequency;
+    uint8_t bmFramingInfo;
+    uint8_t bPreferedVersion;
+    uint8_t bMinVersion;
+    uint8_t bMaxVersion;
+  } __PACKED USBD_VideoControlTypeDef;
 
-/* UVC uses only 26 first bytes */
-typedef struct
-{
-  uint16_t    bmHint;
-  uint8_t     bFormatIndex;
-  uint8_t     bFrameIndex;
-  uint32_t    dwFrameInterval;
-  uint16_t    wKeyFrameRate;
-  uint16_t    wPFrameRate;
-  uint16_t    wCompQuality;
-  uint16_t    wCompWindowSize;
-  uint16_t    wDelay;
-  uint32_t    dwMaxVideoFrameSize;
-  uint32_t    dwMaxPayloadTransferSize;
-  uint32_t    dwClockFrequency;
-  uint8_t     bmFramingInfo;
-  uint8_t     bPreferedVersion;
-  uint8_t     bMinVersion;
-  uint8_t     bMaxVersion;
-} __PACKED USBD_VideoControlTypeDef;
+  extern USBD_ClassTypeDef USBD_VIDEO;
 
-extern USBD_ClassTypeDef    USBD_VIDEO;
-
-/**
+  /**
   * @}
   */
 
-/** @defgroup USB_CORE_Exported_Functions
+  /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
 
-uint8_t USBD_VIDEO_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_VIDEO_ItfTypeDef *fops);
+  uint8_t USBD_VIDEO_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_VIDEO_ItfTypeDef *fops);
 
-/**
+  /**
   * @}
   */
 

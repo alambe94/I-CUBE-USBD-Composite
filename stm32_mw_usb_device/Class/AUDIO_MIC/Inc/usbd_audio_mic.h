@@ -61,12 +61,12 @@
 */
 
 /* Audio Data in endpoint */
-#define AUDIO_MIC_EP                                  0x81
+#define AUDIO_MIC_EP                                      0x81
 
-#define AUDIO_MIC_CHANNELS                            0x01
-#define AUDIO_MIC_SMPL_FREQ                           1600
+#define AUDIO_MIC_CHANNELS                                0x01
+#define AUDIO_MIC_SMPL_FREQ                               16000
 
-#define AUDIO_MIC_CONFIG_DESC_SIZE                    109
+#define AUDIO_MIC_CONFIG_DESC_SIZE                        109
 
 #define AUDIO_MIC_INTERFACE_DESC_SIZE                     0x09
 #define AUDIO_MIC_DESC_SIZE                               0x09
@@ -101,13 +101,13 @@
 #define AUDIO_MIC_REQ_SET_CUR                             0x01
 #define AUDIO_MIC_OUT_STREAMING_CTRL                      0x02
 
-#define AUDIO_MIC_VOL_MIN                             0xDBE0
-#define AUDIO_MIC_VOL_RES                             0x0023
-#define AUDIO_MIC_VOL_MAX                             0x0000
-#define AUDIO_MIC_PACKET                              (uint32_t)((((AUDIO_MIC_SMPL_FREQ/1000)+2)*8)*2)
-#define AUDIO_MIC_TERMINAL_ID                         1
-#define AUDIO_MIC_FU_ID                               2
-#define AUDIO_MIC_OUT_TERMINAL_ID                     3
+#define AUDIO_MIC_VOL_MIN                                 0xDBE0
+#define AUDIO_MIC_VOL_RES                                 0x0023
+#define AUDIO_MIC_VOL_MAX                                 0x0000
+#define AUDIO_MIC_PACKET                                  (uint32_t)((((AUDIO_MIC_SMPL_FREQ/1000)+2)*8)*2)
+#define AUDIO_MIC_TERMINAL_ID                             1
+#define AUDIO_MIC_FU_ID                                   2
+#define AUDIO_MIC_OUT_TERMINAL_ID                         3
 
 /* Buffering state definitions */
 typedef enum
@@ -116,14 +116,12 @@ typedef enum
   STATE_USB_IDLE = 1,
   STATE_USB_REQUESTS_STARTED = 2,
   STATE_USB_BUFFER_WRITE_STARTED = 3,
-}
-AUDIO_MIC_StatesTypeDef;
+} AUDIO_MIC_StatesTypeDef;
 
 /* Number of sub-packets in the audio transfer buffer.*/
-#define AUDIO_MIC_PACKET_NUM                            20
+#define AUDIO_MIC_PACKET_NUM 20
 
-#define TIMEOUT_VALUE                                  200
-
+#define TIMEOUT_VALUE 200
 
 /* Audio Commands enmueration */
 typedef enum
@@ -131,8 +129,7 @@ typedef enum
   AUDIO_CMD_START = 1,
   AUDIO_CMD_PLAY,
   AUDIO_CMD_STOP,
-}AUDIO_MIC_CMD_TypeDef;
-
+} AUDIO_MIC_CMD_TypeDef;
 
 typedef enum
 {
@@ -140,14 +137,11 @@ typedef enum
   AUDIO_OFFSET_HALF,
   AUDIO_OFFSET_FULL,
   AUDIO_OFFSET_UNKNOWN,
-}
-AUDIO_MIC_OffsetTypeDef;
-
+} AUDIO_MIC_OffsetTypeDef;
 
 /**
 * @}
 */
-
 
 /** @defgroup USBD_AUDIO_IN_Exported_TypesDefinitions
 * @{
@@ -158,42 +152,38 @@ typedef struct
   uint8_t data[USB_MAX_EP0_SIZE];
   uint8_t len;
   uint8_t unit;
-}
-USBD_AUDIO_ControlTypeDef;
-
+} USBD_AUDIO_ControlTypeDef;
 
 typedef struct
 {
-  __IO uint32_t              alt_setting;
-  uint8_t                    channels;
-  uint32_t                   frequency;
-  __IO int16_t                   timeout;
-  uint16_t                   buffer_length;
-  uint16_t                   dataAmount;
-  uint16_t                   paketDimension;
-  uint8_t                    state;
-  uint16_t                   rd_ptr;
-  uint16_t                   wr_ptr;
-  uint8_t                    upper_treshold;
-  uint8_t                    lower_treshold;
+  __IO uint32_t alt_setting;
+  uint8_t channels;
+  uint32_t frequency;
+  __IO int16_t timeout;
+  uint16_t buffer_length;
+  uint16_t dataAmount;
+  uint16_t paketDimension;
+  uint8_t state;
+  uint16_t rd_ptr;
+  uint16_t wr_ptr;
+  uint8_t upper_treshold;
+  uint8_t lower_treshold;
   USBD_AUDIO_ControlTypeDef control;
-  uint8_t  *                 buffer;
-}
-USBD_AUDIO_MIC_HandleTypeDef;
-
+  uint8_t *buffer;
+} USBD_AUDIO_MIC_HandleTypeDef;
 
 typedef struct
 {
-  int8_t  (*Init)         	(uint32_t  AudioFreq, uint32_t BitRes, uint32_t ChnlNbr);
-  int8_t  (*DeInit)       	(uint32_t options);
-  int8_t  (*Record)     	(void);
-  int8_t  (*VolumeCtl)    	(int16_t Volume);
-  int8_t  (*MuteCtl)      	(uint8_t cmd);
-  int8_t  (*Stop)   		(void);
-  int8_t  (*Pause)   		(void);
-  int8_t  (*Resume)   		(void);
-  int8_t  (*CommandMgr)     (uint8_t cmd);
-}USBD_AUDIO_MIC_ItfTypeDef;
+  int8_t (*Init)(uint32_t AudioFreq, uint32_t BitRes, uint32_t ChnlNbr);
+  int8_t (*DeInit)(uint32_t options);
+  int8_t (*Record)(void);
+  int8_t (*VolumeCtl)(int16_t Volume);
+  int8_t (*MuteCtl)(uint8_t cmd);
+  int8_t (*Stop)(void);
+  int8_t (*Pause)(void);
+  int8_t (*Resume)(void);
+  int8_t (*CommandMgr)(uint8_t cmd);
+} USBD_AUDIO_MIC_ItfTypeDef;
 /**
 * @}
 */
@@ -210,7 +200,7 @@ typedef struct
 * @{
 */
 
-extern USBD_ClassTypeDef  USBD_AUDIO_MIC;
+extern USBD_ClassTypeDef USBD_AUDIO_MIC;
 /**
 * @}
 */
@@ -218,15 +208,9 @@ extern USBD_ClassTypeDef  USBD_AUDIO_MIC;
 /** @defgroup USBD_AUDIO_IN_Exported_Functions
 * @{
 */
-uint8_t  USBD_AUDIO_MIC_RegisterInterface  (USBD_HandleTypeDef   *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
-void USBD_AUDIO_MICInit_Microphone_Descriptor(USBD_HandleTypeDef   *pdev, uint32_t samplingFrequency, uint8_t Channels);
-uint8_t  USBD_AUDIO_MICData_Transfer (USBD_HandleTypeDef *pdev, int16_t * audioData, uint16_t dataAmount);
-
-
-/**
-* @}
-*/
-
+uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
+void USBD_AUDIO_MICInit_Microphone_Descriptor(USBD_HandleTypeDef *pdev, uint32_t samplingFrequency, uint8_t Channels);
+uint8_t USBD_AUDIO_MICData_Transfer(USBD_HandleTypeDef *pdev, int16_t *audioData, uint16_t dataAmount);
 
 /**
 * @}
@@ -235,5 +219,9 @@ uint8_t  USBD_AUDIO_MICData_Transfer (USBD_HandleTypeDef *pdev, int16_t * audioD
 /**
 * @}
 */
-#endif  // __USBD_AUDIO_IN_H_
+
+/**
+* @}
+*/
+#endif // __USBD_AUDIO_IN_H_
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

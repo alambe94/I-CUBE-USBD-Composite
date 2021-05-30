@@ -59,11 +59,9 @@ EndBSPDependencies */
 #include "usbd_printer.h"
 #include "usbd_ctlreq.h"
 
-
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
-
 
 /** @defgroup USBD_PRNT
   * @brief usbd core module
@@ -92,7 +90,6 @@ static uint32_t usbd_PRNT_altset = 0U;
   * @}
   */
 
-
 /** @defgroup USBD_PRNT_Private_FunctionPrototypes
   * @{
   */
@@ -110,17 +107,17 @@ uint8_t *USBD_PRNT_GetDeviceQualifierDescriptor(uint16_t *length);
 
 /* USB Standard Device Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_PRNT_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_DESC] __ALIGN_END =
-{
-  USB_LEN_DEV_QUALIFIER_DESC,
-  USB_DESC_TYPE_DEVICE_QUALIFIER,
-  0x00,
-  0x02,
-  0x00,
-  0x00,
-  0x00,
-  0x40,
-  0x01,
-  0x00,
+    {
+        USB_LEN_DEV_QUALIFIER_DESC,
+        USB_DESC_TYPE_DEVICE_QUALIFIER,
+        0x00,
+        0x02,
+        0x00,
+        0x00,
+        0x00,
+        0x40,
+        0x01,
+        0x00,
 };
 
 /**
@@ -131,167 +128,168 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER
   * @{
   */
 
+static USBD_PRNT_HandleTypeDef USBD_PRNT_Instance;
+
 /* PRNT interface class callbacks structure */
 USBD_ClassTypeDef USBD_PRNT =
-{
-  USBD_PRNT_Init,
-  USBD_PRNT_DeInit,
-  USBD_PRNT_Setup,
-  NULL,
-  NULL,
-  USBD_PRNT_DataIn,
-  USBD_PRNT_DataOut,
-  NULL,
-  NULL,
-  NULL,
-  USBD_PRNT_GetHSCfgDesc,
-  USBD_PRNT_GetFSCfgDesc,
-  USBD_PRNT_GetOtherSpeedCfgDesc,
-  USBD_PRNT_GetDeviceQualifierDescriptor,
+    {
+        USBD_PRNT_Init,
+        USBD_PRNT_DeInit,
+        USBD_PRNT_Setup,
+        NULL,
+        NULL,
+        USBD_PRNT_DataIn,
+        USBD_PRNT_DataOut,
+        NULL,
+        NULL,
+        NULL,
+        USBD_PRNT_GetHSCfgDesc,
+        USBD_PRNT_GetFSCfgDesc,
+        USBD_PRNT_GetOtherSpeedCfgDesc,
+        USBD_PRNT_GetDeviceQualifierDescriptor,
 };
 
 /* USB PRNT device Configuration Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[] __ALIGN_END =
-{
-  /*Configuration Descriptor*/
-  0x09,                                /* bLength: Configuration Descriptor size */
-  USB_DESC_TYPE_CONFIGURATION,         /* bDescriptorType: Configuration */
-  USB_PRNT_CONFIG_DESC_SIZ,            /* wTotalLength:no of returned bytes */
-  0x00,
-  0x01,                                /* bNumInterfaces: 1 interface */
-  0x01,                                /* bConfigurationValue: Configuration value */
-  0x00,                                /* iConfiguration: Index of string descriptor describing the configuration */
+    {
+        /*Configuration Descriptor*/
+        0x09,                        /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
+        USB_PRNT_CONFIG_DESC_SIZ,    /* wTotalLength:no of returned bytes */
+        0x00,
+        0x01, /* bNumInterfaces: 1 interface */
+        0x01, /* bConfigurationValue: Configuration value */
+        0x00, /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
-  0xC0,                                /* bmAttributes: Self Powered according to user configuration */
+        0xC0, /* bmAttributes: Self Powered according to user configuration */
 #else
-  0x80,                                /* bmAttributes: Bus Powered according to user configuration */
+        0x80, /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                      /* MaxPower in mA */
+        USBD_MAX_POWER, /* MaxPower in mA */
 
-  /* Interface Descriptor */
-  0x09,                                /* bLength: Interface Descriptor size */
-  USB_DESC_TYPE_INTERFACE,             /* bDescriptorType: Interface */
-  0x00,                                /* bInterfaceNumber: Number of Interface */
-  0x00,                                /* bAlternateSetting: Alternate setting */
-  0x02,                                /* bNumEndpoints: 2 endpoints used */
-  0x07,                                /* bInterfaceClass: Communication Interface Class */
-  0x01,                                /* bInterfaceSubClass: Abstract Control Model */
-  USB_PRNT_BIDIRECTIONAL,              /* bDeviceProtocol */
-  0x00,                                /* iInterface */
+        /* Interface Descriptor */
+        0x09,                    /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface */
+        0x00,                    /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x02,                    /* bNumEndpoints: 2 endpoints used */
+        0x07,                    /* bInterfaceClass: Communication Interface Class */
+        0x01,                    /* bInterfaceSubClass: Abstract Control Model */
+        USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
+        0x00,                    /* iInterface */
 
-  /* Endpoint IN Descriptor */
-  0x07,                                /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-  PRNT_IN_EP,                          /* bEndpointAddress */
-  0x02,                                /* bmAttributes: Bulk */
-  LOBYTE(PRNT_DATA_HS_IN_PACKET_SIZE), /* wMaxPacketSize */
-  HIBYTE(PRNT_DATA_HS_IN_PACKET_SIZE),
-  0x00,                                /* bInterval */
+        /* Endpoint IN Descriptor */
+        0x07,                                /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
+        PRNT_IN_EP,                          /* bEndpointAddress */
+        0x02,                                /* bmAttributes: Bulk */
+        LOBYTE(PRNT_DATA_HS_IN_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(PRNT_DATA_HS_IN_PACKET_SIZE),
+        0x00, /* bInterval */
 
-  /* Endpoint OUT Descriptor */
-  0x07,                                /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-  PRNT_OUT_EP,                         /* bEndpointAddress */
-  0x02,                                /* bmAttributes: Bulk */
-  LOBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE),/* wMaxPacketSize */
-  HIBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE),
-  0x00                                 /* bInterval */
+        /* Endpoint OUT Descriptor */
+        0x07,                                 /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
+        PRNT_OUT_EP,                          /* bEndpointAddress */
+        0x02,                                 /* bmAttributes: Bulk */
+        LOBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE),
+        0x00 /* bInterval */
 };
-
 
 /* USB PRNT device Configuration Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[] __ALIGN_END =
-{
-  /*Configuration Descriptor*/
-  0x09,                                /* bLength: Configuration Descriptor size */
-  USB_DESC_TYPE_CONFIGURATION,         /* bDescriptorType: Configuration */
-  USB_PRNT_CONFIG_DESC_SIZ,            /* wTotalLength:no of returned bytes */
-  0x00,
-  0x01,                                /* bNumInterfaces: 1 interface */
-  0x01,                                /* bConfigurationValue: Configuration value */
-  0x00,                                /* iConfiguration: Index of string descriptor describing the configuration */
+    {
+        /*Configuration Descriptor*/
+        0x09,                        /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
+        USB_PRNT_CONFIG_DESC_SIZ,    /* wTotalLength:no of returned bytes */
+        0x00,
+        0x01, /* bNumInterfaces: 1 interface */
+        0x01, /* bConfigurationValue: Configuration value */
+        0x00, /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
-  0xC0,                                /* bmAttributes: Self Powered according to user configuration */
+        0xC0, /* bmAttributes: Self Powered according to user configuration */
 #else
-  0x80,                                /* bmAttributes: Bus Powered according to user configuration */
+        0x80, /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                      /* MaxPower in mA */
+        USBD_MAX_POWER, /* MaxPower in mA */
 
-  /*Interface Descriptor */
-  0x09,                                /* bLength: Interface Descriptor size */
-  USB_DESC_TYPE_INTERFACE,             /* bDescriptorType: Interface */
-  0x00,                                /* bInterfaceNumber: Number of Interface */
-  0x00,                                /* bAlternateSetting: Alternate setting */
-  0x02,                                /* bNumEndpoints: 2 endpoints used */
-  0x07,                                /* bInterfaceClass: Communication Interface Class */
-  0x01,                                /* bInterfaceSubClass: Abstract Control Model */
-  USB_PRNT_BIDIRECTIONAL,              /* bDeviceProtocol */
-  0x00,                                /* iInterface */
+        /*Interface Descriptor */
+        0x09,                    /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface */
+        0x00,                    /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x02,                    /* bNumEndpoints: 2 endpoints used */
+        0x07,                    /* bInterfaceClass: Communication Interface Class */
+        0x01,                    /* bInterfaceSubClass: Abstract Control Model */
+        USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
+        0x00,                    /* iInterface */
 
-  /*Endpoint IN Descriptor*/
-  0x07,                                /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-  PRNT_IN_EP,                          /* bEndpointAddress */
-  0x02,                                /* bmAttributes: Bulk */
-  LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
-  HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
-  0x00,                                /* bInterval */
+        /*Endpoint IN Descriptor*/
+        0x07,                                /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
+        PRNT_IN_EP,                          /* bEndpointAddress */
+        0x02,                                /* bmAttributes: Bulk */
+        LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
+        0x00, /* bInterval */
 
-  /*Endpoint OUT Descriptor*/
-  0x07,                                /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-  PRNT_OUT_EP,                         /* bEndpointAddress */
-  0x02,                                /* bmAttributes: Bulk */
-  LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),/* wMaxPacketSize */
-  HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),
-  0x00                                 /* bInterval */
+        /*Endpoint OUT Descriptor*/
+        0x07,                                 /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
+        PRNT_OUT_EP,                          /* bEndpointAddress */
+        0x02,                                 /* bmAttributes: Bulk */
+        LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),
+        0x00 /* bInterval */
 };
 
 __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[] __ALIGN_END =
-{
-  /*Configuration Descriptor*/
-  0x09,                                /* bLength: Configuration Descriptor size */
-  USB_DESC_TYPE_CONFIGURATION,         /* bDescriptorType: Configuration */
-  USB_PRNT_CONFIG_DESC_SIZ,            /* wTotalLength:no of returned bytes */
-  0x00,
-  0x01,                                /* bNumInterfaces: 1 interface */
-  0x01,                                /* bConfigurationValue: Configuration value */
-  0x00,                                /* iConfiguration: Index of string descriptor describing the configuration */
+    {
+        /*Configuration Descriptor*/
+        0x09,                        /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
+        USB_PRNT_CONFIG_DESC_SIZ,    /* wTotalLength:no of returned bytes */
+        0x00,
+        0x01, /* bNumInterfaces: 1 interface */
+        0x01, /* bConfigurationValue: Configuration value */
+        0x00, /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
-  0xC0,                                /* bmAttributes: Self Powered according to user configuration */
+        0xC0, /* bmAttributes: Self Powered according to user configuration */
 #else
-  0x80,                                /* bmAttributes: Bus Powered according to user configuration */
+        0x80, /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                      /* MaxPower in mA */
+        USBD_MAX_POWER, /* MaxPower in mA */
 
-  /*Interface Descriptor */
-  0x09,                                /* bLength: Interface Descriptor size */
-  USB_DESC_TYPE_INTERFACE,             /* bDescriptorType: Interface */
-  0x00,                                /* bInterfaceNumber: Number of Interface */
-  0x00,                                /* bAlternateSetting: Alternate setting */
-  0x02,                                /* bNumEndpoints: 2 endpoints used */
-  0x07,                                /* bInterfaceClass: Communication Interface Class */
-  0x01,                                /* bInterfaceSubClass: Abstract Control Model */
-  USB_PRNT_BIDIRECTIONAL,              /* bDeviceProtocol */
-  0x00,                                /* iInterface */
+        /*Interface Descriptor */
+        0x09,                    /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface */
+        0x00,                    /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x02,                    /* bNumEndpoints: 2 endpoints used */
+        0x07,                    /* bInterfaceClass: Communication Interface Class */
+        0x01,                    /* bInterfaceSubClass: Abstract Control Model */
+        USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
+        0x00,                    /* iInterface */
 
-  /*Endpoint IN Descriptor*/
-  0x07,                                /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-  PRNT_IN_EP,                          /* bEndpointAddress */
-  0x02,                                /* bmAttributes: Bulk */
-  LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
-  HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
-  0x00,                                /* bInterval */
+        /*Endpoint IN Descriptor*/
+        0x07,                                /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
+        PRNT_IN_EP,                          /* bEndpointAddress */
+        0x02,                                /* bmAttributes: Bulk */
+        LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
+        0x00, /* bInterval */
 
-  /*Endpoint OUT Descriptor*/
-  0x07,                                /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-  PRNT_OUT_EP,                         /* bEndpointAddress */
-  0x02,                                /* bmAttributes: Bulk */
-  LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),/* wMaxPacketSize */
-  HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),
-  0x00                                 /* bInterval */
+        /*Endpoint OUT Descriptor*/
+        0x07,                                 /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
+        PRNT_OUT_EP,                          /* bEndpointAddress */
+        0x02,                                 /* bmAttributes: Bulk */
+        LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),
+        0x00 /* bInterval */
 };
 
 /**
@@ -315,7 +313,7 @@ static uint8_t USBD_PRNT_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   USBD_PRNT_HandleTypeDef *hPRNT;
   uint16_t mps;
-  hPRNT = (USBD_PRNT_HandleTypeDef *)USBD_malloc(sizeof(USBD_PRNT_HandleTypeDef));
+  hPRNT = &USBD_PRNT_Instance;
 
   if (hPRNT == NULL)
   {
@@ -381,7 +379,9 @@ static uint8_t USBD_PRNT_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   if (pdev->pClassData != NULL)
   {
     ((USBD_PRNT_ItfTypeDef *)pdev->pUserData)->DeInit();
+#if (0)
     (void)USBD_free(pdev->pClassData);
+#endif
     pdev->pClassData = NULL;
   }
 
@@ -397,8 +397,8 @@ static uint8_t USBD_PRNT_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   */
 static uint8_t USBD_PRNT_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
-  USBD_PRNT_HandleTypeDef   *hPRNT = (USBD_PRNT_HandleTypeDef *)pdev->pClassData;
-  USBD_PRNT_ItfTypeDef      *hPRNTitf = (USBD_PRNT_ItfTypeDef *)pdev->pUserData;
+  USBD_PRNT_HandleTypeDef *hPRNT = (USBD_PRNT_HandleTypeDef *)pdev->pClassData;
+  USBD_PRNT_ItfTypeDef *hPRNTitf = (USBD_PRNT_ItfTypeDef *)pdev->pUserData;
 
   USBD_StatusTypeDef ret = USBD_OK;
   uint16_t status_info = 0U;
@@ -406,81 +406,81 @@ static uint8_t USBD_PRNT_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *r
 
   switch (req->bmRequest & USB_REQ_TYPE_MASK)
   {
-    case USB_REQ_TYPE_CLASS :
-      if (req->wLength != 0U)
+  case USB_REQ_TYPE_CLASS:
+    if (req->wLength != 0U)
+    {
+      data_length = MIN(req->wLength, PRNT_DATA_HS_MAX_PACKET_SIZE);
+
+      if ((req->bmRequest & 0x80U) != 0U)
       {
-        data_length = MIN(req->wLength, PRNT_DATA_HS_MAX_PACKET_SIZE);
+        /* Call the User class interface function to process the command */
+        hPRNTitf->Control_req(req->bRequest, (uint8_t *)hPRNT->data, &data_length);
 
-        if ((req->bmRequest & 0x80U) != 0U)
-        {
-          /* Call the User class interface function to process the command */
-          hPRNTitf->Control_req(req->bRequest, (uint8_t *)hPRNT->data, &data_length);
-
-          /* Return the answer to host */
-          (void) USBD_CtlSendData(pdev, (uint8_t *)hPRNT->data, data_length);
-        }
-        else
-        {
-          /* Prepare for control data reception */
-          (void) USBD_CtlPrepareRx(pdev, (uint8_t *)hPRNT->data, data_length);
-        }
+        /* Return the answer to host */
+        (void)USBD_CtlSendData(pdev, (uint8_t *)hPRNT->data, data_length);
       }
       else
       {
-        data_length = 0U;
-        hPRNTitf->Control_req(req->bRequest, (uint8_t *)req, &data_length);
+        /* Prepare for control data reception */
+        (void)USBD_CtlPrepareRx(pdev, (uint8_t *)hPRNT->data, data_length);
+      }
+    }
+    else
+    {
+      data_length = 0U;
+      hPRNTitf->Control_req(req->bRequest, (uint8_t *)req, &data_length);
+    }
+    break;
+
+  case USB_REQ_TYPE_STANDARD:
+    switch (req->bRequest)
+    {
+    case USB_REQ_GET_STATUS:
+      if (pdev->dev_state == USBD_STATE_CONFIGURED)
+      {
+        (void)USBD_CtlSendData(pdev, (uint8_t *)&status_info, 2U);
+      }
+      else
+      {
+        USBD_CtlError(pdev, req);
+        ret = USBD_FAIL;
       }
       break;
 
-    case USB_REQ_TYPE_STANDARD:
-      switch (req->bRequest)
+    case USB_REQ_GET_INTERFACE:
+      if (pdev->dev_state == USBD_STATE_CONFIGURED)
       {
-        case USB_REQ_GET_STATUS:
-          if (pdev->dev_state == USBD_STATE_CONFIGURED)
-          {
-            (void)USBD_CtlSendData(pdev, (uint8_t *)&status_info, 2U);
-          }
-          else
-          {
-            USBD_CtlError(pdev, req);
-            ret = USBD_FAIL;
-          }
-          break;
-
-        case USB_REQ_GET_INTERFACE:
-          if (pdev->dev_state == USBD_STATE_CONFIGURED)
-          {
-            (void)USBD_CtlSendData(pdev, (uint8_t *)&usbd_PRNT_altset, 1U);
-          }
-          else
-          {
-            USBD_CtlError(pdev, req);
-            ret = USBD_FAIL;
-          }
-          break;
-
-        case USB_REQ_SET_INTERFACE:
-          if (pdev->dev_state != USBD_STATE_CONFIGURED)
-          {
-            USBD_CtlError(pdev, req);
-            ret = USBD_FAIL;
-          }
-          break;
-
-        case USB_REQ_CLEAR_FEATURE:
-          break;
-
-        default:
-          USBD_CtlError(pdev, req);
-          ret = USBD_FAIL;
-          break;
+        (void)USBD_CtlSendData(pdev, (uint8_t *)&usbd_PRNT_altset, 1U);
       }
+      else
+      {
+        USBD_CtlError(pdev, req);
+        ret = USBD_FAIL;
+      }
+      break;
+
+    case USB_REQ_SET_INTERFACE:
+      if (pdev->dev_state != USBD_STATE_CONFIGURED)
+      {
+        USBD_CtlError(pdev, req);
+        ret = USBD_FAIL;
+      }
+      break;
+
+    case USB_REQ_CLEAR_FEATURE:
       break;
 
     default:
       USBD_CtlError(pdev, req);
       ret = USBD_FAIL;
       break;
+    }
+    break;
+
+  default:
+    USBD_CtlError(pdev, req);
+    ret = USBD_FAIL;
+    break;
   }
 
   return (uint8_t)ret;
@@ -510,7 +510,7 @@ static uint8_t USBD_PRNT_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
     pdev->ep_in[epnum].total_length = 0U;
 
     /* Send ZLP */
-    (void) USBD_LL_Transmit(pdev, epnum, NULL, 0U);
+    (void)USBD_LL_Transmit(pdev, epnum, NULL, 0U);
   }
   else
   {
@@ -553,7 +553,7 @@ static uint8_t USBD_PRNT_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
   */
 static uint8_t *USBD_PRNT_GetFSCfgDesc(uint16_t *length)
 {
-  *length = (uint16_t) sizeof(USBD_PRNT_CfgFSDesc);
+  *length = (uint16_t)sizeof(USBD_PRNT_CfgFSDesc);
   return USBD_PRNT_CfgFSDesc;
 }
 
@@ -565,7 +565,7 @@ static uint8_t *USBD_PRNT_GetFSCfgDesc(uint16_t *length)
   */
 static uint8_t *USBD_PRNT_GetHSCfgDesc(uint16_t *length)
 {
-  *length = (uint16_t) sizeof(USBD_PRNT_CfgHSDesc);
+  *length = (uint16_t)sizeof(USBD_PRNT_CfgHSDesc);
   return USBD_PRNT_CfgHSDesc;
 }
 
@@ -577,7 +577,7 @@ static uint8_t *USBD_PRNT_GetHSCfgDesc(uint16_t *length)
   */
 static uint8_t *USBD_PRNT_GetOtherSpeedCfgDesc(uint16_t *length)
 {
-  *length = (uint16_t) sizeof(USBD_PRNT_OtherSpeedCfgDesc);
+  *length = (uint16_t)sizeof(USBD_PRNT_OtherSpeedCfgDesc);
   return USBD_PRNT_OtherSpeedCfgDesc;
 }
 
@@ -621,7 +621,7 @@ uint8_t USBD_PRNT_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_PRNT_ItfTypeD
   */
 uint8_t USBD_PRNT_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff)
 {
-  USBD_PRNT_HandleTypeDef *hPRNT = (USBD_PRNT_HandleTypeDef *) pdev->pClassData;
+  USBD_PRNT_HandleTypeDef *hPRNT = (USBD_PRNT_HandleTypeDef *)pdev->pClassData;
 
   hPRNT->RxBuffer = pbuff;
 

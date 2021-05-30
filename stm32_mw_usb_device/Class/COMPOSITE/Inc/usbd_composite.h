@@ -61,6 +61,8 @@ extern "C" {
 #define USBD_USE_MSC                                                0
 
 #define USBD_USE_DFU                                                0
+
+#define USBD_USE_PRNTR                                              0
 /**
   * @}
   */

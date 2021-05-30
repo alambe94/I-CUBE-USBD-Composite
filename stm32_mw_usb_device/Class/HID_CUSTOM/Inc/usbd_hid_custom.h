@@ -89,7 +89,6 @@ extern "C" {
   * @}
   */
 
-
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
   * @{
   */
@@ -102,15 +101,15 @@ typedef enum
 typedef struct _USBD_CUSTOM_HID_Itf
 {
   uint8_t *pReport;
-  int8_t (* Init)(void);
-  int8_t (* DeInit)(void);
-  int8_t (* OutEvent)(uint8_t event_idx, uint8_t state);
+  int8_t (*Init)(void);
+  int8_t (*DeInit)(void);
+  int8_t (*OutEvent)(uint8_t event_idx, uint8_t state);
 
 } USBD_CUSTOM_HID_ItfTypeDef;
 
 typedef struct
 {
-  uint8_t  Report_buf[USBD_CUSTOMHID_OUTREPORT_BUF_SIZE];
+  uint8_t Report_buf[USBD_CUSTOMHID_OUTREPORT_BUF_SIZE];
   uint32_t Protocol;
   uint32_t IdleState;
   uint32_t AltSetting;
@@ -120,8 +119,6 @@ typedef struct
 /**
   * @}
   */
-
-
 
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
@@ -160,7 +157,7 @@ uint8_t USBD_CUSTOM_HID_RegisterInterface(USBD_HandleTypeDef *pdev,
 }
 #endif
 
-#endif  /* __USB_CUSTOMHID_H */
+#endif /* __USB_CUSTOMHID_H */
 /**
   * @}
   */

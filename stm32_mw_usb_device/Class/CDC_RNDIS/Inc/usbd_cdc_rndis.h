@@ -202,7 +202,6 @@ extern "C" {
   * @}
   */
 
-
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
   * @{
   */
@@ -213,58 +212,57 @@ extern "C" {
 
 typedef struct _USBD_CDC_RNDIS_Itf
 {
-  int8_t (* Init)(void);
-  int8_t (* DeInit)(void);
-  int8_t (* Control)(uint8_t cmd, uint8_t *pbuf, uint16_t length);
-  int8_t (* Receive)(uint8_t *Buf, uint32_t *Len);
-  int8_t (* TransmitCplt)(uint8_t *Buf, uint32_t *Len, uint8_t epnum);
-  int8_t (* Process)(USBD_HandleTypeDef *pdev);
+  int8_t (*Init)(void);
+  int8_t (*DeInit)(void);
+  int8_t (*Control)(uint8_t cmd, uint8_t *pbuf, uint16_t length);
+  int8_t (*Receive)(uint8_t *Buf, uint32_t *Len);
+  int8_t (*TransmitCplt)(uint8_t *Buf, uint32_t *Len, uint8_t epnum);
+  int8_t (*Process)(USBD_HandleTypeDef *pdev);
   uint8_t *pStrDesc;
 } USBD_CDC_RNDIS_ItfTypeDef;
 
 /* CDC_RNDIS State values */
 typedef enum
 {
-  CDC_RNDIS_STATE_UNINITIALIZED    = 0,
-  CDC_RNDIS_STATE_BUS_INITIALIZED  = 1,
-  CDC_RNDIS_STATE_INITIALIZED      = 2,
+  CDC_RNDIS_STATE_UNINITIALIZED = 0,
+  CDC_RNDIS_STATE_BUS_INITIALIZED = 1,
+  CDC_RNDIS_STATE_INITIALIZED = 2,
   CDC_RNDIS_STATE_DATA_INITIALIZED = 3
 } USBD_CDC_RNDIS_StateTypeDef;
 
 typedef struct
 {
-  uint8_t   bmRequest;
-  uint8_t   bRequest;
-  uint16_t  wValue;
-  uint16_t  wIndex;
-  uint16_t  wLength;
-  uint8_t   data[8];
+  uint8_t bmRequest;
+  uint8_t bRequest;
+  uint16_t wValue;
+  uint16_t wIndex;
+  uint16_t wLength;
+  uint8_t data[8];
 } USBD_CDC_RNDIS_NotifTypeDef;
 
 typedef struct
 {
-  uint32_t        data[CDC_RNDIS_MAX_DATA_SZE / 4U]; /* Force 32-bit alignment */
-  uint8_t         CmdOpCode;
-  uint8_t         CmdLength;
-  uint8_t         ResponseRdy;     /* Indicates if the Device Response to an CDC_RNDIS msg is ready */
-  uint8_t         Reserved1;       /* Reserved Byte to force 4 bytes alignment of following fields */
-  uint8_t         *RxBuffer;
-  uint8_t         *TxBuffer;
-  uint32_t        RxLength;
-  uint32_t        TxLength;
+  uint32_t data[CDC_RNDIS_MAX_DATA_SZE / 4U]; /* Force 32-bit alignment */
+  uint8_t CmdOpCode;
+  uint8_t CmdLength;
+  uint8_t ResponseRdy; /* Indicates if the Device Response to an CDC_RNDIS msg is ready */
+  uint8_t Reserved1;   /* Reserved Byte to force 4 bytes alignment of following fields */
+  uint8_t *RxBuffer;
+  uint8_t *TxBuffer;
+  uint32_t RxLength;
+  uint32_t TxLength;
 
-  USBD_CDC_RNDIS_NotifTypeDef     Req;
-  USBD_CDC_RNDIS_StateTypeDef     State;
+  USBD_CDC_RNDIS_NotifTypeDef Req;
+  USBD_CDC_RNDIS_StateTypeDef State;
 
-  __IO uint32_t   TxState;
-  __IO uint32_t   RxState;
+  __IO uint32_t TxState;
+  __IO uint32_t RxState;
 
-  __IO uint32_t   MaxPcktLen;
-  __IO uint32_t   LinkStatus;
-  __IO uint32_t   NotificationStatus;
-  __IO uint32_t   PacketFilter;
+  __IO uint32_t MaxPcktLen;
+  __IO uint32_t LinkStatus;
+  __IO uint32_t NotificationStatus;
+  __IO uint32_t PacketFilter;
 } USBD_CDC_RNDIS_HandleTypeDef;
-
 
 typedef enum
 {
@@ -272,7 +270,6 @@ typedef enum
   RESPONSE_AVAILABLE = 0x01,
   CONNECTION_SPEED_CHANGE = 0x2A
 } USBD_CDC_RNDIS_NotifCodeTypeDef;
-
 
 /* Messages Sent by the Host ---------------------*/
 
@@ -336,7 +333,6 @@ typedef struct
   uint32_t MsgLength;
   uint32_t ReqId;
 } USBD_CDC_RNDIS_KpAliveMsgTypeDef;
-
 
 /* Messages Sent by the Device ---------------------*/
 
@@ -408,7 +404,6 @@ typedef struct
   uint32_t Status;
 } USBD_CDC_RNDIS_KpAliveCpltMsgTypeDef;
 
-
 /* Messages Sent by both Host and Device ---------------------*/
 
 /* Type define for a CDC_RNDIS packet message, used to encapsulate
@@ -449,7 +444,6 @@ typedef struct
   uint32_t ParamValueLength;
 } USBD_CDC_RNDIS_ParamStructTypeDef;
 
-
 /* Type define of a single CDC_RNDIS OOB data record */
 typedef struct
 {
@@ -474,7 +468,6 @@ typedef struct
   uint32_t MsgLength;
 } USBD_CDC_RNDIS_CtrlMsgTypeDef;
 
-
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
   */
@@ -488,7 +481,7 @@ typedef struct
   */
 
 extern USBD_ClassTypeDef USBD_CDC_RNDIS;
-#define USBD_CDC_RNDIS_CLASS &USBD_CDC_RNDIS
+
 /**
   * @}
   */
@@ -517,7 +510,7 @@ uint8_t USBD_CDC_RNDIS_SendNotification(USBD_HandleTypeDef *pdev,
 }
 #endif
 
-#endif  /* __USB_CDC_RNDIS_H */
+#endif /* __USB_CDC_RNDIS_H */
 /**
   * @}
   */

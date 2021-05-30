@@ -146,15 +146,14 @@ typedef  void (*pFunction)(void);
                                       0x02,   /* nInterfaceProtocol: DFU mode protocol */ \
                                       USBD_IDX_INTERFACE_STR + (n) + 1U /* iInterface: Index of string descriptor */ \
 
-#define TRANSFER_SIZE_BYTES(size)      ((uint8_t)(size)), /* XFERSIZEB0 */\
-                                       ((uint8_t)((size) >> 8)) /* XFERSIZEB1 */
+#define TRANSFER_SIZE_BYTES(size)     ((uint8_t)(size)), /* XFERSIZEB0 */\
+                                      ((uint8_t)((size) >> 8)) /* XFERSIZEB1 */
 
-#define IS_PROTECTED_AREA(add)         (uint8_t)((((add) >= 0x08000000) && ((add) < (APP_DEFAULT_ADD)))? 1:0)
+#define IS_PROTECTED_AREA(add)        (uint8_t)((((add) >= 0x08000000) && ((add) < (APP_DEFAULT_ADD)))? 1:0)
 
 /**
   * @}
   */
-
 
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
   * @{
@@ -182,18 +181,16 @@ typedef struct
 typedef struct
 {
   const uint8_t *pStrDesc;
-  uint16_t (* Init)(void);
-  uint16_t (* DeInit)(void);
-  uint16_t (* Erase)(uint32_t Add);
-  uint16_t (* Write)(uint8_t *src, uint8_t *dest, uint32_t Len);
-  uint8_t *(* Read)(uint8_t *src, uint8_t *dest, uint32_t Len);
-  uint16_t (* GetStatus)(uint32_t Add, uint8_t cmd, uint8_t *buff);
+  uint16_t (*Init)(void);
+  uint16_t (*DeInit)(void);
+  uint16_t (*Erase)(uint32_t Add);
+  uint16_t (*Write)(uint8_t *src, uint8_t *dest, uint32_t Len);
+  uint8_t *(*Read)(uint8_t *src, uint8_t *dest, uint32_t Len);
+  uint16_t (*GetStatus)(uint32_t Add, uint8_t cmd, uint8_t *buff);
 } USBD_DFU_MediaTypeDef;
 /**
   * @}
   */
-
-
 
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
@@ -226,7 +223,7 @@ uint8_t USBD_DFU_RegisterMedia(USBD_HandleTypeDef *pdev,
 }
 #endif
 
-#endif  /* __USB_DFU_H */
+#endif /* __USB_DFU_H */
 /**
   * @}
   */

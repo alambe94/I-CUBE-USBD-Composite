@@ -116,93 +116,87 @@ extern "C" {
 /* Total size of the audio transfer buffer */
 #define AUDIO_TOTAL_BUF_SIZE                          ((uint16_t)(AUDIO_OUT_PACKET * AUDIO_OUT_PACKET_NUM))
 
-/* Audio Commands enumeration */
-typedef enum
-{
-  AUDIO_SPKR_CMD_START = 1,
-  AUDIO_SPKR_CMD_PLAY,
-  AUDIO_SPKR_CMD_STOP,
-} AUDIO_SPKR_CMD_TypeDef;
+  /* Audio Commands enumeration */
+  typedef enum
+  {
+    AUDIO_SPKR_CMD_START = 1,
+    AUDIO_SPKR_CMD_PLAY,
+    AUDIO_SPKR_CMD_STOP,
+  } AUDIO_SPKR_CMD_TypeDef;
 
-
-typedef enum
-{
-  AUDIO_SPKR_OFFSET_NONE = 0,
-  AUDIO_SPKR_OFFSET_HALF,
-  AUDIO_SPKR_OFFSET_FULL,
-  AUDIO_SPKR_OFFSET_UNKNOWN,
-} AUDIO_SPKR_OffsetTypeDef;
-/**
+  typedef enum
+  {
+    AUDIO_SPKR_OFFSET_NONE = 0,
+    AUDIO_SPKR_OFFSET_HALF,
+    AUDIO_SPKR_OFFSET_FULL,
+    AUDIO_SPKR_OFFSET_UNKNOWN,
+  } AUDIO_SPKR_OffsetTypeDef;
+  /**
   * @}
   */
 
-
-/** @defgroup USBD_CORE_Exported_TypesDefinitions
+  /** @defgroup USBD_CORE_Exported_TypesDefinitions
   * @{
   */
-typedef struct
-{
-  uint8_t cmd;
-  uint8_t data[USB_MAX_EP0_SIZE];
-  uint8_t len;
-  uint8_t unit;
-} USBD_AUDIO_SPKR_ControlTypeDef;
+  typedef struct
+  {
+    uint8_t cmd;
+    uint8_t data[USB_MAX_EP0_SIZE];
+    uint8_t len;
+    uint8_t unit;
+  } USBD_AUDIO_SPKR_ControlTypeDef;
 
+  typedef struct
+  {
+    uint32_t alt_setting;
+    uint8_t buffer[AUDIO_TOTAL_BUF_SIZE];
+    AUDIO_SPKR_OffsetTypeDef offset;
+    uint8_t rd_enable;
+    uint16_t rd_ptr;
+    uint16_t wr_ptr;
+    USBD_AUDIO_SPKR_ControlTypeDef control;
+  } USBD_AUDIO_SPKR_HandleTypeDef;
 
-typedef struct
-{
-  uint32_t alt_setting;
-  uint8_t buffer[AUDIO_TOTAL_BUF_SIZE];
-  AUDIO_SPKR_OffsetTypeDef offset;
-  uint8_t rd_enable;
-  uint16_t rd_ptr;
-  uint16_t wr_ptr;
-  USBD_AUDIO_SPKR_ControlTypeDef control;
-} USBD_AUDIO_SPKR_HandleTypeDef;
-
-
-typedef struct
-{
-  int8_t (*Init)(uint32_t AudioFreq, uint32_t Volume, uint32_t options);
-  int8_t (*DeInit)(uint32_t options);
-  int8_t (*AudioCmd)(uint8_t *pbuf, uint32_t size, uint8_t cmd);
-  int8_t (*VolumeCtl)(uint8_t vol);
-  int8_t (*MuteCtl)(uint8_t cmd);
-  int8_t (*PeriodicTC)(uint8_t *pbuf, uint32_t size, uint8_t cmd);
-  int8_t (*GetState)(void);
-} USBD_AUDIO_SPKR_ItfTypeDef;
-/**
+  typedef struct
+  {
+    int8_t (*Init)(uint32_t AudioFreq, uint32_t Volume, uint32_t options);
+    int8_t (*DeInit)(uint32_t options);
+    int8_t (*AudioCmd)(uint8_t *pbuf, uint32_t size, uint8_t cmd);
+    int8_t (*VolumeCtl)(uint8_t vol);
+    int8_t (*MuteCtl)(uint8_t cmd);
+    int8_t (*PeriodicTC)(uint8_t *pbuf, uint32_t size, uint8_t cmd);
+    int8_t (*GetState)(void);
+  } USBD_AUDIO_SPKR_ItfTypeDef;
+  /**
   * @}
   */
 
-
-
-/** @defgroup USBD_CORE_Exported_Macros
+  /** @defgroup USBD_CORE_Exported_Macros
   * @{
   */
 
-/**
+  /**
   * @}
   */
 
-/** @defgroup USBD_CORE_Exported_Variables
+  /** @defgroup USBD_CORE_Exported_Variables
   * @{
   */
 
-extern USBD_ClassTypeDef USBD_AUDIO_SPKR;
+  extern USBD_ClassTypeDef USBD_AUDIO_SPKR;
 
-/**
+  /**
   * @}
   */
 
-/** @defgroup USB_CORE_Exported_Functions
+  /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
-uint8_t USBD_AUDIO_SPKR_RegisterInterface(USBD_HandleTypeDef *pdev,
-                                          USBD_AUDIO_SPKR_ItfTypeDef *fops);
+  uint8_t USBD_AUDIO_SPKR_RegisterInterface(USBD_HandleTypeDef *pdev,
+                                            USBD_AUDIO_SPKR_ItfTypeDef *fops);
 
-void USBD_AUDIO_SPKR_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset);
-/**
+  void USBD_AUDIO_SPKR_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset);
+  /**
   * @}
   */
 
@@ -210,7 +204,7 @@ void USBD_AUDIO_SPKR_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef off
 }
 #endif
 
-#endif  /* __USB_AUDIO_SPKR_H */
+#endif /* __USB_AUDIO_SPKR_H */
 /**
   * @}
   */

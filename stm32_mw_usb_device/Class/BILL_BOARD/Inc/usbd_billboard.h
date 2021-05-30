@@ -129,7 +129,7 @@ typedef enum
   */
 
 extern USBD_ClassTypeDef  USBD_BB;
-#define USBD_BB_CLASS    &USBD_BB
+
 /**
   * @}
   */

@@ -324,6 +324,8 @@ typedef struct _USBD_HandleTypeDef
   void                    *pUserData_MSC;
   void                    *pClassData_DFU;
   void                    *pUserData_DFU;
+  void                    *pClassData_PRNTR;
+  void                    *pUserData_PRNTR;
   void                    *pData;
   void                    *pBosDesc;
   void                    *pConfDesc;

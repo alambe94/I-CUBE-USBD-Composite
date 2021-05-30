@@ -73,7 +73,6 @@ extern "C" {
   * @}
   */
 
-
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
   * @{
   */
@@ -82,7 +81,6 @@ typedef enum
   HID_IDLE = 0,
   HID_BUSY,
 } HID_StateTypeDef;
-
 
 typedef struct
 {
@@ -94,8 +92,6 @@ typedef struct
 /**
   * @}
   */
-
-
 
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
@@ -129,7 +125,7 @@ uint32_t USBD_HID_Mouse_GetPollingInterval(USBD_HandleTypeDef *pdev);
 }
 #endif
 
-#endif  /* __USB_HID_H */
+#endif /* __USB_HID_H */
 /**
   * @}
   */

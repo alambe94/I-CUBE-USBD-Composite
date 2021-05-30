@@ -60,7 +60,6 @@
   * @{
   */
 
-
 /** @defgroup USBD_CDC_RNDIS
   * @brief usbd core module
   * @{
@@ -73,14 +72,12 @@
   * @}
   */
 
-
 /** @defgroup USBD_CDC_RNDIS_Private_Defines
   * @{
   */
 /**
   * @}
   */
-
 
 /** @defgroup USBD_CDC_RNDIS_Private_Macros
   * @{
@@ -89,7 +86,6 @@
 /**
   * @}
   */
-
 
 /** @defgroup USBD_CDC_RNDIS_Private_FunctionPrototypes
   * @{
@@ -115,7 +111,6 @@ static uint8_t *USBD_CDC_RNDIS_USRStringDescriptor(USBD_HandleTypeDef *pdev, uin
 
 uint8_t *USBD_CDC_RNDIS_GetDeviceQualifierDescriptor(uint16_t *length);
 
-
 /* CDC_RNDIS Internal messages parsing and construction functions */
 static uint8_t USBD_CDC_RNDIS_MsgParsing(USBD_HandleTypeDef *pdev, uint8_t *RxBuff);
 static uint8_t USBD_CDC_RNDIS_ProcessInitMsg(USBD_HandleTypeDef *pdev, USBD_CDC_RNDIS_InitMsgTypeDef *Msg);
@@ -129,26 +124,24 @@ static uint8_t USBD_CDC_RNDIS_ProcessUnsupportedMsg(USBD_HandleTypeDef *pdev, US
 
 /* USB Standard Device Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_DESC] __ALIGN_END =
-{
-  USB_LEN_DEV_QUALIFIER_DESC,
-  USB_DESC_TYPE_DEVICE_QUALIFIER,
-  0x00,
-  0x02,
-  0x00,
-  0x00,
-  0x00,
-  0x40,
-  0x01,
-  0x00,
+    {
+        USB_LEN_DEV_QUALIFIER_DESC,
+        USB_DESC_TYPE_DEVICE_QUALIFIER,
+        0x00,
+        0x02,
+        0x00,
+        0x00,
+        0x00,
+        0x40,
+        0x01,
+        0x00,
 };
 
 static uint8_t MAC_StrDesc[6] = {CDC_RNDIS_MAC_ADDR0, CDC_RNDIS_MAC_ADDR1, CDC_RNDIS_MAC_ADDR2,
-                                 CDC_RNDIS_MAC_ADDR3, CDC_RNDIS_MAC_ADDR4, CDC_RNDIS_MAC_ADDR5
-                                };
+                                 CDC_RNDIS_MAC_ADDR3, CDC_RNDIS_MAC_ADDR4, CDC_RNDIS_MAC_ADDR5};
 
 static uint32_t ConnSpeedTab[2] = {CDC_RNDIS_CONNECT_SPEED_UPSTREAM,
-                                   CDC_RNDIS_CONNECT_SPEED_DOWNSTREAM
-                                  };
+                                   CDC_RNDIS_CONNECT_SPEED_DOWNSTREAM};
 
 static uint8_t EmptyResponse = 0x00U;
 
@@ -160,377 +153,376 @@ static uint8_t EmptyResponse = 0x00U;
   * @{
   */
 
+static USBD_CDC_RNDIS_HandleTypeDef CDC_RNDIS_Instance;
 
 /* CDC_RNDIS interface class callbacks structure */
 USBD_ClassTypeDef USBD_CDC_RNDIS =
-{
-  USBD_CDC_RNDIS_Init,
-  USBD_CDC_RNDIS_DeInit,
-  USBD_CDC_RNDIS_Setup,
-  NULL,                 /* EP0_TxSent, */
-  USBD_CDC_RNDIS_EP0_RxReady,
-  USBD_CDC_RNDIS_DataIn,
-  USBD_CDC_RNDIS_DataOut,
-  NULL,
-  NULL,
-  NULL,
-  USBD_CDC_RNDIS_GetHSCfgDesc,
-  USBD_CDC_RNDIS_GetFSCfgDesc,
-  USBD_CDC_RNDIS_GetOtherSpeedCfgDesc,
-  USBD_CDC_RNDIS_GetDeviceQualifierDescriptor,
+    {
+        USBD_CDC_RNDIS_Init,
+        USBD_CDC_RNDIS_DeInit,
+        USBD_CDC_RNDIS_Setup,
+        NULL, /* EP0_TxSent, */
+        USBD_CDC_RNDIS_EP0_RxReady,
+        USBD_CDC_RNDIS_DataIn,
+        USBD_CDC_RNDIS_DataOut,
+        NULL,
+        NULL,
+        NULL,
+        USBD_CDC_RNDIS_GetHSCfgDesc,
+        USBD_CDC_RNDIS_GetFSCfgDesc,
+        USBD_CDC_RNDIS_GetOtherSpeedCfgDesc,
+        USBD_CDC_RNDIS_GetDeviceQualifierDescriptor,
 #if (USBD_SUPPORT_USER_STRING_DESC == 1U)
-  USBD_CDC_RNDIS_USRStringDescriptor,
+        USBD_CDC_RNDIS_USRStringDescriptor,
 #endif
 };
 
 /* USB CDC_RNDIS device Configuration Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE] __ALIGN_END =
-{
-  /* Configuration Descriptor */
-  0x09,                                        /* bLength: Configuration Descriptor size */
-  USB_DESC_TYPE_CONFIGURATION,                 /* bDescriptorType: Configuration */
-  LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZE),           /* wTotalLength: Total size of the Config descriptor */
-  HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZE),
-  0x02,                                        /* bNumInterfaces: 2 interface */
-  0x01,                                        /* bConfigurationValue: Configuration value */
-  0x00,                                        /* iConfiguration: Index of string descriptor describing the configuration */
+    {
+        /* Configuration Descriptor */
+        0x09,                               /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION,        /* bDescriptorType: Configuration */
+        LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZE), /* wTotalLength: Total size of the Config descriptor */
+        HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZE),
+        0x02, /* bNumInterfaces: 2 interface */
+        0x01, /* bConfigurationValue: Configuration value */
+        0x00, /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
-  0xC0,                                        /* bmAttributes: Bus Powered according to user configuration */
+        0xC0, /* bmAttributes: Bus Powered according to user configuration */
 #else
-  0x80,                                        /* bmAttributes: Bus Powered according to user configuration */
+        0x80, /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                              /* MaxPower 100 mA */
+        USBD_MAX_POWER, /* MaxPower 100 mA */
 
-  /*---------------------------------------------------------------------------*/
-  /* IAD descriptor */
-  0x08,                                        /* bLength */
-  0x0B,                                        /* bDescriptorType */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bFirstInterface */
-  0x02,                                        /* bInterfaceCount */
-  0xE0,                                        /* bFunctionClass (Wireless Controller) */
-  0x01,                                        /* bFunctionSubClass */
-  0x03,                                        /* bFunctionProtocol */
-  0x00,                                        /* iFunction */
+        /*---------------------------------------------------------------------------*/
+        /* IAD descriptor */
+        0x08,                  /* bLength */
+        0x0B,                  /* bDescriptorType */
+        CDC_RNDIS_CMD_ITF_NBR, /* bFirstInterface */
+        0x02,                  /* bInterfaceCount */
+        0xE0,                  /* bFunctionClass (Wireless Controller) */
+        0x01,                  /* bFunctionSubClass */
+        0x03,                  /* bFunctionProtocol */
+        0x00,                  /* iFunction */
 
-  /*---------------------------------------------------------------------------*/
-  /* Interface Descriptor */
-  0x09,                                        /* bLength: Interface Descriptor size */
-  USB_DESC_TYPE_INTERFACE,                     /* bDescriptorType: Interface descriptor type */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bInterfaceNumber: Number of Interface */
-  0x00,                                        /* bAlternateSetting: Alternate setting */
-  0x01,                                        /* bNumEndpoints: One endpoint used */
-  0x02,                                        /* bInterfaceClass: Communication Interface Class */
-  0x02,                                        /* bInterfaceSubClass:Abstract Control Model */
-  0xFF,                                        /* bInterfaceProtocol: Common AT commands */
-  0x00,                                        /* iInterface: */
+        /*---------------------------------------------------------------------------*/
+        /* Interface Descriptor */
+        0x09,                    /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
+        CDC_RNDIS_CMD_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x01,                    /* bNumEndpoints: One endpoint used */
+        0x02,                    /* bInterfaceClass: Communication Interface Class */
+        0x02,                    /* bInterfaceSubClass:Abstract Control Model */
+        0xFF,                    /* bInterfaceProtocol: Common AT commands */
+        0x00,                    /* iInterface: */
 
-  /* Header Functional Descriptor */
-  0x05,                                        /* bLength: Endpoint Descriptor size */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x00,                                        /* bDescriptorSubtype: Header functional descriptor */
-  0x10,                                        /* bcdCDC: spec release number: 1.20 */
-  0x01,
+        /* Header Functional Descriptor */
+        0x05, /* bLength: Endpoint Descriptor size */
+        0x24, /* bDescriptorType: CS_INTERFACE */
+        0x00, /* bDescriptorSubtype: Header functional descriptor */
+        0x10, /* bcdCDC: spec release number: 1.20 */
+        0x01,
 
-  /* Call Management Functional Descriptor */
-  0x05,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x01,                                        /* bDescriptorSubtype: Call Management Func Desc */
-  0x00,                                        /* bmCapabilities: D0+D1 */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bDataInterface: 1 */
+        /* Call Management Functional Descriptor */
+        0x05,                  /* bFunctionLength */
+        0x24,                  /* bDescriptorType: CS_INTERFACE */
+        0x01,                  /* bDescriptorSubtype: Call Management Func Desc */
+        0x00,                  /* bmCapabilities: D0+D1 */
+        CDC_RNDIS_COM_ITF_NBR, /* bDataInterface: 1 */
 
-  /* ACM Functional Descriptor */
-  0x04,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x02,                                        /* bDescriptorSubtype: Abstract Control Management desc */
-  0x00,                                        /* bmCapabilities */
+        /* ACM Functional Descriptor */
+        0x04, /* bFunctionLength */
+        0x24, /* bDescriptorType: CS_INTERFACE */
+        0x02, /* bDescriptorSubtype: Abstract Control Management desc */
+        0x00, /* bmCapabilities */
 
-  /* Union Functional Descriptor */
-  0x05,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x06,                                        /* bDescriptorSubtype: Union functional descriptor */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bMasterInterface: Communication class interface */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bSlaveInterface0: Data Class Interface */
+        /* Union Functional Descriptor */
+        0x05,                  /* bFunctionLength */
+        0x24,                  /* bDescriptorType: CS_INTERFACE */
+        0x06,                  /* bDescriptorSubtype: Union functional descriptor */
+        CDC_RNDIS_CMD_ITF_NBR, /* bMasterInterface: Communication class interface */
+        CDC_RNDIS_COM_ITF_NBR, /* bSlaveInterface0: Data Class Interface */
 
-  /* Notification Endpoint Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_CMD_EP,                            /* bEndpointAddress */
-  0x03,                                        /* bmAttributes: Interrupt */
-  LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE),           /* wMaxPacketSize */
-  HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
-  CDC_RNDIS_HS_BINTERVAL,                      /* bInterval */
+        /* Notification Endpoint Descriptor */
+        0x07,                              /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,            /* bDescriptorType: Endpoint */
+        CDC_RNDIS_CMD_EP,                  /* bEndpointAddress */
+        0x03,                              /* bmAttributes: Interrupt */
+        LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
+        CDC_RNDIS_HS_BINTERVAL, /* bInterval */
 
-  /*---------------------------------------------------------------------------*/
-  /* Data class interface descriptor */
-  0x09,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_INTERFACE,                     /* bDescriptorType: */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bInterfaceNumber: Number of Interface */
-  0x00,                                        /* bAlternateSetting: Alternate setting */
-  0x02,                                        /* bNumEndpoints: Two endpoints used */
-  0x0A,                                        /* bInterfaceClass: CDC */
-  0x00,                                        /* bInterfaceSubClass */
-  0x00,                                        /* bInterfaceProtocol */
-  0x00,                                        /* iInterface */
+        /*---------------------------------------------------------------------------*/
+        /* Data class interface descriptor */
+        0x09,                    /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: */
+        CDC_RNDIS_COM_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x02,                    /* bNumEndpoints: Two endpoints used */
+        0x0A,                    /* bInterfaceClass: CDC */
+        0x00,                    /* bInterfaceSubClass */
+        0x00,                    /* bInterfaceProtocol */
+        0x00,                    /* iInterface */
 
-  /* Endpoint OUT Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_OUT_EP,                            /* bEndpointAddress */
-  0x02,                                        /* bmAttributes: Bulk */
-  LOBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),   /* wMaxPacketSize */
-  HIBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),
-  0x00,                                        /* bInterval */
+        /* Endpoint OUT Descriptor */
+        0x07,                                      /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
+        CDC_RNDIS_OUT_EP,                          /* bEndpointAddress */
+        0x02,                                      /* bmAttributes: Bulk */
+        LOBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),
+        0x00, /* bInterval */
 
-  /* Endpoint IN Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_IN_EP,                             /* bEndpointAddress */
-  0x02,                                        /* bmAttributes: Bulk */
-  LOBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),   /* wMaxPacketSize: */
-  HIBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),
-  0x00                                         /* bInterval */
+        /* Endpoint IN Descriptor */
+        0x07,                                      /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
+        CDC_RNDIS_IN_EP,                           /* bEndpointAddress */
+        0x02,                                      /* bmAttributes: Bulk */
+        LOBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize: */
+        HIBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),
+        0x00 /* bInterval */
 };
-
 
 /* USB CDC device Configuration Descriptor */
-__ALIGN_BEGIN static uint8_t  USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE] __ALIGN_END =
-{
-  /* Configuration Descriptor */
-  0x09,                                        /* bLength: Configuration Descriptor size */
-  USB_DESC_TYPE_CONFIGURATION,                 /* bDescriptorType: Configuration */
-  LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),           /* wTotalLength: Total size of the Config descriptor */
-  HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),
-  0x02,                                        /* bNumInterfaces: 2 interfaces */
-  0x01,                                        /* bConfigurationValue: Configuration value */
-  0x00,                                        /* iConfiguration: Index of string descriptor describing the configuration */
+__ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE] __ALIGN_END =
+    {
+        /* Configuration Descriptor */
+        0x09,                              /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION,       /* bDescriptorType: Configuration */
+        LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZ), /* wTotalLength: Total size of the Config descriptor */
+        HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),
+        0x02, /* bNumInterfaces: 2 interfaces */
+        0x01, /* bConfigurationValue: Configuration value */
+        0x00, /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
-  0xC0,                                        /* bmAttributes: Bus Powered according to user configuration */
+        0xC0, /* bmAttributes: Bus Powered according to user configuration */
 #else
-  0x80,                                        /* bmAttributes: Bus Powered according to user configuration */
+        0x80, /* bmAttributes: Bus Powered according to user configuration */
 #endif
-  USBD_MAX_POWER,                              /* MaxPower 100 mA */
+        USBD_MAX_POWER, /* MaxPower 100 mA */
 
-  /*---------------------------------------------------------------------------*/
-  /* IAD descriptor */
-  0x08,                                        /* bLength */
-  0x0B,                                        /* bDescriptorType */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bFirstInterface */
-  0x02,                                        /* bInterfaceCount */
-  0xE0,                                        /* bFunctionClass (Wireless Controller) */
-  0x01,                                        /* bFunctionSubClass */
-  0x03,                                        /* bFunctionProtocol */
-  0x00,                                        /* iFunction */
+        /*---------------------------------------------------------------------------*/
+        /* IAD descriptor */
+        0x08,                  /* bLength */
+        0x0B,                  /* bDescriptorType */
+        CDC_RNDIS_CMD_ITF_NBR, /* bFirstInterface */
+        0x02,                  /* bInterfaceCount */
+        0xE0,                  /* bFunctionClass (Wireless Controller) */
+        0x01,                  /* bFunctionSubClass */
+        0x03,                  /* bFunctionProtocol */
+        0x00,                  /* iFunction */
 
-  /*---------------------------------------------------------------------------*/
-  /* Interface Descriptor */
-  0x09,                                        /* bLength: Interface Descriptor size */
-  USB_DESC_TYPE_INTERFACE,                     /* bDescriptorType: Interface descriptor type */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bInterfaceNumber: Number of Interface */
-  0x00,                                        /* bAlternateSetting: Alternate setting */
-  0x01,                                        /* bNumEndpoints: One endpoint used */
-  0x02,                                        /* bInterfaceClass: Communication Interface Class */
-  0x02,                                        /* bInterfaceSubClass:Abstract Control Model */
-  0xFF,                                        /* bInterfaceProtocol: Common AT commands */
-  0x00,                                        /* iInterface */
+        /*---------------------------------------------------------------------------*/
+        /* Interface Descriptor */
+        0x09,                    /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
+        CDC_RNDIS_CMD_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x01,                    /* bNumEndpoints: One endpoint used */
+        0x02,                    /* bInterfaceClass: Communication Interface Class */
+        0x02,                    /* bInterfaceSubClass:Abstract Control Model */
+        0xFF,                    /* bInterfaceProtocol: Common AT commands */
+        0x00,                    /* iInterface */
 
-  /* Header Functional Descriptor */
-  0x05,                                        /* bLength: Endpoint Descriptor size */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x00,                                        /* bDescriptorSubtype: Header functional descriptor */
-  0x10,                                        /* bcdCDC: spec release number: 1.20 */
-  0x01,
+        /* Header Functional Descriptor */
+        0x05, /* bLength: Endpoint Descriptor size */
+        0x24, /* bDescriptorType: CS_INTERFACE */
+        0x00, /* bDescriptorSubtype: Header functional descriptor */
+        0x10, /* bcdCDC: spec release number: 1.20 */
+        0x01,
 
-  /* Call Management Functional Descriptor */
-  0x05,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x01,                                        /* bDescriptorSubtype: Call Management Func Desc */
-  0x00,                                        /* bmCapabilities: D0+D1 */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bDataInterface: 1 */
+        /* Call Management Functional Descriptor */
+        0x05,                  /* bFunctionLength */
+        0x24,                  /* bDescriptorType: CS_INTERFACE */
+        0x01,                  /* bDescriptorSubtype: Call Management Func Desc */
+        0x00,                  /* bmCapabilities: D0+D1 */
+        CDC_RNDIS_COM_ITF_NBR, /* bDataInterface: 1 */
 
-  /* ACM Functional Descriptor */
-  0x04,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x02,                                        /* bDescriptorSubtype: Abstract Control Management desc */
-  0x00,                                        /* bmCapabilities */
+        /* ACM Functional Descriptor */
+        0x04, /* bFunctionLength */
+        0x24, /* bDescriptorType: CS_INTERFACE */
+        0x02, /* bDescriptorSubtype: Abstract Control Management desc */
+        0x00, /* bmCapabilities */
 
-  /* Union Functional Descriptor */
-  0x05,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x06,                                        /* bDescriptorSubtype: Union functional descriptor */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bMasterInterface: Communication class interface */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bSlaveInterface0: Data Class Interface */
+        /* Union Functional Descriptor */
+        0x05,                  /* bFunctionLength */
+        0x24,                  /* bDescriptorType: CS_INTERFACE */
+        0x06,                  /* bDescriptorSubtype: Union functional descriptor */
+        CDC_RNDIS_CMD_ITF_NBR, /* bMasterInterface: Communication class interface */
+        CDC_RNDIS_COM_ITF_NBR, /* bSlaveInterface0: Data Class Interface */
 
-  /* Notification Endpoint Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_CMD_EP,                            /* bEndpointAddress */
-  0x03,                                        /* bmAttributes: Interrupt */
-  LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE),           /* wMaxPacketSize */
-  HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
-  CDC_RNDIS_FS_BINTERVAL,                      /* bInterval */
+        /* Notification Endpoint Descriptor */
+        0x07,                              /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,            /* bDescriptorType: Endpoint */
+        CDC_RNDIS_CMD_EP,                  /* bEndpointAddress */
+        0x03,                              /* bmAttributes: Interrupt */
+        LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
+        CDC_RNDIS_FS_BINTERVAL, /* bInterval */
 
-  /*---------------------------------------------------------------------------*/
-  /* Data class interface descriptor */
-  0x09,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_INTERFACE,                     /* bDescriptorType: */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bInterfaceNumber: Number of Interface */
-  0x00,                                        /* bAlternateSetting: Alternate setting */
-  0x02,                                        /* bNumEndpoints: Two endpoints used */
-  0x0A,                                        /* bInterfaceClass: CDC */
-  0x00,                                        /* bInterfaceSubClass */
-  0x00,                                        /* bInterfaceProtocol */
-  0x00,                                        /* iInterface */
+        /*---------------------------------------------------------------------------*/
+        /* Data class interface descriptor */
+        0x09,                    /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: */
+        CDC_RNDIS_COM_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x02,                    /* bNumEndpoints: Two endpoints used */
+        0x0A,                    /* bInterfaceClass: CDC */
+        0x00,                    /* bInterfaceSubClass */
+        0x00,                    /* bInterfaceProtocol */
+        0x00,                    /* iInterface */
 
-  /* Endpoint OUT Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_OUT_EP,                            /* bEndpointAddress */
-  0x02,                                        /* bmAttributes: Bulk */
-  LOBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),   /* wMaxPacketSize: */
-  HIBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),
-  0x00,                                        /* bInterval */
+        /* Endpoint OUT Descriptor */
+        0x07,                                      /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
+        CDC_RNDIS_OUT_EP,                          /* bEndpointAddress */
+        0x02,                                      /* bmAttributes: Bulk */
+        LOBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize: */
+        HIBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),
+        0x00, /* bInterval */
 
-  /* Endpoint IN Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_IN_EP,                             /* bEndpointAddress */
-  0x02,                                        /* bmAttributes: Bulk */
-  LOBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),   /* wMaxPacketSize */
-  HIBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),
-  0x00                                         /* bInterval */
-} ;
-
-__ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
-{
-  /* Configuration Descriptor */
-  0x09,                                        /* bLength: Configuration Descriptor size */
-  USB_DESC_TYPE_CONFIGURATION,                 /* bDescriptorType: Configuration */
-  LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),           /* wTotalLength:no of returned bytes */
-  HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),
-  0x02,                                        /* bNumInterfaces: 2 interfaces */
-  0x01,                                        /* bConfigurationValue: Configuration value */
-  0x04,                                        /* iConfiguration: Index of string descriptor describing the configuration */
-#if (USBD_SELF_POWERED == 1U)
-  0xC0,                                        /* bmAttributes: Bus Powered according to user configuration */
-#else
-  0x80,                                        /* bmAttributes: Bus Powered according to user configuration */
-#endif
-  USBD_MAX_POWER,                              /* MaxPower (mA) */
-
-  /*---------------------------------------------------------------------------*/
-  /* IAD descriptor */
-  0x08,                                        /* bLength */
-  0x0B,                                        /* bDescriptorType */
-  0x00,                                        /* bFirstInterface */
-  0x02,                                        /* bInterfaceCount */
-  0xE0,                                        /* bFunctionClass (Wireless Controller) */
-  0x01,                                        /* bFunctionSubClass */
-  0x03,                                        /* bFunctionProtocol */
-  0x00,                                        /* iFunction */
-
-  /*---------------------------------------------------------------------------*/
-  /* Interface Descriptor */
-  0x09,                                        /* bLength: Interface Descriptor size */
-  USB_DESC_TYPE_INTERFACE,                     /* bDescriptorType: Interface descriptor type */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bInterfaceNumber: Number of Interface */
-  0x00,                                        /* bAlternateSetting: Alternate setting */
-  0x01,                                        /* bNumEndpoints: One endpoint used */
-  0x02,                                        /* bInterfaceClass: Communication Interface Class */
-  0x02,                                        /* bInterfaceSubClass:Abstract Control Model */
-  0xFF,                                        /* bInterfaceProtocol: Common AT commands */
-  0x00,                                        /* iInterface */
-
-  /* Header Functional Descriptor */
-  0x05,                                        /* bLength: Endpoint Descriptor size */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x00,                                        /* bDescriptorSubtype: Header functional descriptor */
-  0x10,                                        /* bcdCDC: spec release number: 1.20 */
-  0x01,
-
-  /* Call Management Functional Descriptor */
-  0x05,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x01,                                        /* bDescriptorSubtype: Call Management Func Desc */
-  0x00,                                        /* bmCapabilities: D0+D1 */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bDataInterface: 1 */
-
-  /* ACM Functional Descriptor */
-  0x04,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x02,                                        /* bDescriptorSubtype: Abstract Control Management desc */
-  0x00,                                        /* bmCapabilities */
-
-  /* Union Functional Descriptor */
-  0x05,                                        /* bFunctionLength */
-  0x24,                                        /* bDescriptorType: CS_INTERFACE */
-  0x06,                                        /* bDescriptorSubtype: Union functional descriptor */
-  CDC_RNDIS_CMD_ITF_NBR,                       /* bMasterInterface: Communication class interface */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bSlaveInterface0: Data Class Interface */
-
-  /* Communication Endpoint Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_CMD_EP,                            /* bEndpointAddress */
-  0x03,                                        /* bmAttributes: Interrupt */
-  LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE),           /* wMaxPacketSize */
-  HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
-  CDC_RNDIS_FS_BINTERVAL,                      /* bInterval */
-
-  /*---------------------------------------------------------------------------*/
-  /* Data class interface descriptor */
-  0x09,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_INTERFACE,                     /* bDescriptorType: */
-  CDC_RNDIS_COM_ITF_NBR,                       /* bInterfaceNumber: Number of Interface */
-  0x00,                                        /* bAlternateSetting: Alternate setting */
-  0x02,                                        /* bNumEndpoints: Two endpoints used */
-  0x0A,                                        /* bInterfaceClass: CDC */
-  0x00,                                        /* bInterfaceSubClass */
-  0x00,                                        /* bInterfaceProtocol */
-  0x00,                                        /* iInterface */
-
-  /* Endpoint OUT Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_OUT_EP,                            /* bEndpointAddress */
-  0x02,                                        /* bmAttributes: Bulk */
-  0x40,                                        /* wMaxPacketSize */
-  0x00,
-  0x00,                                        /* bInterval */
-
-  /* Endpoint IN Descriptor */
-  0x07,                                        /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                      /* bDescriptorType: Endpoint */
-  CDC_RNDIS_IN_EP,                             /* bEndpointAddress */
-  0x02,                                        /* bmAttributes: Bulk */
-  0x40,                                        /* wMaxPacketSize */
-  0x00,
-  0x00                                         /* bInterval */
+        /* Endpoint IN Descriptor */
+        0x07,                                      /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
+        CDC_RNDIS_IN_EP,                           /* bEndpointAddress */
+        0x02,                                      /* bmAttributes: Bulk */
+        LOBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),
+        0x00 /* bInterval */
 };
 
+__ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
+    {
+        /* Configuration Descriptor */
+        0x09,                              /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION,       /* bDescriptorType: Configuration */
+        LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZ), /* wTotalLength:no of returned bytes */
+        HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZ),
+        0x02, /* bNumInterfaces: 2 interfaces */
+        0x01, /* bConfigurationValue: Configuration value */
+        0x04, /* iConfiguration: Index of string descriptor describing the configuration */
+#if (USBD_SELF_POWERED == 1U)
+        0xC0, /* bmAttributes: Bus Powered according to user configuration */
+#else
+        0x80, /* bmAttributes: Bus Powered according to user configuration */
+#endif
+        USBD_MAX_POWER, /* MaxPower (mA) */
+
+        /*---------------------------------------------------------------------------*/
+        /* IAD descriptor */
+        0x08, /* bLength */
+        0x0B, /* bDescriptorType */
+        0x00, /* bFirstInterface */
+        0x02, /* bInterfaceCount */
+        0xE0, /* bFunctionClass (Wireless Controller) */
+        0x01, /* bFunctionSubClass */
+        0x03, /* bFunctionProtocol */
+        0x00, /* iFunction */
+
+        /*---------------------------------------------------------------------------*/
+        /* Interface Descriptor */
+        0x09,                    /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
+        CDC_RNDIS_CMD_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x01,                    /* bNumEndpoints: One endpoint used */
+        0x02,                    /* bInterfaceClass: Communication Interface Class */
+        0x02,                    /* bInterfaceSubClass:Abstract Control Model */
+        0xFF,                    /* bInterfaceProtocol: Common AT commands */
+        0x00,                    /* iInterface */
+
+        /* Header Functional Descriptor */
+        0x05, /* bLength: Endpoint Descriptor size */
+        0x24, /* bDescriptorType: CS_INTERFACE */
+        0x00, /* bDescriptorSubtype: Header functional descriptor */
+        0x10, /* bcdCDC: spec release number: 1.20 */
+        0x01,
+
+        /* Call Management Functional Descriptor */
+        0x05,                  /* bFunctionLength */
+        0x24,                  /* bDescriptorType: CS_INTERFACE */
+        0x01,                  /* bDescriptorSubtype: Call Management Func Desc */
+        0x00,                  /* bmCapabilities: D0+D1 */
+        CDC_RNDIS_COM_ITF_NBR, /* bDataInterface: 1 */
+
+        /* ACM Functional Descriptor */
+        0x04, /* bFunctionLength */
+        0x24, /* bDescriptorType: CS_INTERFACE */
+        0x02, /* bDescriptorSubtype: Abstract Control Management desc */
+        0x00, /* bmCapabilities */
+
+        /* Union Functional Descriptor */
+        0x05,                  /* bFunctionLength */
+        0x24,                  /* bDescriptorType: CS_INTERFACE */
+        0x06,                  /* bDescriptorSubtype: Union functional descriptor */
+        CDC_RNDIS_CMD_ITF_NBR, /* bMasterInterface: Communication class interface */
+        CDC_RNDIS_COM_ITF_NBR, /* bSlaveInterface0: Data Class Interface */
+
+        /* Communication Endpoint Descriptor */
+        0x07,                              /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT,            /* bDescriptorType: Endpoint */
+        CDC_RNDIS_CMD_EP,                  /* bEndpointAddress */
+        0x03,                              /* bmAttributes: Interrupt */
+        LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE), /* wMaxPacketSize */
+        HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
+        CDC_RNDIS_FS_BINTERVAL, /* bInterval */
+
+        /*---------------------------------------------------------------------------*/
+        /* Data class interface descriptor */
+        0x09,                    /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: */
+        CDC_RNDIS_COM_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        0x00,                    /* bAlternateSetting: Alternate setting */
+        0x02,                    /* bNumEndpoints: Two endpoints used */
+        0x0A,                    /* bInterfaceClass: CDC */
+        0x00,                    /* bInterfaceSubClass */
+        0x00,                    /* bInterfaceProtocol */
+        0x00,                    /* iInterface */
+
+        /* Endpoint OUT Descriptor */
+        0x07,                   /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: Endpoint */
+        CDC_RNDIS_OUT_EP,       /* bEndpointAddress */
+        0x02,                   /* bmAttributes: Bulk */
+        0x40,                   /* wMaxPacketSize */
+        0x00,
+        0x00, /* bInterval */
+
+        /* Endpoint IN Descriptor */
+        0x07,                   /* bLength: Endpoint Descriptor size */
+        USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: Endpoint */
+        CDC_RNDIS_IN_EP,        /* bEndpointAddress */
+        0x02,                   /* bmAttributes: Bulk */
+        0x40,                   /* wMaxPacketSize */
+        0x00,
+        0x00 /* bInterval */
+};
 
 static const uint32_t CDC_RNDIS_SupportedOIDs[] =
-{
-  OID_GEN_SUPPORTED_LIST,
-  OID_GEN_HARDWARE_STATUS,
-  OID_GEN_MEDIA_SUPPORTED,
-  OID_GEN_MEDIA_IN_USE,
-  OID_GEN_MAXIMUM_FRAME_SIZE,
-  OID_GEN_LINK_SPEED,
-  OID_GEN_TRANSMIT_BLOCK_SIZE,
-  OID_GEN_RECEIVE_BLOCK_SIZE,
-  OID_GEN_VENDOR_ID,
-  OID_GEN_VENDOR_DESCRIPTION,
-  OID_GEN_CURRENT_PACKET_FILTER,
-  OID_GEN_MAXIMUM_TOTAL_SIZE,
-  OID_GEN_MEDIA_CONNECT_STATUS,
-  OID_GEN_MAXIMUM_SEND_PACKETS,
-  OID_802_3_PERMANENT_ADDRESS,
-  OID_802_3_CURRENT_ADDRESS,
-  OID_802_3_MULTICAST_LIST,
-  OID_802_3_MAXIMUM_LIST_SIZE,
-  OID_802_3_RCV_ERROR_ALIGNMENT,
-  OID_802_3_XMIT_ONE_COLLISION,
-  OID_802_3_XMIT_MORE_COLLISIONS,
+    {
+        OID_GEN_SUPPORTED_LIST,
+        OID_GEN_HARDWARE_STATUS,
+        OID_GEN_MEDIA_SUPPORTED,
+        OID_GEN_MEDIA_IN_USE,
+        OID_GEN_MAXIMUM_FRAME_SIZE,
+        OID_GEN_LINK_SPEED,
+        OID_GEN_TRANSMIT_BLOCK_SIZE,
+        OID_GEN_RECEIVE_BLOCK_SIZE,
+        OID_GEN_VENDOR_ID,
+        OID_GEN_VENDOR_DESCRIPTION,
+        OID_GEN_CURRENT_PACKET_FILTER,
+        OID_GEN_MAXIMUM_TOTAL_SIZE,
+        OID_GEN_MEDIA_CONNECT_STATUS,
+        OID_GEN_MAXIMUM_SEND_PACKETS,
+        OID_802_3_PERMANENT_ADDRESS,
+        OID_802_3_CURRENT_ADDRESS,
+        OID_802_3_MULTICAST_LIST,
+        OID_802_3_MAXIMUM_LIST_SIZE,
+        OID_802_3_RCV_ERROR_ALIGNMENT,
+        OID_802_3_XMIT_ONE_COLLISION,
+        OID_802_3_XMIT_MORE_COLLISIONS,
 };
 
 /**
@@ -553,7 +545,7 @@ static uint8_t USBD_CDC_RNDIS_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   UNUSED(cfgidx);
   USBD_CDC_RNDIS_HandleTypeDef *hcdc;
 
-  hcdc = USBD_malloc(sizeof(USBD_CDC_RNDIS_HandleTypeDef));
+  hcdc = &CDC_RNDIS_Instance;
 
   if (hcdc == NULL)
   {
@@ -652,7 +644,9 @@ static uint8_t USBD_CDC_RNDIS_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   if (pdev->pClassData_CDC_RNDIS != NULL)
   {
     ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->DeInit();
+#if (0)
     USBD_free(pdev->pClassData_CDC_RNDIS);
+#endif
     pdev->pClassData_CDC_RNDIS = NULL;
   }
 
@@ -682,115 +676,112 @@ static uint8_t USBD_CDC_RNDIS_Setup(USBD_HandleTypeDef *pdev,
 
   switch (req->bmRequest & USB_REQ_TYPE_MASK)
   {
-    case USB_REQ_TYPE_CLASS :
-      if (req->wLength != 0U)
+  case USB_REQ_TYPE_CLASS:
+    if (req->wLength != 0U)
+    {
+      /* Control Request Data from Device to Host, send data prepared by device */
+      if ((req->bmRequest & 0x80U) != 0U)
       {
-        /* Control Request Data from Device to Host, send data prepared by device */
-        if ((req->bmRequest & 0x80U) != 0U)
+        /* Update opcode and length */
+        hcdc->CmdOpCode = req->bRequest;
+        hcdc->CmdLength = (uint8_t)req->wLength;
+
+        if (hcdc->CmdOpCode == CDC_RNDIS_GET_ENCAPSULATED_RESPONSE)
         {
-          /* Update opcode and length */
-          hcdc->CmdOpCode = req->bRequest;
-          hcdc->CmdLength = (uint8_t)req->wLength;
-
-          if (hcdc->CmdOpCode == CDC_RNDIS_GET_ENCAPSULATED_RESPONSE)
-          {
-            /* Data of Response Message has already been prepared by USBD_CDC_RNDIS_MsgParsing.
+          /* Data of Response Message has already been prepared by USBD_CDC_RNDIS_MsgParsing.
             Just check that length is corresponding to right expected value */
-            if (req->wLength != Msg->MsgLength)
-            {
-            }
-          }
-
-          /* Allow application layer to pre-process data or add own processing before sending response */
-          ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Control(req->bRequest,
-                                                                  (uint8_t *)hcdc->data,
-                                                                  req->wLength);
-          /* Check if Response is ready */
-          if (hcdc->ResponseRdy != 0U)
+          if (req->wLength != Msg->MsgLength)
           {
-            /* Clear Response Ready flag */
-            hcdc->ResponseRdy = 0U;
-
-            /* Send data on control endpoint */
-            (void)USBD_CtlSendData(pdev, (uint8_t *)hcdc->data,
-                                   MIN(CDC_RNDIS_MAX_DATA_SZE, Msg->MsgLength));
           }
-          else
-          {
-            /* CDC_RNDIS Specification says: If for some reason the device receives a GET ENCAPSULATED RESPONSE
+        }
+
+        /* Allow application layer to pre-process data or add own processing before sending response */
+        ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Control(req->bRequest, (uint8_t *)hcdc->data, req->wLength);
+        /* Check if Response is ready */
+        if (hcdc->ResponseRdy != 0U)
+        {
+          /* Clear Response Ready flag */
+          hcdc->ResponseRdy = 0U;
+
+          /* Send data on control endpoint */
+          (void)USBD_CtlSendData(pdev, (uint8_t *)hcdc->data,
+                                 MIN(CDC_RNDIS_MAX_DATA_SZE, Msg->MsgLength));
+        }
+        else
+        {
+          /* CDC_RNDIS Specification says: If for some reason the device receives a GET ENCAPSULATED RESPONSE
             and is unable to respond with a valid data on the Control endpoint,
             then it should return a one-byte packet set to 0x00, rather than
             stalling the Control endpoint */
-            (void)USBD_CtlSendData(pdev, &EmptyResponse, 1U);
-          }
-        }
-        /* Control Request Data from Host to Device: Prepare reception of control data stage */
-        else
-        {
-          hcdc->CmdOpCode = req->bRequest;
-          hcdc->CmdLength = (uint8_t)MIN(CDC_RNDIS_CMD_PACKET_SIZE, req->wLength);
-
-          (void)USBD_CtlPrepareRx(pdev, (uint8_t *)hcdc->data, hcdc->CmdLength);
+          (void)USBD_CtlSendData(pdev, &EmptyResponse, 1U);
         }
       }
-      /* No Data control request: there is no such request for CDC_RNDIS protocol,
-      so let application layer manage this case */
+      /* Control Request Data from Host to Device: Prepare reception of control data stage */
       else
       {
-        ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Control(req->bRequest,
-                                                                (uint8_t *)req, 0U);
+        hcdc->CmdOpCode = req->bRequest;
+        hcdc->CmdLength = (uint8_t)MIN(CDC_RNDIS_CMD_PACKET_SIZE, req->wLength);
+
+        (void)USBD_CtlPrepareRx(pdev, (uint8_t *)hcdc->data, hcdc->CmdLength);
+      }
+    }
+    /* No Data control request: there is no such request for CDC_RNDIS protocol,
+      so let application layer manage this case */
+    else
+    {
+      ((USBD_CDC_RNDIS_ItfTypeDef *)pdev->pUserData_CDC_RNDIS)->Control(req->bRequest, (uint8_t *)req, 0U);
+    }
+    break;
+
+  case USB_REQ_TYPE_STANDARD:
+    switch (req->bRequest)
+    {
+    case USB_REQ_GET_STATUS:
+      if (pdev->dev_state == USBD_STATE_CONFIGURED)
+      {
+        (void)USBD_CtlSendData(pdev, (uint8_t *)&status_info, 2U);
+      }
+      else
+      {
+        USBD_CtlError(pdev, req);
+        ret = USBD_FAIL;
       }
       break;
 
-    case USB_REQ_TYPE_STANDARD:
-      switch (req->bRequest)
+    case USB_REQ_GET_INTERFACE:
+      if (pdev->dev_state == USBD_STATE_CONFIGURED)
       {
-        case USB_REQ_GET_STATUS:
-          if (pdev->dev_state == USBD_STATE_CONFIGURED)
-          {
-            (void)USBD_CtlSendData(pdev, (uint8_t *)&status_info, 2U);
-          }
-          else
-          {
-            USBD_CtlError(pdev, req);
-            ret = USBD_FAIL;
-          }
-          break;
-
-        case USB_REQ_GET_INTERFACE:
-          if (pdev->dev_state == USBD_STATE_CONFIGURED)
-          {
-            (void)USBD_CtlSendData(pdev, &ifalt, 1U);
-          }
-          else
-          {
-            USBD_CtlError(pdev, req);
-            ret = USBD_FAIL;
-          }
-          break;
-
-        case USB_REQ_SET_INTERFACE:
-          if (pdev->dev_state != USBD_STATE_CONFIGURED)
-          {
-            USBD_CtlError(pdev, req);
-            ret = USBD_FAIL;
-          }
-          break;
-
-        case USB_REQ_CLEAR_FEATURE:
-          break;
-
-        default:
-          USBD_CtlError(pdev, req);
-          ret = USBD_FAIL;
-          break;
+        (void)USBD_CtlSendData(pdev, &ifalt, 1U);
       }
+      else
+      {
+        USBD_CtlError(pdev, req);
+        ret = USBD_FAIL;
+      }
+      break;
+
+    case USB_REQ_SET_INTERFACE:
+      if (pdev->dev_state != USBD_STATE_CONFIGURED)
+      {
+        USBD_CtlError(pdev, req);
+        ret = USBD_FAIL;
+      }
+      break;
+
+    case USB_REQ_CLEAR_FEATURE:
       break;
 
     default:
       USBD_CtlError(pdev, req);
       ret = USBD_FAIL;
       break;
+    }
+    break;
+
+  default:
+    USBD_CtlError(pdev, req);
+    ret = USBD_FAIL;
+    break;
   }
 
   return (uint8_t)ret;
@@ -1020,7 +1011,6 @@ uint8_t USBD_CDC_RNDIS_RegisterInterface(USBD_HandleTypeDef *pdev,
   return (uint8_t)USBD_OK;
 }
 
-
 /**
   * @brief  USBD_CDC_RNDIS_USRStringDescriptor
   *         Manages the transfer of user string descriptors.
@@ -1069,7 +1059,6 @@ uint8_t USBD_CDC_RNDIS_SetTxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff, uin
   return (uint8_t)USBD_OK;
 }
 
-
 /**
   * @brief  USBD_CDC_RNDIS_SetRxBuffer
   * @param  pdev: device instance
@@ -1089,7 +1078,6 @@ uint8_t USBD_CDC_RNDIS_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff)
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_TransmitPacket
@@ -1141,7 +1129,6 @@ uint8_t USBD_CDC_RNDIS_TransmitPacket(USBD_HandleTypeDef *pdev)
   return (uint8_t)ret;
 }
 
-
 /**
   * @brief  USBD_CDC_RNDIS_ReceivePacket
   *         prepare OUT Endpoint for reception
@@ -1165,7 +1152,6 @@ uint8_t USBD_CDC_RNDIS_ReceivePacket(USBD_HandleTypeDef *pdev)
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_SendNotification
@@ -1199,33 +1185,32 @@ uint8_t USBD_CDC_RNDIS_SendNotification(USBD_HandleTypeDef *pdev,
 
   switch (Notif)
   {
-    case RNDIS_RESPONSE_AVAILABLE:
-      (hcdc->Req).wValue = 0U;
-      (hcdc->Req).wIndex = CDC_RNDIS_CMD_ITF_NBR;
-      (hcdc->Req).wLength = 0U;
+  case RNDIS_RESPONSE_AVAILABLE:
+    (hcdc->Req).wValue = 0U;
+    (hcdc->Req).wIndex = CDC_RNDIS_CMD_ITF_NBR;
+    (hcdc->Req).wLength = 0U;
 
-      for (Idx = 0U; Idx < 8U; Idx++)
-      {
-        (hcdc->Req).data[Idx] = 0U;
-      }
+    for (Idx = 0U; Idx < 8U; Idx++)
+    {
+      (hcdc->Req).data[Idx] = 0U;
+    }
 
-      ReqSize = 8U;
-      break;
+    ReqSize = 8U;
+    break;
 
-    default:
-      ret = USBD_FAIL;
-      break;
+  default:
+    ret = USBD_FAIL;
+    break;
   }
 
   /* Transmit notification packet */
   if (ReqSize != 0U)
   {
-    (void)USBD_LL_Transmit(pdev, CDC_RNDIS_CMD_EP, (uint8_t *) &(hcdc->Req), ReqSize);
+    (void)USBD_LL_Transmit(pdev, CDC_RNDIS_CMD_EP, (uint8_t *)&(hcdc->Req), ReqSize);
   }
 
   return (uint8_t)ret;
 }
-
 
 /* ----------------------------- CDC_RNDIS Messages processing functions ----------------------- */
 /**
@@ -1243,45 +1228,44 @@ static uint8_t USBD_CDC_RNDIS_MsgParsing(USBD_HandleTypeDef *pdev, uint8_t *RxBu
   /* Check message type */
   switch (Msg->MsgType)
   {
-    /* CDC_RNDIS Initialize message */
-    case CDC_RNDIS_INITIALIZE_MSG_ID:
-      ret = USBD_CDC_RNDIS_ProcessInitMsg(pdev, (USBD_CDC_RNDIS_InitMsgTypeDef *)(void *)Msg);
-      break;
+  /* CDC_RNDIS Initialize message */
+  case CDC_RNDIS_INITIALIZE_MSG_ID:
+    ret = USBD_CDC_RNDIS_ProcessInitMsg(pdev, (USBD_CDC_RNDIS_InitMsgTypeDef *)(void *)Msg);
+    break;
 
-    /* CDC_RNDIS Halt message */
-    case CDC_RNDIS_HALT_MSG_ID:
-      ret = USBD_CDC_RNDIS_ProcessHaltMsg(pdev, (USBD_CDC_RNDIS_HaltMsgTypeDef *)(void *)Msg);
-      break;
+  /* CDC_RNDIS Halt message */
+  case CDC_RNDIS_HALT_MSG_ID:
+    ret = USBD_CDC_RNDIS_ProcessHaltMsg(pdev, (USBD_CDC_RNDIS_HaltMsgTypeDef *)(void *)Msg);
+    break;
 
-    /* CDC_RNDIS Query message */
-    case CDC_RNDIS_QUERY_MSG_ID:
-      ret = USBD_CDC_RNDIS_ProcessQueryMsg(pdev, (USBD_CDC_RNDIS_QueryMsgTypeDef *)(void *)Msg);
-      break;
+  /* CDC_RNDIS Query message */
+  case CDC_RNDIS_QUERY_MSG_ID:
+    ret = USBD_CDC_RNDIS_ProcessQueryMsg(pdev, (USBD_CDC_RNDIS_QueryMsgTypeDef *)(void *)Msg);
+    break;
 
-    /* CDC_RNDIS Set message */
-    case CDC_RNDIS_SET_MSG_ID:
-      ret = USBD_CDC_RNDIS_ProcessSetMsg(pdev, (USBD_CDC_RNDIS_SetMsgTypeDef *)(void *)Msg);
-      break;
+  /* CDC_RNDIS Set message */
+  case CDC_RNDIS_SET_MSG_ID:
+    ret = USBD_CDC_RNDIS_ProcessSetMsg(pdev, (USBD_CDC_RNDIS_SetMsgTypeDef *)(void *)Msg);
+    break;
 
-    /* CDC_RNDIS Reset message */
-    case CDC_RNDIS_RESET_MSG_ID:
-      ret = USBD_CDC_RNDIS_ProcessResetMsg(pdev, (USBD_CDC_RNDIS_ResetMsgTypeDef *)(void *)Msg);
-      break;
+  /* CDC_RNDIS Reset message */
+  case CDC_RNDIS_RESET_MSG_ID:
+    ret = USBD_CDC_RNDIS_ProcessResetMsg(pdev, (USBD_CDC_RNDIS_ResetMsgTypeDef *)(void *)Msg);
+    break;
 
-    /* CDC_RNDIS Keep-Alive message */
-    case CDC_RNDIS_KEEPALIVE_MSG_ID:
-      ret = USBD_CDC_RNDIS_ProcessKeepAliveMsg(pdev, (USBD_CDC_RNDIS_KpAliveMsgTypeDef *)(void *)Msg);
-      break;
+  /* CDC_RNDIS Keep-Alive message */
+  case CDC_RNDIS_KEEPALIVE_MSG_ID:
+    ret = USBD_CDC_RNDIS_ProcessKeepAliveMsg(pdev, (USBD_CDC_RNDIS_KpAliveMsgTypeDef *)(void *)Msg);
+    break;
 
-    /* CDC_RNDIS unsupported message */
-    default:
-      ret = USBD_CDC_RNDIS_ProcessUnsupportedMsg(pdev, (USBD_CDC_RNDIS_CtrlMsgTypeDef *)(void *)Msg);
-      break;
+  /* CDC_RNDIS unsupported message */
+  default:
+    ret = USBD_CDC_RNDIS_ProcessUnsupportedMsg(pdev, (USBD_CDC_RNDIS_CtrlMsgTypeDef *)(void *)Msg);
+    break;
   }
 
   return ret;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_ProcessInitMsg
@@ -1311,7 +1295,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessInitMsg(USBD_HandleTypeDef *pdev,
   }
 
   /* Check correctness of the message (MsgType already checked by entry to this function) */
-  if ((InitMessage->MsgLength != sizeof(USBD_CDC_RNDIS_InitMsgTypeDef)) || \
+  if ((InitMessage->MsgLength != sizeof(USBD_CDC_RNDIS_InitMsgTypeDef)) ||
       (InitMessage->MajorVersion < CDC_RNDIS_VERSION_MAJOR))
   {
     InitResponse->Status = CDC_RNDIS_STATUS_FAILURE;
@@ -1332,8 +1316,8 @@ static uint8_t USBD_CDC_RNDIS_ProcessInitMsg(USBD_HandleTypeDef *pdev,
   InitResponse->MaxPacketsPerTransfer = 1U;
   InitResponse->MaxTransferSize = (sizeof(USBD_CDC_RNDIS_PacketMsgTypeDef) + CDC_RNDIS_ETH_FRAME_SIZE_MAX);
   InitResponse->PacketAlignmentFactor = 2U; /* Not needed as single packet by transfer set */
-  InitResponse->AFListOffset = 0U; /* Reserved for connection-oriented devices. Set value to zero. */
-  InitResponse->AFListSize = 0U; /* Reserved for connection-oriented devices. Set value to zero. */
+  InitResponse->AFListOffset = 0U;          /* Reserved for connection-oriented devices. Set value to zero. */
+  InitResponse->AFListSize = 0U;            /* Reserved for connection-oriented devices. Set value to zero. */
 
   /* Set CDC_RNDIS state to INITIALIZED */
   hcdc->State = CDC_RNDIS_STATE_INITIALIZED;
@@ -1346,7 +1330,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessInitMsg(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_ProcessHaltMsg
@@ -1375,7 +1358,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessHaltMsg(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_ProcessKeepAliveMsg
@@ -1426,7 +1408,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessKeepAliveMsg(USBD_HandleTypeDef *pdev,
   return (uint8_t)USBD_OK;
 }
 
-
 /**
   * @brief  USBD_CDC_RNDIS_ProcessQueryMsg
   *         Parse, extract data and check correctness of CDC_RNDIS Query command.
@@ -1454,106 +1435,106 @@ static uint8_t USBD_CDC_RNDIS_ProcessQueryMsg(USBD_HandleTypeDef *pdev,
   /* Process the OID depending on its code */
   switch (Msg->Oid)
   {
-    case OID_GEN_SUPPORTED_LIST:
-      QueryResponse->InfoBufLength = sizeof(CDC_RNDIS_SupportedOIDs);
-      (void)USBD_memcpy(QueryResponse->InfoBuf, CDC_RNDIS_SupportedOIDs,
-                        sizeof(CDC_RNDIS_SupportedOIDs));
+  case OID_GEN_SUPPORTED_LIST:
+    QueryResponse->InfoBufLength = sizeof(CDC_RNDIS_SupportedOIDs);
+    (void)USBD_memcpy(QueryResponse->InfoBuf, CDC_RNDIS_SupportedOIDs,
+                      sizeof(CDC_RNDIS_SupportedOIDs));
 
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_HARDWARE_STATUS:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = CDC_RNDIS_HW_STS_READY;
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_HARDWARE_STATUS:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = CDC_RNDIS_HW_STS_READY;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_MEDIA_SUPPORTED:
-    case OID_GEN_MEDIA_IN_USE:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = CDC_RNDIS_MEDIUM_802_3;
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_MEDIA_SUPPORTED:
+  case OID_GEN_MEDIA_IN_USE:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = CDC_RNDIS_MEDIUM_802_3;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_VENDOR_ID:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = USBD_CDC_RNDIS_VID;
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_VENDOR_ID:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = USBD_CDC_RNDIS_VID;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_MAXIMUM_FRAME_SIZE:
-    case OID_GEN_TRANSMIT_BLOCK_SIZE:
-    case OID_GEN_RECEIVE_BLOCK_SIZE:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = CDC_RNDIS_ETH_FRAME_SIZE_MAX;
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_MAXIMUM_FRAME_SIZE:
+  case OID_GEN_TRANSMIT_BLOCK_SIZE:
+  case OID_GEN_RECEIVE_BLOCK_SIZE:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = CDC_RNDIS_ETH_FRAME_SIZE_MAX;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_VENDOR_DESCRIPTION:
-      QueryResponse->InfoBufLength = (strlen(USBD_CDC_RNDIS_VENDOR_DESC) + 1U);
-      (void)USBD_memcpy(QueryResponse->InfoBuf, USBD_CDC_RNDIS_VENDOR_DESC,
-                        strlen(USBD_CDC_RNDIS_VENDOR_DESC));
+  case OID_GEN_VENDOR_DESCRIPTION:
+    QueryResponse->InfoBufLength = (strlen(USBD_CDC_RNDIS_VENDOR_DESC) + 1U);
+    (void)USBD_memcpy(QueryResponse->InfoBuf, USBD_CDC_RNDIS_VENDOR_DESC,
+                      strlen(USBD_CDC_RNDIS_VENDOR_DESC));
 
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_MEDIA_CONNECT_STATUS:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = CDC_RNDIS_MEDIA_STATE_CONNECTED;
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_MEDIA_CONNECT_STATUS:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = CDC_RNDIS_MEDIA_STATE_CONNECTED;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_MAXIMUM_SEND_PACKETS:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = 1U;
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_MAXIMUM_SEND_PACKETS:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = 1U;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_LINK_SPEED:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = USBD_CDC_RNDIS_LINK_SPEED;
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_LINK_SPEED:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = USBD_CDC_RNDIS_LINK_SPEED;
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_802_3_PERMANENT_ADDRESS:
-    case OID_802_3_CURRENT_ADDRESS:
-      QueryResponse->InfoBufLength = 6U;
-      (void)USBD_memcpy(QueryResponse->InfoBuf, MAC_StrDesc, 6);
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_802_3_PERMANENT_ADDRESS:
+  case OID_802_3_CURRENT_ADDRESS:
+    QueryResponse->InfoBufLength = 6U;
+    (void)USBD_memcpy(QueryResponse->InfoBuf, MAC_StrDesc, 6);
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_802_3_MAXIMUM_LIST_SIZE:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = 1U; /* Only one multicast address supported */
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_802_3_MAXIMUM_LIST_SIZE:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = 1U; /* Only one multicast address supported */
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_CURRENT_PACKET_FILTER:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = 0xFFFFFFU; /* USBD_CDC_RNDIS_DEVICE.packetFilter; */
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_CURRENT_PACKET_FILTER:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = 0xFFFFFFU; /* USBD_CDC_RNDIS_DEVICE.packetFilter; */
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_802_3_RCV_ERROR_ALIGNMENT:
-    case OID_802_3_XMIT_ONE_COLLISION:
-    case OID_802_3_XMIT_MORE_COLLISIONS:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      QueryResponse->InfoBuf[0] = 0U; /* Unused OIDs, return zero */
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_802_3_RCV_ERROR_ALIGNMENT:
+  case OID_802_3_XMIT_ONE_COLLISION:
+  case OID_802_3_XMIT_MORE_COLLISIONS:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    QueryResponse->InfoBuf[0] = 0U; /* Unused OIDs, return zero */
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_GEN_MAXIMUM_TOTAL_SIZE:
-      QueryResponse->InfoBufLength = sizeof(uint32_t);
-      /* Indicate maximum overall buffer (Ethernet frame and CDC_RNDIS header) the adapter can handle */
-      QueryResponse->InfoBuf[0] = (CDC_RNDIS_MESSAGE_BUFFER_SIZE + CDC_RNDIS_ETH_FRAME_SIZE_MAX);
-      QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_MAXIMUM_TOTAL_SIZE:
+    QueryResponse->InfoBufLength = sizeof(uint32_t);
+    /* Indicate maximum overall buffer (Ethernet frame and CDC_RNDIS header) the adapter can handle */
+    QueryResponse->InfoBuf[0] = (CDC_RNDIS_MESSAGE_BUFFER_SIZE + CDC_RNDIS_ETH_FRAME_SIZE_MAX);
+    QueryResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    default:
-      /* Unknown or unsupported OID */
-      QueryResponse->InfoBufLength = 0U;
-      QueryResponse->Status = CDC_RNDIS_STATUS_FAILURE;
-      break;
+  default:
+    /* Unknown or unsupported OID */
+    QueryResponse->InfoBufLength = 0U;
+    QueryResponse->Status = CDC_RNDIS_STATUS_FAILURE;
+    break;
   }
 
   /* Setup the response buffer content */
@@ -1570,7 +1551,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessQueryMsg(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_ProcessSetMsg
@@ -1601,21 +1581,21 @@ static uint8_t USBD_CDC_RNDIS_ProcessSetMsg(USBD_HandleTypeDef *pdev,
 
   switch (SetMessage->Oid)
   {
-    case OID_GEN_CURRENT_PACKET_FILTER:
-      /* Setup the packet filter value */
-      hcdc->PacketFilter = SetMessage->InfoBuf[0];
-      SetResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_GEN_CURRENT_PACKET_FILTER:
+    /* Setup the packet filter value */
+    hcdc->PacketFilter = SetMessage->InfoBuf[0];
+    SetResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    case OID_802_3_MULTICAST_LIST:
-      /* List of multicast addresses on a miniport adapter */
-      SetResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
-      break;
+  case OID_802_3_MULTICAST_LIST:
+    /* List of multicast addresses on a miniport adapter */
+    SetResponse->Status = CDC_RNDIS_STATUS_SUCCESS;
+    break;
 
-    default:
-      /* Report an error */
-      SetResponse->Status = CDC_RNDIS_STATUS_FAILURE;
-      break;
+  default:
+    /* Report an error */
+    SetResponse->Status = CDC_RNDIS_STATUS_FAILURE;
+    break;
   }
 
   /* Prepare response buffer */
@@ -1631,7 +1611,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessSetMsg(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_ProcessResetMsg
@@ -1655,7 +1634,7 @@ static uint8_t USBD_CDC_RNDIS_ProcessResetMsg(USBD_HandleTypeDef *pdev,
     return (uint8_t)USBD_FAIL;
   }
 
-  if ((ResetMessage->MsgLength != sizeof(USBD_CDC_RNDIS_ResetMsgTypeDef)) || \
+  if ((ResetMessage->MsgLength != sizeof(USBD_CDC_RNDIS_ResetMsgTypeDef)) ||
       (ResetMessage->Reserved != 0U))
   {
     ResetResponse->Status = CDC_RNDIS_STATUS_FAILURE;
@@ -1682,7 +1661,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessResetMsg(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @brief  USBD_CDC_RNDIS_ProcessPacketMsg
@@ -1727,7 +1705,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessPacketMsg(USBD_HandleTypeDef *pdev,
   return (uint8_t)USBD_OK;
 }
 
-
 /**
   * @brief  USBD_CDC_RNDIS_ProcessUnsupportedMsg
   *         Parse, extract data and check correctness of CDC_RNDIS KeepAlive command.
@@ -1766,7 +1743,6 @@ static uint8_t USBD_CDC_RNDIS_ProcessUnsupportedMsg(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
-
 
 /**
   * @}
