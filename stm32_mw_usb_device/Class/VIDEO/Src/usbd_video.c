@@ -52,6 +52,15 @@
 #include "usbd_video.h"
 #include "usbd_ctlreq.h"
 #include "usbd_core.h"
+
+#define _UVC_IN_EP 0x81U
+#define _UVC_VC_IF_NUM 0x00U
+#define _UVC_VS_IF_NUM 0x01U
+
+uint8_t UVC_IN_EP = _UVC_IN_EP;
+uint8_t UVC_VC_IF_NUM = _UVC_VC_IF_NUM;
+uint8_t UVC_VS_IF_NUM = _UVC_VS_IF_NUM;
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -132,8 +141,8 @@ USBD_ClassTypeDef USBD_VIDEO =
 __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_END =
     {
         /* Configuration 1 */
-        USB_CONF_DESC_SIZE,          /* bLength: Configuration Descriptor size */
-        USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
+        USB_CONF_DESC_SIZE,           /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION,  /* bDescriptorType: Configuration */
         LOBYTE(UVC_CONFIG_DESC_SIZE), /* wTotalLength: no of returned bytes */
         HIBYTE(UVC_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces: 2 interfaces */
@@ -149,7 +158,7 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         /* Interface Association Descriptor */
         USB_IAD_DESC_SIZE,             /* bLength: Interface Association Descriptor size */
         USB_DESC_TYPE_IAD,             /* bDescriptorType: interface association */
-        UVC_VC_IF_NUM,                 /* bFirstInterface */
+        _UVC_VC_IF_NUM,                /* bFirstInterface */
         0x02,                          /* bInterfaceCount */
         UVC_CC_VIDEO,                  /* bFunctionClass: Video class */
         SC_VIDEO_INTERFACE_COLLECTION, /* bFunctionSubClass: Video Interface Collection */
@@ -159,7 +168,7 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         /* Standard VC (Video Control) Interface Descriptor  = interface 0 */
         USB_IF_DESC_SIZE,        /* bLength: interface descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: interface */
-        UVC_VC_IF_NUM,           /* bInterfaceNumber: interface number */
+        _UVC_VC_IF_NUM,          /* bInterfaceNumber: interface number */
         0x00,                    /* bAlternateSetting: index of this alternate setting */
         0x00,                    /* bNumEndpoints: No endpoints used for this interface */
         UVC_CC_VIDEO,            /* bInterfaceClass: Video Class */
@@ -179,8 +188,8 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         0x6C,
         0xDC,
         0x02,
-        0x01,          /* bInCollection: number of streaming interfaces */
-        UVC_VS_IF_NUM, /* baInterfaceNr(1): VideoStreaming interface 1 is part of VC interface */
+        0x01,           /* bInCollection: number of streaming interfaces */
+        _UVC_VS_IF_NUM, /* baInterfaceNr(1): VideoStreaming interface 1 is part of VC interface */
 
         /* Input Terminal Descriptor */
         VIDEO_IN_TERMINAL_DESC_SIZE, /* bLength: Input terminal descriptor size */
@@ -207,7 +216,7 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
     (when no data are sent from the device) */
         USB_IF_DESC_SIZE,        /* bLength: interface descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType */
-        UVC_VS_IF_NUM,           /* bInterfaceNumber */
+        _UVC_VS_IF_NUM,          /* bInterfaceNumber */
         0x00,                    /* bAlternateSetting */
         0x00,                    /* bNumEndpoints: no endpoints used for alternate setting 0 */
         UVC_CC_VIDEO,            /* bInterfaceClass */
@@ -221,15 +230,15 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         VS_INPUT_HEADER,                 /* bDescriptorSubtype */
         0x01,                            /* bNumFormats: 1 format descriptor is used */
         VC_HEADER_SIZE,
-        0x00,      /* Total size of Video Control Specific Descriptors */
-        UVC_IN_EP, /* bEndPointAddress: In endpoint is used for the alternate setting */
-        0x00,      /* bmInfo: dynamic format change not supported */
-        0x02,      /* bTerminalLink: output to terminal ID 2 */
-        0x00,      /* bStillCaptureMethod: not supported */
-        0x00,      /* bTriggerSupport: not supported */
-        0x00,      /* bTriggerUsage: not supported */
-        0x01,      /* bControlSize: 1 byte field size */
-        0x00,      /* bmaControls: No specific controls used */
+        0x00,       /* Total size of Video Control Specific Descriptors */
+        _UVC_IN_EP, /* bEndPointAddress: In endpoint is used for the alternate setting */
+        0x00,       /* bmInfo: dynamic format change not supported */
+        0x02,       /* bTerminalLink: output to terminal ID 2 */
+        0x00,       /* bStillCaptureMethod: not supported */
+        0x00,       /* bTriggerSupport: not supported */
+        0x00,       /* bTriggerUsage: not supported */
+        0x01,       /* bControlSize: 1 byte field size */
+        0x00,       /* bmaControls: No specific controls used */
 
         /* Payload Format Descriptor */
         VS_FORMAT_DESC_SIZE, /* blength */
@@ -285,7 +294,7 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         /* Standard VS Interface Descriptor  = interface 1, alternate setting 1 = data transfer mode  */
         USB_IF_DESC_SIZE,        /* bLength */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType */
-        UVC_VS_IF_NUM,           /* bInterfaceNumber */
+        _UVC_VS_IF_NUM,          /* bInterfaceNumber */
         0x01,                    /* bAlternateSetting */
         0x01,                    /* bNumEndpoints: one endpoint is used */
         UVC_CC_VIDEO,            /* bInterfaceClass */
@@ -296,7 +305,7 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         /* Standard VS (Video Streaming) data Endpoint */
         USB_EP_DESC_SIZE,       /* bLength */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType */
-        UVC_IN_EP,              /* bEndpointAddress */
+        _UVC_IN_EP,             /* bEndpointAddress */
         0x05,                   /* bmAttributes: ISO transfer */
         LOBYTE(UVC_ISO_FS_MPS), /* wMaxPacketSize */
         HIBYTE(UVC_ISO_FS_MPS),
@@ -1030,6 +1039,27 @@ uint8_t USBD_VIDEO_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_VIDEO_ItfTyp
 
   /* Exit with no error code */
   return (uint8_t)USBD_OK;
+}
+
+void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t in_ep)
+{
+#ifdef USBD_UVC_FORMAT_UNCOMPRESSED
+#define UNCOMPRESSED_OFFSET 22
+#else
+#define UNCOMPRESSED_OFFSET 0
+#endif
+
+  desc[11] = vc_itf;
+  desc[19] = vc_itf;
+  desc[38] = vs_itf;
+  desc[58] = vs_itf;
+  desc[71] = in_ep;
+  desc[100 + UNCOMPRESSED_OFFSET] = vs_itf;
+  desc[109 + UNCOMPRESSED_OFFSET] = in_ep;
+
+  UVC_IN_EP = in_ep;
+  UVC_VC_IF_NUM = vc_itf;
+  UVC_VS_IF_NUM = vs_itf;
 }
 
 /**

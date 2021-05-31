@@ -998,27 +998,33 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_UAC_MIC == 1)
   ptr = USBD_AUDIO_MIC.GetFSConfigDescriptor(&len);
+  USBD_Update_Audio_MIC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UAC_MIC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_AUDIO_MIC.GetHSConfigDescriptor(&len);
+  USBD_Update_Audio_MIC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_MIC_DESC, ptr + 0x09, len - 0x09);
   in_ep_count += 1;
   interface_count += 2;
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
   ptr = USBD_AUDIO_SPKR.GetFSConfigDescriptor(&len);
+  USBD_Update_Audio_SPKR_DESC(ptr, interface_count, interface_count + 1, out_ep_count);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_AUDIO_SPKR.GetHSConfigDescriptor(&len);
+  USBD_Update_Audio_SPKR_DESC(ptr, interface_count, interface_count + 1, out_ep_count);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
   out_ep_count += 1;
   interface_count += 2;
 #endif
 #if (USBD_USE_UVC == 1)
   ptr = USBD_VIDEO.GetFSConfigDescriptor(&len);
+  USBD_Update_UVC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UVC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_VIDEO.GetHSConfigDescriptor(&len);
+  USBD_Update_UVC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UVC_DESC, ptr + 0x09, len - 0x09);
   in_ep_count += 1;
   interface_count += 2;

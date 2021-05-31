@@ -49,10 +49,7 @@ extern "C" {
 #define UVC_VERSION                                   0x0110U      /* UVC 1.1 */
 #endif
 
-/* bEndpointAddress in Endpoint Descriptor */
-#ifndef UVC_IN_EP
-#define UVC_IN_EP                                     0x81U
-#endif /* VIDEO_IN_EP */
+#define USBD_UVC_FORMAT_UNCOMPRESSED                  
 
 /* These defines shall be updated in the usbd_conf.h file */
 #ifndef UVC_WIDTH
@@ -123,8 +120,6 @@ extern "C" {
 
 
 #define UVC_REQ_READ_MASK                             0x80U
-#define UVC_VC_IF_NUM                                 0x00U
-#define UVC_VS_IF_NUM                                 0x01U
 #define UVC_TOTAL_IF_NUM                              0x02U
 
 #ifdef USBD_UVC_FORMAT_UNCOMPRESSED
@@ -438,6 +433,10 @@ extern "C" {
 
   extern USBD_ClassTypeDef USBD_VIDEO;
 
+  extern uint8_t UVC_IN_EP;
+  extern uint8_t UVC_VC_IF_NUM;
+  extern uint8_t UVC_VS_IF_NUM;
+
   /**
   * @}
   */
@@ -447,6 +446,8 @@ extern "C" {
   */
 
   uint8_t USBD_VIDEO_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_VIDEO_ItfTypeDef *fops);
+
+  void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t in_ep);
 
   /**
   * @}
