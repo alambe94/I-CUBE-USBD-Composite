@@ -1031,9 +1031,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_MSC == 1)
   ptr = USBD_MSC.GetFSConfigDescriptor(&len);
+  USBD_Update_MSC_DESC(ptr, interface_count, in_ep_count, out_ep_count);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_MSC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_MSC.GetHSConfigDescriptor(&len);
+  USBD_Update_MSC_DESC(ptr, interface_count, in_ep_count, out_ep_count);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_MSC_DESC, ptr + 0x09, len - 0x09);
   in_ep_count += 1;
   out_ep_count += 1;
@@ -1041,18 +1043,24 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_DFU == 1)
   ptr = USBD_DFU.GetFSConfigDescriptor(&len);
+  USBD_Update_DFU_DESC(ptr, interface_count);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_DFU.GetHSConfigDescriptor(&len);
+  USBD_Update_DFU_DESC(ptr, interface_count);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
   interface_count += 1;
 #endif
 #if (USBD_USE_PRNTR == 1)
   ptr = USBD_PRNT.GetFSConfigDescriptor(&len);
+  USBD_Update_PRNT_DESC(ptr, interface_count, in_ep_count, out_ep_count);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_PRNT.GetHSConfigDescriptor(&len);
+  USBD_Update_PRNT_DESC(ptr, interface_count, in_ep_count, out_ep_count);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
+  interface_count += 1;
+  out_ep_count += 1;
   interface_count += 1;
 #endif
 }

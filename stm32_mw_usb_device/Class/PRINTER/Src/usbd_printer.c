@@ -59,6 +59,14 @@ EndBSPDependencies */
 #include "usbd_printer.h"
 #include "usbd_ctlreq.h"
 
+#define _PRNT_IN_EP 0x81U  /* Default: EP1 for data IN */
+#define _PRNT_OUT_EP 0x01U /* Default: EP1 for data OUT */
+#define _PRNT_ITF_NBR 0x00
+
+uint8_t PRNT_IN_EP = _PRNT_IN_EP;
+uint8_t PRNT_OUT_EP = _PRNT_OUT_EP;
+uint8_t PRNT_ITF_NBR = _PRNT_ITF_NBR;
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -155,7 +163,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /*Configuration Descriptor*/
         0x09,                        /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
-		USB_PRNT_CONFIG_DESC_SIZE,    /* wTotalLength:no of returned bytes */
+        USB_PRNT_CONFIG_DESC_SIZE,   /* wTotalLength:no of returned bytes */
         0x00,
         0x01, /* bNumInterfaces: 1 interface */
         0x01, /* bConfigurationValue: Configuration value */
@@ -170,7 +178,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface */
-        0x00,                    /* bInterfaceNumber: Number of Interface */
+        _PRNT_ITF_NBR,           /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints: 2 endpoints used */
         0x07,                    /* bInterfaceClass: Communication Interface Class */
@@ -181,7 +189,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /* Endpoint IN Descriptor */
         0x07,                                /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-        PRNT_IN_EP,                          /* bEndpointAddress */
+        _PRNT_IN_EP,                          /* bEndpointAddress */
         0x02,                                /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_HS_IN_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_HS_IN_PACKET_SIZE),
@@ -190,7 +198,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /* Endpoint OUT Descriptor */
         0x07,                                 /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
-        PRNT_OUT_EP,                          /* bEndpointAddress */
+        _PRNT_OUT_EP,                          /* bEndpointAddress */
         0x02,                                 /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE),
@@ -203,7 +211,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /*Configuration Descriptor*/
         0x09,                        /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
-		USB_PRNT_CONFIG_DESC_SIZE,    /* wTotalLength:no of returned bytes */
+        USB_PRNT_CONFIG_DESC_SIZE,   /* wTotalLength:no of returned bytes */
         0x00,
         0x01, /* bNumInterfaces: 1 interface */
         0x01, /* bConfigurationValue: Configuration value */
@@ -218,7 +226,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /*Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface */
-        0x00,                    /* bInterfaceNumber: Number of Interface */
+        _PRNT_ITF_NBR,           /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints: 2 endpoints used */
         0x07,                    /* bInterfaceClass: Communication Interface Class */
@@ -229,7 +237,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /*Endpoint IN Descriptor*/
         0x07,                                /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-        PRNT_IN_EP,                          /* bEndpointAddress */
+        _PRNT_IN_EP,                          /* bEndpointAddress */
         0x02,                                /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
@@ -238,7 +246,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /*Endpoint OUT Descriptor*/
         0x07,                                 /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
-        PRNT_OUT_EP,                          /* bEndpointAddress */
+        _PRNT_OUT_EP,                          /* bEndpointAddress */
         0x02,                                 /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),
@@ -250,7 +258,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[USB_PRNT_CONFIG_DESC_SI
         /*Configuration Descriptor*/
         0x09,                        /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
-		USB_PRNT_CONFIG_DESC_SIZE,    /* wTotalLength:no of returned bytes */
+        USB_PRNT_CONFIG_DESC_SIZE,   /* wTotalLength:no of returned bytes */
         0x00,
         0x01, /* bNumInterfaces: 1 interface */
         0x01, /* bConfigurationValue: Configuration value */
@@ -265,7 +273,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[USB_PRNT_CONFIG_DESC_SI
         /*Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface */
-        0x00,                    /* bInterfaceNumber: Number of Interface */
+        _PRNT_ITF_NBR,           /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints: 2 endpoints used */
         0x07,                    /* bInterfaceClass: Communication Interface Class */
@@ -276,7 +284,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[USB_PRNT_CONFIG_DESC_SI
         /*Endpoint IN Descriptor*/
         0x07,                                /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-        PRNT_IN_EP,                          /* bEndpointAddress */
+        _PRNT_IN_EP,                          /* bEndpointAddress */
         0x02,                                /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
@@ -285,7 +293,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[USB_PRNT_CONFIG_DESC_SI
         /*Endpoint OUT Descriptor*/
         0x07,                                 /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
-        PRNT_OUT_EP,                          /* bEndpointAddress */
+        _PRNT_OUT_EP,                          /* bEndpointAddress */
         0x02,                                 /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),
@@ -657,6 +665,17 @@ uint8_t USBD_PRNT_ReceivePacket(USBD_HandleTypeDef *pdev)
   }
 
   return (uint8_t)USBD_OK;
+}
+
+void USBD_Update_PRNT_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep)
+{
+  desc[11] = itf_no;
+  desc[20] = in_ep;
+  desc[27] = out_ep;
+
+  PRNT_IN_EP = in_ep;
+  PRNT_OUT_EP = out_ep;
+  PRNT_ITF_NBR = itf_no;
 }
 /**
   * @}

@@ -41,6 +41,14 @@ EndBSPDependencies */
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_msc.h"
 
+#define _MSC_EPIN_ADDR 0x81U
+#define _MSC_EPOUT_ADDR 0x01U
+#define _MSC_ITF_NBR 0x00
+
+uint8_t MSC_EPIN_ADDR = _MSC_EPIN_ADDR;
+uint8_t MSC_EPOUT_ADDR = _MSC_EPOUT_ADDR;
+uint8_t MSC_ITF_NBR = _MSC_ITF_NBR;
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -134,28 +142,28 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         USBD_MAX_POWER, /* MaxPower (mA) */
 
         /********************  Mass Storage interface ********************/
-        0x09,        /* bLength: Interface Descriptor size */
-        0x04,        /* bDescriptorType: */
-        MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
-        0x00,        /* bAlternateSetting: Alternate setting */
-        0x02,        /* bNumEndpoints */
-        0x08,        /* bInterfaceClass: MSC Class */
-        0x06,        /* bInterfaceSubClass : SCSI transparent */
-        0x50,        /* nInterfaceProtocol */
-        0x05,        /* iInterface */
+        0x09,         /* bLength: Interface Descriptor size */
+        0x04,         /* bDescriptorType: */
+        _MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
+        0x00,         /* bAlternateSetting: Alternate setting */
+        0x02,         /* bNumEndpoints */
+        0x08,         /* bInterfaceClass: MSC Class */
+        0x06,         /* bInterfaceSubClass : SCSI transparent */
+        0x50,         /* nInterfaceProtocol */
+        0x05,         /* iInterface */
         /********************  Mass Storage Endpoints ********************/
-        0x07,          /* Endpoint descriptor length = 7 */
-        0x05,          /* Endpoint descriptor type */
-        MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
-        0x02,          /* Bulk endpoint type */
+        0x07,           /* Endpoint descriptor length = 7 */
+        0x05,           /* Endpoint descriptor type */
+        _MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
+        0x02,           /* Bulk endpoint type */
         LOBYTE(MSC_MAX_HS_PACKET),
         HIBYTE(MSC_MAX_HS_PACKET),
         0x00, /* Polling interval in milliseconds */
 
-        0x07,           /* Endpoint descriptor length = 7 */
-        0x05,           /* Endpoint descriptor type */
-        MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
-        0x02,           /* Bulk endpoint type */
+        0x07,            /* Endpoint descriptor length = 7 */
+        0x05,            /* Endpoint descriptor type */
+        _MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
+        0x02,            /* Bulk endpoint type */
         LOBYTE(MSC_MAX_HS_PACKET),
         HIBYTE(MSC_MAX_HS_PACKET),
         0x00 /* Polling interval in milliseconds */
@@ -181,28 +189,28 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgFSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         USBD_MAX_POWER, /* MaxPower (mA) */
 
         /********************  Mass Storage interface ********************/
-        0x09,        /* bLength: Interface Descriptor size */
-        0x04,        /* bDescriptorType: */
-        MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
-        0x00,        /* bAlternateSetting: Alternate setting */
-        0x02,        /* bNumEndpoints*/
-        0x08,        /* bInterfaceClass: MSC Class */
-        0x06,        /* bInterfaceSubClass : SCSI transparent*/
-        0x50,        /* nInterfaceProtocol */
-        0x05,        /* iInterface: */
+        0x09,         /* bLength: Interface Descriptor size */
+        0x04,         /* bDescriptorType: */
+        _MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
+        0x00,         /* bAlternateSetting: Alternate setting */
+        0x02,         /* bNumEndpoints*/
+        0x08,         /* bInterfaceClass: MSC Class */
+        0x06,         /* bInterfaceSubClass : SCSI transparent*/
+        0x50,         /* nInterfaceProtocol */
+        0x05,         /* iInterface: */
         /********************  Mass Storage Endpoints ********************/
-        0x07,          /* Endpoint descriptor length = 7 */
-        0x05,          /* Endpoint descriptor type */
-        MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
-        0x02,          /* Bulk endpoint type */
+        0x07,           /* Endpoint descriptor length = 7 */
+        0x05,           /* Endpoint descriptor type */
+        _MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
+        0x02,           /* Bulk endpoint type */
         LOBYTE(MSC_MAX_FS_PACKET),
         HIBYTE(MSC_MAX_FS_PACKET),
         0x00, /* Polling interval in milliseconds */
 
-        0x07,           /* Endpoint descriptor length = 7 */
-        0x05,           /* Endpoint descriptor type */
-        MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
-        0x02,           /* Bulk endpoint type */
+        0x07,            /* Endpoint descriptor length = 7 */
+        0x05,            /* Endpoint descriptor type */
+        _MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
+        0x02,            /* Bulk endpoint type */
         LOBYTE(MSC_MAX_FS_PACKET),
         HIBYTE(MSC_MAX_FS_PACKET),
         0x00 /* Polling interval in milliseconds */
@@ -226,28 +234,28 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_OtherSpeedCfgDesc[USB_MSC_CONFIG_DESC_SIZ]
         USBD_MAX_POWER, /* MaxPower (mA) */
 
         /********************  Mass Storage interface ********************/
-        0x09,        /* bLength: Interface Descriptor size */
-        0x04,        /* bDescriptorType: */
-        MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
-        0x00,        /* bAlternateSetting: Alternate setting */
-        0x02,        /* bNumEndpoints */
-        0x08,        /* bInterfaceClass: MSC Class */
-        0x06,        /* bInterfaceSubClass : SCSI transparent command set */
-        0x50,        /* nInterfaceProtocol */
-        0x05,        /* iInterface */
+        0x09,         /* bLength: Interface Descriptor size */
+        0x04,         /* bDescriptorType: */
+        _MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
+        0x00,         /* bAlternateSetting: Alternate setting */
+        0x02,         /* bNumEndpoints */
+        0x08,         /* bInterfaceClass: MSC Class */
+        0x06,         /* bInterfaceSubClass : SCSI transparent command set */
+        0x50,         /* nInterfaceProtocol */
+        0x05,         /* iInterface */
         /********************  Mass Storage Endpoints ********************/
-        0x07,          /* Endpoint descriptor length = 7 */
-        0x05,          /* Endpoint descriptor type */
-        MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
-        0x02,          /* Bulk endpoint type */
+        0x07,           /* Endpoint descriptor length = 7 */
+        0x05,           /* Endpoint descriptor type */
+        _MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
+        0x02,           /* Bulk endpoint type */
         0x40,
         0x00,
         0x00, /* Polling interval in milliseconds */
 
-        0x07,           /* Endpoint descriptor length = 7 */
-        0x05,           /* Endpoint descriptor type */
-        MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
-        0x02,           /* Bulk endpoint type */
+        0x07,            /* Endpoint descriptor length = 7 */
+        0x05,            /* Endpoint descriptor type */
+        _MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
+        0x02,            /* Bulk endpoint type */
         0x40,
         0x00,
         0x00 /* Polling interval in milliseconds */
@@ -577,6 +585,17 @@ uint8_t USBD_MSC_RegisterStorage(USBD_HandleTypeDef *pdev, USBD_StorageTypeDef *
   pdev->pUserData_MSC = fops;
 
   return (uint8_t)USBD_OK;
+}
+
+void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep)
+{
+  desc[11] = itf_no;
+  desc[20] = in_ep;
+  desc[27] = out_ep;
+
+  MSC_EPIN_ADDR = in_ep;
+  MSC_EPIN_ADDR = out_ep;
+  MSC_ITF_NBR = itf_no;
 }
 
 /**

@@ -55,12 +55,6 @@ extern "C" {
 #define BOT_RESET                    0xFF
 #define USB_MSC_CONFIG_DESC_SIZ      32
 
-
-#define MSC_EPIN_ADDR                0x81U
-#define MSC_EPOUT_ADDR               0x01U
-
-#define MSC_ITF_NBR                  0x00
-
 /**
   * @}
   */
@@ -107,8 +101,14 @@ typedef struct
 /* Structure for MSC process */
 extern USBD_ClassTypeDef USBD_MSC;
 
+extern uint8_t MSC_EPIN_ADDR;
+extern uint8_t MSC_EPOUT_ADDR;
+extern uint8_t MSC_ITF_NBR;
+
 uint8_t USBD_MSC_RegisterStorage(USBD_HandleTypeDef *pdev,
                                  USBD_StorageTypeDef *fops);
+
+void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep);
 /**
   * @}
   */

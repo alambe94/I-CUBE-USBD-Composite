@@ -41,14 +41,6 @@ extern "C" {
 /** @defgroup usbd_PRNT_Exported_Defines
   * @{
   */
-#ifndef PRNT_IN_EP
-#define PRNT_IN_EP                                   0x81U  /* Default: EP1 for data IN */
-#endif /* PRNT_IN_EP */
-
-#ifndef PRNT_OUT_EP
-#define PRNT_OUT_EP                                  0x01U  /* Default: EP1 for data OUT */
-#endif /* PRNT_OUT_EP */
-
 #ifndef PRNT_DATA_HS_MAX_PACKET_SIZE
 #define PRNT_DATA_HS_MAX_PACKET_SIZE                 512U  /* Endpoint IN & OUT Packet size */
 #endif /* PRNT_DATA_HS_MAX_PACKET_SIZE */
@@ -128,7 +120,11 @@ typedef struct
   */
 
 extern USBD_ClassTypeDef USBD_PRNT;
-#define USBD_PRNT_CLASS &USBD_PRNT
+
+extern uint8_t PRNT_IN_EP;
+extern uint8_t PRNT_OUT_EP;
+extern uint8_t PRNT_ITF_NBR;
+
 /**
   * @}
   */
@@ -139,6 +135,8 @@ extern USBD_ClassTypeDef USBD_PRNT;
 uint8_t USBD_PRNT_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_PRNT_ItfTypeDef *fops);
 uint8_t USBD_PRNT_SetRxBuffer(USBD_HandleTypeDef *pdev, uint8_t *pbuff);
 uint8_t USBD_PRNT_ReceivePacket(USBD_HandleTypeDef *pdev);
+
+void USBD_Update_PRNT_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep);
 
 /**
   * @}
