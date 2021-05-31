@@ -47,6 +47,14 @@
 #include "usbd_desc.h"
 #include "usbd_ctlreq.h"
 
+#define _AUDIO_MIC_EP 0x81
+#define _AUDIO_MIC_AC_ITF_NBR 0x00U
+#define _AUDIO_MIC_AS_ITF_NBR 0x01U
+
+uint8_t AUDIO_MIC_EP = _AUDIO_MIC_EP;
+uint8_t AUDIO_MIC_AC_ITF_NBR = _AUDIO_MIC_AC_ITF_NBR;
+uint8_t AUDIO_MIC_AS_ITF_NBR = _AUDIO_MIC_AS_ITF_NBR;
+
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
 * @{
 */
@@ -166,13 +174,18 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x02, /* bNumInterfaces */
         0x01, /* bConfigurationValue */
         0x00, /* iConfiguration */
-        0x80, /* bmAttributes  BUS Powered*/
-        0x32, /* bMaxPower = 100 mA*/
+#if (USBD_SELF_POWERED == 1U)
+        0xC0, /* bmAttributes: Bus Powered according to user configuration */
+#else
+        0x80, /* bmAttributes: Bus Powered according to user configuration */
+#endif
+        USBD_MAX_POWER, /* bMaxPower = 100 mA */
+        /* 09 byte*/
 
         /* USB Microphone Standard interface descriptor */
         0x09,                            /* bLength */
         USB_DESC_TYPE_INTERFACE,         /* bDescriptorType */
-        0x00,                            /* bInterfaceNumber */
+        _AUDIO_MIC_AC_ITF_NBR,           /* bInterfaceNumber */
         0x00,                            /* bAlternateSetting */
         0x00,                            /* bNumEndpoints */
         AUDIO_MIC_DEVICE_CLASS,          /* bInterfaceClass */
@@ -189,8 +202,8 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x01,
         0x25 + AUDIO_MIC_CHANNELS, /* wTotalLength = 37+AUDIO_CHANNELS*/
         0x00,
-        0x01, /* bInCollection */
-        0x01, /* baInterfaceNr */
+        0x01,                  /* bInCollection */
+        _AUDIO_MIC_AS_ITF_NBR, /* baInterfaceNr */
 
         /* USB Microphone Input Terminal Descriptor */
         AUDIO_MIC_INPUT_TERMINAL_DESC_SIZE,  /* bLength */
@@ -268,7 +281,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         /* Interface 1, Alternate Setting 0                                             */
         0x09,                              /* bLength */
         USB_DESC_TYPE_INTERFACE,           /* bDescriptorType */
-        0x01,                              /* bInterfaceNumber */
+        _AUDIO_MIC_AS_ITF_NBR,             /* bInterfaceNumber */
         0x00,                              /* bAlternateSetting */
         0x00,                              /* bNumEndpoints */
         AUDIO_MIC_DEVICE_CLASS,            /* bInterfaceClass */
@@ -280,7 +293,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         /* Interface 1, Alternate Setting 1                                           */
         0x09,                              /* bLength */
         USB_DESC_TYPE_INTERFACE,           /* bDescriptorType */
-        0x01,                              /* bInterfaceNumber */
+        _AUDIO_MIC_AS_ITF_NBR,             /* bInterfaceNumber */
         0x01,                              /* bAlternateSetting */
         0x01,                              /* bNumEndpoints */
         AUDIO_MIC_DEVICE_CLASS,            /* bInterfaceClass */
@@ -313,7 +326,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         /* Endpoint 1 - Standard Descriptor */
         AUDIO_MIC_STANDARD_ENDPOINT_DESC_SIZE,                              /* bLength */
         0x05,                                                               /* bDescriptorType */
-        AUDIO_MIC_EP,                                                       /* bEndpointAddress 1 in endpoint*/
+        _AUDIO_MIC_EP,                                                      /* bEndpointAddress 1 in endpoint*/
         0x05,                                                               /* bmAttributes */
         ((AUDIO_MIC_SMPL_FREQ / 1000 + 2) * AUDIO_MIC_CHANNELS * 2) & 0xFF, /* wMaxPacketSize */
         ((AUDIO_MIC_SMPL_FREQ / 1000 + 2) * AUDIO_MIC_CHANNELS * 2) >> 8,

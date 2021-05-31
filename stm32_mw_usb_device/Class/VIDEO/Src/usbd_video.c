@@ -444,7 +444,9 @@ static uint8_t USBD_VIDEO_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   /* DeInit  physical Interface components */
   ((USBD_VIDEO_ItfTypeDef *)pdev->pUserData_UVC)->DeInit();
+#if (0)
   USBD_free(pdev->pClassData_UVC);
+#endif
   pdev->pClassData_UVC = NULL;
 
   /* Exit with no error code */

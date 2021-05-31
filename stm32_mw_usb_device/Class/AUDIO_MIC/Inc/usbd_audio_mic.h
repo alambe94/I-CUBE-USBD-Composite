@@ -61,8 +61,6 @@
 */
 
 /* Audio Data in endpoint */
-#define AUDIO_MIC_EP                                      0x81
-
 #define AUDIO_MIC_CHANNELS                                0x01
 #define AUDIO_MIC_SMPL_FREQ                               16000
 

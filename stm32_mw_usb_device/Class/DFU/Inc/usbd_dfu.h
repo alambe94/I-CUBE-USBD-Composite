@@ -41,9 +41,6 @@ extern "C" {
 /** @defgroup USBD_DFU_Exported_Defines
   * @{
   */
-
-#define DFU_ITF_NBR                     0x00
-
 #ifndef USBD_DFU_MAX_ITF_NUM
 #define USBD_DFU_MAX_ITF_NUM            1U
 #endif /* USBD_DFU_MAX_ITF_NUM */
@@ -138,7 +135,7 @@ typedef  void (*pFunction)(void);
 /**********  Descriptor of DFU interface 0 Alternate setting n ****************/
 #define USBD_DFU_IF_DESC(n)           0x09,   /* bLength: Interface Descriptor size */ \
                                       USB_DESC_TYPE_INTERFACE,   /* bDescriptorType */ \
-                                      DFU_ITF_NBR,   /* bInterfaceNumber: Number of Interface */ \
+                                      _DFU_ITF_NBR,   /* bInterfaceNumber: Number of Interface */ \
                                       (n),    /* bAlternateSetting: Alternate setting */ \
                                       0x00,   /* bNumEndpoints*/ \
                                       0xFE,   /* bInterfaceClass: Application Specific Class Code */ \
@@ -206,6 +203,8 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_DFU;
 
+extern uint8_t DFU_ITF_NBR;
+
 /**
   * @}
   */
@@ -215,6 +214,8 @@ extern USBD_ClassTypeDef USBD_DFU;
   */
 uint8_t USBD_DFU_RegisterMedia(USBD_HandleTypeDef *pdev,
                                USBD_DFU_MediaTypeDef *fops);
+
+void USBD_Update_DFU_DESC(uint8_t *desc, uint8_t itf_no);
 /**
   * @}
   */
