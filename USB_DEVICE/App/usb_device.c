@@ -85,7 +85,7 @@ void MX_USB_DEVICE_Init(void)
     Error_Handler();
   }
 #if (USBD_USE_CDC_ACM == 1)
-  if (USBD_CDC_ACM_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_ACM_Template_fops) != USBD_OK)
+  if (USBD_CDC_ACM_RegisterInterface(&hUsbDeviceHS, &USBD_CDC_ACM_fops) != USBD_OK)
   {
     Error_Handler();
   }

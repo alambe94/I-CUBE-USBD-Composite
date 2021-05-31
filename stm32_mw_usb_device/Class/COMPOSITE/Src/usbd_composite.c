@@ -845,77 +845,77 @@ void USBD_COMPOSITE_Mount_Class(void)
   uint8_t out_ep_count = 1;
   uint8_t interface_count = 0;
 
-#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 0)
-  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
-  USBD_Update_CDC_ACM_DESC(ptr,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
-  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+//#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 0)
+//  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
+//  USBD_Update_CDC_ACM_DESC(ptr,
+//                           interface_count,
+//                           interface_count + 1,
+//                           in_ep_count,
+//                           in_ep_count + 1,
+//                           out_ep_count);
+//  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+//
+//  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
+//  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
+//                           interface_count,
+//                           interface_count + 1,
+//                           in_ep_count,
+//                           in_ep_count + 1,
+//                           out_ep_count);
+//  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+//
+//  in_ep_count += 2;
+//  out_ep_count += 1;
+//  interface_count += 2;
+//#endif
 
-  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
-  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
-  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-
-  in_ep_count += 2;
-  out_ep_count += 1;
-  interface_count += 2;
-#endif
-
-#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 1)
-  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
-  USBD_Update_CDC_ACM_DESC(ptr,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
-  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-
-  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
-  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
-  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-
-  in_ep_count += 2;
-  out_ep_count += 1;
-  interface_count += 2;
-#endif
-
-#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 2)
-  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
-  USBD_Update_CDC_ACM_DESC(ptr,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
-  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-
-  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
-  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
-  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-
-  in_ep_count += 2;
-  out_ep_count += 1;
-  interface_count += 2;
-#endif
+//#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 1)
+//  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
+//  USBD_Update_CDC_ACM_DESC(ptr,
+//                           interface_count,
+//                           interface_count + 1,
+//                           in_ep_count,
+//                           in_ep_count + 1,
+//                           out_ep_count);
+//  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+//
+//  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
+//  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
+//                           interface_count,
+//                           interface_count + 1,
+//                           in_ep_count,
+//                           in_ep_count + 1,
+//                           out_ep_count);
+//  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+//
+//  in_ep_count += 2;
+//  out_ep_count += 1;
+//  interface_count += 2;
+//#endif
+//
+//#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 2)
+//  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
+//  USBD_Update_CDC_ACM_DESC(ptr,
+//                           interface_count,
+//                           interface_count + 1,
+//                           in_ep_count,
+//                           in_ep_count + 1,
+//                           out_ep_count);
+//  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+//
+//  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
+//  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
+//                           interface_count,
+//                           interface_count + 1,
+//                           in_ep_count,
+//                           in_ep_count + 1,
+//                           out_ep_count);
+//  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+//
+//  in_ep_count += 2;
+//  out_ep_count += 1;
+//  interface_count += 2;
+//#endif
 #if (USBD_USE_CDC_RNDIS == 1)
   ptr = USBD_CDC_RNDIS.GetFSConfigDescriptor(&len);
   USBD_Update_CDC_RNDIS_DESC(ptr,
