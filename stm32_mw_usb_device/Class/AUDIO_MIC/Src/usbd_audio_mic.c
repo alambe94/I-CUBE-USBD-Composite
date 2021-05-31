@@ -192,6 +192,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_SUBCLASS_AUDIOCONTROL, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,    /* bInterfaceProtocol */
         0x00,                            /* iInterface */
+        /* 18 byte*/
 
         /* USB Microphone Class-specific AC Interface Descriptor */
         0x09,                                /* bLength */
@@ -204,6 +205,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x00,
         0x01,                  /* bInCollection */
         _AUDIO_MIC_AS_ITF_NBR, /* baInterfaceNr */
+        /* 27 byte*/
 
         /* USB Microphone Input Terminal Descriptor */
         AUDIO_MIC_INPUT_TERMINAL_DESC_SIZE,  /* bLength */
@@ -223,6 +225,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
 #endif
         0x00, /* iChannelNames */
         0x00, /* iTerminal */
+        /* 39 byte*/
 
         /* USB Microphone Audio Feature Unit Descriptor */
         0x07 + AUDIO_MIC_CHANNELS + 1,       /* bLength */
@@ -265,6 +268,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x02,
 #endif
         0x00, /* iTerminal */
+        //47 + AUDIO_MIC_CHANNELS byte
 
         /*USB Microphone Output Terminal Descriptor */
         0x09,                                /* bLength */
@@ -276,6 +280,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x00,
         0x02,
         0x00,
+        //56 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Zero Bandwith */
         /* Interface 1, Alternate Setting 0                                             */
@@ -288,8 +293,9 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
         0x00,
-        /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Operational */
+        //65 + AUDIO_MIC_CHANNELS byte
 
+        /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Operational */
         /* Interface 1, Alternate Setting 1                                           */
         0x09,                              /* bLength */
         USB_DESC_TYPE_INTERFACE,           /* bDescriptorType */
@@ -300,6 +306,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
         0x00,                              /* iInterface */
+        //74 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Audio Streaming Interface Descriptor */
         AUDIO_MIC_STREAMING_INTERFACE_DESC_SIZE, /* bLength */
@@ -309,6 +316,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x01,                                    /* bDelay */
         0x01,                                    /* wFormatTag AUDIO_FORMAT_PCM  0x0001*/
         0x00,
+        //81 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Audio Type I Format Interface Descriptor */
         0x0B,                                /* bLength */
@@ -322,6 +330,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_SMPL_FREQ & 0xff,          /* tSamFreq 8000 = 0x1F40 */
         (AUDIO_MIC_SMPL_FREQ >> 8) & 0xff,
         AUDIO_MIC_SMPL_FREQ >> 16,
+        //92 + AUDIO_MIC_CHANNELS byte
 
         /* Endpoint 1 - Standard Descriptor */
         AUDIO_MIC_STANDARD_ENDPOINT_DESC_SIZE,                              /* bLength */
@@ -896,20 +905,22 @@ uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev,
   return 0;
 }
 
-/**
-* @brief  Configures the microphone descriptor on the base of the frequency
-*         and channels number informations. These parameters will be used to
-*         init the audio engine, trough the USB interface functions.
-* @param  samplingFrequency: sampling frequency
-* @param  Channels: number of channels
-* @retval status
-*/
-void USBD_AUDIO_Init_Microphone_Descriptor(USBD_HandleTypeDef *pdev, uint32_t samplingFrequency, uint8_t Channels)
+void USBD_Update_Audio_MIC_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, uint8_t in_ep)
 {
-  haudioInstance.paketDimension = (samplingFrequency / 1000 * Channels * 2);
-  haudioInstance.frequency = samplingFrequency;
+  desc[11] = ac_itf;
+  desc[26] = as_itf;
+  desc[58 + AUDIO_MIC_CHANNELS] = as_itf;
+  desc[67 + AUDIO_MIC_CHANNELS] = as_itf;
+  desc[95 + AUDIO_MIC_CHANNELS] = in_ep;
+
+  AUDIO_MIC_EP = in_ep;
+  AUDIO_MIC_AC_ITF_NBR = ac_itf;
+  AUDIO_MIC_AS_ITF_NBR = as_itf;
+
+  haudioInstance.paketDimension = (AUDIO_MIC_SMPL_FREQ / 1000 * AUDIO_MIC_CHANNELS * 2);
+  haudioInstance.frequency = AUDIO_MIC_SMPL_FREQ;
   haudioInstance.buffer_length = haudioInstance.paketDimension * AUDIO_MIC_PACKET_NUM;
-  haudioInstance.channels = Channels;
+  haudioInstance.channels = AUDIO_MIC_CHANNELS;
   haudioInstance.upper_treshold = 5;
   haudioInstance.lower_treshold = 2;
   haudioInstance.state = STATE_USB_WAITING_FOR_INIT;

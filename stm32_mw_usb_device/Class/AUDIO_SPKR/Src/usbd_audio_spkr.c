@@ -63,6 +63,14 @@ EndBSPDependencies */
 #include "usbd_audio_spkr.h"
 #include "usbd_ctlreq.h"
 
+#define _AUDIO_OUT_EP 0x01U
+#define _AUDIO_OUT_AC_ITF_NBR 0x00U
+#define _AUDIO_OUT_AS_ITF_NBR 0x01U
+
+uint8_t AUDIO_OUT_EP = _AUDIO_OUT_EP;
+uint8_t AUDIO_OUT_AC_ITF_NBR = _AUDIO_OUT_AC_ITF_NBR;
+uint8_t AUDIO_OUT_AS_ITF_NBR = _AUDIO_OUT_AS_ITF_NBR;
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -170,7 +178,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         /* USB Speaker Standard interface descriptor */
         AUDIO_INTERFACE_DESC_SIZE,   /* bLength */
         USB_DESC_TYPE_INTERFACE,     /* bDescriptorType */
-        AUDIO_OUT_AC_ITF_NBR,        /* bInterfaceNumber */
+        _AUDIO_OUT_AC_ITF_NBR,       /* bInterfaceNumber */
         0x00,                        /* bAlternateSetting */
         0x00,                        /* bNumEndpoints */
         USB_DEVICE_CLASS_AUDIO,      /* bInterfaceClass */
@@ -187,8 +195,8 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         0x01,
         0x27, /* wTotalLength = 39*/
         0x00,
-        0x01,                 /* bInCollection */
-        AUDIO_OUT_AS_ITF_NBR, /* baInterfaceNr */
+        0x01,                  /* bInCollection */
+        _AUDIO_OUT_AS_ITF_NBR, /* baInterfaceNr */
         /* 09 byte*/
 
         /* USB Speaker Input Terminal Descriptor */
@@ -234,7 +242,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         /* Interface 1, Alternate Setting 0                                             */
         AUDIO_INTERFACE_DESC_SIZE,     /* bLength */
         USB_DESC_TYPE_INTERFACE,       /* bDescriptorType */
-        AUDIO_OUT_AS_ITF_NBR,          /* bInterfaceNumber */
+        _AUDIO_OUT_AS_ITF_NBR,         /* bInterfaceNumber */
         0x00,                          /* bAlternateSetting */
         0x00,                          /* bNumEndpoints */
         USB_DEVICE_CLASS_AUDIO,        /* bInterfaceClass */
@@ -247,7 +255,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         /* Interface 1, Alternate Setting 1                                           */
         AUDIO_INTERFACE_DESC_SIZE,     /* bLength */
         USB_DESC_TYPE_INTERFACE,       /* bDescriptorType */
-        AUDIO_OUT_AS_ITF_NBR,          /* bInterfaceNumber */
+        _AUDIO_OUT_AS_ITF_NBR,         /* bInterfaceNumber */
         0x01,                          /* bAlternateSetting */
         0x01,                          /* bNumEndpoints */
         USB_DEVICE_CLASS_AUDIO,        /* bInterfaceClass */
@@ -281,7 +289,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         /* Endpoint 1 - Standard Descriptor */
         AUDIO_STANDARD_ENDPOINT_DESC_SIZE, /* bLength */
         USB_DESC_TYPE_ENDPOINT,            /* bDescriptorType */
-        AUDIO_OUT_EP,                      /* bEndpointAddress 1 out endpoint */
+        _AUDIO_OUT_EP,                     /* bEndpointAddress 1 out endpoint */
         USBD_EP_TYPE_ISOC,                 /* bmAttributes */
         AUDIO_PACKET_SZE(USBD_AUDIO_FREQ), /* wMaxPacketSize in Bytes (Freq(Samples)*2(Stereo)*2(HalfWord)) */
         AUDIO_FS_BINTERVAL,                /* bInterval */
@@ -847,6 +855,20 @@ uint8_t USBD_AUDIO_SPKR_RegisterInterface(USBD_HandleTypeDef *pdev,
 
   return (uint8_t)USBD_OK;
 }
+
+void USBD_Update_Audio_SPKR_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, uint8_t out_ep)
+{
+  desc[11] = ac_itf;
+  desc[26] = as_itf;
+  desc[59] = as_itf;
+  desc[68] = as_itf;
+  desc[96] = out_ep;
+
+  AUDIO_OUT_EP = out_ep;
+  AUDIO_OUT_AC_ITF_NBR = ac_itf;
+  AUDIO_OUT_AS_ITF_NBR = as_itf;
+}
+
 /**
   * @}
   */
