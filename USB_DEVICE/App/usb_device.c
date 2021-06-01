@@ -107,7 +107,7 @@ void MX_USB_DEVICE_Init(void)
 #if (USBD_USE_HID_KEYBOARD == 1)
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
-  if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceHS, &USBD_CustomHID_template_fops) != USBD_OK)
+  if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceHS, &USBD_CustomHID_fops) != USBD_OK)
   {
     Error_Handler();
   }
