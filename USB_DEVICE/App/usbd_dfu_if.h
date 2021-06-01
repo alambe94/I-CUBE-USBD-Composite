@@ -67,7 +67,7 @@ extern "C" {
 /** @defgroup USBD_MEDIA_Exported_Variables
   * @{
   */
-extern USBD_DFU_MediaTypeDef  USBD_DFU_MEDIA_Template_fops;
+extern USBD_DFU_MediaTypeDef  USBD_DFU_MEDIA_fops;
 /**
   * @}
   */

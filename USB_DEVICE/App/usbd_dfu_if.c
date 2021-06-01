@@ -40,7 +40,7 @@ uint8_t *MEM_If_Read(uint8_t *src, uint8_t *dest, uint32_t Len);
 uint16_t MEM_If_DeInit(void);
 uint16_t MEM_If_GetStatus(uint32_t Add, uint8_t Cmd, uint8_t *buffer);
 
-USBD_DFU_MediaTypeDef USBD_DFU_MEDIA_Template_fops =
+USBD_DFU_MediaTypeDef USBD_DFU_MEDIA_fops =
 {
   (uint8_t *)"DFU MEDIA",
   MEM_If_Init,

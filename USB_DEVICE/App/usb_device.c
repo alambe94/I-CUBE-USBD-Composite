@@ -33,6 +33,7 @@
 #include "usbd_video_if.h"
 #include "usbd_msc_if.h"
 #include "usbd_dfu_if.h"
+#include "usbd_printer_if.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -137,7 +138,13 @@ void MX_USB_DEVICE_Init(void)
   }
 #endif
 #if (USBD_USE_DFU == 1)
-  if (USBD_DFU_RegisterMedia(&hUsbDeviceHS, &USBD_DFU_MEDIA_Template_fops) != USBD_OK)
+  if (USBD_DFU_RegisterMedia(&hUsbDeviceHS, &USBD_DFU_MEDIA_fops) != USBD_OK)
+  {
+    Error_Handler();
+  }
+#endif
+#if (USBD_USE_PRNTR == 1)
+  if (USBD_PRNT_RegisterInterface(&hUsbDeviceHS, &USBD_PRNT_fops) != USBD_OK)
   {
     Error_Handler();
   }
