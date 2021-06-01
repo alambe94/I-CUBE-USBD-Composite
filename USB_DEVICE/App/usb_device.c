@@ -119,7 +119,7 @@ void MX_USB_DEVICE_Init(void)
   }
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  if (USBD_AUDIO_SPKR_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_SPKR_Template_fops) != USBD_OK)
+  if (USBD_AUDIO_SPKR_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_SPKR_fops) != USBD_OK)
   {
     Error_Handler();
   }
@@ -136,7 +136,7 @@ void MX_USB_DEVICE_Init(void)
     Error_Handler();
   }
 #endif
-#if (USBD_USE_UAC_DFU == 1)
+#if (USBD_USE_DFU == 1)
   if (USBD_DFU_RegisterMedia(&hUsbDeviceHS, &USBD_DFU_MEDIA_Template_fops) != USBD_OK)
   {
     Error_Handler();

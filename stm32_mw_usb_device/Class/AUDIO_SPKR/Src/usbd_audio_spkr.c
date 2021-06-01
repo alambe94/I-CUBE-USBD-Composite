@@ -626,7 +626,7 @@ static uint8_t USBD_AUDIO_SOF(USBD_HandleTypeDef *pdev)
   * @param  pdev: device instance
   * @retval status
   */
-void USBD_AUDIO_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset)
+void USBD_AUDIO_SPKR_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset)
 {
   USBD_AUDIO_SPKR_HandleTypeDef *haudio;
   uint32_t BufferSize = AUDIO_TOTAL_BUF_SIZE / 2U;
