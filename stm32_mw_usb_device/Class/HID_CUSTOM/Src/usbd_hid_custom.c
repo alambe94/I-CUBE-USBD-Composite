@@ -46,12 +46,12 @@ EndBSPDependencies */
 #include "usbd_hid_custom.h"
 #include "usbd_ctlreq.h"
 
-#define _CUSTOM_HID_EPIN_ADDR 0x81U
-#define _CUSTOM_HID_EPOUT_ADDR 0x01U
+#define _CUSTOM_HID_IN_EP 0x81U
+#define _CUSTOM_HID_OUT_EP 0x01U
 #define _CUSTOM_HID_ITF_NBR 0x00U
 
-uint8_t CUSTOM_HID_EPIN_ADDR = _CUSTOM_HID_EPIN_ADDR;
-uint8_t CUSTOM_HID_EPOUT_ADDR = _CUSTOM_HID_EPOUT_ADDR;
+uint8_t CUSTOM_HID_IN_EP = _CUSTOM_HID_IN_EP;
+uint8_t CUSTOM_HID_OUT_EP = _CUSTOM_HID_OUT_EP;
 uint8_t CUSTOM_HID_ITF_NBR = _CUSTOM_HID_ITF_NBR;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
@@ -173,7 +173,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_IN_EP,   /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Byte max */
         0x00,
@@ -182,7 +182,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_OUT_EP,  /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max  */
         0x00,
@@ -233,7 +233,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_IN_EP,   /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Byte max */
         0x00,
@@ -242,7 +242,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_OUT_EP,  /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max  */
         0x00,
@@ -293,7 +293,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_EPIN_ADDR,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_IN_EP,   /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Bytes max */
         0x00,
@@ -302,7 +302,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_EPOUT_ADDR,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_OUT_EP,  /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max */
         0x00,
@@ -372,33 +372,33 @@ static uint8_t USBD_CUSTOM_HID_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
-    pdev->ep_in[CUSTOM_HID_EPIN_ADDR & 0xFU].bInterval = CUSTOM_HID_HS_BINTERVAL;
-    pdev->ep_out[CUSTOM_HID_EPOUT_ADDR & 0xFU].bInterval = CUSTOM_HID_HS_BINTERVAL;
+    pdev->ep_in[CUSTOM_HID_IN_EP & 0xFU].bInterval = CUSTOM_HID_HS_BINTERVAL;
+    pdev->ep_out[CUSTOM_HID_OUT_EP & 0xFU].bInterval = CUSTOM_HID_HS_BINTERVAL;
   }
   else /* LOW and FULL-speed endpoints */
   {
-    pdev->ep_in[CUSTOM_HID_EPIN_ADDR & 0xFU].bInterval = CUSTOM_HID_FS_BINTERVAL;
-    pdev->ep_out[CUSTOM_HID_EPOUT_ADDR & 0xFU].bInterval = CUSTOM_HID_FS_BINTERVAL;
+    pdev->ep_in[CUSTOM_HID_IN_EP & 0xFU].bInterval = CUSTOM_HID_FS_BINTERVAL;
+    pdev->ep_out[CUSTOM_HID_OUT_EP & 0xFU].bInterval = CUSTOM_HID_FS_BINTERVAL;
   }
 
   /* Open EP IN */
-  (void)USBD_LL_OpenEP(pdev, CUSTOM_HID_EPIN_ADDR, USBD_EP_TYPE_INTR,
+  (void)USBD_LL_OpenEP(pdev, CUSTOM_HID_IN_EP, USBD_EP_TYPE_INTR,
                        CUSTOM_HID_EPIN_SIZE);
 
-  pdev->ep_in[CUSTOM_HID_EPIN_ADDR & 0xFU].is_used = 1U;
+  pdev->ep_in[CUSTOM_HID_IN_EP & 0xFU].is_used = 1U;
 
   /* Open EP OUT */
-  (void)USBD_LL_OpenEP(pdev, CUSTOM_HID_EPOUT_ADDR, USBD_EP_TYPE_INTR,
+  (void)USBD_LL_OpenEP(pdev, CUSTOM_HID_OUT_EP, USBD_EP_TYPE_INTR,
                        CUSTOM_HID_EPOUT_SIZE);
 
-  pdev->ep_out[CUSTOM_HID_EPOUT_ADDR & 0xFU].is_used = 1U;
+  pdev->ep_out[CUSTOM_HID_OUT_EP & 0xFU].is_used = 1U;
 
   hhid->state = CUSTOM_HID_IDLE;
 
   ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData_HID_Custom)->Init();
 
   /* Prepare Out endpoint to receive 1st packet */
-  (void)USBD_LL_PrepareReceive(pdev, CUSTOM_HID_EPOUT_ADDR, hhid->Report_buf,
+  (void)USBD_LL_PrepareReceive(pdev, CUSTOM_HID_OUT_EP, hhid->Report_buf,
                                USBD_CUSTOMHID_OUTREPORT_BUF_SIZE);
 
   return (uint8_t)USBD_OK;
@@ -416,14 +416,14 @@ static uint8_t USBD_CUSTOM_HID_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   UNUSED(cfgidx);
 
   /* Close CUSTOM_HID EP IN */
-  (void)USBD_LL_CloseEP(pdev, CUSTOM_HID_EPIN_ADDR);
-  pdev->ep_in[CUSTOM_HID_EPIN_ADDR & 0xFU].is_used = 0U;
-  pdev->ep_in[CUSTOM_HID_EPIN_ADDR & 0xFU].bInterval = 0U;
+  (void)USBD_LL_CloseEP(pdev, CUSTOM_HID_IN_EP);
+  pdev->ep_in[CUSTOM_HID_IN_EP & 0xFU].is_used = 0U;
+  pdev->ep_in[CUSTOM_HID_IN_EP & 0xFU].bInterval = 0U;
 
   /* Close CUSTOM_HID EP OUT */
-  (void)USBD_LL_CloseEP(pdev, CUSTOM_HID_EPOUT_ADDR);
-  pdev->ep_out[CUSTOM_HID_EPOUT_ADDR & 0xFU].is_used = 0U;
-  pdev->ep_out[CUSTOM_HID_EPOUT_ADDR & 0xFU].bInterval = 0U;
+  (void)USBD_LL_CloseEP(pdev, CUSTOM_HID_OUT_EP);
+  pdev->ep_out[CUSTOM_HID_OUT_EP & 0xFU].is_used = 0U;
+  pdev->ep_out[CUSTOM_HID_OUT_EP & 0xFU].bInterval = 0U;
 
   /* Free allocated memory */
   if (pdev->pClassData_HID_Custom != NULL)
@@ -591,7 +591,7 @@ uint8_t USBD_CUSTOM_HID_SendReport(USBD_HandleTypeDef *pdev,
     if (hhid->state == CUSTOM_HID_IDLE)
     {
       hhid->state = CUSTOM_HID_BUSY;
-      (void)USBD_LL_Transmit(pdev, CUSTOM_HID_EPIN_ADDR, report, len);
+      (void)USBD_LL_Transmit(pdev, CUSTOM_HID_IN_EP, report, len);
     }
     else
     {
@@ -705,7 +705,7 @@ uint8_t USBD_CUSTOM_HID_ReceivePacket(USBD_HandleTypeDef *pdev)
   hhid = (USBD_CUSTOM_HID_HandleTypeDef *)pdev->pClassData_HID_Custom;
 
   /* Resume USB Out process */
-  (void)USBD_LL_PrepareReceive(pdev, CUSTOM_HID_EPOUT_ADDR, hhid->Report_buf,
+  (void)USBD_LL_PrepareReceive(pdev, CUSTOM_HID_OUT_EP, hhid->Report_buf,
                                USBD_CUSTOMHID_OUTREPORT_BUF_SIZE);
 
   return (uint8_t)USBD_OK;
@@ -773,8 +773,8 @@ void USBD_Update_HID_Custom_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, u
   desc[29] = in_ep;
   desc[36] = out_ep;
 
-  CUSTOM_HID_EPIN_ADDR = in_ep;
-  CUSTOM_HID_EPOUT_ADDR = out_ep;
+  CUSTOM_HID_IN_EP = in_ep;
+  CUSTOM_HID_OUT_EP = out_ep;
   CUSTOM_HID_ITF_NBR = itf_no;
 }
 

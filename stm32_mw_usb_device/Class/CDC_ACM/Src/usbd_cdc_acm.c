@@ -1816,7 +1816,7 @@ static uint8_t USBD_CDC_Setup(USBD_HandleTypeDef *pdev,
     {
       if ((req->bmRequest & 0x80U) != 0U)
       {
-        ((USBD_CDC_ACM_ItfTypeDef *)pdev->pUserData_CDC_ACM)->Control(windex_to_ch, req->bRequest, (uint8_t *)hcdc->data, req->wLength);
+        ((USBD_CDC_ACM_ItfTypeDef *)pdev->pUserData_CDC_ACM)->Control(windex_to_ch, req->bRequest, (uint8_t *)hcdc->data[windex_to_ch], req->wLength);
 
         len = MIN(CDC_REQ_MAX_DATA_SIZE, req->wLength);
         (void)USBD_CtlSendData(pdev, (uint8_t *)hcdc->data[windex_to_ch], len);

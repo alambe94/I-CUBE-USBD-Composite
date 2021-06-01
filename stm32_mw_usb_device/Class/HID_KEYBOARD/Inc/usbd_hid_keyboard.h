@@ -105,7 +105,7 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_HID_KEYBOARD;
 
-extern uint8_t HID_KEYBOARD_EPIN_ADDR;
+extern uint8_t HID_KEYBOARD_IN_EP;
 extern uint8_t HID_KEYBOARD_ITF_NBR;
 
 /**

@@ -104,8 +104,8 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_HID_MOUSE;
 
-extern uint8_t HID_EPIN_ADDR;
-extern uint8_t HID_ITF_NBR;
+extern uint8_t HID_MOUSE_IN_EP;
+extern uint8_t HID_MOUSE_ITF_NBR;
 
 /**
   * @}

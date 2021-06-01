@@ -129,54 +129,6 @@ USBD_ClassTypeDef USBD_COMPOSITE =
         USBD_COMPOSITE_GetDeviceQualifierDesc,
 };
 
-/////////////////////////////////// Keep track of assigned Interfaces and end points /////////////////////////
-uint8_t COMPOSITE_CDC_ACM_CMD_ITF_NBR = 0x00;
-uint8_t COMPOSITE_CDC_ACM_COM_ITF_NBR = 0x01;
-uint8_t COMPOSITE_CDC_RNDIS_CMD_ITF_NBR = 0x00U;
-uint8_t COMPOSITE_CDC_RNDIS_COM_ITF_NBR = 0x01U;
-uint8_t COMPOSITE_CDC_ECM_CMD_ITF_NBR = 0x00U;
-uint8_t COMPOSITE_CDC_ECM_COM_ITF_NBR = 0x01U;
-uint8_t COMPOSITE_HID_MOUSE_ITF_NBR = 0x00U;
-uint8_t COMPOSITE_HID_KEYBOARD_ITF_NBR = 0x00U;
-uint8_t COMPOSITE_HID_CUSTOM_ITF_NBR = 0x00U;
-uint8_t COMPOSITE_UAC_MIC_AC_IF_NUM = 0x00U;
-uint8_t COMPOSITE_UAC_MIC_AS_IF_NUM = 0x01U;
-uint8_t COMPOSITE_UAC_SPKR_AC_IF_NUM = 0x00U;
-uint8_t COMPOSITE_UAC_SPKR_AS_IF_NUM = 0x01U;
-uint8_t COMPOSITE_UVC_VC_IF_NUM = 0x00U;
-uint8_t COMPOSITE_UVC_VS_IF_NUM = 0x01U;
-uint8_t COMPOSITE_MSC_ITF_NBR = 0x00U;
-uint8_t COMPOSITE_DFU_ITF_NBR = 0x00U;
-uint8_t COMPOSITE_PRNTR_ITF_NBR = 0x00U;
-
-uint8_t COMPOSITE_CDC_ACM_CMD_EP = 0x81;
-uint8_t COMPOSITE_CDC_ACM_IN_EP = 0x82;
-uint8_t COMPOSITE_CDC_ACM_OUT_EP = 0x01;
-
-uint8_t COMPOSITE_CDC_RNDIS_IN_EP = 0x81U;
-uint8_t COMPOSITE_CDC_RNDIS_OUT_EP = 0x01U;
-uint8_t COMPOSITE_CDC_RNDIS_CMD_EP = 0x82U;
-
-uint8_t COMPOSITE_CDC_ECM_IN_EP = 0x81U;
-uint8_t COMPOSITE_CDC_ECM_OUT_EP = 0x01U;
-uint8_t COMPOSITE_CDC_ECM_CMD_EP = 0x82U;
-
-uint8_t COMPOSITE_HID_MOUSE_IN_EP = 0x81U;
-uint8_t COMPOSITE_HID_KEYBOARD_IN_EP = 0x81U;
-uint8_t COMPOSITE_HID_CUSTOM_IN_EP = 0x81U;
-uint8_t COMPOSITE_HID_CUSTOM_OUT_EP = 0x01U;
-
-uint8_t COMPOSITE_UAC_MIC_IN_EP = 0x84U;
-uint8_t COMPOSITE_UAC_SPKR_OUT_EP = 0x02U;
-
-uint8_t COMPOSITE_UVC_IN_EP = 0x83U;
-
-uint8_t COMPOSITE_MSC_IN_EP = 0x84U;
-uint8_t COMPOSITE_MSC_OUT_EP = 0x02U;
-
-uint8_t COMPOSITE_PRNTR_IN_EP = 0x84U;
-uint8_t COMPOSITE_PRNTR_OUT_EP = 0x02U;
-
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
 #endif
@@ -358,74 +310,78 @@ static uint8_t USBD_COMPOSITE_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 static uint8_t USBD_COMPOSITE_Setup(USBD_HandleTypeDef *pdev,
                                     USBD_SetupReqTypedef *req)
 {
+
 #if (USBD_USE_CDC_ACM == 1)
-  if (req->wIndex == COMPOSITE_CDC_ACM_CMD_ITF_NBR || req->wIndex == COMPOSITE_CDC_ACM_COM_ITF_NBR)
+  for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
   {
-    return USBD_CDC_ACM.Setup(pdev, req);
+    if (req->wIndex == CDC_CMD_ITF_NBR[i] || req->wIndex == CDC_COM_ITF_NBR[i])
+    {
+      return USBD_CDC_ACM.Setup(pdev, req);
+    }
   }
 #endif
 #if (USBD_USE_CDC_ECM == 1)
-  if (req->wIndex == COMPOSITE_CDC_ECM_CMD_ITF_NBR || req->wIndex == COMPOSITE_CDC_ECM_COM_ITF_NBR)
+  if (req->wIndex == CDC_ECM_CMD_ITF_NBR || req->wIndex == CDC_ECM_COM_ITF_NBR)
   {
     return USBD_CDC_ECM.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_CDC_RNDIS == 1)
-  if (req->wIndex == COMPOSITE_CDC_RNDIS_CMD_ITF_NBR || req->wIndex == COMPOSITE_CDC_RNDIS_COM_ITF_NBR)
+  if (req->wIndex == CDC_RNDIS_CMD_ITF_NBR || req->wIndex == CDC_RNDIS_COM_ITF_NBR)
   {
     return USBD_CDC_RNDIS.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
-  if (req->wIndex == COMPOSITE_HID_MOUSE_ITF_NBR)
+  if (req->wIndex == HID_MOUSE_ITF_NBR)
   {
     return USBD_HID_MOUSE.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_HID_KEYBOARD == 1)
-  if (req->wIndex == COMPOSITE_HID_KEYBOARD_ITF_NBR)
+  if (req->wIndex == HID_KEYBOARD_ITF_NBR)
   {
     return USBD_HID_KEYBOARD.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
-  if (req->wIndex == COMPOSITE_HID_CUSTOM_ITF_NBR)
+  if (req->wIndex == CUSTOM_HID_ITF_NBR)
   {
     return USBD_HID_CUSTOM.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  if (req->wIndex == COMPOSITE_UAC_MIC_AC_IF_NUM || req->wIndex == COMPOSITE_UAC_MIC_AS_IF_NUM)
+  if (req->wIndex == AUDIO_MIC_AC_ITF_NBR || req->wIndex == AUDIO_MIC_AS_ITF_NBR)
   {
     return USBD_AUDIO_MIC.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  if (req->wIndex == COMPOSITE_UAC_SPKR_AC_IF_NUM || req->wIndex == COMPOSITE_UAC_SPKR_AS_IF_NUM)
+  if (req->wIndex == AUDIO_OUT_AC_ITF_NBR || req->wIndex == AUDIO_OUT_AS_ITF_NBR)
   {
     return USBD_AUDIO_SPKR.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_UVC == 1)
-  if (req->wIndex == COMPOSITE_UVC_VC_IF_NUM || req->wIndex == COMPOSITE_UVC_VS_IF_NUM)
+  if (req->wIndex == UVC_VC_IF_NUM || req->wIndex == UVC_VS_IF_NUM)
   {
     return USBD_VIDEO.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_MSC == 1)
-  if (req->wIndex == COMPOSITE_MSC_ITF_NBR)
+  if (req->wIndex == MSC_ITF_NBR)
   {
     return USBD_MSC.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_DFU == 1)
-  if (req->wIndex == COMPOSITE_DFU_ITF_NBR)
+  if (req->wIndex == DFU_ITF_NBR)
   {
     return USBD_DFU.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_PRNTR == 1)
-  if (req->wIndex == COMPOSITE_PRNTR_ITF_NBR)
+  if (req->wIndex == PRNT_ITF_NBR)
   {
     USBD_PRNT.Setup(pdev, req);
   }
@@ -444,43 +400,46 @@ static uint8_t USBD_COMPOSITE_Setup(USBD_HandleTypeDef *pdev,
 static uint8_t USBD_COMPOSITE_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
 {
 #if (USBD_USE_CDC_ACM == 1)
-  if (epnum == (COMPOSITE_CDC_ACM_IN_EP & 0x7F) || epnum == (COMPOSITE_CDC_ACM_CMD_EP & 0x7F))
+  for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
   {
-    return USBD_CDC_ACM.DataIn(pdev, epnum);
+    if (epnum == (CDC_IN_EP[i] & 0x7F) || epnum == (CDC_CMD_EP[i] & 0x7F))
+    {
+      return USBD_CDC_ACM.DataIn(pdev, epnum);
+    }
   }
 #endif
 #if (USBD_USE_CDC_ECM == 1)
-  if (epnum == (COMPOSITE_CDC_ECM_IN_EP & 0x7F) || epnum == (COMPOSITE_CDC_ECM_CMD_EP & 0x7F))
+  if (epnum == (CDC_ECM_IN_EP & 0x7F) || epnum == (CDC_ECM_CMD_EP & 0x7F))
   {
     return USBD_CDC_ECM.DataIn(pdev, epnum);
   }
 #endif
 #if (USBD_USE_CDC_RNDIS == 1)
-  if (epnum == (COMPOSITE_CDC_RNDIS_IN_EP & 0x7F) || epnum == (COMPOSITE_CDC_RNDIS_CMD_EP & 0x7F))
+  if (epnum == (CDC_RNDIS_IN_EP & 0x7F) || epnum == (CDC_RNDIS_CMD_EP & 0x7F))
   {
     return USBD_CDC_RNDIS.DataIn(pdev, epnum);
   }
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
-  if (epnum == (COMPOSITE_HID_MOUSE_IN_EP & 0x7F))
+  if (epnum == (HID_MOUSE_IN_EP & 0x7F))
   {
     return USBD_HID_MOUSE.DataIn(pdev, epnum);
   }
 #endif
 #if (USBD_USE_HID_KEYBOARD == 1)
-  if (epnum == (COMPOSITE_HID_KEYBOARD_IN_EP & 0x7F))
+  if (epnum == (HID_KEYBOARD_IN_EP & 0x7F))
   {
     return USBD_HID_KEYBOARD.DataIn(pdev, epnum);
   }
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
-  if (epnum == (COMPOSITE_HID_CUSTOM_IN_EP & 0x7F))
+  if (epnum == (CUSTOM_HID_IN_EP & 0x7F))
   {
     return USBD_HID_CUSTOM.DataIn(pdev, epnum);
   }
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  if (epnum == (COMPOSITE_UAC_MIC_IN_EP & 0x7F))
+  if (epnum == (AUDIO_MIC_EP & 0x7F))
   {
     return USBD_AUDIO_MIC.DataIn(pdev, epnum);
   }
@@ -488,13 +447,13 @@ static uint8_t USBD_COMPOSITE_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_UAC_SPKR == 1)
 #endif
 #if (USBD_USE_UVC == 1)
-  if (epnum == (COMPOSITE_UVC_IN_EP & 0x7F))
+  if (epnum == (UVC_IN_EP & 0x7F))
   {
     return USBD_VIDEO.DataIn(pdev, epnum);
   }
 #endif
 #if (USBD_USE_MSC == 1)
-  if (epnum == (COMPOSITE_MSC_IN_EP & 0x7F))
+  if (epnum == (MSC_EPIN_ADDR & 0x7F))
   {
     return USBD_MSC.DataIn(pdev, epnum);
   }
@@ -502,7 +461,7 @@ static uint8_t USBD_COMPOSITE_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_DFU == 1)
 #endif
 #if (USBD_USE_PRNTR == 1)
-  if (epnum == (COMPOSITE_PRNTR_IN_EP & 0x7F))
+  if (epnum == (PRNT_IN_EP & 0x7F))
   {
     USBD_PRNT.DataIn(pdev, epnum);
   }
@@ -721,19 +680,22 @@ static uint8_t USBD_COMPOSITE_IsoOutIncomplete(USBD_HandleTypeDef *pdev, uint8_t
 static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 {
 #if (USBD_USE_CDC_ACM == 1)
-  if (epnum == COMPOSITE_CDC_ACM_OUT_EP)
+  for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
   {
-    return USBD_CDC_ACM.DataOut(pdev, epnum);
+    if (epnum == CDC_OUT_EP[i])
+    {
+      return USBD_CDC_ACM.DataOut(pdev, epnum);
+    }
   }
 #endif
 #if (USBD_USE_CDC_ECM == 1)
-  if (epnum == COMPOSITE_CDC_ECM_OUT_EP)
+  if (epnum == CDC_ECM_OUT_EP)
   {
     return USBD_CDC_ECM.DataOut(pdev, epnum);
   }
 #endif
 #if (USBD_USE_CDC_RNDIS == 1)
-  if (epnum == COMPOSITE_CDC_RNDIS_OUT_EP)
+  if (epnum == CDC_RNDIS_OUT_EP)
   {
     return USBD_CDC_RNDIS.DataOut(pdev, epnum);
   }
@@ -743,7 +705,7 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_HID_KEYBOARD == 1)
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
-  if (epnum == COMPOSITE_HID_CUSTOM_OUT_EP)
+  if (epnum == CUSTOM_HID_OUT_EP)
   {
     return USBD_HID_CUSTOM.DataOut(pdev, epnum);
   }
@@ -751,7 +713,7 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_UAC_MIC == 1)
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  if (epnum == COMPOSITE_UAC_SPKR_OUT_EP)
+  if (epnum == AUDIO_OUT_EP)
   {
     return USBD_AUDIO_SPKR.DataOut(pdev, epnum);
   }
@@ -759,7 +721,7 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_UVC == 1)
 #endif
 #if (USBD_USE_MSC == 1)
-  if (epnum == COMPOSITE_MSC_OUT_EP)
+  if (epnum == MSC_EPOUT_ADDR)
   {
     return USBD_MSC.DataOut(pdev, epnum);
   }
@@ -767,7 +729,7 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_DFU == 1)
 #endif
 #if (USBD_USE_PRNTR == 1)
-  if (epnum == COMPOSITE_PRNTR_OUT_EP)
+  if (epnum == PRNT_OUT_EP)
   {
     USBD_PRNT.DataOut(pdev, epnum);
   }
@@ -808,14 +770,14 @@ static uint8_t *USBD_COMPOSITE_GetFSCfgDesc(uint16_t *length)
   */
 static uint8_t *USBD_COMPOSITE_GetOtherSpeedCfgDesc(uint16_t *length)
 {
-  //TODOif (pdev->dev_speed == USBD_SPEED_HIGH)
+  // if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
-    *length = (uint16_t)sizeof(USBD_COMPOSITE_FSCfgDesc);
-    return (uint8_t *)&USBD_COMPOSITE_FSCfgDesc;
+    *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
+    return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
   }
 
-  *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
-  return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
+  *length = (uint16_t)sizeof(USBD_COMPOSITE_FSCfgDesc);
+  return (uint8_t *)&USBD_COMPOSITE_FSCfgDesc;
 }
 
 /**
@@ -1014,9 +976,9 @@ void USBD_COMPOSITE_Mount_Class(void)
   uint16_t CFG_SIZE = sizeof(USBD_COMPOSITE_CFG_DESC_t);
   ptr = USBD_COMPOSITE_HSCfgDesc.CONFIG_DESC;
   /* Configuration Descriptor */
-  ptr[0] = 0x09;                            /* bLength: Configuration Descriptor size */
-  ptr[1] = USB_DESC_TYPE_CONFIGURATION;     /* bDescriptorType: Configuration */
-  ptr[2] = LOBYTE(CFG_SIZE); /* wTotalLength:no of returned bytes */
+  ptr[0] = 0x09;                        /* bLength: Configuration Descriptor size */
+  ptr[1] = USB_DESC_TYPE_CONFIGURATION; /* bDescriptorType: Configuration */
+  ptr[2] = LOBYTE(CFG_SIZE);            /* wTotalLength:no of returned bytes */
   ptr[3] = HIBYTE(CFG_SIZE);
   ptr[4] = (2 * NUMBER_OF_CDC); /* bNumInterfaces: 2 interface */
   ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */
@@ -1030,9 +992,9 @@ void USBD_COMPOSITE_Mount_Class(void)
 
   ptr = USBD_COMPOSITE_FSCfgDesc.CONFIG_DESC;
   /* Configuration Descriptor */
-  ptr[0] = 0x09;                            /* bLength: Configuration Descriptor size */
-  ptr[1] = USB_DESC_TYPE_CONFIGURATION;     /* bDescriptorType: Configuration */
-  ptr[2] = LOBYTE(CFG_SIZE); /* wTotalLength:no of returned bytes */
+  ptr[0] = 0x09;                        /* bLength: Configuration Descriptor size */
+  ptr[1] = USB_DESC_TYPE_CONFIGURATION; /* bDescriptorType: Configuration */
+  ptr[2] = LOBYTE(CFG_SIZE);            /* wTotalLength:no of returned bytes */
   ptr[3] = HIBYTE(CFG_SIZE);
   ptr[4] = (2 * NUMBER_OF_CDC); /* bNumInterfaces: 2 interface */
   ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */

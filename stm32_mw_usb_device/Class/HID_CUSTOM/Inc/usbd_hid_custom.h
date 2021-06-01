@@ -123,8 +123,8 @@ typedef struct
 
 extern USBD_ClassTypeDef USBD_HID_CUSTOM;
 
-extern uint8_t CUSTOM_HID_EPIN_ADDR;
-extern uint8_t CUSTOM_HID_EPOUT_ADDR;
+extern uint8_t CUSTOM_HID_IN_EP;
+extern uint8_t CUSTOM_HID_OUT_EP;
 extern uint8_t CUSTOM_HID_ITF_NBR;
 
 /**

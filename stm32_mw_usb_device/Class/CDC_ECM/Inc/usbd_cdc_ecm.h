@@ -201,6 +201,12 @@ typedef enum
 
 extern USBD_ClassTypeDef USBD_CDC_ECM;
 
+extern uint8_t CDC_ECM_IN_EP;
+extern uint8_t CDC_ECM_OUT_EP;
+extern uint8_t CDC_ECM_CMD_EP;
+extern uint8_t CDC_ECM_CMD_ITF_NBR;
+extern uint8_t CDC_ECM_COM_ITF_NBR;
+
 /**
   * @}
   */
