@@ -55,7 +55,7 @@ extern "C" {
 #define CDC_DATA_FS_MAX_PACKET_SIZE                 64U  /* Endpoint IN & OUT Packet size */
 #define CDC_CMD_PACKET_SIZE                         8U  /* Control Endpoint Packet size */
 
-#define USB_CDC_CONFIG_DESC_SIZ 					(9 + 66 * NUMBER_OF_CDC)
+#define USB_CDC_CONFIG_DESC_SIZ 					          (9 + 66 * NUMBER_OF_CDC)
 #define CDC_DATA_HS_IN_PACKET_SIZE                  CDC_DATA_HS_MAX_PACKET_SIZE
 #define CDC_DATA_HS_OUT_PACKET_SIZE                 CDC_DATA_HS_MAX_PACKET_SIZE
 
@@ -157,7 +157,6 @@ extern "C" {
   uint8_t USBD_CDC_TransmitPacket(uint8_t ch, USBD_HandleTypeDef *pdev);
 
   void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
-                                uint8_t ch,
                                 uint8_t cmd_itf,
                                 uint8_t com_itf,
                                 uint8_t cmd_ep,

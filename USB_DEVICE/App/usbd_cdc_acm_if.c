@@ -134,6 +134,7 @@ static int8_t CDC_Init(uint8_t cdc_ch);
 static int8_t CDC_DeInit(uint8_t cdc_ch);
 static int8_t CDC_Control(uint8_t cdc_ch, uint8_t cmd, uint8_t *pbuf, uint16_t length);
 static int8_t CDC_Receive(uint8_t cdc_ch, uint8_t *pbuf, uint32_t *Len);
+static int8_t CDC_TransmitCplt(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len, uint8_t epnum);
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
 UART_HandleTypeDef *CDC_CH_To_UART_Handle(uint8_t cdc_ch)
@@ -273,7 +274,8 @@ void Change_UART_Setting(uint8_t cdc_ch)
 USBD_CDC_ACM_ItfTypeDef USBD_CDC_ACM_fops = {CDC_Init,
                                              CDC_DeInit,
                                              CDC_Control,
-                                             CDC_Receive};
+                                             CDC_Receive,
+											 CDC_TransmitCplt};
 
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -422,6 +424,11 @@ static int8_t CDC_Receive(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len)
   HAL_UART_Transmit_DMA(CDC_CH_To_UART_Handle(cdc_ch), Buf, *Len);
   return (USBD_OK);
   /* USER CODE END 6 */
+}
+
+static int8_t CDC_TransmitCplt(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len, uint8_t epnum)
+{
+	return (USBD_OK);
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */

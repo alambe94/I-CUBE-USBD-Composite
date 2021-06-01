@@ -183,14 +183,8 @@ uint8_t COMPOSITE_PRNTR_OUT_EP = 0x02U;
 typedef struct __attribute__((packed, aligned(4))) USBD_COMPOSITE_CFG_DESC_t
 {
   uint8_t CONFIG_DESC[USB_CONF_DESC_SIZE];
-#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 0)
+#if (USBD_USE_CDC_ACM == 1)
   uint8_t USBD_CDC_ACM0_DESC[USB_CDC_CONFIG_DESC_SIZ - 0x09];
-#endif
-#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 1)
-  uint8_t USBD_CDC_ACM1_DESC[USB_CDC_CONFIG_DESC_SIZ - 0x09];
-#endif
-#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 2)
-  uint8_t USBD_CDC_ACM2_DESC[USB_CDC_CONFIG_DESC_SIZ - 0x09];
 #endif
 #if (USBD_USE_CDC_ECM == 1)
   uint8_t USBD_CDC_ECM_DESC[CDC_ECM_CONFIG_DESC_SIZE - 0x09];
@@ -841,81 +835,34 @@ void USBD_COMPOSITE_Mount_Class(void)
   uint16_t len = 0;
   uint8_t *ptr = NULL;
 
-  uint8_t in_ep_count = 1;
-  uint8_t out_ep_count = 1;
-  uint8_t interface_count = 0;
+  uint8_t in_ep_count = 0x81;
+  uint8_t out_ep_count = 0x01;
+  uint8_t interface_count = 0x00;
 
-//#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 0)
-//  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
-//  USBD_Update_CDC_ACM_DESC(ptr,
-//                           interface_count,
-//                           interface_count + 1,
-//                           in_ep_count,
-//                           in_ep_count + 1,
-//                           out_ep_count);
-//  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-//
-//  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
-//  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
-//                           interface_count,
-//                           interface_count + 1,
-//                           in_ep_count,
-//                           in_ep_count + 1,
-//                           out_ep_count);
-//  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-//
-//  in_ep_count += 2;
-//  out_ep_count += 1;
-//  interface_count += 2;
-//#endif
+#if (USBD_USE_CDC_ACM == 1)
+  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
+  USBD_Update_CDC_ACM_DESC(ptr,
+                           interface_count,
+                           interface_count + 1,
+                           in_ep_count,
+                           in_ep_count + 1,
+                           out_ep_count);
+  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
 
-//#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 1)
-//  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
-//  USBD_Update_CDC_ACM_DESC(ptr,
-//                           interface_count,
-//                           interface_count + 1,
-//                           in_ep_count,
-//                           in_ep_count + 1,
-//                           out_ep_count);
-//  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-//
-//  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
-//  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
-//                           interface_count,
-//                           interface_count + 1,
-//                           in_ep_count,
-//                           in_ep_count + 1,
-//                           out_ep_count);
-//  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-//
-//  in_ep_count += 2;
-//  out_ep_count += 1;
-//  interface_count += 2;
-//#endif
-//
-//#if (USBD_USE_CDC_ACM == 1 && USBD_CDC_ACM_COUNT > 2)
-//  ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
-//  USBD_Update_CDC_ACM_DESC(ptr,
-//                           interface_count,
-//                           interface_count + 1,
-//                           in_ep_count,
-//                           in_ep_count + 1,
-//                           out_ep_count);
-//  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-//
-//  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
-//  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
-//                           interface_count,
-//                           interface_count + 1,
-//                           in_ep_count,
-//                           in_ep_count + 1,
-//                           out_ep_count);
-//  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
-//
-//  in_ep_count += 2;
-//  out_ep_count += 1;
-//  interface_count += 2;
-//#endif
+  ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
+  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
+                           interface_count,
+                           interface_count + 1,
+                           in_ep_count,
+                           in_ep_count + 1,
+                           out_ep_count);
+  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+
+  in_ep_count += 2 * USBD_CDC_ACM_COUNT;
+  out_ep_count += 1 * USBD_CDC_ACM_COUNT;
+  interface_count += 2 * USBD_CDC_ACM_COUNT;
+#endif
+
 #if (USBD_USE_CDC_RNDIS == 1)
   ptr = USBD_CDC_RNDIS.GetFSConfigDescriptor(&len);
   USBD_Update_CDC_RNDIS_DESC(ptr,
@@ -1063,6 +1010,39 @@ void USBD_COMPOSITE_Mount_Class(void)
   out_ep_count += 1;
   interface_count += 1;
 #endif
+
+  uint16_t CFG_SIZE = sizeof(USBD_COMPOSITE_CFG_DESC_t);
+  ptr = USBD_COMPOSITE_HSCfgDesc.CONFIG_DESC;
+  /* Configuration Descriptor */
+  ptr[0] = 0x09;                            /* bLength: Configuration Descriptor size */
+  ptr[1] = USB_DESC_TYPE_CONFIGURATION;     /* bDescriptorType: Configuration */
+  ptr[2] = LOBYTE(CFG_SIZE); /* wTotalLength:no of returned bytes */
+  ptr[3] = HIBYTE(CFG_SIZE);
+  ptr[4] = (2 * NUMBER_OF_CDC); /* bNumInterfaces: 2 interface */
+  ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */
+  ptr[6] = 0x00;                /* iConfiguration: Index of string descriptor describing the configuration */
+#if (USBD_SELF_POWERED == 1U)
+  ptr[7] = 0xC0; /* bmAttributes: Bus Powered according to user configuration */
+#else
+  ptr[7] = 0x80; /* bmAttributes: Bus Powered according to user configuration */
+#endif
+  ptr[8] = USBD_MAX_POWER; /* MaxPower 100 mA */
+
+  ptr = USBD_COMPOSITE_FSCfgDesc.CONFIG_DESC;
+  /* Configuration Descriptor */
+  ptr[0] = 0x09;                            /* bLength: Configuration Descriptor size */
+  ptr[1] = USB_DESC_TYPE_CONFIGURATION;     /* bDescriptorType: Configuration */
+  ptr[2] = LOBYTE(CFG_SIZE); /* wTotalLength:no of returned bytes */
+  ptr[3] = HIBYTE(CFG_SIZE);
+  ptr[4] = (2 * NUMBER_OF_CDC); /* bNumInterfaces: 2 interface */
+  ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */
+  ptr[6] = 0x00;                /* iConfiguration: Index of string descriptor describing the configuration */
+#if (USBD_SELF_POWERED == 1U)
+  ptr[7] = 0xC0; /* bmAttributes: Bus Powered according to user configuration */
+#else
+  ptr[7] = 0x80; /* bmAttributes: Bus Powered according to user configuration */
+#endif
+  ptr[8] = USBD_MAX_POWER; /* MaxPower 100 mA */
 }
 
 /**
