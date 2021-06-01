@@ -131,7 +131,7 @@ void MX_USB_DEVICE_Init(void)
   }
 #endif
 #if (USBD_USE_MSC == 1)
-  if (USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_MSC_Template_fops) != USBD_OK)
+  if (USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_Storage_Interface_fops) != USBD_OK)
   {
     Error_Handler();
   }
