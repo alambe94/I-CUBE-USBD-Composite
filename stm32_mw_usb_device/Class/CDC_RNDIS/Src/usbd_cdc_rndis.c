@@ -56,11 +56,11 @@
 
 #include "usbd_cdc_rndis_if.h"
 
-#define _CDC_RNDIS_IN_EP                                   0x81U  /* EP1 for data IN */
-#define _CDC_RNDIS_OUT_EP                                  0x01U  /* EP1 for data OUT */
-#define _CDC_RNDIS_CMD_EP                                  0x82U  /* EP2 for CDC_RNDIS commands */
-#define _CDC_RNDIS_CMD_ITF_NBR                             0x00U /* Command Interface Number 0 */
-#define _CDC_RNDIS_COM_ITF_NBR                             0x01U /* Communication Interface Number 0 */
+#define _CDC_RNDIS_IN_EP 0x81U       /* EP1 for data IN */
+#define _CDC_RNDIS_OUT_EP 0x01U      /* EP1 for data OUT */
+#define _CDC_RNDIS_CMD_EP 0x82U      /* EP2 for CDC_RNDIS commands */
+#define _CDC_RNDIS_CMD_ITF_NBR 0x00U /* Command Interface Number 0 */
+#define _CDC_RNDIS_COM_ITF_NBR 0x01U /* Communication Interface Number 0 */
 
 uint8_t CDC_RNDIS_IN_EP = _CDC_RNDIS_IN_EP;
 uint8_t CDC_RNDIS_OUT_EP = _CDC_RNDIS_OUT_EP;
@@ -209,20 +209,20 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
 
         /*---------------------------------------------------------------------------*/
         /* IAD descriptor */
-        0x08,                  /* bLength */
-        0x0B,                  /* bDescriptorType */
+        0x08,                   /* bLength */
+        0x0B,                   /* bDescriptorType */
         _CDC_RNDIS_CMD_ITF_NBR, /* bFirstInterface */
-        0x02,                  /* bInterfaceCount */
-        0xE0,                  /* bFunctionClass (Wireless Controller) */
-        0x01,                  /* bFunctionSubClass */
-        0x03,                  /* bFunctionProtocol */
-        0x00,                  /* iFunction */
+        0x02,                   /* bInterfaceCount */
+        0xE0,                   /* bFunctionClass (Wireless Controller) */
+        0x01,                   /* bFunctionSubClass */
+        0x03,                   /* bFunctionProtocol */
+        0x00,                   /* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        _CDC_RNDIS_CMD_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        _CDC_RNDIS_CMD_ITF_NBR,  /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x01,                    /* bNumEndpoints: One endpoint used */
         0x02,                    /* bInterfaceClass: Communication Interface Class */
@@ -238,10 +238,10 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         0x01,
 
         /* Call Management Functional Descriptor */
-        0x05,                  /* bFunctionLength */
-        0x24,                  /* bDescriptorType: CS_INTERFACE */
-        0x01,                  /* bDescriptorSubtype: Call Management Func Desc */
-        0x00,                  /* bmCapabilities: D0+D1 */
+        0x05,                   /* bFunctionLength */
+        0x24,                   /* bDescriptorType: CS_INTERFACE */
+        0x01,                   /* bDescriptorSubtype: Call Management Func Desc */
+        0x00,                   /* bmCapabilities: D0+D1 */
         _CDC_RNDIS_COM_ITF_NBR, /* bDataInterface: 1 */
 
         /* ACM Functional Descriptor */
@@ -251,16 +251,16 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         0x00, /* bmCapabilities */
 
         /* Union Functional Descriptor */
-        0x05,                  /* bFunctionLength */
-        0x24,                  /* bDescriptorType: CS_INTERFACE */
-        0x06,                  /* bDescriptorSubtype: Union functional descriptor */
+        0x05,                   /* bFunctionLength */
+        0x24,                   /* bDescriptorType: CS_INTERFACE */
+        0x06,                   /* bDescriptorSubtype: Union functional descriptor */
         _CDC_RNDIS_CMD_ITF_NBR, /* bMasterInterface: Communication class interface */
         _CDC_RNDIS_COM_ITF_NBR, /* bSlaveInterface0: Data Class Interface */
 
         /* Notification Endpoint Descriptor */
         0x07,                              /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,            /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_CMD_EP,                  /* bEndpointAddress */
+        _CDC_RNDIS_CMD_EP,                 /* bEndpointAddress */
         0x03,                              /* bmAttributes: Interrupt */
         LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
@@ -270,7 +270,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         /* Data class interface descriptor */
         0x09,                    /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: */
-        _CDC_RNDIS_COM_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        _CDC_RNDIS_COM_ITF_NBR,  /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints: Two endpoints used */
         0x0A,                    /* bInterfaceClass: CDC */
@@ -281,7 +281,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         /* Endpoint OUT Descriptor */
         0x07,                                      /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_OUT_EP,                          /* bEndpointAddress */
+        _CDC_RNDIS_OUT_EP,                         /* bEndpointAddress */
         0x02,                                      /* bmAttributes: Bulk */
         LOBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),
@@ -290,7 +290,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         /* Endpoint IN Descriptor */
         0x07,                                      /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_IN_EP,                           /* bEndpointAddress */
+        _CDC_RNDIS_IN_EP,                          /* bEndpointAddress */
         0x02,                                      /* bmAttributes: Bulk */
         LOBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize: */
         HIBYTE(CDC_RNDIS_DATA_HS_MAX_PACKET_SIZE),
@@ -301,8 +301,8 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
 __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE] __ALIGN_END =
     {
         /* Configuration Descriptor */
-        0x09,                              /* bLength: Configuration Descriptor size */
-        USB_DESC_TYPE_CONFIGURATION,       /* bDescriptorType: Configuration */
+        0x09,                               /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION,        /* bDescriptorType: Configuration */
         LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZE), /* wTotalLength: Total size of the Config descriptor */
         HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces: 2 interfaces */
@@ -317,20 +317,20 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
 
         /*---------------------------------------------------------------------------*/
         /* IAD descriptor */
-        0x08,                  /* bLength */
-        0x0B,                  /* bDescriptorType */
+        0x08,                   /* bLength */
+        0x0B,                   /* bDescriptorType */
         _CDC_RNDIS_CMD_ITF_NBR, /* bFirstInterface */
-        0x02,                  /* bInterfaceCount */
-        0xE0,                  /* bFunctionClass (Wireless Controller) */
-        0x01,                  /* bFunctionSubClass */
-        0x03,                  /* bFunctionProtocol */
-        0x00,                  /* iFunction */
+        0x02,                   /* bInterfaceCount */
+        0xE0,                   /* bFunctionClass (Wireless Controller) */
+        0x01,                   /* bFunctionSubClass */
+        0x03,                   /* bFunctionProtocol */
+        0x00,                   /* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        _CDC_RNDIS_CMD_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        _CDC_RNDIS_CMD_ITF_NBR,  /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x01,                    /* bNumEndpoints: One endpoint used */
         0x02,                    /* bInterfaceClass: Communication Interface Class */
@@ -346,10 +346,10 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         0x01,
 
         /* Call Management Functional Descriptor */
-        0x05,                  /* bFunctionLength */
-        0x24,                  /* bDescriptorType: CS_INTERFACE */
-        0x01,                  /* bDescriptorSubtype: Call Management Func Desc */
-        0x00,                  /* bmCapabilities: D0+D1 */
+        0x05,                   /* bFunctionLength */
+        0x24,                   /* bDescriptorType: CS_INTERFACE */
+        0x01,                   /* bDescriptorSubtype: Call Management Func Desc */
+        0x00,                   /* bmCapabilities: D0+D1 */
         _CDC_RNDIS_COM_ITF_NBR, /* bDataInterface: 1 */
 
         /* ACM Functional Descriptor */
@@ -359,16 +359,16 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         0x00, /* bmCapabilities */
 
         /* Union Functional Descriptor */
-        0x05,                  /* bFunctionLength */
-        0x24,                  /* bDescriptorType: CS_INTERFACE */
-        0x06,                  /* bDescriptorSubtype: Union functional descriptor */
+        0x05,                   /* bFunctionLength */
+        0x24,                   /* bDescriptorType: CS_INTERFACE */
+        0x06,                   /* bDescriptorSubtype: Union functional descriptor */
         _CDC_RNDIS_CMD_ITF_NBR, /* bMasterInterface: Communication class interface */
         _CDC_RNDIS_COM_ITF_NBR, /* bSlaveInterface0: Data Class Interface */
 
         /* Notification Endpoint Descriptor */
         0x07,                              /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,            /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_CMD_EP,                  /* bEndpointAddress */
+        _CDC_RNDIS_CMD_EP,                 /* bEndpointAddress */
         0x03,                              /* bmAttributes: Interrupt */
         LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
@@ -378,7 +378,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         /* Data class interface descriptor */
         0x09,                    /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: */
-        _CDC_RNDIS_COM_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        _CDC_RNDIS_COM_ITF_NBR,  /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints: Two endpoints used */
         0x0A,                    /* bInterfaceClass: CDC */
@@ -389,7 +389,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         /* Endpoint OUT Descriptor */
         0x07,                                      /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_OUT_EP,                          /* bEndpointAddress */
+        _CDC_RNDIS_OUT_EP,                         /* bEndpointAddress */
         0x02,                                      /* bmAttributes: Bulk */
         LOBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize: */
         HIBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),
@@ -398,7 +398,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         /* Endpoint IN Descriptor */
         0x07,                                      /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,                    /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_IN_EP,                           /* bEndpointAddress */
+        _CDC_RNDIS_IN_EP,                          /* bEndpointAddress */
         0x02,                                      /* bmAttributes: Bulk */
         LOBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_RNDIS_DATA_FS_MAX_PACKET_SIZE),
@@ -408,8 +408,8 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
 __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
     {
         /* Configuration Descriptor */
-        0x09,                              /* bLength: Configuration Descriptor size */
-        USB_DESC_TYPE_CONFIGURATION,       /* bDescriptorType: Configuration */
+        0x09,                               /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION,        /* bDescriptorType: Configuration */
         LOBYTE(CDC_RNDIS_CONFIG_DESC_SIZE), /* wTotalLength:no of returned bytes */
         HIBYTE(CDC_RNDIS_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces: 2 interfaces */
@@ -437,7 +437,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
-        _CDC_RNDIS_CMD_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        _CDC_RNDIS_CMD_ITF_NBR,  /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x01,                    /* bNumEndpoints: One endpoint used */
         0x02,                    /* bInterfaceClass: Communication Interface Class */
@@ -453,10 +453,10 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         0x01,
 
         /* Call Management Functional Descriptor */
-        0x05,                  /* bFunctionLength */
-        0x24,                  /* bDescriptorType: CS_INTERFACE */
-        0x01,                  /* bDescriptorSubtype: Call Management Func Desc */
-        0x00,                  /* bmCapabilities: D0+D1 */
+        0x05,                   /* bFunctionLength */
+        0x24,                   /* bDescriptorType: CS_INTERFACE */
+        0x01,                   /* bDescriptorSubtype: Call Management Func Desc */
+        0x00,                   /* bmCapabilities: D0+D1 */
         _CDC_RNDIS_COM_ITF_NBR, /* bDataInterface: 1 */
 
         /* ACM Functional Descriptor */
@@ -466,16 +466,16 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         0x00, /* bmCapabilities */
 
         /* Union Functional Descriptor */
-        0x05,                  /* bFunctionLength */
-        0x24,                  /* bDescriptorType: CS_INTERFACE */
-        0x06,                  /* bDescriptorSubtype: Union functional descriptor */
+        0x05,                   /* bFunctionLength */
+        0x24,                   /* bDescriptorType: CS_INTERFACE */
+        0x06,                   /* bDescriptorSubtype: Union functional descriptor */
         _CDC_RNDIS_CMD_ITF_NBR, /* bMasterInterface: Communication class interface */
         _CDC_RNDIS_COM_ITF_NBR, /* bSlaveInterface0: Data Class Interface */
 
         /* Communication Endpoint Descriptor */
         0x07,                              /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,            /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_CMD_EP,                  /* bEndpointAddress */
+        _CDC_RNDIS_CMD_EP,                 /* bEndpointAddress */
         0x03,                              /* bmAttributes: Interrupt */
         LOBYTE(CDC_RNDIS_CMD_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_RNDIS_CMD_PACKET_SIZE),
@@ -485,7 +485,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         /* Data class interface descriptor */
         0x09,                    /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_INTERFACE, /* bDescriptorType: */
-        _CDC_RNDIS_COM_ITF_NBR,   /* bInterfaceNumber: Number of Interface */
+        _CDC_RNDIS_COM_ITF_NBR,  /* bInterfaceNumber: Number of Interface */
         0x00,                    /* bAlternateSetting: Alternate setting */
         0x02,                    /* bNumEndpoints: Two endpoints used */
         0x0A,                    /* bInterfaceClass: CDC */
@@ -496,7 +496,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         /* Endpoint OUT Descriptor */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_OUT_EP,       /* bEndpointAddress */
+        _CDC_RNDIS_OUT_EP,      /* bEndpointAddress */
         0x02,                   /* bmAttributes: Bulk */
         0x40,                   /* wMaxPacketSize */
         0x00,
@@ -505,7 +505,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         /* Endpoint IN Descriptor */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: Endpoint */
-        _CDC_RNDIS_IN_EP,        /* bEndpointAddress */
+        _CDC_RNDIS_IN_EP,       /* bEndpointAddress */
         0x02,                   /* bmAttributes: Bulk */
         0x40,                   /* wMaxPacketSize */
         0x00,
@@ -1756,7 +1756,12 @@ static uint8_t USBD_CDC_RNDIS_ProcessUnsupportedMsg(USBD_HandleTypeDef *pdev,
   return (uint8_t)USBD_OK;
 }
 
-void USBD_Update_CDC_RNDIS_DESC(uint8_t *desc, uint8_t cmd_itf, uint8_t com_itf, uint8_t cmd_ep, uint8_t in_ep, uint8_t out_ep)
+void USBD_Update_CDC_RNDIS_DESC(uint8_t *desc,
+                                uint8_t cmd_itf,
+                                uint8_t com_itf,
+                                uint8_t in_ep,
+                                uint8_t cmd_ep,
+                                uint8_t out_ep)
 {
   desc[11] = cmd_itf;
   desc[19] = cmd_itf;

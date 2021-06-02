@@ -103,6 +103,7 @@ static uint8_t *USBD_COMPOSITE_GetHSCfgDesc(uint16_t *length);
 static uint8_t *USBD_COMPOSITE_GetFSCfgDesc(uint16_t *length);
 static uint8_t *USBD_COMPOSITE_GetOtherSpeedCfgDesc(uint16_t *length);
 static uint8_t *USBD_COMPOSITE_GetDeviceQualifierDesc(uint16_t *length);
+
 /**
   * @}
   */
@@ -132,7 +133,7 @@ USBD_ClassTypeDef USBD_COMPOSITE =
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
 #endif
-typedef struct __attribute__((packed, aligned(4))) USBD_COMPOSITE_CFG_DESC_t
+typedef struct __attribute__((packed)) USBD_COMPOSITE_CFG_DESC_t
 {
   uint8_t CONFIG_DESC[USB_CONF_DESC_SIZE];
 #if (USBD_USE_CDC_ACM == 1)

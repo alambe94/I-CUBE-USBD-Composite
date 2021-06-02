@@ -41,7 +41,7 @@ extern "C" {
 /** @defgroup usbd_cdc_Exported_Defines
   * @{
   */
-#define NUMBER_OF_CDC 								3
+#define NUMBER_OF_CDC 								1
 #ifndef CDC_HS_BINTERVAL
 #define CDC_HS_BINTERVAL                            0x10U
 #endif /* CDC_HS_BINTERVAL */
@@ -159,8 +159,8 @@ extern "C" {
   void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
                                 uint8_t cmd_itf,
                                 uint8_t com_itf,
-                                uint8_t cmd_ep,
                                 uint8_t in_ep,
+                                uint8_t cmd_ep,
                                 uint8_t out_ep);
   /**
   * @}

@@ -45,24 +45,24 @@ extern "C" {
 #define USBD_USE_CDC_ACM                                            1
 #define USBD_CDC_ACM_COUNT                                          NUMBER_OF_CDC
 
-#define USBD_USE_CDC_RNDIS                                          1
-#define USBD_USE_CDC_ECM                                            1
+#define USBD_USE_CDC_RNDIS                                          0
+#define USBD_USE_CDC_ECM                                            0
 
-#define USBD_USE_HID_MOUSE                                          1
-#define USBD_USE_HID_KEYBOARD                                       1
-#define USBD_USE_HID_CUSTOM                                         1
+#define USBD_USE_HID_MOUSE                                          0
+#define USBD_USE_HID_KEYBOARD                                       0
+#define USBD_USE_HID_CUSTOM                                         0
 
-#define USBD_USE_UAC_MIC                                            1
+#define USBD_USE_UAC_MIC                                            0
 
-#define USBD_USE_UAC_SPKR                                           1
+#define USBD_USE_UAC_SPKR                                           0
 
-#define USBD_USE_UVC                                                1
+#define USBD_USE_UVC                                                0
 
-#define USBD_USE_MSC                                                1
+#define USBD_USE_MSC                                                0
 
-#define USBD_USE_DFU                                                1
+#define USBD_USE_DFU                                                0
 
-#define USBD_USE_PRNTR                                              1
+#define USBD_USE_PRNTR                                              0
 /**
   * @}
   */
@@ -98,6 +98,7 @@ extern USBD_ClassTypeDef USBD_COMPOSITE;
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
+void USBD_COMPOSITE_Mount_Class(void);
 /**
   * @}
   */

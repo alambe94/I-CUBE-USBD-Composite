@@ -104,17 +104,17 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_FMC_Init();
-  MX_I2C4_Init();
-  MX_LTDC_Init();
-  MX_OCTOSPI1_Init();
-  MX_RTC_Init();
-  MX_SDMMC1_SD_Init();
-  MX_SPI2_Init();
+  //MX_FMC_Init();
+  //MX_I2C4_Init();
+  //MX_LTDC_Init();
+  //MX_OCTOSPI1_Init();
+  ///MX_RTC_Init();
+  //MX_SDMMC1_SD_Init();
+  //MX_SPI2_Init();
   MX_USART1_UART_Init();
   MX_USB_OTG_HS_PCD_Init();
-  MX_DMA2D_Init();
-  MX_RNG_Init();
+  //MX_DMA2D_Init();
+  //MX_RNG_Init();
   /* USER CODE BEGIN 2 */
   MX_USB_DEVICE_Init();
   /* USER CODE END 2 */

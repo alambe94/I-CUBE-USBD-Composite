@@ -233,8 +233,8 @@ uint8_t USBD_CDC_ECM_SendNotification(USBD_HandleTypeDef *pdev,
 void USBD_Update_CDC_ECM_DESC(uint8_t *desc,
                               uint8_t cmd_itf,
                               uint8_t com_itf,
-                              uint8_t cmd_ep,
                               uint8_t in_ep,
+                              uint8_t cmd_ep,
                               uint8_t out_ep);
 
 /**
