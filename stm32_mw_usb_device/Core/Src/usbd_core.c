@@ -102,7 +102,6 @@ USBD_StatusTypeDef USBD_Init(USBD_HandleTypeDef *pdev,
 
   /* Unlink previous class resources */
   pdev->pClass = NULL;
-  pdev->pUserData_CDC_ACM = NULL;
   pdev->pConfDesc = NULL;
 
   /* Assign USBD Descriptors */

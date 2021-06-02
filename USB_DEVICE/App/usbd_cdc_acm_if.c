@@ -438,39 +438,39 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
   USBD_CDC_ReceivePacket(UART_Handle_TO_CDC_CH(huart), &hUsbDeviceHS);
 }
 
-void HAL_TIM_PeriodElapsedCallback1111111111111111111(TIM_HandleTypeDef *htim)
-{
-  for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
-  {
-    uint32_t buffptr;
-    uint32_t buffsize;
-
-    if (Read_Index[i] != Write_Index[i])
-    {
-      if (Read_Index[i] > Write_Index[i]) /* Rollback */
-      {
-        buffsize = APP_TX_DATA_SIZE - Read_Index[i];
-      }
-      else
-      {
-        buffsize = Write_Index[i] - Read_Index[i];
-      }
-
-      buffptr = Read_Index[i];
-
-      USBD_CDC_SetTxBuffer(i, &hUsbDeviceHS, &TX_Buffer[i][buffptr], buffsize);
-
-      if (USBD_CDC_TransmitPacket(i, &hUsbDeviceHS) == USBD_OK)
-      {
-        Read_Index[i] += buffsize;
-        if (Read_Index[i] == APP_RX_DATA_SIZE)
-        {
-          Read_Index[i] = 0;
-        }
-      }
-    }
-  }
-}
+//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+//{
+//  for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
+//  {
+//    uint32_t buffptr;
+//    uint32_t buffsize;
+//
+//    if (Read_Index[i] != Write_Index[i])
+//    {
+//      if (Read_Index[i] > Write_Index[i]) /* Rollback */
+//      {
+//        buffsize = APP_TX_DATA_SIZE - Read_Index[i];
+//      }
+//      else
+//      {
+//        buffsize = Write_Index[i] - Read_Index[i];
+//      }
+//
+//      buffptr = Read_Index[i];
+//
+//      USBD_CDC_SetTxBuffer(i, &hUsbDeviceHS, &TX_Buffer[i][buffptr], buffsize);
+//
+//      if (USBD_CDC_TransmitPacket(i, &hUsbDeviceHS) == USBD_OK)
+//      {
+//        Read_Index[i] += buffsize;
+//        if (Read_Index[i] == APP_RX_DATA_SIZE)
+//        {
+//          Read_Index[i] = 0;
+//        }
+//      }
+//    }
+//  }
+//}
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {

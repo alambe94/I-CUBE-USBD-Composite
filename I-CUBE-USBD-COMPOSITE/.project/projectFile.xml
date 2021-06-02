@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <package schemaVersion="1.6.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
-    <vendor>AlsaadLambe</vendor>
+    <vendor>AL94</vendor>
     <name>I-CUBE-USBD-COMPOSITE::FROM_SCRATCH_GENERATED::CUBE_RULES</name>
     <description>Create STM32 USB composite devices with ease.</description>
     <url>https://github.com/alambe94/I-CUBE-USB-Composite/</url>
@@ -60,7 +60,7 @@
         </condition>
     </conditions>
     <components>
-        <bundle Cbundle="Composite" Cclass="USB" Cvendor="AL94" Cversion="1.0.0">
+        <bundle Cbundle="Composite" Cclass="USB" Cversion="1.0.0">
             <description>Composite</description>
             <doc>C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/README.md::I-CUBE-USBD-Composite/README.md</doc>
             <component Cgroup="COMPOSITE" Csub="Core" maxInstances="1">
@@ -77,6 +77,8 @@
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usb_device.h::Middlewares/Third_Party/COMPOSITE/App/usb_device.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/Target/usbd_conf.c::Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.c"/>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/Target/usbd_conf.h::Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_desc.c::Middlewares/Third_Party/COMPOSITE/App/usbd_desc.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_desc.h::Middlewares/Third_Party/COMPOSITE/App/usbd_desc.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="CDC_ACM" maxInstances="1">
@@ -192,6 +194,8 @@
                 <files>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/PRINTER/Inc/usbd_printer.h::Middlewares/Third_Party/COMPOSITE/Class/PRINTER/Inc/usbd_printer.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/PRINTER/Src/usbd_printer.c::Middlewares/Third_Party/COMPOSITE/Class/PRINTER/Src/usbd_printer.c"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_printer_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_printer_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_printer_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_printer_if.h"/>
                 </files>
             </component>
         </bundle>

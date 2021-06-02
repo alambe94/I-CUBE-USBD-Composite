@@ -27,18 +27,6 @@
 
 /* USER CODE BEGIN Includes */
 #include "usbd_composite.h"
-#include "usbd_cdc_acm.h"
-#include "usbd_cdc_ecm.h"
-#include "usbd_cdc_rndis.h"
-#include "usbd_hid_mouse.h"
-#include "usbd_hid_keyboard.h"
-#include "usbd_hid_custom.h"
-#include "usbd_audio_mic.h"
-#include "usbd_audio_spkr.h"
-#include "usbd_video.h"
-#include "usbd_msc.h"
-#include "usbd_dfu.h"
-#include "usbd_printer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
