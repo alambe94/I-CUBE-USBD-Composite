@@ -304,7 +304,6 @@ typedef struct _USBD_HandleTypeDef
   USBD_SetupReqTypedef    request;
   USBD_DescriptorsTypeDef *pDesc;
   USBD_ClassTypeDef       *pClass;
-  void                    *pClassData_CDC_ACM;
   void                    *pUserData_CDC_ACM;
   void                    *pClassData_CDC_RNDIS;
   void                    *pUserData_CDC_RNDIS;

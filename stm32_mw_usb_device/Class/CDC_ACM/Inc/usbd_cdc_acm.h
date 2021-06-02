@@ -107,15 +107,15 @@ extern "C" {
   typedef struct
   {
     uint32_t data[NUMBER_OF_CDC][CDC_DATA_HS_MAX_PACKET_SIZE / 4U]; /* Force 32bits alignment */
-    uint8_t CmdOpCode[NUMBER_OF_CDC];
-    uint8_t CmdLength[NUMBER_OF_CDC];
-    uint8_t *RxBuffer[NUMBER_OF_CDC];
-    uint8_t *TxBuffer[NUMBER_OF_CDC];
-    uint32_t RxLength[NUMBER_OF_CDC];
-    uint32_t TxLength[NUMBER_OF_CDC];
+    uint8_t CmdOpCode;
+    uint8_t CmdLength;
+    uint8_t *RxBuffer;
+    uint8_t *TxBuffer;
+    uint32_t RxLength;
+    uint32_t TxLength;
 
-    __IO uint32_t TxState[NUMBER_OF_CDC];
-    __IO uint32_t RxState[NUMBER_OF_CDC];
+    __IO uint32_t TxState;
+    __IO uint32_t RxState;
   } USBD_CDC_ACM_HandleTypeDef;
 
   /** @defgroup USBD_CORE_Exported_Macros

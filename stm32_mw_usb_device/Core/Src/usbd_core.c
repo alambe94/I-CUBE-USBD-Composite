@@ -142,7 +142,6 @@ USBD_StatusTypeDef USBD_DeInit(USBD_HandleTypeDef *pdev)
   {
     pdev->pClass->DeInit(pdev, (uint8_t)pdev->dev_config);
     pdev->pClass = NULL;
-    pdev->pUserData_CDC_ACM = NULL;
   }
 
   /* Free Device descriptors resources */
