@@ -430,8 +430,8 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
 #if (USBD_USE_CDC_ACM == 1)
     for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
     {
-      HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_IN_EP[i] & 0x7F), 128);
-      HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_CMD_EP[i] & 0x7F), 64);
+      HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_IN_EP[i] & 0x7F), 64);
+      HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_CMD_EP[i] & 0x7F), 8);
     }
 #endif
 #if (USBD_USE_CDC_RNDIS == 1)

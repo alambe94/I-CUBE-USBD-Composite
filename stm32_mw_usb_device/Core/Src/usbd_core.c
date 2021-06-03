@@ -176,17 +176,17 @@ USBD_StatusTypeDef USBD_RegisterClass(USBD_HandleTypeDef *pdev, USBD_ClassTypeDe
   pdev->pClass = pclass;
 
   /* Get Device Configuration Descriptor */
-#ifdef USE_USB_HS
-  if (pdev->pClass->GetHSConfigDescriptor != NULL)
+  if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
-    pdev->pConfDesc = (void *)pdev->pClass->GetHSConfigDescriptor(&len);
+	  if (pdev->pClass->GetHSConfigDescriptor != NULL)
+	  {
+		  pdev->pConfDesc = (void *)pdev->pClass->GetHSConfigDescriptor(&len);
+	  }
   }
-#else /* Default USE_USB_FS */
-  if (pdev->pClass->GetFSConfigDescriptor != NULL)
+  else if (pdev->pClass->GetFSConfigDescriptor != NULL)
   {
-    pdev->pConfDesc = (void *)pdev->pClass->GetFSConfigDescriptor(&len);
+	  pdev->pConfDesc = (void *)pdev->pClass->GetFSConfigDescriptor(&len);
   }
-#endif /* USE_USB_FS */
 
   return USBD_OK;
 }

@@ -137,134 +137,134 @@ static int8_t CDC_Receive(uint8_t cdc_ch, uint8_t *pbuf, uint32_t *Len);
 static int8_t CDC_TransmitCplt(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len, uint8_t epnum);
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
-UART_HandleTypeDef *CDC_CH_To_UART_Handle(uint8_t cdc_ch)
-{
-  UART_HandleTypeDef *handle = NULL;
-
-  if (cdc_ch == 0)
-  {
-    handle = &huart1;
-  }
-#if (0)
-  else if (cdc_ch == 1)
-  {
-    handle = &huart2;
-  }
-  else if (cdc_ch == 2)
-  {
-    handle = &huart3;
-  }
-#endif
-  return handle;
-}
-
-uint8_t UART_Handle_TO_CDC_CH(UART_HandleTypeDef *handle)
-{
-  uint8_t cdc_ch = 0;
-
-  if (handle == &huart1)
-  {
-    cdc_ch = 0;
-  }
-#if (0)
-  else if (handle == &huart2)
-  {
-    cdc_ch = 1;
-  }
-  else if (handle == &huart3)
-  {
-    cdc_ch = 2;
-  }
-#endif
-  return cdc_ch;
-}
-
-void Change_UART_Setting(uint8_t cdc_ch)
-{
-  UART_HandleTypeDef *handle = CDC_CH_To_UART_Handle(cdc_ch);
-
-  if (HAL_UART_DeInit(handle) != HAL_OK)
-  {
-    /* Initialization Error */
-    Error_Handler();
-  }
-  /* set the Stop bit */
-  switch (Line_Coding[cdc_ch].format)
-  {
-  case 0:
-    handle->Init.StopBits = UART_STOPBITS_1;
-    break;
-  case 2:
-    handle->Init.StopBits = UART_STOPBITS_2;
-    break;
-  default:
-    handle->Init.StopBits = UART_STOPBITS_1;
-    break;
-  }
-
-  /* set the parity bit*/
-  switch (Line_Coding[cdc_ch].paritytype)
-  {
-  case 0:
-    handle->Init.Parity = UART_PARITY_NONE;
-    break;
-  case 1:
-    handle->Init.Parity = UART_PARITY_ODD;
-    break;
-  case 2:
-    handle->Init.Parity = UART_PARITY_EVEN;
-    break;
-  default:
-    handle->Init.Parity = UART_PARITY_NONE;
-    break;
-  }
-
-  /*set the data type : only 8bits and 9bits is supported */
-  switch (Line_Coding[cdc_ch].datatype)
-  {
-  case 0x07:
-    /* With this configuration a parity (Even or Odd) must be set */
-    handle->Init.WordLength = UART_WORDLENGTH_8B;
-    break;
-  case 0x08:
-    if (handle->Init.Parity == UART_PARITY_NONE)
-    {
-      handle->Init.WordLength = UART_WORDLENGTH_8B;
-    }
-    else
-    {
-      handle->Init.WordLength = UART_WORDLENGTH_9B;
-    }
-
-    break;
-  default:
-    handle->Init.WordLength = UART_WORDLENGTH_8B;
-    break;
-  }
-
-  if (Line_Coding[cdc_ch].bitrate == 0)
-  {
-    Line_Coding[cdc_ch].bitrate = 115200;
-  }
-
-  handle->Init.BaudRate = Line_Coding[cdc_ch].bitrate;
-  handle->Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  handle->Init.Mode = UART_MODE_TX_RX;
-  handle->Init.OverSampling = UART_OVERSAMPLING_16;
-
-  if (HAL_UART_Init(handle) != HAL_OK)
-  {
-    /* Initialization Error */
-    Error_Handler();
-  }
-
-  /** rx for uart and tx buffer of usb */
-  if (HAL_UART_Receive_IT(handle, TX_Buffer[cdc_ch], 1) != HAL_OK)
-  {
-    /* Transfer error in reception process */
-    Error_Handler();
-  }
-}
+//UART_HandleTypeDef *CDC_CH_To_UART_Handle(uint8_t cdc_ch)
+//{
+//  UART_HandleTypeDef *handle = NULL;
+//
+//  if (cdc_ch == 0)
+//  {
+//    handle = &huart1;
+//  }
+//#if (0)
+//  else if (cdc_ch == 1)
+//  {
+//    handle = &huart2;
+//  }
+//  else if (cdc_ch == 2)
+//  {
+//    handle = &huart3;
+//  }
+//#endif
+//  return handle;
+//}
+//
+//uint8_t UART_Handle_TO_CDC_CH(UART_HandleTypeDef *handle)
+//{
+//  uint8_t cdc_ch = 0;
+//
+//  if (handle == &huart1)
+//  {
+//    cdc_ch = 0;
+//  }
+//#if (0)
+//  else if (handle == &huart2)
+//  {
+//    cdc_ch = 1;
+//  }
+//  else if (handle == &huart3)
+//  {
+//    cdc_ch = 2;
+//  }
+//#endif
+//  return cdc_ch;
+//}
+//
+//void Change_UART_Setting(uint8_t cdc_ch)
+//{
+//  UART_HandleTypeDef *handle = CDC_CH_To_UART_Handle(cdc_ch);
+//
+//  if (HAL_UART_DeInit(handle) != HAL_OK)
+//  {
+//    /* Initialization Error */
+//    Error_Handler();
+//  }
+//  /* set the Stop bit */
+//  switch (Line_Coding[cdc_ch].format)
+//  {
+//  case 0:
+//    handle->Init.StopBits = UART_STOPBITS_1;
+//    break;
+//  case 2:
+//    handle->Init.StopBits = UART_STOPBITS_2;
+//    break;
+//  default:
+//    handle->Init.StopBits = UART_STOPBITS_1;
+//    break;
+//  }
+//
+//  /* set the parity bit*/
+//  switch (Line_Coding[cdc_ch].paritytype)
+//  {
+//  case 0:
+//    handle->Init.Parity = UART_PARITY_NONE;
+//    break;
+//  case 1:
+//    handle->Init.Parity = UART_PARITY_ODD;
+//    break;
+//  case 2:
+//    handle->Init.Parity = UART_PARITY_EVEN;
+//    break;
+//  default:
+//    handle->Init.Parity = UART_PARITY_NONE;
+//    break;
+//  }
+//
+//  /*set the data type : only 8bits and 9bits is supported */
+//  switch (Line_Coding[cdc_ch].datatype)
+//  {
+//  case 0x07:
+//    /* With this configuration a parity (Even or Odd) must be set */
+//    handle->Init.WordLength = UART_WORDLENGTH_8B;
+//    break;
+//  case 0x08:
+//    if (handle->Init.Parity == UART_PARITY_NONE)
+//    {
+//      handle->Init.WordLength = UART_WORDLENGTH_8B;
+//    }
+//    else
+//    {
+//      handle->Init.WordLength = UART_WORDLENGTH_9B;
+//    }
+//
+//    break;
+//  default:
+//    handle->Init.WordLength = UART_WORDLENGTH_8B;
+//    break;
+//  }
+//
+//  if (Line_Coding[cdc_ch].bitrate == 0)
+//  {
+//    Line_Coding[cdc_ch].bitrate = 115200;
+//  }
+//
+//  handle->Init.BaudRate = Line_Coding[cdc_ch].bitrate;
+//  handle->Init.HwFlowCtl = UART_HWCONTROL_NONE;
+//  handle->Init.Mode = UART_MODE_TX_RX;
+//  handle->Init.OverSampling = UART_OVERSAMPLING_16;
+//
+//  if (HAL_UART_Init(handle) != HAL_OK)
+//  {
+//    /* Initialization Error */
+//    Error_Handler();
+//  }
+//
+//  /** rx for uart and tx buffer of usb */
+//  if (HAL_UART_Receive_IT(handle, TX_Buffer[cdc_ch], 1) != HAL_OK)
+//  {
+//    /* Transfer error in reception process */
+//    Error_Handler();
+//  }
+//}
 /* USER CODE END PRIVATE_FUNCTIONS_DECLARATION */
 
 /**
@@ -309,11 +309,11 @@ static int8_t CDC_DeInit(uint8_t cdc_ch)
 {
   /* USER CODE BEGIN 4 */
   /* DeInitialize the UART peripheral */
-  if (HAL_UART_DeInit(CDC_CH_To_UART_Handle(cdc_ch)) != HAL_OK)
-  {
-    /* Initialization Error */
-    Error_Handler();
-  }
+//  if (HAL_UART_DeInit(CDC_CH_To_UART_Handle(cdc_ch)) != HAL_OK)
+//  {
+//    /* Initialization Error */
+//    Error_Handler();
+//  }
   return (USBD_OK);
   /* USER CODE END 4 */
 }
@@ -374,7 +374,7 @@ static int8_t CDC_Control(uint8_t cdc_ch, uint8_t cmd, uint8_t *pbuf, uint16_t l
     Line_Coding[cdc_ch].paritytype = pbuf[5];
     Line_Coding[cdc_ch].datatype = pbuf[6];
 
-    Change_UART_Setting(cdc_ch);
+    //Change_UART_Setting(cdc_ch);
     break;
 
   case CDC_GET_LINE_CODING:
@@ -421,22 +421,67 @@ static int8_t CDC_Control(uint8_t cdc_ch, uint8_t cmd, uint8_t *pbuf, uint16_t l
 static int8_t CDC_Receive(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
-  HAL_UART_Transmit_DMA(CDC_CH_To_UART_Handle(cdc_ch), Buf, *Len);
+  //HAL_UART_Transmit_DMA(CDC_CH_To_UART_Handle(cdc_ch), Buf, *Len);
+	CDC_Transmit(cdc_ch, Buf, *Len);// echo back on same channel
+
+	USBD_CDC_SetRxBuffer(cdc_ch, &hUsbDeviceHS, &Buf[0]);
+	USBD_CDC_ReceivePacket(cdc_ch, &hUsbDeviceHS);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
 
+/**
+  * @brief  CDC_TransmitCplt_FS
+  *         Data transmited callback
+  *
+  *         @note
+  *         This function is IN transfer complete callback used to inform user that
+  *         the submitted Data is successfully sent over USB.
+  *
+  * @param  Buf: Buffer of data to be received
+  * @param  Len: Number of data received (in bytes)
+  * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
+  */
 static int8_t CDC_TransmitCplt(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len, uint8_t epnum)
 {
 	return (USBD_OK);
 }
 
-/* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+
+/**
+  * @brief  CDC_Transmit
+  *         Data to send over USB IN endpoint are sent over CDC interface
+  *         through this function.
+  *         @note
+  *
+  *
+  * @param  Buf: Buffer of data to be sent
+  * @param  Len: Number of data to be sent (in bytes)
+  * @retval USBD_OK if all operations are OK else USBD_FAIL or USBD_BUSY
+  */
+uint8_t CDC_Transmit(uint8_t ch, uint8_t* Buf, uint16_t Len)
 {
-  /* Initiate next USB packet transfer once UART completes transfer (transmitting data over Tx line) */
-  USBD_CDC_ReceivePacket(UART_Handle_TO_CDC_CH(huart), &hUsbDeviceHS);
+  uint8_t result = USBD_OK;
+  /* USER CODE BEGIN 7 */
+  extern USBD_CDC_ACM_HandleTypeDef CDC_ACM_Class_Data[];
+  USBD_CDC_ACM_HandleTypeDef *hcdc = NULL;
+  hcdc = &CDC_ACM_Class_Data[ch];
+  if (hcdc->TxState != 0){
+    return USBD_BUSY;
+  }
+  USBD_CDC_SetTxBuffer(ch, &hUsbDeviceHS, Buf, Len);
+  result = USBD_CDC_TransmitPacket(ch, &hUsbDeviceHS);
+  /* USER CODE END 7 */
+  return result;
 }
+
+
+/* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
+//void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+//{
+//  /* Initiate next USB packet transfer once UART completes transfer (transmitting data over Tx line) */
+//  //USBD_CDC_ReceivePacket(UART_Handle_TO_CDC_CH(huart), &hUsbDeviceHS);
+//}
 
 //void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //{
@@ -472,21 +517,21 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 //  }
 //}
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-  uint8_t cdc_ch = UART_Handle_TO_CDC_CH(huart);
-  /* Increment Index for buffer writing */
-  Write_Index[cdc_ch]++;
-
-  /* To avoid buffer overflow */
-  if (Write_Index[cdc_ch] == APP_RX_DATA_SIZE)
-  {
-    Write_Index[cdc_ch] = 0;
-  }
-
-  /* Start another reception: provide the buffer pointer with offset and the buffer size */
-  HAL_UART_Receive_IT(huart, (TX_Buffer[cdc_ch] + Write_Index[cdc_ch]), 1);
-}
+//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+//{
+//  uint8_t cdc_ch = UART_Handle_TO_CDC_CH(huart);
+//  /* Increment Index for buffer writing */
+//  Write_Index[cdc_ch]++;
+//
+//  /* To avoid buffer overflow */
+//  if (Write_Index[cdc_ch] == APP_RX_DATA_SIZE)
+//  {
+//    Write_Index[cdc_ch] = 0;
+//  }
+//
+//  /* Start another reception: provide the buffer pointer with offset and the buffer size */
+//  HAL_UART_Receive_IT(huart, (TX_Buffer[cdc_ch] + Write_Index[cdc_ch]), 1);
+//}
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
 /**

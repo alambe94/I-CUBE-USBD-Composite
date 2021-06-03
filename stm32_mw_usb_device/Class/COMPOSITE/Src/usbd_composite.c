@@ -124,7 +124,7 @@ typedef struct __attribute__((packed)) USBD_COMPOSITE_CFG_DESC_t
 {
   uint8_t CONFIG_DESC[USB_CONF_DESC_SIZE];
 #if (USBD_USE_CDC_ACM == 1)
-  uint8_t USBD_CDC_ACM0_DESC[USB_CDC_CONFIG_DESC_SIZ - 0x09];
+  uint8_t USBD_CDC_ACM_DESC[USB_CDC_CONFIG_DESC_SIZ - 0x09];
 #endif
 #if (USBD_USE_CDC_ECM == 1)
   uint8_t USBD_CDC_ECM_DESC[CDC_ECM_CONFIG_DESC_SIZE - 0x09];
@@ -298,7 +298,6 @@ static uint8_t USBD_COMPOSITE_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 static uint8_t USBD_COMPOSITE_Setup(USBD_HandleTypeDef *pdev,
                                     USBD_SetupReqTypedef *req)
 {
-
 #if (USBD_USE_CDC_ACM == 1)
   for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
   {
@@ -797,16 +796,16 @@ void USBD_COMPOSITE_Mount_Class(void)
                            in_ep_count,
                            in_ep_count + 1,
                            out_ep_count);
-  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
-  USBD_Update_CDC_ACM_DESC(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC,
+  USBD_Update_CDC_ACM_DESC(ptr,
                            interface_count,
                            interface_count + 1,
                            in_ep_count,
                            in_ep_count + 1,
                            out_ep_count);
-  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM0_DESC, ptr + 0x09, len - 0x09);
+  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM_DESC, ptr + 0x09, len - 0x09);
 
   in_ep_count += 2 * USBD_CDC_ACM_COUNT;
   out_ep_count += 1 * USBD_CDC_ACM_COUNT;
@@ -968,7 +967,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   ptr[1] = USB_DESC_TYPE_CONFIGURATION; /* bDescriptorType: Configuration */
   ptr[2] = LOBYTE(CFG_SIZE);            /* wTotalLength:no of returned bytes */
   ptr[3] = HIBYTE(CFG_SIZE);
-  ptr[4] = (2 * NUMBER_OF_CDC); /* bNumInterfaces: 2 interface */
+  ptr[4] = interface_count; /* bNumInterfaces: 2 interface */
   ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */
   ptr[6] = 0x00;                /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
@@ -984,7 +983,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   ptr[1] = USB_DESC_TYPE_CONFIGURATION; /* bDescriptorType: Configuration */
   ptr[2] = LOBYTE(CFG_SIZE);            /* wTotalLength:no of returned bytes */
   ptr[3] = HIBYTE(CFG_SIZE);
-  ptr[4] = (2 * NUMBER_OF_CDC); /* bNumInterfaces: 2 interface */
+  ptr[4] = interface_count; /* bNumInterfaces: 2 interface */
   ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */
   ptr[6] = 0x00;                /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)

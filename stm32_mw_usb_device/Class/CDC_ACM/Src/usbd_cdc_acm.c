@@ -121,7 +121,7 @@ static uint8_t *USBD_CDC_GetOtherSpeedCfgDesc(uint16_t *length);
 static uint8_t *USBD_CDC_GetOtherSpeedCfgDesc(uint16_t *length);
 static uint8_t *USBD_CDC_GetDeviceQualifierDescriptor(uint16_t *length);
 
-static USBD_CDC_ACM_HandleTypeDef CDC_ACM_Class_Data[NUMBER_OF_CDC];
+USBD_CDC_ACM_HandleTypeDef CDC_ACM_Class_Data[NUMBER_OF_CDC];
 
 /* USB Standard Device Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_CDC_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_DESC] __ALIGN_END =
@@ -908,8 +908,8 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         /* Configuration Descriptor */
         0x09,                        /* bLength: Configuration Descriptor size */
         USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
-        USB_CDC_CONFIG_DESC_SIZ,     /* wTotalLength:no of returned bytes */
-        0x00,
+        LOBYTE(USB_CDC_CONFIG_DESC_SIZ), /* wTotalLength:no of returned bytes */
+        HIBYTE(USB_CDC_CONFIG_DESC_SIZ),
         0x02, /* bNumInterfaces: 2 interface */
         0x01, /* bConfigurationValue: Configuration value */
         0x00, /* iConfiguration: Index of string descriptor describing the configuration */
@@ -1782,6 +1782,7 @@ static uint8_t USBD_CDC_Setup(USBD_HandleTypeDef *pdev,
   USBD_StatusTypeDef ret = USBD_OK;
 
   uint8_t windex_to_ch = 0;
+  
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
     if (req->wIndex == CDC_CMD_ITF_NBR[i] || req->wIndex == CDC_COM_ITF_NBR[i])
@@ -2160,27 +2161,28 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
   desc += 9;
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
-    desc[2 + (i * 66)] = cmd_itf;
-    desc[10 + (i * 66)] = cmd_itf;
-    desc[26 + (i * 66)] = com_itf;
-    desc[34 + (i * 66)] = cmd_itf;
-    desc[35 + (i * 66)] = com_itf;
-    desc[38 + (i * 66)] = cmd_ep;
-    desc[45 + (i * 66)] = com_itf;
-    desc[54 + (i * 66)] = out_ep;
-    desc[61 + (i * 66)] = in_ep;
+    desc[02] = cmd_itf;
+    desc[10] = cmd_itf;
+    desc[26] = com_itf;
+    desc[34] = cmd_itf;
+    desc[35] = com_itf;
+    desc[38] = cmd_ep;
+    desc[45] = com_itf;
+    desc[54] = out_ep;
+    desc[61] = in_ep;
 
+    desc += 66;
     CDC_IN_EP[i] = in_ep;
     CDC_OUT_EP[i] = out_ep;
     CDC_CMD_EP[i] = cmd_ep;
     CDC_CMD_ITF_NBR[i] = cmd_itf;
     CDC_COM_ITF_NBR[i] = com_itf;
 
-    in_ep++;
+    in_ep += 2;
     cmd_ep = in_ep + 1;
     out_ep++;
 
-    cmd_itf++;
+    cmd_itf += 2;;
     com_itf = cmd_itf + 1;
   }
 }
