@@ -1044,9 +1044,9 @@ uint8_t USBD_VIDEO_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_VIDEO_ItfTyp
 void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t in_ep)
 {
 #ifdef USBD_UVC_FORMAT_UNCOMPRESSED
-#define UNCOMPRESSED_OFFSET 22
+#define _OFFSET 44
 #else
-#define UNCOMPRESSED_OFFSET 0
+#define _OFFSET 22
 #endif
 
   desc[11] = vc_itf;
@@ -1054,8 +1054,8 @@ void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t
   desc[38] = vs_itf;
   desc[58] = vs_itf;
   desc[71] = in_ep;
-  desc[100 + UNCOMPRESSED_OFFSET] = vs_itf;
-  desc[109 + UNCOMPRESSED_OFFSET] = in_ep;
+  desc[100 + _OFFSET] = vs_itf;
+  desc[109 + _OFFSET] = in_ep;
 
   UVC_IN_EP = in_ep;
   UVC_VC_IF_NUM = vc_itf;

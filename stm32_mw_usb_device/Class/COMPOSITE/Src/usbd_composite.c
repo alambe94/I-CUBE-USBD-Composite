@@ -955,7 +955,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   ptr = USBD_PRNT.GetHSConfigDescriptor(&len);
   USBD_Update_PRNT_DESC(ptr, interface_count, in_ep_count, out_ep_count);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
-  interface_count += 1;
+  in_ep_count += 1;
   out_ep_count += 1;
   interface_count += 1;
 #endif
@@ -992,6 +992,9 @@ void USBD_COMPOSITE_Mount_Class(void)
   ptr[7] = 0x80; /* bmAttributes: Bus Powered according to user configuration */
 #endif
   ptr[8] = USBD_MAX_POWER; /* MaxPower 100 mA */
+
+  (void)out_ep_count;
+  (void)in_ep_count;
 }
 
 /**

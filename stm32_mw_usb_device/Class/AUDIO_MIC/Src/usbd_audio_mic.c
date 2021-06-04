@@ -911,7 +911,7 @@ void USBD_Update_Audio_MIC_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, u
   desc[26] = as_itf;
   desc[58 + AUDIO_MIC_CHANNELS] = as_itf;
   desc[67 + AUDIO_MIC_CHANNELS] = as_itf;
-  desc[95 + AUDIO_MIC_CHANNELS] = in_ep;
+  desc[94 + AUDIO_MIC_CHANNELS] = in_ep;
 
   AUDIO_MIC_EP = in_ep;
   AUDIO_MIC_AC_ITF_NBR = ac_itf;

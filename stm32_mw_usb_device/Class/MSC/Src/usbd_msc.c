@@ -594,7 +594,7 @@ void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t 
   desc[27] = out_ep;
 
   MSC_EPIN_ADDR = in_ep;
-  MSC_EPIN_ADDR = out_ep;
+  MSC_EPOUT_ADDR = out_ep;
   MSC_ITF_NBR = itf_no;
 }
 
