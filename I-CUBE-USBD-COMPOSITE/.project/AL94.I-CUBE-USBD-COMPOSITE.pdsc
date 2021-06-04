@@ -75,10 +75,10 @@
                     <file category="source" name="Middlewares/Third_Party/COMPOSITE/Core/Src/usbd_ioreq.c"/>
                     <file category="source" name="Middlewares/Third_Party/COMPOSITE/App/usb_device.c"/>
                     <file category="header" name="Middlewares/Third_Party/COMPOSITE/App/usb_device.h"/>
-                    <file category="source" name="Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.c"/>
-                    <file category="header" name="Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.h"/>
                     <file category="source" name="Middlewares/Third_Party/COMPOSITE/App/usbd_desc.c"/>
                     <file category="header" name="Middlewares/Third_Party/COMPOSITE/App/usbd_desc.h"/>
+                    <file category="source" name="Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.c"/>
+                    <file category="header" name="Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="CDC_ACM" maxInstances="1">

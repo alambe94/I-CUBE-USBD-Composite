@@ -73,12 +73,12 @@
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Core/Src/usbd_core.c::Middlewares/Third_Party/COMPOSITE/Core/Src/usbd_core.c"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Core/Src/usbd_ctlreq.c::Middlewares/Third_Party/COMPOSITE/Core/Src/usbd_ctlreq.c"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Core/Src/usbd_ioreq.c::Middlewares/Third_Party/COMPOSITE/Core/Src/usbd_ioreq.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usb_device.c::Middlewares/Third_Party/COMPOSITE/App/usb_device.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usb_device.h::Middlewares/Third_Party/COMPOSITE/App/usb_device.h"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/Target/usbd_conf.c::Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/Target/usbd_conf.h::Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.h"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_desc.c::Middlewares/Third_Party/COMPOSITE/App/usbd_desc.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_desc.h::Middlewares/Third_Party/COMPOSITE/App/usbd_desc.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usb_device.c::Middlewares/Third_Party/COMPOSITE/App/usb_device.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usb_device.h::Middlewares/Third_Party/COMPOSITE/App/usb_device.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_desc.c::Middlewares/Third_Party/COMPOSITE/App/usbd_desc.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_desc.h::Middlewares/Third_Party/COMPOSITE/App/usbd_desc.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Target/usbd_conf.c::Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Target/usbd_conf.h::Middlewares/Third_Party/COMPOSITE/Target/usbd_conf.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="CDC_ACM" maxInstances="1">
@@ -86,8 +86,8 @@
                 <files>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/CDC_ACM/Inc/usbd_cdc_acm.h::Middlewares/Third_Party/COMPOSITE/Class/CDC_ACM/Inc/usbd_cdc_acm.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/CDC_ACM/Src/usbd_cdc_acm.c::Middlewares/Third_Party/COMPOSITE/Class/CDC_ACM/Src/usbd_cdc_acm.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_cdc_acm_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_acm_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_cdc_acm_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_acm_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_cdc_acm_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_acm_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_cdc_acm_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_acm_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="CDC_RNDIS" maxInstances="1">
@@ -95,8 +95,8 @@
                 <files>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/CDC_RNDIS/Inc/usbd_cdc_rndis.h::Middlewares/Third_Party/COMPOSITE/Class/CDC_RNDIS/Inc/usbd_cdc_rndis.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/CDC_RNDIS/Src/usbd_cdc_rndis.c::Middlewares/Third_Party/COMPOSITE/Class/CDC_RNDIS/Src/usbd_cdc_rndis.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_cdc_rndis_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_rndis_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_cdc_rndis_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_rndis_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_cdc_rndis_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_rndis_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_cdc_rndis_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_rndis_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="HID_MOUSE" maxInstances="1">
@@ -118,8 +118,8 @@
                 <files>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/HID_CUSTOM/Src/usbd_hid_custom.c::Middlewares/Third_Party/COMPOSITE/Class/HID_CUSTOM/Src/usbd_hid_custom.c"/>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/HID_CUSTOM/Inc/usbd_hid_custom.h::Middlewares/Third_Party/COMPOSITE/Class/HID_CUSTOM/Inc/usbd_hid_custom.h"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_hid_custom_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_hid_custom_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_hid_custom_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_hid_custom_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_hid_custom_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_hid_custom_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_hid_custom_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_hid_custom_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="MSC_BOT" maxInstances="1">
@@ -133,8 +133,8 @@
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/MSC/Src/usbd_msc_bot.c::Middlewares/Third_Party/COMPOSITE/Class/MSC/Src/usbd_msc_bot.c"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/MSC/Src/usbd_msc_data.c::Middlewares/Third_Party/COMPOSITE/Class/MSC/Src/usbd_msc_data.c"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/MSC/Src/usbd_msc_scsi.c::Middlewares/Third_Party/COMPOSITE/Class/MSC/Src/usbd_msc_scsi.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_msc_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_msc_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_msc_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_msc_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_msc_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_msc_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_msc_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_msc_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="UAC_MIC" maxInstances="1">
@@ -142,8 +142,8 @@
                 <files>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_MIC/Inc/usbd_audio_mic.h::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_MIC/Inc/usbd_audio_mic.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_MIC/Src/usbd_audio_mic.c::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_MIC/Src/usbd_audio_mic.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_audio_mic_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_audio_mic_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_mic_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_mic_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="UAC_SPKR" maxInstances="1">
@@ -151,8 +151,8 @@
                 <files>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_SPKR/Inc/usbd_audio_spkr.h::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_SPKR/Inc/usbd_audio_spkr.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_SPKR/Src/usbd_audio_spkr.c::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_SPKR/Src/usbd_audio_spkr.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_audio_spkr_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_audio_spkr_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_spkr_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_spkr_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="UVC" maxInstances="1">
@@ -160,8 +160,8 @@
                 <files>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/VIDEO/Inc/usbd_video.h::Middlewares/Third_Party/COMPOSITE/Class/VIDEO/Inc/usbd_video.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/VIDEO/Src/usbd_video.c::Middlewares/Third_Party/COMPOSITE/Class/VIDEO/Src/usbd_video.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_video_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_video_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_video_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_video_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_video_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_video_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_video_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_video_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="DFU" maxInstances="1">
@@ -169,8 +169,8 @@
                 <files>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/DFU/Src/usbd_dfu.c::Middlewares/Third_Party/COMPOSITE/Class/DFU/Src/usbd_dfu.c"/>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/DFU/Inc/usbd_dfu.h::Middlewares/Third_Party/COMPOSITE/Class/DFU/Inc/usbd_dfu.h"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_dfu_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_dfu_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_dfu_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_dfu_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_dfu_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_dfu_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_dfu_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_dfu_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="CDC_ECM" maxInstances="1">
@@ -178,8 +178,8 @@
                 <files>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/CDC_ECM/Src/usbd_cdc_ecm.c::Middlewares/Third_Party/COMPOSITE/Class/CDC_ECM/Src/usbd_cdc_ecm.c"/>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/CDC_ECM/Inc/usbd_cdc_ecm.h::Middlewares/Third_Party/COMPOSITE/Class/CDC_ECM/Inc/usbd_cdc_ecm.h"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_cdc_ecm_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_ecm_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_cdc_ecm_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_ecm_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_cdc_ecm_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_ecm_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_cdc_ecm_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_cdc_ecm_if.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="COMPOSITE" maxInstances="1">
@@ -194,8 +194,8 @@
                 <files>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/PRINTER/Inc/usbd_printer.h::Middlewares/Third_Party/COMPOSITE/Class/PRINTER/Inc/usbd_printer.h"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/PRINTER/Src/usbd_printer.c::Middlewares/Third_Party/COMPOSITE/Class/PRINTER/Src/usbd_printer.c"/>
-                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_printer_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_printer_if.c"/>
-                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/USB_DEVICE/App/usbd_printer_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_printer_if.h"/>
+                    <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_printer_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_printer_if.c"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_printer_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_printer_if.h"/>
                 </files>
             </component>
         </bundle>
