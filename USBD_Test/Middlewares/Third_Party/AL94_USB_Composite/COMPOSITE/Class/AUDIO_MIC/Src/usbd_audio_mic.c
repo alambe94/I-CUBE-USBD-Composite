@@ -169,8 +169,8 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
     {
         0x09,                                                           /* bLength */
         0x02,                                                           /* bDescriptorType */
-        ((AUDIO_MIC_CONFIG_DESC_SIZE + AUDIO_MIC_CHANNELS - 1) & 0xff), /* wTotalLength */
-        ((AUDIO_MIC_CONFIG_DESC_SIZE + AUDIO_MIC_CHANNELS - 1) >> 8),
+        LOBYTE(AUDIO_MIC_CONFIG_DESC_SIZE), /* wTotalLength: Total size of the Config descriptor */
+        HIBYTE(AUDIO_MIC_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces */
         0x01, /* bConfigurationValue */
         0x00, /* iConfiguration */
@@ -216,7 +216,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x02,
         0x00,               /* bAssocTerminal */
         AUDIO_MIC_CHANNELS, /* bNrChannels */
-#if (AUDIO_MIC_CHANNELS == 1)
+#if (AUDIO_MIC_CHANNELS != 2)
         0x00, /* wChannelConfig 0x0000  Mono */
         0x00,
 #else
@@ -342,6 +342,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x01, /* bInterval */
         0x00, /* bRefresh */
         0x00, /* bSynchAddress */
+		//101 + AUDIO_MIC_CHANNELS byte
 
         /* Endpoint - Audio Streaming Descriptor*/
         AUDIO_MIC_STREAMING_ENDPOINT_DESC_SIZE, /* bLength */
@@ -351,6 +352,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x00,                                   /* bLockDelayUnits */
         0x00,                                   /* wLockDelay */
         0x00,
+		//108 + AUDIO_MIC_CHANNELS byte
 };
 
 /* USB Standard Device Descriptor */
@@ -395,7 +397,7 @@ static uint8_t USBD_AUDIO_Init(USBD_HandleTypeDef *pdev,
   USBD_AUDIO_MIC_HandleTypeDef *haudio;
   pdev->pClassData_UAC_MIC = &haudioInstance;
   haudio = (USBD_AUDIO_MIC_HandleTypeDef *)pdev->pClassData_UAC_MIC;
-  uint16_t packet_dim = haudio->paketDimension;
+  uint16_t packet_dim = haudio->paketDimension = 100;
   uint16_t wr_rd_offset = (AUDIO_MIC_PACKET_NUM / 2) * haudio->dataAmount / haudio->paketDimension;
   haudio->wr_ptr = wr_rd_offset * packet_dim;
   haudio->rd_ptr = 0;
@@ -455,6 +457,10 @@ static uint8_t USBD_AUDIO_Setup(USBD_HandleTypeDef *pdev,
   uint8_t ret = USBD_OK;
   haudio = pdev->pClassData_UAC_MIC;
 
+  if (req->wIndex > 1)
+   {
+	  AUDIO_REQ_GetCurrent(pdev, req);
+   }
   switch (req->bmRequest & USB_REQ_TYPE_MASK)
   {
     /* AUDIO Class Requests -------------------------------*/
@@ -907,27 +913,27 @@ uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev,
 
 void USBD_Update_Audio_MIC_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, uint8_t in_ep)
 {
-  desc[11] = ac_itf;
-  desc[26] = as_itf;
-  desc[58 + AUDIO_MIC_CHANNELS] = as_itf;
-  desc[67 + AUDIO_MIC_CHANNELS] = as_itf;
-  desc[94 + AUDIO_MIC_CHANNELS] = in_ep;
-
-  AUDIO_MIC_EP = in_ep;
-  AUDIO_MIC_AC_ITF_NBR = ac_itf;
-  AUDIO_MIC_AS_ITF_NBR = as_itf;
-
-  haudioInstance.paketDimension = (AUDIO_MIC_SMPL_FREQ / 1000 * AUDIO_MIC_CHANNELS * 2);
-  haudioInstance.frequency = AUDIO_MIC_SMPL_FREQ;
-  haudioInstance.buffer_length = haudioInstance.paketDimension * AUDIO_MIC_PACKET_NUM;
-  haudioInstance.channels = AUDIO_MIC_CHANNELS;
-  haudioInstance.upper_treshold = 5;
-  haudioInstance.lower_treshold = 2;
-  haudioInstance.state = STATE_USB_WAITING_FOR_INIT;
-  haudioInstance.wr_ptr = 3 * haudioInstance.paketDimension;
-  haudioInstance.rd_ptr = 0;
-  haudioInstance.dataAmount = 0;
-  haudioInstance.buffer = 0;
+//  desc[11] = ac_itf;
+//  desc[26] = as_itf;
+//  desc[58 + AUDIO_MIC_CHANNELS] = as_itf;
+//  desc[67 + AUDIO_MIC_CHANNELS] = as_itf;
+//  desc[94 + AUDIO_MIC_CHANNELS] = in_ep;
+//
+//  AUDIO_MIC_EP = in_ep;
+//  AUDIO_MIC_AC_ITF_NBR = ac_itf;
+//  AUDIO_MIC_AS_ITF_NBR = as_itf;
+//
+//  haudioInstance.paketDimension = (AUDIO_MIC_SMPL_FREQ / 1000 * AUDIO_MIC_CHANNELS * 2);
+//  haudioInstance.frequency = AUDIO_MIC_SMPL_FREQ;
+//  haudioInstance.buffer_length = haudioInstance.paketDimension * AUDIO_MIC_PACKET_NUM;
+//  haudioInstance.channels = AUDIO_MIC_CHANNELS;
+//  haudioInstance.upper_treshold = 5;
+//  haudioInstance.lower_treshold = 2;
+//  haudioInstance.state = STATE_USB_WAITING_FOR_INIT;
+//  haudioInstance.wr_ptr = 3 * haudioInstance.paketDimension;
+//  haudioInstance.rd_ptr = 0;
+//  haudioInstance.dataAmount = 0;
+//  haudioInstance.buffer = 0;
 }
 
 /**

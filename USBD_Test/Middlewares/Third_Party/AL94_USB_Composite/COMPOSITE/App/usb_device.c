@@ -73,7 +73,7 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
-  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_COMPOSITE) != USBD_OK)
+  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_AUDIO_MIC) != USBD_OK)
   {
     Error_Handler();
   }
