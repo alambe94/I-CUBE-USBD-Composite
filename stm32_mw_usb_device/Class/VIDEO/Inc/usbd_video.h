@@ -49,7 +49,7 @@ extern "C" {
 #define UVC_VERSION                                   0x0110U      /* UVC 1.1 */
 #endif
 
-#define USBD_UVC_FORMAT_UNCOMPRESSED                  
+//#define USBD_UVC_FORMAT_UNCOMPRESSED
 
 /* These defines shall be updated in the usbd_conf.h file */
 #ifndef UVC_WIDTH

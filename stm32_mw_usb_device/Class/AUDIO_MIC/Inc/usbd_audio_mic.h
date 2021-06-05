@@ -64,7 +64,7 @@
 #define AUDIO_MIC_CHANNELS                                0x01
 #define AUDIO_MIC_SMPL_FREQ                               16000
 
-#define AUDIO_MIC_CONFIG_DESC_SIZE                        109
+#define AUDIO_MIC_CONFIG_DESC_SIZE                        (109 + AUDIO_MIC_CHANNELS - 1)
 
 #define AUDIO_MIC_INTERFACE_DESC_SIZE                     0x09
 #define AUDIO_MIC_DESC_SIZE                               0x09

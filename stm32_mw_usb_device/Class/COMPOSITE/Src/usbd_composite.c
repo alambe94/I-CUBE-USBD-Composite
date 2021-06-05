@@ -301,74 +301,74 @@ static uint8_t USBD_COMPOSITE_Setup(USBD_HandleTypeDef *pdev,
 #if (USBD_USE_CDC_ACM == 1)
   for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
   {
-    if (req->wIndex == CDC_CMD_ITF_NBR[i] || req->wIndex == CDC_COM_ITF_NBR[i])
+    if (LOBYTE(req->wIndex) == CDC_CMD_ITF_NBR[i] || LOBYTE(req->wIndex) == CDC_COM_ITF_NBR[i])
     {
       return USBD_CDC_ACM.Setup(pdev, req);
     }
   }
 #endif
 #if (USBD_USE_CDC_ECM == 1)
-  if (req->wIndex == CDC_ECM_CMD_ITF_NBR || req->wIndex == CDC_ECM_COM_ITF_NBR)
+  if (LOBYTE(req->wIndex) == CDC_ECM_CMD_ITF_NBR || LOBYTE(req->wIndex) == CDC_ECM_COM_ITF_NBR)
   {
     return USBD_CDC_ECM.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_CDC_RNDIS == 1)
-  if (req->wIndex == CDC_RNDIS_CMD_ITF_NBR || req->wIndex == CDC_RNDIS_COM_ITF_NBR)
+  if (LOBYTE(req->wIndex) == CDC_RNDIS_CMD_ITF_NBR || LOBYTE(req->wIndex) == CDC_RNDIS_COM_ITF_NBR)
   {
     return USBD_CDC_RNDIS.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
-  if (req->wIndex == HID_MOUSE_ITF_NBR)
+  if (LOBYTE(req->wIndex) == HID_MOUSE_ITF_NBR)
   {
     return USBD_HID_MOUSE.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_HID_KEYBOARD == 1)
-  if (req->wIndex == HID_KEYBOARD_ITF_NBR)
+  if (LOBYTE(req->wIndex) == HID_KEYBOARD_ITF_NBR)
   {
     return USBD_HID_KEYBOARD.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
-  if (req->wIndex == CUSTOM_HID_ITF_NBR)
+  if (LOBYTE(req->wIndex) == CUSTOM_HID_ITF_NBR)
   {
     return USBD_HID_CUSTOM.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  if (req->wIndex == AUDIO_MIC_AC_ITF_NBR || req->wIndex == AUDIO_MIC_AS_ITF_NBR)
+  if (LOBYTE(req->wIndex) == AUDIO_MIC_AC_ITF_NBR || LOBYTE(req->wIndex) == AUDIO_MIC_AS_ITF_NBR)
   {
     return USBD_AUDIO_MIC.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  if (req->wIndex == AUDIO_OUT_AC_ITF_NBR || req->wIndex == AUDIO_OUT_AS_ITF_NBR)
+  if (LOBYTE(req->wIndex) == AUDIO_OUT_AC_ITF_NBR || LOBYTE(req->wIndex) == AUDIO_OUT_AS_ITF_NBR)
   {
     return USBD_AUDIO_SPKR.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_UVC == 1)
-  if (req->wIndex == UVC_VC_IF_NUM || req->wIndex == UVC_VS_IF_NUM)
+  if (LOBYTE(req->wIndex) == UVC_VC_IF_NUM || LOBYTE(req->wIndex) == UVC_VS_IF_NUM)
   {
     return USBD_VIDEO.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_MSC == 1)
-  if (req->wIndex == MSC_ITF_NBR)
+  if (LOBYTE(req->wIndex) == MSC_ITF_NBR)
   {
     return USBD_MSC.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_DFU == 1)
-  if (req->wIndex == DFU_ITF_NBR)
+  if (LOBYTE(req->wIndex) == DFU_ITF_NBR)
   {
     return USBD_DFU.Setup(pdev, req);
   }
 #endif
 #if (USBD_USE_PRNTR == 1)
-  if (req->wIndex == PRNT_ITF_NBR)
+  if (LOBYTE(req->wIndex) == PRNT_ITF_NBR)
   {
     USBD_PRNT.Setup(pdev, req);
   }

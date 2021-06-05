@@ -66,11 +66,23 @@ USBD_StatusTypeDef USBD_Get_USB_Status(HAL_StatusTypeDef hal_status);
 __weak void HAL_PCD_MspInit(PCD_HandleTypeDef *pcdHandle)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if (pcdHandle->Instance == USB_OTG_HS)
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  if(pcdHandle->Instance==USB_OTG_HS)
   {
-    /* USER CODE BEGIN USB_OTG_HS_MspInit 0 */
+  /* USER CODE BEGIN USB_OTG_HS_MspInit 0 */
 
-    /* USER CODE END USB_OTG_HS_MspInit 0 */
+  /* USER CODE END USB_OTG_HS_MspInit 0 */
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB;
+    PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_PLL;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+  /** Enable USB Voltage detector
+  */
+    HAL_PWREx_EnableUSBVoltageDetector();
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOI_CLK_ENABLE();
@@ -131,7 +143,7 @@ __weak void HAL_PCD_MspInit(PCD_HandleTypeDef *pcdHandle)
     __HAL_RCC_USB_OTG_HS_ULPI_CLK_ENABLE();
 
     /* Peripheral interrupt init */
-    HAL_NVIC_SetPriority(OTG_HS_IRQn, 6, 0);
+    HAL_NVIC_SetPriority(OTG_HS_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(OTG_HS_IRQn);
     /* USER CODE BEGIN USB_OTG_HS_MspInit 1 */
 
@@ -425,7 +437,7 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
     HAL_PCDEx_SetRxFiFo(&hpcd_USB_OTG_HS, 1024);
 
-    HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 0, 64); // EP0 IN
+    HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 0, 128); // EP0 IN
 
 #if (USBD_USE_CDC_ACM == 1)
     for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)

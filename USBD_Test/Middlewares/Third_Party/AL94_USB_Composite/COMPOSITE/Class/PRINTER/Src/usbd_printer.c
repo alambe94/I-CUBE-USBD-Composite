@@ -669,9 +669,9 @@ uint8_t USBD_PRNT_ReceivePacket(USBD_HandleTypeDef *pdev)
 
 void USBD_Update_PRNT_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep)
 {
-//  desc[11] = itf_no;
-//  desc[20] = in_ep;
-//  desc[27] = out_ep;
+  desc[11] = itf_no;
+  desc[20] = in_ep;
+  desc[27] = out_ep;
 
   PRNT_IN_EP = in_ep;
   PRNT_OUT_EP = out_ep;

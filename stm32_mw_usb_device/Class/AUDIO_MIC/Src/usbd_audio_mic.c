@@ -169,8 +169,8 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
     {
         0x09,                                                           /* bLength */
         0x02,                                                           /* bDescriptorType */
-        ((AUDIO_MIC_CONFIG_DESC_SIZE + AUDIO_MIC_CHANNELS - 1) & 0xff), /* wTotalLength */
-        ((AUDIO_MIC_CONFIG_DESC_SIZE + AUDIO_MIC_CHANNELS - 1) >> 8),
+        LOBYTE(AUDIO_MIC_CONFIG_DESC_SIZE), /* wTotalLength: Total size of the Config descriptor */
+        HIBYTE(AUDIO_MIC_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces */
         0x01, /* bConfigurationValue */
         0x00, /* iConfiguration */
@@ -342,6 +342,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x01, /* bInterval */
         0x00, /* bRefresh */
         0x00, /* bSynchAddress */
+		//101 + AUDIO_MIC_CHANNELS byte
 
         /* Endpoint - Audio Streaming Descriptor*/
         AUDIO_MIC_STREAMING_ENDPOINT_DESC_SIZE, /* bLength */
@@ -351,6 +352,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x00,                                   /* bLockDelayUnits */
         0x00,                                   /* wLockDelay */
         0x00,
+		//108 + AUDIO_MIC_CHANNELS byte
 };
 
 /* USB Standard Device Descriptor */
@@ -395,6 +397,10 @@ static uint8_t USBD_AUDIO_Init(USBD_HandleTypeDef *pdev,
   USBD_AUDIO_MIC_HandleTypeDef *haudio;
   pdev->pClassData_UAC_MIC = &haudioInstance;
   haudio = (USBD_AUDIO_MIC_HandleTypeDef *)pdev->pClassData_UAC_MIC;
+  if(haudio->paketDimension == 0)
+  {
+	  haudio->paketDimension = 1;
+  }
   uint16_t packet_dim = haudio->paketDimension;
   uint16_t wr_rd_offset = (AUDIO_MIC_PACKET_NUM / 2) * haudio->dataAmount / haudio->paketDimension;
   haudio->wr_ptr = wr_rd_offset * packet_dim;
