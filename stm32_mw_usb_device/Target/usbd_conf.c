@@ -448,7 +448,7 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
 #endif
 #if (USBD_USE_CDC_RNDIS == 1)
     HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_RNDIS_IN_EP & 0x7F), 512);
-    HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_RNDIS_CMD_EP & 0x7F), 64);
+    HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_RNDIS_CMD_EP & 0x7F), 16);
 #endif
 #if (USBD_USE_CDC_ECM == 1)
     HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, (CDC_ECM_IN_EP & 0x7F), 512);
