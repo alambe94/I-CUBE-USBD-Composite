@@ -251,7 +251,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgHSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE),
-        0x00, /* bInterval */
+  		0xFF,                                     /* bInterval: ignore for Bulk transfer */
 
         /* Endpoint IN Descriptor */
         0x07,                                    /* bLength: Endpoint Descriptor size */
@@ -260,7 +260,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgHSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE),
-        0x00 /* bInterval */
+  		0xFF                                      /* bInterval: ignore for Bulk transfer */
 };
 
 /* USB CDC_ECM device Configuration Descriptor */
@@ -361,7 +361,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgFSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE),
-        0x00, /* bInterval */
+  		0xFF,                                     /* bInterval: ignore for Bulk transfer */
 
         /* Endpoint IN Descriptor */
         0x07,                                    /* bLength: Endpoint Descriptor size */
@@ -370,7 +370,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgFSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE),
-        0x00 /* bInterval */
+  		0xFF                                      /* bInterval: ignore for Bulk transfer */
 };
 
 __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_SIZE] __ALIGN_END =
@@ -470,7 +470,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_
         0x02,                   /* bmAttributes: Bulk */
         0x40,                   /* wMaxPacketSize */
         0x00,
-        0x00, /* bInterval */
+  		0xFF,                                     /* bInterval: ignore for Bulk transfer */
 
         /* Endpoint IN Descriptor */
         0x07,                   /* bLength: Endpoint Descriptor size */
@@ -479,7 +479,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_
         0x02,                   /* bmAttributes: Bulk */
         0x40,                   /* wMaxPacketSize */
         0x00,
-        0x00 /* bInterval */
+  		0xFF                                      /* bInterval: ignore for Bulk transfer */
 };
 
 /**
