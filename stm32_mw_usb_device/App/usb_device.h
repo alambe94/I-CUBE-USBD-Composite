@@ -28,8 +28,7 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32h7xx.h"
-#include "stm32h7xx_hal.h"
+#include "main.h"
 #include "usbd_def.h"
 
 /* USER CODE BEGIN INCLUDE */

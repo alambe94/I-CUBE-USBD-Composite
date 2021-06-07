@@ -42,6 +42,7 @@ extern "C" {
   * @{
   */
 
+#define USBD_USE_HS                                            		1
 #define USBD_USE_CDC_ACM                                            1
 #define USBD_CDC_ACM_COUNT                                          NUMBER_OF_CDC
 #define USBD_USE_CDC_RNDIS                                          0

@@ -13,7 +13,6 @@
         <keyword>CUBE_RULES_COMPLIANT</keyword>
         <keyword>Cortex-M</keyword>
         <keyword>STMicroelectronics</keyword>
-        <keyword>IMPLEMENTED_WITH_STM32CUBEMX</keyword>
     </keywords>
     <taxonomy>
         <description Cclass="USB">USB</description>
