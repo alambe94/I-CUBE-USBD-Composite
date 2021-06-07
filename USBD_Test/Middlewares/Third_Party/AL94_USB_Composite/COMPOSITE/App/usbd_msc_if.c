@@ -126,7 +126,7 @@ const int8_t STORAGE_Inquirydata[] = {/* 36 */
   * @{
   */
 
-extern USBD_HandleTypeDef hUsbDeviceHS;
+extern USBD_HandleTypeDef hUsbDevice;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
 

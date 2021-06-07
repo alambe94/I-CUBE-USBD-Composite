@@ -21,7 +21,7 @@
 
 #include "usbd_cdc_ecm_if.h"
 
-extern USBD_HandleTypeDef hUsbDeviceHS;
+extern USBD_HandleTypeDef hUsbDevice;
 
 /*
   Include here  LwIP files if used
@@ -83,8 +83,8 @@ static int8_t CDC_ECM_Itf_Init(void)
   }
 
   /* Set Application Buffers */
-  (void)USBD_CDC_ECM_SetTxBuffer(&hUsbDeviceHS, UserTxBuffer, 0U);
-  (void)USBD_CDC_ECM_SetRxBuffer(&hUsbDeviceHS, UserRxBuffer);
+  (void)USBD_CDC_ECM_SetTxBuffer(&hUsbDevice, UserTxBuffer, 0U);
+  (void)USBD_CDC_ECM_SetRxBuffer(&hUsbDevice, UserRxBuffer);
 
   return (0);
 }
@@ -97,7 +97,7 @@ static int8_t CDC_ECM_Itf_Init(void)
   */
 static int8_t CDC_ECM_Itf_DeInit(void)
 {
-  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_ECM);
+  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDevice.pClassData_CDC_ECM);
 
   /* Notify application layer that link is down */
   hcdc_cdc_ecm->LinkStatus = 0U;
@@ -115,7 +115,7 @@ static int8_t CDC_ECM_Itf_DeInit(void)
   */
 static int8_t CDC_ECM_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 {
-  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_ECM);
+  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDevice.pClassData_CDC_ECM);
 
   switch (cmd)
   {
@@ -152,7 +152,7 @@ static int8_t CDC_ECM_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
         if (hcdc_cdc_ecm->NotificationStatus == 0U)
         {
           /* Send notification: NETWORK_CONNECTION Event */
-          (void)USBD_CDC_ECM_SendNotification(&hUsbDeviceHS, ECM_NETWORK_CONNECTION,
+          (void)USBD_CDC_ECM_SendNotification(&hUsbDevice, ECM_NETWORK_CONNECTION,
                                               CDC_ECM_NET_CONNECTED, NULL);
 
           /* Prepare for sending Connection Speed Change notification */
@@ -186,7 +186,7 @@ static int8_t CDC_ECM_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 static int8_t CDC_ECM_Itf_Receive(uint8_t *Buf, uint32_t *Len)
 {
   /* Get the CDC_ECM handler pointer */
-  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_ECM);
+  USBD_CDC_ECM_HandleTypeDef *hcdc_cdc_ecm = (USBD_CDC_ECM_HandleTypeDef *)(hUsbDevice.pClassData_CDC_ECM);
 
   /* Call Eth buffer processing */
   hcdc_cdc_ecm->RxState = 1U;
