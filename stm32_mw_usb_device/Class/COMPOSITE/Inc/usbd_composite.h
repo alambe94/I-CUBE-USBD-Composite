@@ -58,6 +58,8 @@ extern "C" {
 #define USBD_USE_DFU                 _USBD_USE_DFU
 #define USBD_USE_PRNTR               _USBD_USE_PRNTR
 
+#define STM32F1_DEVICE               _STM32F1_DEVICE
+
 #if(USBD_USE_CDC_ACM == 1)
 #include "usbd_cdc_acm_if.h"
 #endif

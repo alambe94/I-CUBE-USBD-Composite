@@ -33,6 +33,7 @@
         <Argument AddressOf="false" Comment="_USBD_USE_MSC" GenericType="simple" Name="_USBD_USE_MSC" OptimizationCondition="equal"/>
         <Argument AddressOf="false" Comment="_USBD_USE_DFU" GenericType="simple" Name="_USBD_USE_DFU" OptimizationCondition="equal"/>
         <Argument AddressOf="false" Comment="_USBD_USE_PRNTR" GenericType="simple" Name="_USBD_USE_PRNTR" OptimizationCondition="equal"/>
+        <Argument AddressOf="false" Comment="_STM32F1_DEVICE" GenericType="simple" Name="_STM32F1_DEVICE" OptimizationCondition="equal"/>
     </RefConfigFile>
     <RefComponent Cclass="CompositeCcUSB" Cgroup="COMPOSITE" Cversion="1Gg0Gg0">
         <SubComponent Csub="Core" Cvariant="true" Cversion="1Gg0Gg0">

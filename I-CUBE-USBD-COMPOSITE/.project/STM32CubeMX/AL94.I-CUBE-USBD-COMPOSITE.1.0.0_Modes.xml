@@ -31,6 +31,7 @@
         <Parameter Added="true" Name="_USBD_USE_MSC"/>
         <Parameter Added="true" Name="_USBD_USE_DFU"/>
         <Parameter Added="true" Name="_USBD_USE_PRNTR"/>
+        <Parameter Added="true" Name="_STM32F1_DEVICE"/>
     </RefMode>
     <ModeLogicOperator Name="OR">
         <Mode Name="USBJjComposite">
@@ -150,6 +151,10 @@
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>
     <RefParameter Added="true" Comment="USBD_USE_HID_MOUSE" DefaultValue="false" Group="Basic Parameters" Name="_USBD_USE_HID_MOUSE" TabName="Parameter Settings" Type="boolean">
+        <PossibleValue Comment="true" Value="true"/>
+        <PossibleValue Comment="false" Value="false"/>
+    </RefParameter>
+    <RefParameter Added="true" Comment="STM32F1_DEVICE" DefaultValue="false" Group="Basic Parameters" Name="_STM32F1_DEVICE" TabName="Parameter Settings" Type="boolean">
         <PossibleValue Comment="true" Value="true"/>
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>
