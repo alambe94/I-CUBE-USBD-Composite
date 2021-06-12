@@ -2182,7 +2182,7 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
     cmd_ep = in_ep + 1;
     out_ep++;
 
-    cmd_itf += 2;;
+    cmd_itf += 2;
     com_itf = cmd_itf + 1;
   }
 }

@@ -440,7 +440,7 @@ static uint8_t USBD_COMPOSITE_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
   }
 #endif
 #if (USBD_USE_MSC == 1)
-  if (epnum == (MSC_EPIN_ADDR & 0x7F))
+  if (epnum == (MSC_IN_EP & 0x7F))
   {
     return USBD_MSC.DataIn(pdev, epnum);
   }
@@ -708,7 +708,7 @@ static uint8_t USBD_COMPOSITE_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
 #if (USBD_USE_UVC == 1)
 #endif
 #if (USBD_USE_MSC == 1)
-  if (epnum == MSC_EPOUT_ADDR)
+  if (epnum == MSC_OUT_EP)
   {
     return USBD_MSC.DataOut(pdev, epnum);
   }
@@ -757,14 +757,14 @@ static uint8_t *USBD_COMPOSITE_GetFSCfgDesc(uint16_t *length)
   */
 static uint8_t *USBD_COMPOSITE_GetOtherSpeedCfgDesc(uint16_t *length)
 {
-  // if (pdev->dev_speed == USBD_SPEED_HIGH)
-  {
-    *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
-    return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
-  }
+#if (USBD_USE_HS == 1)
+  *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
+  return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
+#else
 
   *length = (uint16_t)sizeof(USBD_COMPOSITE_FSCfgDesc);
   return (uint8_t *)&USBD_COMPOSITE_FSCfgDesc;
+#endif
 }
 
 /**
@@ -784,180 +784,180 @@ void USBD_COMPOSITE_Mount_Class(void)
   uint16_t len = 0;
   uint8_t *ptr = NULL;
 
-  uint8_t in_ep_count = 0x81;
-  uint8_t out_ep_count = 0x01;
-  uint8_t interface_count = 0x00;
+  uint8_t in_ep_track = 0x81;
+  uint8_t out_ep_track = 0x01;
+  uint8_t interface_no_track = 0x00;
 
 #if (USBD_USE_CDC_ACM == 1)
   ptr = USBD_CDC_ACM.GetFSConfigDescriptor(&len);
   USBD_Update_CDC_ACM_DESC(ptr,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
+                           interface_no_track,
+                           interface_no_track + 1,
+                           in_ep_track,
+                           in_ep_track + 1,
+                           out_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ACM_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_ACM.GetHSConfigDescriptor(&len);
   USBD_Update_CDC_ACM_DESC(ptr,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
+                           interface_no_track,
+                           interface_no_track + 1,
+                           in_ep_track,
+                           in_ep_track + 1,
+                           out_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ACM_DESC, ptr + 0x09, len - 0x09);
 
-  in_ep_count += 2 * USBD_CDC_ACM_COUNT;
-  out_ep_count += 1 * USBD_CDC_ACM_COUNT;
-  interface_count += 2 * USBD_CDC_ACM_COUNT;
+  in_ep_track += 2 * USBD_CDC_ACM_COUNT;
+  out_ep_track += 1 * USBD_CDC_ACM_COUNT;
+  interface_no_track += 2 * USBD_CDC_ACM_COUNT;
 #endif
 
 #if (USBD_USE_CDC_RNDIS == 1)
   ptr = USBD_CDC_RNDIS.GetFSConfigDescriptor(&len);
   USBD_Update_CDC_RNDIS_DESC(ptr,
-                             interface_count,
-                             interface_count + 1,
-                             in_ep_count,
-                             in_ep_count + 1,
-                             out_ep_count);
+                             interface_no_track,
+                             interface_no_track + 1,
+                             in_ep_track,
+                             in_ep_track + 1,
+                             out_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_RNDIS_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_RNDIS.GetHSConfigDescriptor(&len);
   USBD_Update_CDC_RNDIS_DESC(ptr,
-                             interface_count,
-                             interface_count + 1,
-                             in_ep_count,
-                             in_ep_count + 1,
-                             out_ep_count);
+                             interface_no_track,
+                             interface_no_track + 1,
+                             in_ep_track,
+                             in_ep_track + 1,
+                             out_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_RNDIS_DESC, ptr + 0x09, len - 0x09);
 
-  in_ep_count += 2;
-  out_ep_count += 1;
-  interface_count += 2;
+  in_ep_track += 2;
+  out_ep_track += 1;
+  interface_no_track += 2;
 #endif
 #if (USBD_USE_CDC_ECM == 1)
   ptr = USBD_CDC_ECM.GetFSConfigDescriptor(&len);
   USBD_Update_CDC_ECM_DESC(ptr,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
+                           interface_no_track,
+                           interface_no_track + 1,
+                           in_ep_track,
+                           in_ep_track + 1,
+                           out_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ECM_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_ECM.GetHSConfigDescriptor(&len);
   USBD_Update_CDC_ECM_DESC(ptr,
-                           interface_count,
-                           interface_count + 1,
-                           in_ep_count,
-                           in_ep_count + 1,
-                           out_ep_count);
+                           interface_no_track,
+                           interface_no_track + 1,
+                           in_ep_track,
+                           in_ep_track + 1,
+                           out_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ECM_DESC, ptr + 0x09, len - 0x09);
 
-  in_ep_count += 2;
-  out_ep_count += 1;
-  interface_count += 2;
+  in_ep_track += 2;
+  out_ep_track += 1;
+  interface_no_track += 2;
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
   ptr = USBD_HID_MOUSE.GetFSConfigDescriptor(&len);
-  USBD_Update_HID_Mouse_DESC(ptr, interface_count, in_ep_count);
+  USBD_Update_HID_Mouse_DESC(ptr, interface_no_track, in_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_HID_MOUSE_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_HID_MOUSE.GetHSConfigDescriptor(&len);
-  USBD_Update_HID_Mouse_DESC(ptr, interface_count, in_ep_count);
+  USBD_Update_HID_Mouse_DESC(ptr, interface_no_track, in_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_MOUSE_DESC, ptr + 0x09, len - 0x09);
-  in_ep_count += 1;
-  interface_count += 1;
+  in_ep_track += 1;
+  interface_no_track += 1;
 #endif
 #if (USBD_USE_HID_KEYBOARD == 1)
   ptr = USBD_HID_KEYBOARD.GetFSConfigDescriptor(&len);
-  USBD_Update_HID_KBD_DESC(ptr, interface_count, in_ep_count);
+  USBD_Update_HID_KBD_DESC(ptr, interface_no_track, in_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_HID_KEYBOARD_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_HID_KEYBOARD.GetHSConfigDescriptor(&len);
-  USBD_Update_HID_KBD_DESC(ptr, interface_count, in_ep_count);
+  USBD_Update_HID_KBD_DESC(ptr, interface_no_track, in_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_KEYBOARD_DESC, ptr + 0x09, len - 0x09);
-  in_ep_count += 1;
-  interface_count += 1;
+  in_ep_track += 1;
+  interface_no_track += 1;
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
   ptr = USBD_HID_CUSTOM.GetFSConfigDescriptor(&len);
-  USBD_Update_HID_Custom_DESC(ptr, interface_count, in_ep_count, out_ep_count);
+  USBD_Update_HID_Custom_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_HID_CUSTOM_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_HID_CUSTOM.GetHSConfigDescriptor(&len);
-  USBD_Update_HID_Custom_DESC(ptr, interface_count, in_ep_count, out_ep_count);
+  USBD_Update_HID_Custom_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_CUSTOM_DESC, ptr + 0x09, len - 0x09);
-  in_ep_count += 1;
-  out_ep_count += 1;
-  interface_count += 1;
+  in_ep_track += 1;
+  out_ep_track += 1;
+  interface_no_track += 1;
 #endif
 #if (USBD_USE_UAC_MIC == 1)
   ptr = USBD_AUDIO_MIC.GetFSConfigDescriptor(&len);
-  USBD_Update_Audio_MIC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
+  USBD_Update_Audio_MIC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UAC_MIC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_AUDIO_MIC.GetHSConfigDescriptor(&len);
-  USBD_Update_Audio_MIC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
+  USBD_Update_Audio_MIC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_MIC_DESC, ptr + 0x09, len - 0x09);
-  in_ep_count += 1;
-  interface_count += 2;
+  in_ep_track += 1;
+  interface_no_track += 2;
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
   ptr = USBD_AUDIO_SPKR.GetFSConfigDescriptor(&len);
-  USBD_Update_Audio_SPKR_DESC(ptr, interface_count, interface_count + 1, out_ep_count);
+  USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_AUDIO_SPKR.GetHSConfigDescriptor(&len);
-  USBD_Update_Audio_SPKR_DESC(ptr, interface_count, interface_count + 1, out_ep_count);
+  USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
-  out_ep_count += 1;
-  interface_count += 2;
+  out_ep_track += 1;
+  interface_no_track += 2;
 #endif
 #if (USBD_USE_UVC == 1)
   ptr = USBD_VIDEO.GetFSConfigDescriptor(&len);
-  USBD_Update_UVC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
+  USBD_Update_UVC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UVC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_VIDEO.GetHSConfigDescriptor(&len);
-  USBD_Update_UVC_DESC(ptr, interface_count, interface_count + 1, in_ep_count);
+  USBD_Update_UVC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UVC_DESC, ptr + 0x09, len - 0x09);
-  in_ep_count += 1;
-  interface_count += 2;
+  in_ep_track += 1;
+  interface_no_track += 2;
 #endif
 #if (USBD_USE_MSC == 1)
   ptr = USBD_MSC.GetFSConfigDescriptor(&len);
-  USBD_Update_MSC_DESC(ptr, interface_count, in_ep_count, out_ep_count);
+  USBD_Update_MSC_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_MSC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_MSC.GetHSConfigDescriptor(&len);
-  USBD_Update_MSC_DESC(ptr, interface_count, in_ep_count, out_ep_count);
+  USBD_Update_MSC_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_MSC_DESC, ptr + 0x09, len - 0x09);
-  in_ep_count += 1;
-  out_ep_count += 1;
-  interface_count += 1;
+  in_ep_track += 1;
+  out_ep_track += 1;
+  interface_no_track += 1;
 #endif
 #if (USBD_USE_DFU == 1)
   ptr = USBD_DFU.GetFSConfigDescriptor(&len);
-  USBD_Update_DFU_DESC(ptr, interface_count);
+  USBD_Update_DFU_DESC(ptr, interface_no_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_DFU.GetHSConfigDescriptor(&len);
-  USBD_Update_DFU_DESC(ptr, interface_count);
+  USBD_Update_DFU_DESC(ptr, interface_no_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
-  interface_count += 1;
+  interface_no_track += 1;
 #endif
 #if (USBD_USE_PRNTR == 1)
   ptr = USBD_PRNT.GetFSConfigDescriptor(&len);
-  USBD_Update_PRNT_DESC(ptr, interface_count, in_ep_count, out_ep_count);
+  USBD_Update_PRNT_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_PRNT.GetHSConfigDescriptor(&len);
-  USBD_Update_PRNT_DESC(ptr, interface_count, in_ep_count, out_ep_count);
+  USBD_Update_PRNT_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
-  in_ep_count += 1;
-  out_ep_count += 1;
-  interface_count += 1;
+  in_ep_track += 1;
+  out_ep_track += 1;
+  interface_no_track += 1;
 #endif
 
   uint16_t CFG_SIZE = sizeof(USBD_COMPOSITE_CFG_DESC_t);
@@ -967,9 +967,9 @@ void USBD_COMPOSITE_Mount_Class(void)
   ptr[1] = USB_DESC_TYPE_CONFIGURATION; /* bDescriptorType: Configuration */
   ptr[2] = LOBYTE(CFG_SIZE);            /* wTotalLength:no of returned bytes */
   ptr[3] = HIBYTE(CFG_SIZE);
-  ptr[4] = interface_count; /* bNumInterfaces: 2 interface */
-  ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */
-  ptr[6] = 0x00;                /* iConfiguration: Index of string descriptor describing the configuration */
+  ptr[4] = interface_no_track; /* bNumInterfaces: 2 interface */
+  ptr[5] = 0x01;               /* bConfigurationValue: Configuration value */
+  ptr[6] = 0x00;               /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
   ptr[7] = 0xC0; /* bmAttributes: Bus Powered according to user configuration */
 #else
@@ -983,9 +983,9 @@ void USBD_COMPOSITE_Mount_Class(void)
   ptr[1] = USB_DESC_TYPE_CONFIGURATION; /* bDescriptorType: Configuration */
   ptr[2] = LOBYTE(CFG_SIZE);            /* wTotalLength:no of returned bytes */
   ptr[3] = HIBYTE(CFG_SIZE);
-  ptr[4] = interface_count; /* bNumInterfaces: 2 interface */
-  ptr[5] = 0x01;                /* bConfigurationValue: Configuration value */
-  ptr[6] = 0x00;                /* iConfiguration: Index of string descriptor describing the configuration */
+  ptr[4] = interface_no_track; /* bNumInterfaces: 2 interface */
+  ptr[5] = 0x01;               /* bConfigurationValue: Configuration value */
+  ptr[6] = 0x00;               /* iConfiguration: Index of string descriptor describing the configuration */
 #if (USBD_SELF_POWERED == 1U)
   ptr[7] = 0xC0; /* bmAttributes: Bus Powered according to user configuration */
 #else
@@ -993,8 +993,8 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
   ptr[8] = USBD_MAX_POWER; /* MaxPower 100 mA */
 
-  (void)out_ep_count;
-  (void)in_ep_count;
+  (void)out_ep_track;
+  (void)in_ep_track;
 }
 
 /**

@@ -41,12 +41,12 @@ EndBSPDependencies */
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_msc.h"
 
-#define _MSC_EPIN_ADDR 0x81U
-#define _MSC_EPOUT_ADDR 0x01U
+#define _MSC_IN_EP 0x81U
+#define _MSC_OUT_EP 0x01U
 #define _MSC_ITF_NBR 0x00
 
-uint8_t MSC_EPIN_ADDR = _MSC_EPIN_ADDR;
-uint8_t MSC_EPOUT_ADDR = _MSC_EPOUT_ADDR;
+uint8_t MSC_IN_EP = _MSC_IN_EP;
+uint8_t MSC_OUT_EP = _MSC_OUT_EP;
 uint8_t MSC_ITF_NBR = _MSC_ITF_NBR;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
@@ -154,7 +154,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         /********************  Mass Storage Endpoints ********************/
         0x07,           /* Endpoint descriptor length = 7 */
         0x05,           /* Endpoint descriptor type */
-        _MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
+        _MSC_IN_EP, /* Endpoint address (IN, address 1) */
         0x02,           /* Bulk endpoint type */
         LOBYTE(MSC_MAX_HS_PACKET),
         HIBYTE(MSC_MAX_HS_PACKET),
@@ -162,7 +162,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
 
         0x07,            /* Endpoint descriptor length = 7 */
         0x05,            /* Endpoint descriptor type */
-        _MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
+        _MSC_OUT_EP, /* Endpoint address (OUT, address 1) */
         0x02,            /* Bulk endpoint type */
         LOBYTE(MSC_MAX_HS_PACKET),
         HIBYTE(MSC_MAX_HS_PACKET),
@@ -201,7 +201,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgFSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         /********************  Mass Storage Endpoints ********************/
         0x07,           /* Endpoint descriptor length = 7 */
         0x05,           /* Endpoint descriptor type */
-        _MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
+        _MSC_IN_EP, /* Endpoint address (IN, address 1) */
         0x02,           /* Bulk endpoint type */
         LOBYTE(MSC_MAX_FS_PACKET),
         HIBYTE(MSC_MAX_FS_PACKET),
@@ -209,7 +209,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgFSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
 
         0x07,            /* Endpoint descriptor length = 7 */
         0x05,            /* Endpoint descriptor type */
-        _MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
+        _MSC_OUT_EP, /* Endpoint address (OUT, address 1) */
         0x02,            /* Bulk endpoint type */
         LOBYTE(MSC_MAX_FS_PACKET),
         HIBYTE(MSC_MAX_FS_PACKET),
@@ -246,7 +246,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_OtherSpeedCfgDesc[USB_MSC_CONFIG_DESC_SIZ]
         /********************  Mass Storage Endpoints ********************/
         0x07,           /* Endpoint descriptor length = 7 */
         0x05,           /* Endpoint descriptor type */
-        _MSC_EPIN_ADDR, /* Endpoint address (IN, address 1) */
+        _MSC_IN_EP, /* Endpoint address (IN, address 1) */
         0x02,           /* Bulk endpoint type */
         0x40,
         0x00,
@@ -254,7 +254,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_OtherSpeedCfgDesc[USB_MSC_CONFIG_DESC_SIZ]
 
         0x07,            /* Endpoint descriptor length = 7 */
         0x05,            /* Endpoint descriptor type */
-        _MSC_EPOUT_ADDR, /* Endpoint address (OUT, address 1) */
+        _MSC_OUT_EP, /* Endpoint address (OUT, address 1) */
         0x02,            /* Bulk endpoint type */
         0x40,
         0x00,
@@ -308,22 +308,22 @@ uint8_t USBD_MSC_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   if (pdev->dev_speed == USBD_SPEED_HIGH)
   {
     /* Open EP OUT */
-    (void)USBD_LL_OpenEP(pdev, MSC_EPOUT_ADDR, USBD_EP_TYPE_BULK, MSC_MAX_HS_PACKET);
-    pdev->ep_out[MSC_EPOUT_ADDR & 0xFU].is_used = 1U;
+    (void)USBD_LL_OpenEP(pdev, MSC_OUT_EP, USBD_EP_TYPE_BULK, MSC_MAX_HS_PACKET);
+    pdev->ep_out[MSC_OUT_EP & 0xFU].is_used = 1U;
 
     /* Open EP IN */
-    (void)USBD_LL_OpenEP(pdev, MSC_EPIN_ADDR, USBD_EP_TYPE_BULK, MSC_MAX_HS_PACKET);
-    pdev->ep_in[MSC_EPIN_ADDR & 0xFU].is_used = 1U;
+    (void)USBD_LL_OpenEP(pdev, MSC_IN_EP, USBD_EP_TYPE_BULK, MSC_MAX_HS_PACKET);
+    pdev->ep_in[MSC_IN_EP & 0xFU].is_used = 1U;
   }
   else
   {
     /* Open EP OUT */
-    (void)USBD_LL_OpenEP(pdev, MSC_EPOUT_ADDR, USBD_EP_TYPE_BULK, MSC_MAX_FS_PACKET);
-    pdev->ep_out[MSC_EPOUT_ADDR & 0xFU].is_used = 1U;
+    (void)USBD_LL_OpenEP(pdev, MSC_OUT_EP, USBD_EP_TYPE_BULK, MSC_MAX_FS_PACKET);
+    pdev->ep_out[MSC_OUT_EP & 0xFU].is_used = 1U;
 
     /* Open EP IN */
-    (void)USBD_LL_OpenEP(pdev, MSC_EPIN_ADDR, USBD_EP_TYPE_BULK, MSC_MAX_FS_PACKET);
-    pdev->ep_in[MSC_EPIN_ADDR & 0xFU].is_used = 1U;
+    (void)USBD_LL_OpenEP(pdev, MSC_IN_EP, USBD_EP_TYPE_BULK, MSC_MAX_FS_PACKET);
+    pdev->ep_in[MSC_IN_EP & 0xFU].is_used = 1U;
   }
 
   /* Init the BOT  layer */
@@ -344,12 +344,12 @@ uint8_t USBD_MSC_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   UNUSED(cfgidx);
 
   /* Close MSC EPs */
-  (void)USBD_LL_CloseEP(pdev, MSC_EPOUT_ADDR);
-  pdev->ep_out[MSC_EPOUT_ADDR & 0xFU].is_used = 0U;
+  (void)USBD_LL_CloseEP(pdev, MSC_OUT_EP);
+  pdev->ep_out[MSC_OUT_EP & 0xFU].is_used = 0U;
 
   /* Close EP IN */
-  (void)USBD_LL_CloseEP(pdev, MSC_EPIN_ADDR);
-  pdev->ep_in[MSC_EPIN_ADDR & 0xFU].is_used = 0U;
+  (void)USBD_LL_CloseEP(pdev, MSC_IN_EP);
+  pdev->ep_in[MSC_IN_EP & 0xFU].is_used = 0U;
 
   /* Free MSC Class Resources */
   if (pdev->pClassData_MSC != NULL)
@@ -593,8 +593,8 @@ void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t 
   desc[20] = in_ep;
   desc[27] = out_ep;
 
-  MSC_EPIN_ADDR = in_ep;
-  MSC_EPOUT_ADDR = out_ep;
+  MSC_IN_EP = in_ep;
+  MSC_OUT_EP = out_ep;
   MSC_ITF_NBR = itf_no;
 }
 

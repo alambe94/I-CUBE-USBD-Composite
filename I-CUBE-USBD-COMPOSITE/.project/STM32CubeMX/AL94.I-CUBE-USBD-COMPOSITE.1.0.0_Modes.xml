@@ -123,6 +123,7 @@
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>
     <RefParameter Added="true" Comment="USBD_USE_HS" DefaultValue="false" Group="Basic Parameters" Name="_USBD_USE_HS" TabName="Parameter Settings" Type="boolean">
+        <Description>For high speed USB.</Description>
         <PossibleValue Comment="true" Value="true"/>
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>
@@ -155,6 +156,8 @@
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>
     <RefParameter Added="true" Comment="STM32F1_DEVICE" DefaultValue="false" Group="Basic Parameters" Name="_STM32F1_DEVICE" TabName="Parameter Settings" Type="boolean">
+        <Description>If device is STM32F1 or similar HAL_PCDEx_PMAConfig() is used by driver.
+For H7 HAL_PCDEx_SetTxFiFo() is use.</Description>
         <PossibleValue Comment="true" Value="true"/>
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>
@@ -162,8 +165,11 @@
         <PossibleValue Comment="true" Value="true"/>
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>
-    <RefParameter Added="true" Comment="USBD_CDC_ACM_COUNT" DefaultValue="1" Group="Basic Parameters" Max="4" Min="0" Name="_USBD_CDC_ACM_COUNT" TabName="Parameter Settings" Type="integer" Unit=""/>
+    <RefParameter Added="true" Comment="USBD_CDC_ACM_COUNT" DefaultValue="1" Group="Basic Parameters" Max="4" Min="0" Name="_USBD_CDC_ACM_COUNT" TabName="Parameter Settings" Type="integer" Unit="">
+        <Description>Upto 4 Virtual comm port is tested. Limited by number of IN end points available. Each instance takes 2 IN &amp; 1 OUT end ponit. If one IN enponit (command) is ignored we can enumrate 8 virtual comm ports.</Description>
+    </RefParameter>
     <RefParameter Added="true" Comment="USBD_USE_CDC_ACM" DefaultValue="false" Group="Basic Parameters" Name="_USBD_USE_CDC_ACM" TabName="Parameter Settings" Type="boolean">
+        <Description>Enable Virtual Comm Port.</Description>
         <PossibleValue Comment="true" Value="true"/>
         <PossibleValue Comment="false" Value="false"/>
     </RefParameter>

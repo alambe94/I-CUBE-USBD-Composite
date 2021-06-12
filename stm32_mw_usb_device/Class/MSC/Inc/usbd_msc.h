@@ -101,8 +101,8 @@ typedef struct
 /* Structure for MSC process */
 extern USBD_ClassTypeDef USBD_MSC;
 
-extern uint8_t MSC_EPIN_ADDR;
-extern uint8_t MSC_EPOUT_ADDR;
+extern uint8_t MSC_IN_EP;
+extern uint8_t MSC_OUT_EP;
 extern uint8_t MSC_ITF_NBR;
 
 uint8_t USBD_MSC_RegisterStorage(USBD_HandleTypeDef *pdev,
