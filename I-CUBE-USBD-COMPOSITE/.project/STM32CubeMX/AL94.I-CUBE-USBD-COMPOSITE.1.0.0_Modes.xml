@@ -18,45 +18,19 @@
         <Parameter Name="CompositeCcUSBJjCOMPOSITEJjCOMPOSITE"/>
         <Parameter Name="CompositeCcUSBJjCOMPOSITEJjPRINTER"/>
         <Parameter Added="true" Name="_USBD_USE_HS"/>
-        <Parameter Added="true" Name="_USBD_USE_CDC_ACM">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjCDCIiACM" Name="ACM_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_CDC_ACM_COUNT">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjCDCIiACM" Name="ACM_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_CDC_RNDIS">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjCDCIiRNDIS" Name="RNDIS_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_CDC_ECM">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjCDCIiECM" Name="ECM_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_HID_MOUSE">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjHIDIiMOUSE" Name="HID_MOUSE_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_HID_KEYBOARD">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjHIDIiKEYBOARD" Name="HID_KBD_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_HID_CUSTOM">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjHIDIiCUSTOM" Name="HID_CUSTOM_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_UAC_MIC">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjUACIiMIC" Name="UAC_MIC_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_UAC_SPKR">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjUACIiSPKR" Name="UAC_SPKR_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_UVC">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjUVC" Name="UVC_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_MSC">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjMSCIiBOT" Name="MSC_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_DFU">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjDFU" Name="DFU_INC"/>
-        </Parameter>
-        <Parameter Added="true" Name="_USBD_USE_PRNTR">
-            <Condition Diagnostic="" Expression="SEMCompositeCcUSBJjCOMPOSITEJjPRINTER" Name="PRINTER_INC"/>
-        </Parameter>
+        <Parameter Added="true" Name="_USBD_USE_CDC_ACM"/>
+        <Parameter Added="true" Name="_USBD_CDC_ACM_COUNT"/>
+        <Parameter Added="true" Name="_USBD_USE_CDC_RNDIS"/>
+        <Parameter Added="true" Name="_USBD_USE_CDC_ECM"/>
+        <Parameter Added="true" Name="_USBD_USE_HID_MOUSE"/>
+        <Parameter Added="true" Name="_USBD_USE_HID_KEYBOARD"/>
+        <Parameter Added="true" Name="_USBD_USE_HID_CUSTOM"/>
+        <Parameter Added="true" Name="_USBD_USE_UAC_MIC"/>
+        <Parameter Added="true" Name="_USBD_USE_UAC_SPKR"/>
+        <Parameter Added="true" Name="_USBD_USE_UVC"/>
+        <Parameter Added="true" Name="_USBD_USE_MSC"/>
+        <Parameter Added="true" Name="_USBD_USE_DFU"/>
+        <Parameter Added="true" Name="_USBD_USE_PRNTR"/>
         <Parameter Added="true" Name="_STM32F1_DEVICE"/>
     </RefMode>
     <ModeLogicOperator Name="OR">
