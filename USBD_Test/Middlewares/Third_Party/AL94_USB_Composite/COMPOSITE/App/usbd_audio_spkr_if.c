@@ -101,7 +101,7 @@
   * @{
   */
 
-extern USBD_HandleTypeDef hUsbDevice;
+extern USBD_HandleTypeDef hUsbDeviceHS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
 
@@ -260,7 +260,7 @@ static int8_t AUDIO_GetState(void)
 void TransferComplete_CallBack(void)
 {
   /* USER CODE BEGIN 7 */
-	USBD_AUDIO_SPKR_Sync(&hUsbDevice, AUDIO_SPKR_OFFSET_FULL);
+	USBD_AUDIO_SPKR_Sync(&hUsbDeviceHS, AUDIO_SPKR_OFFSET_FULL);
   /* USER CODE END 7 */
 }
 
@@ -271,7 +271,7 @@ void TransferComplete_CallBack(void)
 void HalfTransfer_CallBack(void)
 {
   /* USER CODE BEGIN 8 */
-	USBD_AUDIO_SPKR_Sync(&hUsbDevice, AUDIO_SPKR_OFFSET_HALF);
+	USBD_AUDIO_SPKR_Sync(&hUsbDeviceHS, AUDIO_SPKR_OFFSET_HALF);
   /* USER CODE END 8 */
 }
 

@@ -27,6 +27,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include  "usbd_ioreq.h"
+#include "AL94.I-CUBE-USBD-COMPOSITE_conf.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -41,7 +42,7 @@ extern "C" {
 /** @defgroup usbd_cdc_Exported_Defines
   * @{
   */
-#define NUMBER_OF_CDC 								1
+#define NUMBER_OF_CDC 								_USBD_CDC_ACM_COUNT
 #ifndef CDC_HS_BINTERVAL
 #define CDC_HS_BINTERVAL                            0x10U
 #endif /* CDC_HS_BINTERVAL */

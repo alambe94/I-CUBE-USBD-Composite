@@ -1785,7 +1785,7 @@ static uint8_t USBD_CDC_Setup(USBD_HandleTypeDef *pdev,
   
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
-    if (req->wIndex == CDC_CMD_ITF_NBR[i] || req->wIndex == CDC_COM_ITF_NBR[i])
+    if (LOBYTE(req->wIndex) == CDC_CMD_ITF_NBR[i] || LOBYTE(req->wIndex) == CDC_COM_ITF_NBR[i])
     {
       windex_to_ch = i;
       break;

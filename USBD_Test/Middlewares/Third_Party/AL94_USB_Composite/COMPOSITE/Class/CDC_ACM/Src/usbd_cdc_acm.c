@@ -1785,7 +1785,7 @@ static uint8_t USBD_CDC_Setup(USBD_HandleTypeDef *pdev,
   
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
-    if (req->wIndex == CDC_CMD_ITF_NBR[i] || req->wIndex == CDC_COM_ITF_NBR[i])
+    if (LOBYTE(req->wIndex) == CDC_CMD_ITF_NBR[i] || LOBYTE(req->wIndex) == CDC_COM_ITF_NBR[i])
     {
       windex_to_ch = i;
       break;
@@ -2182,7 +2182,7 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
     cmd_ep = in_ep + 1;
     out_ep++;
 
-    cmd_itf += 2;;
+    cmd_itf += 2;
     com_itf = cmd_itf + 1;
   }
 }

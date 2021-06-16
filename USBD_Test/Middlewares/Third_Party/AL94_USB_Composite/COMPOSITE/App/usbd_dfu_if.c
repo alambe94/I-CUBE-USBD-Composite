@@ -103,7 +103,7 @@
   * @{
   */
 
-extern USBD_HandleTypeDef hUsbDevice;
+extern USBD_HandleTypeDef hUsbDeviceHS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
 

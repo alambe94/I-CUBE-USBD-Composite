@@ -26,7 +26,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include  "usbd_ioreq.h"
+#include "stdbool.h"
+#include "usbd_ioreq.h"
+#include "AL94.I-CUBE-USBD-COMPOSITE_conf.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -42,20 +44,22 @@ extern "C" {
   * @{
   */
 
-#define USBD_USE_HS                                            		1
-#define USBD_USE_CDC_ACM                                            1
-#define USBD_CDC_ACM_COUNT                                          NUMBER_OF_CDC
-#define USBD_USE_CDC_RNDIS                                          0
-#define USBD_USE_CDC_ECM                                            0
-#define USBD_USE_HID_MOUSE                                          0
-#define USBD_USE_HID_KEYBOARD                                       0
-#define USBD_USE_HID_CUSTOM                                         1
-#define USBD_USE_UAC_MIC                                            0
-#define USBD_USE_UAC_SPKR                                           0
-#define USBD_USE_UVC                                                0
-#define USBD_USE_MSC                                                0
-#define USBD_USE_DFU                                                0
-#define USBD_USE_PRNTR                                              0
+#define USBD_USE_HS                  _USBD_USE_HS
+#define USBD_USE_CDC_ACM             _USBD_USE_CDC_ACM
+#define USBD_CDC_ACM_COUNT           _USBD_CDC_ACM_COUNT
+#define USBD_USE_CDC_RNDIS           _USBD_USE_CDC_RNDIS
+#define USBD_USE_CDC_ECM             _USBD_USE_CDC_ECM
+#define USBD_USE_HID_MOUSE           _USBD_USE_HID_MOUSE
+#define USBD_USE_HID_KEYBOARD        _USBD_USE_HID_KEYBOARD
+#define USBD_USE_HID_CUSTOM          _USBD_USE_HID_CUSTOM
+#define USBD_USE_UAC_MIC             _USBD_USE_UAC_MIC
+#define USBD_USE_UAC_SPKR            _USBD_USE_UAC_SPKR
+#define USBD_USE_UVC                 _USBD_USE_UVC
+#define USBD_USE_MSC                 _USBD_USE_MSC
+#define USBD_USE_DFU                 _USBD_USE_DFU
+#define USBD_USE_PRNTR               _USBD_USE_PRNTR
+
+#define STM32F1_DEVICE               _STM32F1_DEVICE
 
 #if(USBD_USE_CDC_ACM == 1)
 #include "usbd_cdc_acm_if.h"

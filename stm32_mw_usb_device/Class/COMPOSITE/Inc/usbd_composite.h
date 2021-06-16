@@ -26,8 +26,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbd_ioreq.h"
 #include "stdbool.h"
+#include "usbd_ioreq.h"
 #include "AL94.I-CUBE-USBD-COMPOSITE_conf.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY

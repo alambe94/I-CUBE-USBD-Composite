@@ -152,7 +152,7 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc[USBD_CUSTOM_HID_REPORT_DESC_S
   * @brief Public variables.
   * @{
   */
-extern USBD_HandleTypeDef hUsbDevice;
+extern USBD_HandleTypeDef hUsbDeviceHS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
 

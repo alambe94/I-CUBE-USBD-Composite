@@ -28,62 +28,53 @@
 
 /**
 	MiddleWare name : AL94.I-CUBE-USBD-COMPOSITE.1.0.0
-	MiddleWare fileName : AL94.I-CUBE-USBD-COMPOSITE_conf.h
+	MiddleWare fileName : ./AL94.I-CUBE-USBD-COMPOSITE_conf.h
 	MiddleWare version :
 */
-/*---------- ENABLE_USB_CDC_ACM  -----------*/
-#define ENABLE_USB_CDC_ACM      true
+/*---------- _USBD_USE_HS  -----------*/
+#define _USBD_USE_HS      true
 
-/*---------- USB_CDC_ACM_CMD_ITF_NBR  -----------*/
-#define USB_CDC_ACM_CMD_ITF_NBR      0
+/*---------- _USBD_USE_CDC_ACM  -----------*/
+#define _USBD_USE_CDC_ACM      false
 
-/*---------- USB_CDC_ACM_COM_ITF_NBR  -----------*/
-#define USB_CDC_ACM_COM_ITF_NBR      1
+/*---------- _USBD_CDC_ACM_COUNT  -----------*/
+#define _USBD_CDC_ACM_COUNT      1
 
-/*---------- USB_CDC_ACM_CMD_EP_NBR  -----------*/
-#define USB_CDC_ACM_CMD_EP_NBR      1
+/*---------- _USBD_USE_CDC_RNDIS  -----------*/
+#define _USBD_USE_CDC_RNDIS      false
 
-/*---------- USB_CDC_ACM_IN_EP_NBR  -----------*/
-#define USB_CDC_ACM_IN_EP_NBR      2
+/*---------- _USBD_USE_CDC_ECM  -----------*/
+#define _USBD_USE_CDC_ECM      true
 
-/*---------- USB_CDC_ACM_OUT_EP_NBR  -----------*/
-#define USB_CDC_ACM_OUT_EP_NBR      1
+/*---------- _USBD_USE_HID_MOUSE  -----------*/
+#define _USBD_USE_HID_MOUSE      false
 
-/*---------- USB_CDC_ACM_CMD_EP_SIZE  -----------*/
-#define USB_CDC_ACM_CMD_EP_SIZE      64
+/*---------- _USBD_USE_HID_KEYBOARD  -----------*/
+#define _USBD_USE_HID_KEYBOARD      false
 
-/*---------- USB_CDC_ACM_IN_EP_SIZE  -----------*/
-#define USB_CDC_ACM_IN_EP_SIZE      512
+/*---------- _USBD_USE_HID_CUSTOM  -----------*/
+#define _USBD_USE_HID_CUSTOM      false
 
-/*---------- USB_CDC_ACM_OUT_EP_SIZE  -----------*/
-#define USB_CDC_ACM_OUT_EP_SIZE      512
+/*---------- _USBD_USE_UAC_MIC  -----------*/
+#define _USBD_USE_UAC_MIC      false
 
-/*---------- ENABLE_USB_CDC_RNDIS  -----------*/
-#define ENABLE_USB_CDC_RNDIS      false
+/*---------- _USBD_USE_UAC_SPKR  -----------*/
+#define _USBD_USE_UAC_SPKR      false
 
-/*---------- USB_CDC_RNDIS_CMD_ITF_NBR  -----------*/
-#define USB_CDC_RNDIS_CMD_ITF_NBR      2
+/*---------- _USBD_USE_UVC  -----------*/
+#define _USBD_USE_UVC      false
 
-/*---------- USB_CDC_RNDIS_COM_ITF_NBR  -----------*/
-#define USB_CDC_RNDIS_COM_ITF_NBR      3
+/*---------- _USBD_USE_MSC  -----------*/
+#define _USBD_USE_MSC      false
 
-/*---------- USB_CDC_RNDIS_CMD_EP_NBR  -----------*/
-#define USB_CDC_RNDIS_CMD_EP_NBR      1
+/*---------- _USBD_USE_DFU  -----------*/
+#define _USBD_USE_DFU      false
 
-/*---------- USB_CDC_RNDIS_IN_EP_NBR  -----------*/
-#define USB_CDC_RNDIS_IN_EP_NBR      1
+/*---------- _USBD_USE_PRNTR  -----------*/
+#define _USBD_USE_PRNTR      false
 
-/*---------- USB_CDC_RNDIS_OUT_EP_NBR  -----------*/
-#define USB_CDC_RNDIS_OUT_EP_NBR      1
-
-/*---------- USB_CDC_RNDIS_CMD_EP_SIZE  -----------*/
-#define USB_CDC_RNDIS_CMD_EP_SIZE      64
-
-/*---------- USB_CDC_RNDIS_IN_EP_SIZE  -----------*/
-#define USB_CDC_RNDIS_IN_EP_SIZE      512
-
-/*---------- USB_CDC_RNDIS_OUT_EP_SIZE  -----------*/
-#define USB_CDC_RNDIS_OUT_EP_SIZE      512
+/*---------- _STM32F1_DEVICE  -----------*/
+#define _STM32F1_DEVICE      false
 
 #ifdef __cplusplus
 }

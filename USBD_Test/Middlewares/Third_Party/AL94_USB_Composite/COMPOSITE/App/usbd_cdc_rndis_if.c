@@ -33,7 +33,7 @@
 
 #include "usbd_cdc_rndis_if.h"
 
-extern USBD_HandleTypeDef hUsbDevice;
+extern USBD_HandleTypeDef hUsbDeviceHS;
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -92,8 +92,8 @@ static int8_t CDC_RNDIS_Itf_Init(void)
   }
 
   /* Set Application Buffers */
-  (void)USBD_CDC_RNDIS_SetTxBuffer(&hUsbDevice, UserTxBuffer, 0U);
-  (void)USBD_CDC_RNDIS_SetRxBuffer(&hUsbDevice, UserRxBuffer);
+  (void)USBD_CDC_RNDIS_SetTxBuffer(&hUsbDeviceHS, UserTxBuffer, 0U);
+  (void)USBD_CDC_RNDIS_SetRxBuffer(&hUsbDeviceHS, UserRxBuffer);
 
   return (0);
 }
@@ -106,7 +106,7 @@ static int8_t CDC_RNDIS_Itf_Init(void)
   */
 static int8_t CDC_RNDIS_Itf_DeInit(void)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDevice.pClassData_CDC_RNDIS);
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_RNDIS);
 
   /*
      Add your code here
@@ -128,7 +128,7 @@ static int8_t CDC_RNDIS_Itf_DeInit(void)
   */
 static int8_t CDC_RNDIS_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 {
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDevice.pClassData_CDC_RNDIS);
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_RNDIS);
 
   switch (cmd)
   {
@@ -171,7 +171,7 @@ static int8_t CDC_RNDIS_Itf_Control(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 static int8_t CDC_RNDIS_Itf_Receive(uint8_t *Buf, uint32_t *Len)
 {
   /* Get the CDC_RNDIS handler pointer */
-  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDevice.pClassData_CDC_RNDIS);
+  USBD_CDC_RNDIS_HandleTypeDef *hcdc_cdc_rndis = (USBD_CDC_RNDIS_HandleTypeDef *)(hUsbDeviceHS.pClassData_CDC_RNDIS);
 
   /* Call Eth buffer processing */
   hcdc_cdc_rndis->RxState = 1U;

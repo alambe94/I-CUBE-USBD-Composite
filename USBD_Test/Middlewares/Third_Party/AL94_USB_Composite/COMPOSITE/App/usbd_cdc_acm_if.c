@@ -115,7 +115,7 @@ uint32_t Read_Index[NUMBER_OF_CDC];  /* keep track of sent data to USB */
   * @{
   */
 
-extern USBD_HandleTypeDef hUsbDevice;
+extern USBD_HandleTypeDef hUsbDeviceHS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
 
@@ -287,7 +287,7 @@ static int8_t CDC_Init(uint8_t cdc_ch)
   /* USER CODE BEGIN 3 */
 
   /* ##-1- Set Application Buffers */
-  USBD_CDC_SetRxBuffer(cdc_ch, &hUsbDevice, RX_Buffer[cdc_ch]);
+  USBD_CDC_SetRxBuffer(cdc_ch, &hUsbDeviceHS, RX_Buffer[cdc_ch]);
 
   //  /*##-2- Start the TIM Base generation in interrupt mode ####################*/
   //  /* Start Channel1 */
@@ -424,8 +424,8 @@ static int8_t CDC_Receive(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len)
   //HAL_UART_Transmit_DMA(CDC_CH_To_UART_Handle(cdc_ch), Buf, *Len);
 	CDC_Transmit(cdc_ch, Buf, *Len);// echo back on same channel
 
-	USBD_CDC_SetRxBuffer(cdc_ch, &hUsbDevice, &Buf[0]);
-	USBD_CDC_ReceivePacket(cdc_ch, &hUsbDevice);
+	USBD_CDC_SetRxBuffer(cdc_ch, &hUsbDeviceHS, &Buf[0]);
+	USBD_CDC_ReceivePacket(cdc_ch, &hUsbDeviceHS);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
@@ -469,8 +469,8 @@ uint8_t CDC_Transmit(uint8_t ch, uint8_t* Buf, uint16_t Len)
   if (hcdc->TxState != 0){
     return USBD_BUSY;
   }
-  USBD_CDC_SetTxBuffer(ch, &hUsbDevice, Buf, Len);
-  result = USBD_CDC_TransmitPacket(ch, &hUsbDevice);
+  USBD_CDC_SetTxBuffer(ch, &hUsbDeviceHS, Buf, Len);
+  result = USBD_CDC_TransmitPacket(ch, &hUsbDeviceHS);
   /* USER CODE END 7 */
   return result;
 }
