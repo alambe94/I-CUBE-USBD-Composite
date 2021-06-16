@@ -422,7 +422,7 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
 #if (USBD_USE_MSC == 1)
     HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, MSC_IN_EP, PCD_SNG_BUF, pma_track);
     pma_track += 256;
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, MSC_EPOUT_ADDR, PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, MSC_OUT_EP, PCD_SNG_BUF, pma_track);
     pma_track += 256;
 #endif
 #if (USBD_USE_DFU == 1)
