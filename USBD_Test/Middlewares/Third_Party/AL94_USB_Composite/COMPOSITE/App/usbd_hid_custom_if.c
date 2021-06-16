@@ -152,7 +152,7 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc[USBD_CUSTOM_HID_REPORT_DESC_S
   * @brief Public variables.
   * @{
   */
-extern USBD_HandleTypeDef hUsbDeviceHS;
+extern USBD_HandleTypeDef hUsbDevice;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
 
@@ -218,7 +218,7 @@ static int8_t CUSTOM_HID_OutEvent(uint8_t event_idx, uint8_t state)
 {
   /* USER CODE BEGIN 6 */
   //memcpy(buffer, state, 0x40);
-  //USBD_CUSTOM_HID_SendReport(&hUsbDeviceHS, (uint8_t *)buffer, 0x40);
+  //USBD_CUSTOM_HID_SendReport(&hUsbDevice, (uint8_t *)buffer, 0x40);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
@@ -233,7 +233,7 @@ static int8_t CUSTOM_HID_OutEvent(uint8_t event_idx, uint8_t state)
 /*
 static int8_t USBD_CUSTOM_HID_SendReport(uint8_t *report, uint16_t len)
 {
-  return USBD_CUSTOM_HID_SendReport(&hUsbDeviceHS, report, len);
+  return USBD_CUSTOM_HID_SendReport(&hUsbDevice, report, len);
 }
 */
 /* USER CODE END 7 */

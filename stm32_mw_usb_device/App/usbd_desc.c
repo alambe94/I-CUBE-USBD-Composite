@@ -134,7 +134,7 @@ uint8_t * USBD_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
   * @{
   */
 
-USBD_DescriptorsTypeDef HS_Desc =
+USBD_DescriptorsTypeDef USBD_Desc =
 {
   USBD_DeviceDescriptor
 , USBD_LangIDStrDescriptor

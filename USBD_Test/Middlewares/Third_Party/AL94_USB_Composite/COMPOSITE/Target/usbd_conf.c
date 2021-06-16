@@ -340,7 +340,11 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
   }
 #else
   /**FULL SPEED USB */
+#if (STM32F1_DEVICE) /** for STM32F1 or similar */
+  hpcd_USB_OTG_PTR = &hpcd_USB_FS;  /** hpcd_USB_FS or hpcd_USB_OTG_FS*/
+#else
   hpcd_USB_OTG_PTR = &hpcd_USB_OTG_FS;  /** hpcd_USB_FS or hpcd_USB_OTG_FS*/
+#endif
 
   if (pdev->id == DEVICE_FS)
   {

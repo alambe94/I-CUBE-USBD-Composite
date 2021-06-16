@@ -35,43 +35,43 @@
 #define _USBD_USE_HS      true
 
 /*---------- _USBD_USE_CDC_ACM  -----------*/
-#define _USBD_USE_CDC_ACM      false
+#define _USBD_USE_CDC_ACM      true
 
 /*---------- _USBD_CDC_ACM_COUNT  -----------*/
-#define _USBD_CDC_ACM_COUNT      1
+#define _USBD_CDC_ACM_COUNT      2
 
 /*---------- _USBD_USE_CDC_RNDIS  -----------*/
-#define _USBD_USE_CDC_RNDIS      false
+#define _USBD_USE_CDC_RNDIS      true
 
 /*---------- _USBD_USE_CDC_ECM  -----------*/
 #define _USBD_USE_CDC_ECM      true
 
 /*---------- _USBD_USE_HID_MOUSE  -----------*/
-#define _USBD_USE_HID_MOUSE      false
+#define _USBD_USE_HID_MOUSE      true
 
 /*---------- _USBD_USE_HID_KEYBOARD  -----------*/
-#define _USBD_USE_HID_KEYBOARD      false
+#define _USBD_USE_HID_KEYBOARD      true
 
 /*---------- _USBD_USE_HID_CUSTOM  -----------*/
-#define _USBD_USE_HID_CUSTOM      false
+#define _USBD_USE_HID_CUSTOM      true
 
 /*---------- _USBD_USE_UAC_MIC  -----------*/
-#define _USBD_USE_UAC_MIC      false
+#define _USBD_USE_UAC_MIC      true
 
 /*---------- _USBD_USE_UAC_SPKR  -----------*/
-#define _USBD_USE_UAC_SPKR      false
+#define _USBD_USE_UAC_SPKR      true
 
 /*---------- _USBD_USE_UVC  -----------*/
-#define _USBD_USE_UVC      false
+#define _USBD_USE_UVC      true
 
 /*---------- _USBD_USE_MSC  -----------*/
-#define _USBD_USE_MSC      false
+#define _USBD_USE_MSC      true
 
 /*---------- _USBD_USE_DFU  -----------*/
-#define _USBD_USE_DFU      false
+#define _USBD_USE_DFU      true
 
 /*---------- _USBD_USE_PRNTR  -----------*/
-#define _USBD_USE_PRNTR      false
+#define _USBD_USE_PRNTR      true
 
 /*---------- _STM32F1_DEVICE  -----------*/
 #define _STM32F1_DEVICE      false

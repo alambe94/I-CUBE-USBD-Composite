@@ -32,7 +32,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-uint8_t MSC_Storage[100*1024];
+uint8_t MSC_Storage[10*1024];
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -126,7 +126,7 @@ const int8_t STORAGE_Inquirydata[] = {/* 36 */
   * @{
   */
 
-extern USBD_HandleTypeDef hUsbDeviceHS;
+extern USBD_HandleTypeDef hUsbDevice;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
 
