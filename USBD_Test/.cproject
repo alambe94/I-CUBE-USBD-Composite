@@ -47,7 +47,7 @@
                             							
                             <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.1589977926" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" useByScannerDiscovery="false" value="STM32H7B3I-DK" valueType="string"/>
                             							
-                            <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1860550105" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.4 || Debug || true || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H7B3I-DK || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ACM/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/App | ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_SPKR/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/DFU/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/COMPOSITE/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Target | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_RNDIS/Inc | ../Drivers/CMSIS/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_CUSTOM/Inc | ../Core/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/MSC/Inc | ../Drivers/CMSIS/Device/ST/STM32H7xx/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_MOUSE/Inc | ../Composite | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_KEYBOARD/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/PRINTER/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/VIDEO/Inc | ../Drivers/STM32H7xx_HAL_Driver/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ECM/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Core/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_MIC/Inc ||  ||  || USE_HAL_DRIVER | STM32H7B3xxQ ||  || Drivers | Composite | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H7B3LIHXQ_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None" valueType="string"/>
+                            <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1860550105" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.4 || Debug || true || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H7B3I-DK || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Drivers/CMSIS/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/App | ../Core/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/MSC/Inc | ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy | ../Drivers/CMSIS/Device/ST/STM32H7xx/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/COMPOSITE/Inc | ../Composite | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Target | ../Drivers/STM32H7xx_HAL_Driver/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Core/Inc ||  ||  || USE_HAL_DRIVER | STM32H7B3xxQ ||  || Drivers | Composite | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H7B3LIHXQ_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None" valueType="string"/>
                             							
                             <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.521480796" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
                             							
@@ -97,31 +97,9 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Target"/>
                                     									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ACM/Inc"/>
-                                    									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/COMPOSITE/Inc"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/MSC/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_KEYBOARD/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_CUSTOM/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/DFU/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/PRINTER/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_MOUSE/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_MIC/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_SPKR/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/VIDEO/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_RNDIS/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ECM/Inc"/>
                                     								
                                 </option>
                                 								
@@ -177,11 +155,9 @@
                         						
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
                         						
-                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Composite"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
                         						
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
-                        						
-                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
                         					
                     </sourceEntries>
                     				
@@ -237,7 +213,7 @@
                             							
                             <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.398739418" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" useByScannerDiscovery="false" value="STM32H7B3I-DK" valueType="string"/>
                             							
-                            <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1662709853" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.4 || Release || false || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H7B3I-DK || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ACM/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/App | ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_SPKR/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/DFU/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/COMPOSITE/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Target | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_RNDIS/Inc | ../Drivers/CMSIS/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_CUSTOM/Inc | ../Core/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/MSC/Inc | ../Drivers/CMSIS/Device/ST/STM32H7xx/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_MOUSE/Inc | ../Composite | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_KEYBOARD/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/PRINTER/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/VIDEO/Inc | ../Drivers/STM32H7xx_HAL_Driver/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ECM/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Core/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_MIC/Inc ||  ||  || USE_HAL_DRIVER | STM32H7B3xxQ ||  || Drivers | Composite | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H7B3LIHXQ_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None" valueType="string"/>
+                            <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1662709853" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.4 || Release || false || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H7B3I-DK || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Drivers/CMSIS/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/App | ../Core/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/MSC/Inc | ../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy | ../Drivers/CMSIS/Device/ST/STM32H7xx/Include | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/COMPOSITE/Inc | ../Composite | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Target | ../Drivers/STM32H7xx_HAL_Driver/Inc | ../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Core/Inc ||  ||  || USE_HAL_DRIVER | STM32H7B3xxQ ||  || Drivers | Composite | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H7B3LIHXQ_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None" valueType="string"/>
                             							
                             <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.1612961833" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
                             							
@@ -285,31 +261,9 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Target"/>
                                     									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ACM/Inc"/>
-                                    									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/COMPOSITE/Inc"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/MSC/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_KEYBOARD/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_CUSTOM/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/DFU/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/PRINTER/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/HID_MOUSE/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_MIC/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/AUDIO_SPKR/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/VIDEO/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_RNDIS/Inc"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="../Middlewares/Third_Party/AL94_USB_Composite/COMPOSITE/Class/CDC_ECM/Inc"/>
                                     								
                                 </option>
                                 								
@@ -365,11 +319,9 @@
                         						
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
                         						
-                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Composite"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
                         						
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
-                        						
-                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
                         					
                     </sourceEntries>
                     				
