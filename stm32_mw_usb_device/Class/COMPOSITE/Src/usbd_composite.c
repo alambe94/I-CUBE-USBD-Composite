@@ -601,13 +601,18 @@ static uint8_t USBD_COMPOSITE_IsoINIncomplete(USBD_HandleTypeDef *pdev, uint8_t 
 #if (USBD_USE_HID_CUSTOM == 1)
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  USBD_AUDIO_MIC.IsoINIncomplete(pdev, epnum);
+  if (epnum == (AUDIO_MIC_EP & 0x7F))
+  {
+    USBD_AUDIO_MIC.IsoINIncomplete(pdev, epnum);
+  }
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  USBD_AUDIO_SPKR.IsoINIncomplete(pdev, epnum);
 #endif
 #if (USBD_USE_UVC == 1)
-  USBD_VIDEO.IsoINIncomplete(pdev, epnum);
+  if (epnum == (UVC_IN_EP & 0x7F))
+  {
+    USBD_VIDEO.IsoINIncomplete(pdev, epnum);
+  }
 #endif
 #if (USBD_USE_MSC == 1)
 #endif
@@ -641,10 +646,12 @@ static uint8_t USBD_COMPOSITE_IsoOutIncomplete(USBD_HandleTypeDef *pdev, uint8_t
 #if (USBD_USE_HID_CUSTOM == 1)
 #endif
 #if (USBD_USE_UAC_MIC == 1)
-  USBD_AUDIO_MIC.IsoOUTIncomplete(pdev, epnum);
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  USBD_AUDIO_SPKR.IsoOUTIncomplete(pdev, epnum);
+  if (epnum == AUDIO_SPKR_EP)
+  {
+    USBD_AUDIO_SPKR.IsoOUTIncomplete(pdev, epnum);
+  }
 #endif
 #if (USBD_USE_UVC == 1)
 #endif
@@ -758,12 +765,11 @@ static uint8_t *USBD_COMPOSITE_GetFSCfgDesc(uint16_t *length)
 static uint8_t *USBD_COMPOSITE_GetOtherSpeedCfgDesc(uint16_t *length)
 {
 #if (USBD_USE_HS == 1)
-  *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
-  return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
-#else
-
   *length = (uint16_t)sizeof(USBD_COMPOSITE_FSCfgDesc);
   return (uint8_t *)&USBD_COMPOSITE_FSCfgDesc;
+#else
+  *length = (uint16_t)sizeof(USBD_COMPOSITE_HSCfgDesc);
+  return (uint8_t *)&USBD_COMPOSITE_HSCfgDesc;
 #endif
 }
 

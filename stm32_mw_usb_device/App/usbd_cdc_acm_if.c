@@ -275,7 +275,7 @@ USBD_CDC_ACM_ItfTypeDef USBD_CDC_ACM_fops = {CDC_Init,
                                              CDC_DeInit,
                                              CDC_Control,
                                              CDC_Receive,
-											 CDC_TransmitCplt};
+                                             CDC_TransmitCplt};
 
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -309,11 +309,11 @@ static int8_t CDC_DeInit(uint8_t cdc_ch)
 {
   /* USER CODE BEGIN 4 */
   /* DeInitialize the UART peripheral */
-//  if (HAL_UART_DeInit(CDC_CH_To_UART_Handle(cdc_ch)) != HAL_OK)
-//  {
-//    /* Initialization Error */
-//    Error_Handler();
-//  }
+  //  if (HAL_UART_DeInit(CDC_CH_To_UART_Handle(cdc_ch)) != HAL_OK)
+  //  {
+  //    /* Initialization Error */
+  //    Error_Handler();
+  //  }
   return (USBD_OK);
   /* USER CODE END 4 */
 }
@@ -422,10 +422,10 @@ static int8_t CDC_Receive(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
   //HAL_UART_Transmit_DMA(CDC_CH_To_UART_Handle(cdc_ch), Buf, *Len);
-	CDC_Transmit(cdc_ch, Buf, *Len);// echo back on same channel
+  CDC_Transmit(cdc_ch, Buf, *Len); // echo back on same channel
 
-	USBD_CDC_SetRxBuffer(cdc_ch, &hUsbDevice, &Buf[0]);
-	USBD_CDC_ReceivePacket(cdc_ch, &hUsbDevice);
+  USBD_CDC_SetRxBuffer(cdc_ch, &hUsbDevice, &Buf[0]);
+  USBD_CDC_ReceivePacket(cdc_ch, &hUsbDevice);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
@@ -444,9 +444,8 @@ static int8_t CDC_Receive(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len)
   */
 static int8_t CDC_TransmitCplt(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len, uint8_t epnum)
 {
-	return (USBD_OK);
+  return (USBD_OK);
 }
-
 
 /**
   * @brief  CDC_Transmit
@@ -459,14 +458,15 @@ static int8_t CDC_TransmitCplt(uint8_t cdc_ch, uint8_t *Buf, uint32_t *Len, uint
   * @param  Len: Number of data to be sent (in bytes)
   * @retval USBD_OK if all operations are OK else USBD_FAIL or USBD_BUSY
   */
-uint8_t CDC_Transmit(uint8_t ch, uint8_t* Buf, uint16_t Len)
+uint8_t CDC_Transmit(uint8_t ch, uint8_t *Buf, uint16_t Len)
 {
   uint8_t result = USBD_OK;
   /* USER CODE BEGIN 7 */
   extern USBD_CDC_ACM_HandleTypeDef CDC_ACM_Class_Data[];
   USBD_CDC_ACM_HandleTypeDef *hcdc = NULL;
   hcdc = &CDC_ACM_Class_Data[ch];
-  if (hcdc->TxState != 0){
+  if (hcdc->TxState != 0)
+  {
     return USBD_BUSY;
   }
   USBD_CDC_SetTxBuffer(ch, &hUsbDevice, Buf, Len);
@@ -474,7 +474,6 @@ uint8_t CDC_Transmit(uint8_t ch, uint8_t* Buf, uint16_t Len)
   /* USER CODE END 7 */
   return result;
 }
-
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
