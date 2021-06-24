@@ -50,10 +50,14 @@
 #define _AUDIO_MIC_EP 0x81
 #define _AUDIO_MIC_AC_ITF_NBR 0x00U
 #define _AUDIO_MIC_AS_ITF_NBR 0x01U
+#define _AUDIO_MIC_AC_STR_DESC_IDX 0x00U
+#define _AUDIO_MIC_AS_STR_DESC_IDX 0x00U
 
 uint8_t AUDIO_MIC_EP = _AUDIO_MIC_EP;
 uint8_t AUDIO_MIC_AC_ITF_NBR = _AUDIO_MIC_AC_ITF_NBR;
 uint8_t AUDIO_MIC_AS_ITF_NBR = _AUDIO_MIC_AS_ITF_NBR;
+uint8_t AUDIO_MIC_AC_STR_DESC_IDX = _AUDIO_MIC_AC_STR_DESC_IDX;
+uint8_t AUDIO_MIC_AS_STR_DESC_IDX = _AUDIO_MIC_AS_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
 * @{
@@ -167,8 +171,8 @@ USBD_ClassTypeDef USBD_AUDIO_MIC =
 /* USB AUDIO device Configuration Descriptor */
 __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __ALIGN_END =
     {
-        0x09,                                                           /* bLength */
-        0x02,                                                           /* bDescriptorType */
+        0x09,                               /* bLength */
+        0x02,                               /* bDescriptorType */
         LOBYTE(AUDIO_MIC_CONFIG_DESC_SIZE), /* wTotalLength: Total size of the Config descriptor */
         HIBYTE(AUDIO_MIC_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces */
@@ -191,7 +195,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_DEVICE_CLASS,          /* bInterfaceClass */
         AUDIO_MIC_SUBCLASS_AUDIOCONTROL, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,    /* bInterfaceProtocol */
-        0x00,                            /* iInterface */
+        AUDIO_MIC_AC_STR_DESC_IDX,       /* iInterface */
         /* 18 byte*/
 
         /* USB Microphone Class-specific AC Interface Descriptor */
@@ -305,7 +309,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_DEVICE_CLASS,            /* bInterfaceClass */
         AUDIO_MIC_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
-        0x00,                              /* iInterface */
+        AUDIO_MIC_AS_STR_DESC_IDX,         /* iInterface */
         //74 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Audio Streaming Interface Descriptor */
@@ -342,7 +346,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x01, /* bInterval */
         0x00, /* bRefresh */
         0x00, /* bSynchAddress */
-		//101 + AUDIO_MIC_CHANNELS byte
+              //101 + AUDIO_MIC_CHANNELS byte
 
         /* Endpoint - Audio Streaming Descriptor*/
         AUDIO_MIC_STREAMING_ENDPOINT_DESC_SIZE, /* bLength */
@@ -352,7 +356,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         0x00,                                   /* bLockDelayUnits */
         0x00,                                   /* wLockDelay */
         0x00,
-		//108 + AUDIO_MIC_CHANNELS byte
+        //108 + AUDIO_MIC_CHANNELS byte
 };
 
 /* USB Standard Device Descriptor */
@@ -397,9 +401,9 @@ static uint8_t USBD_AUDIO_Init(USBD_HandleTypeDef *pdev,
   USBD_AUDIO_MIC_HandleTypeDef *haudio;
   pdev->pClassData_UAC_MIC = &haudioInstance;
   haudio = (USBD_AUDIO_MIC_HandleTypeDef *)pdev->pClassData_UAC_MIC;
-  if(haudio->paketDimension == 0)
+  if (haudio->paketDimension == 0)
   {
-	  haudio->paketDimension = 1;
+    haudio->paketDimension = 1;
   }
   uint16_t packet_dim = haudio->paketDimension;
   uint16_t wr_rd_offset = (AUDIO_MIC_PACKET_NUM / 2) * haudio->dataAmount / haudio->paketDimension;
@@ -911,7 +915,12 @@ uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev,
   return 0;
 }
 
-void USBD_Update_Audio_MIC_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, uint8_t in_ep)
+void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
+                                uint8_t ac_itf,
+                                uint8_t as_itf,
+                                uint8_t in_ep,
+                                uint8_t ac_str_idx,
+                                uint8_t as_str_idx)
 {
   desc[11] = ac_itf;
   desc[26] = as_itf;
@@ -922,6 +931,9 @@ void USBD_Update_Audio_MIC_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, u
   AUDIO_MIC_EP = in_ep;
   AUDIO_MIC_AC_ITF_NBR = ac_itf;
   AUDIO_MIC_AS_ITF_NBR = as_itf;
+
+  AUDIO_MIC_AC_STR_DESC_IDX = ac_str_idx;
+  AUDIO_MIC_AC_STR_DESC_IDX = as_str_idx;
 
   haudioInstance.paketDimension = (AUDIO_MIC_SMPL_FREQ / 1000 * AUDIO_MIC_CHANNELS * 2);
   haudioInstance.frequency = AUDIO_MIC_SMPL_FREQ;

@@ -28,6 +28,9 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include  "usbd_ioreq.h"
 
+#define AUDIO_SPKR_AC_STR_DESC                             "SPEAKER CONTROL"
+#define AUDIO_SPKR_AS_STR_DESC                             "SPEAKER STREAM"
+
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -183,6 +186,8 @@ extern "C" {
   extern uint8_t AUDIO_OUT_EP;
   extern uint8_t AUDIO_OUT_AC_ITF_NBR;
   extern uint8_t AUDIO_OUT_AS_ITF_NBR;
+  extern uint8_t AUDIO_SPKR_AC_STR_DESC_IDX;
+  extern uint8_t AUDIO_SPKR_AS_STR_DESC_IDX;
 
   /**
   * @}
@@ -196,7 +201,12 @@ extern "C" {
 
   void USBD_AUDIO_SPKR_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset);
 
-  void USBD_Update_Audio_SPKR_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, uint8_t out_ep);
+  void USBD_Update_Audio_SPKR_DESC(uint8_t *desc,
+                                   uint8_t ac_itf,
+                                   uint8_t as_itf,
+                                   uint8_t out_ep,
+                                   uint8_t ac_str_idx,
+                                   uint8_t as_str_idx);
   /**
   * @}
   */

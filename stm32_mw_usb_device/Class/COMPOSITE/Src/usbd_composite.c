@@ -115,7 +115,7 @@ USBD_ClassTypeDef USBD_COMPOSITE =
         USBD_COMPOSITE_GetFSCfgDesc,
         USBD_COMPOSITE_GetOtherSpeedCfgDesc,
         USBD_COMPOSITE_GetDeviceQualifierDesc,
-};
+        USBD_COMPOSITE_GetUsrStringDesc};
 
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
@@ -163,6 +163,7 @@ typedef struct __attribute__((packed)) USBD_COMPOSITE_CFG_DESC_t
 } USBD_COMPOSITE_CFG_DESC_t;
 
 USBD_COMPOSITE_CFG_DESC_t USBD_COMPOSITE_FSCfgDesc, USBD_COMPOSITE_HSCfgDesc;
+uint8_t USBD_Track_String_Index = USBD_IDX_INTERFACE_STR;
 
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
@@ -785,6 +786,53 @@ uint8_t *USBD_COMPOSITE_GetDeviceQualifierDesc(uint16_t *length)
   return USBD_COMPOSITE_DeviceQualifierDesc;
 }
 
+/**
+  * @brief  USBD_COMPOSITE_GetUsrStringDesc
+  *         Manages the transfer of memory interfaces string descriptors.
+  * @param  speed : current device speed
+  * @param  index: descriptor index
+  * @param  length : pointer data length
+  * @retval pointer to the descriptor table or NULL if the descriptor is not supported.
+  */
+#if (USBD_SUPPORT_USER_STRING_DESC == 1U)
+static uint8_t *USBD_COMPOSITE_GetUsrStringDesc(USBD_HandleTypeDef *pdev, uint8_t index, uint16_t *length)
+{
+  static uint8_t USBD_StrDesc[255];
+
+  /* Check if the requested string interface is supported */
+  if (index <= USBD_Track_String_Index)
+  {
+#if (USBD_USE_UAC_MIC == 1)
+    if (index == AUDIO_MIC_AC_STR_DESC_IDX)
+    {
+      USBD_GetString((uint8_t *)AUDIO_MIC_AC_STR_DESC, USBD_StrDesc, length);
+    }
+    else if (index == AUDIO_MIC_AC_STR_DESC_IDX)
+    {
+      USBD_GetString((uint8_t *)AUDIO_MIC_AS_STR_DESC, USBD_StrDesc, length);
+    }
+#endif
+#if (USBD_USE_UAC_SPKR == 1)
+    if (index == AUDIO_SPKR_AC_STR_DESC_IDX)
+    {
+      USBD_GetString((uint8_t *)AUDIO_SPKR_AC_STR_DESC, USBD_StrDesc, length);
+    }
+    else if (index == AUDIO_SPKR_AC_STR_DESC_IDX)
+    {
+      USBD_GetString((uint8_t *)AUDIO_SPKR_AS_STR_DESC, USBD_StrDesc, length);
+    }
+#endif
+  }
+  return USBD_StrDesc;
+}
+else
+{
+  /* Not supported Interface Descriptor index */
+  return NULL;
+}
+}
+#endif
+
 void USBD_COMPOSITE_Mount_Class(void)
 {
   uint16_t len = 0;
@@ -816,6 +864,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   in_ep_track += 2 * USBD_CDC_ACM_COUNT;
   out_ep_track += 1 * USBD_CDC_ACM_COUNT;
   interface_no_track += 2 * USBD_CDC_ACM_COUNT;
+  USBD_Track_String_Index += USBD_CDC_ACM_COUNT;
 #endif
 
 #if (USBD_USE_CDC_RNDIS == 1)
@@ -840,6 +889,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   in_ep_track += 2;
   out_ep_track += 1;
   interface_no_track += 2;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_CDC_ECM == 1)
   ptr = USBD_CDC_ECM.GetFSConfigDescriptor(&len);
@@ -863,6 +913,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   in_ep_track += 2;
   out_ep_track += 1;
   interface_no_track += 2;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
   ptr = USBD_HID_MOUSE.GetFSConfigDescriptor(&len);
@@ -874,6 +925,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_MOUSE_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   interface_no_track += 1;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_HID_KEYBOARD == 1)
   ptr = USBD_HID_KEYBOARD.GetFSConfigDescriptor(&len);
@@ -885,6 +937,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_KEYBOARD_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   interface_no_track += 1;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
   ptr = USBD_HID_CUSTOM.GetFSConfigDescriptor(&len);
@@ -897,17 +950,29 @@ void USBD_COMPOSITE_Mount_Class(void)
   in_ep_track += 1;
   out_ep_track += 1;
   interface_no_track += 1;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_UAC_MIC == 1)
   ptr = USBD_AUDIO_MIC.GetFSConfigDescriptor(&len);
-  USBD_Update_Audio_MIC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
+  USBD_Update_Audio_MIC_DESC(ptr,
+                             interface_no_track,
+                             interface_no_track + 1,
+                             in_ep_track,
+                             USBD_Track_String_Index,
+                             USBD_Track_String_Index + 1);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UAC_MIC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_AUDIO_MIC.GetHSConfigDescriptor(&len);
-  USBD_Update_Audio_MIC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
+  USBD_Update_Audio_MIC_DESC(ptr,
+                             interface_no_track,
+                             interface_no_track + 1,
+                             in_ep_track,
+                             USBD_Track_String_Index,
+                             USBD_Track_String_Index + 1);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_MIC_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   interface_no_track += 2;
+  USBD_Track_String_Index += 2;
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
   ptr = USBD_AUDIO_SPKR.GetFSConfigDescriptor(&len);
@@ -919,6 +984,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
   out_ep_track += 1;
   interface_no_track += 2;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_UVC == 1)
   ptr = USBD_VIDEO.GetFSConfigDescriptor(&len);
@@ -930,6 +996,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UVC_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   interface_no_track += 2;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_MSC == 1)
   ptr = USBD_MSC.GetFSConfigDescriptor(&len);
@@ -942,6 +1009,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   in_ep_track += 1;
   out_ep_track += 1;
   interface_no_track += 1;
+  USBD_Track_String_Index += 1;
 #endif
 #if (USBD_USE_DFU == 1)
   ptr = USBD_DFU.GetFSConfigDescriptor(&len);
@@ -952,6 +1020,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   USBD_Update_DFU_DESC(ptr, interface_no_track);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
   interface_no_track += 1;
+  USBD_Track_String_Index += USBD_DFU_MAX_ITF_NUM;
 #endif
 #if (USBD_USE_PRNTR == 1)
   ptr = USBD_PRNT.GetFSConfigDescriptor(&len);
@@ -964,6 +1033,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   in_ep_track += 1;
   out_ep_track += 1;
   interface_no_track += 1;
+  USBD_Track_String_Index += 1;
 #endif
 
   uint16_t CFG_SIZE = sizeof(USBD_COMPOSITE_CFG_DESC_t);

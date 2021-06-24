@@ -48,6 +48,9 @@
 
 #include "usbd_ioreq.h"
 
+#define AUDIO_MIC_AC_STR_DESC                             "MICROPHONE CONTROL"
+#define AUDIO_MIC_AS_STR_DESC                             "MICROPHONE STREAM"
+
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
 * @{
 */
@@ -203,6 +206,8 @@ extern USBD_ClassTypeDef USBD_AUDIO_MIC;
 extern uint8_t AUDIO_MIC_EP;
 extern uint8_t AUDIO_MIC_AC_ITF_NBR;
 extern uint8_t AUDIO_MIC_AS_ITF_NBR;
+extern uint8_t AUDIO_MIC_AC_STR_DESC_IDX;
+extern uint8_t AUDIO_MIC_AS_STR_DESC_IDX;
 
 /**
 * @}
@@ -215,8 +220,12 @@ uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_AUDIO_MI
 void USBD_AUDIO_MICInit_Microphone_Descriptor(USBD_HandleTypeDef *pdev, uint32_t samplingFrequency, uint8_t Channels);
 uint8_t USBD_AUDIO_MICData_Transfer(USBD_HandleTypeDef *pdev, int16_t *audioData, uint16_t dataAmount);
 
-void USBD_Update_Audio_MIC_DESC(uint8_t *desc, uint8_t ac_itf, uint8_t as_itf, uint8_t in_ep);
-
+void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
+                                uint8_t ac_itf,
+                                uint8_t as_itf,
+                                uint8_t in_ep,
+                                uint8_t ac_str_idx,
+                                uint8_t as_str_idx);
 /**
 * @}
 */
