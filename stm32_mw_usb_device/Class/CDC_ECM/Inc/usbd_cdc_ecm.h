@@ -41,6 +41,9 @@ extern "C" {
 /** @defgroup usbd_cdc_ecm_Exported_Defines
   * @{
   */
+
+#define CDC_ECM_STR_DESC                                "STM32 CDC ECM"
+
 /* Comment this define in order to disable the CDC ECM Notification pipe */
 
 #ifndef CDC_ECM_HS_BINTERVAL
@@ -206,6 +209,7 @@ extern uint8_t CDC_ECM_OUT_EP;
 extern uint8_t CDC_ECM_CMD_EP;
 extern uint8_t CDC_ECM_CMD_ITF_NBR;
 extern uint8_t CDC_ECM_COM_ITF_NBR;
+extern uint8_t CDC_ECM_STR_DESC_IDX;
 
 /**
   * @}

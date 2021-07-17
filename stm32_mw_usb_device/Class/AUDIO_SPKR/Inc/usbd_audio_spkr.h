@@ -28,9 +28,6 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include  "usbd_ioreq.h"
 
-#define AUDIO_SPKR_AC_STR_DESC                             "SPEAKER CONTROL"
-#define AUDIO_SPKR_AS_STR_DESC                             "SPEAKER STREAM"
-
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -44,6 +41,10 @@ extern "C" {
 /** @defgroup USBD_AUDIO_Exported_Defines
   * @{
   */
+
+#define AUDIO_SPKR_AC_STR_DESC                        "STM32 SPEAKER CONTROL"
+#define AUDIO_SPKR_AS_STR_DESC                        "STM32 SPEAKER STREAM"
+
 #ifndef USBD_AUDIO_FREQ
 /* AUDIO Class Config */
 #define USBD_AUDIO_FREQ                               48000U

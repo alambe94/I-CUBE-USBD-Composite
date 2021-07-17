@@ -41,6 +41,8 @@ extern "C" {
 /** @defgroup USBD_HID_Exported_Defines
   * @{
   */
+#define HID_MOUSE_STR_DESC                         "STM32 USB MOUSE"
+
 #define HID_EPIN_SIZE                              0x04U
 
 #define USB_HID_CONFIG_DESC_SIZ                    34U
@@ -106,6 +108,7 @@ extern USBD_ClassTypeDef USBD_HID_MOUSE;
 
 extern uint8_t HID_MOUSE_IN_EP;
 extern uint8_t HID_MOUSE_ITF_NBR;
+extern uint8_t HID_MOUSE_STR_DESC_IDX;
 
 /**
   * @}

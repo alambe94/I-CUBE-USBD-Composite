@@ -41,6 +41,9 @@ extern "C" {
 /** @defgroup USBD_HID_Exported_Defines
   * @{
   */
+
+#define HID_KEYBOARD_STR_DESC                               "STM32 USB KEYBOARD"
+
 #define HID_KEYBOARD_EPIN_SIZE                              0x08U
 
 #define HID_KEYBOARD_CONFIG_DESC_SIZE                       34U
@@ -107,6 +110,7 @@ extern USBD_ClassTypeDef USBD_HID_KEYBOARD;
 
 extern uint8_t HID_KEYBOARD_IN_EP;
 extern uint8_t HID_KEYBOARD_ITF_NBR;
+extern uint8_t HID_KEYBOARD_STR_DESC_IDX;
 
 /**
   * @}

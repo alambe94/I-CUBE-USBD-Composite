@@ -61,12 +61,14 @@
 #define _CDC_RNDIS_CMD_EP 0x82U      /* EP2 for CDC_RNDIS commands */
 #define _CDC_RNDIS_CMD_ITF_NBR 0x00U /* Command Interface Number 0 */
 #define _CDC_RNDIS_COM_ITF_NBR 0x01U /* Communication Interface Number 0 */
+#define _CDC_RNDIS_STR_DESC_IDX 0x01U
 
 uint8_t CDC_RNDIS_IN_EP = _CDC_RNDIS_IN_EP;
 uint8_t CDC_RNDIS_OUT_EP = _CDC_RNDIS_OUT_EP;
 uint8_t CDC_RNDIS_CMD_EP = _CDC_RNDIS_CMD_EP;
 uint8_t CDC_RNDIS_CMD_ITF_NBR = _CDC_RNDIS_CMD_ITF_NBR;
 uint8_t CDC_RNDIS_COM_ITF_NBR = _CDC_RNDIS_COM_ITF_NBR;
+uint8_t CDC_RNDIS_STR_DESC_IDX = _CDC_RNDIS_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{

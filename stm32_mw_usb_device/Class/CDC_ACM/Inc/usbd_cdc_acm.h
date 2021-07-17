@@ -42,6 +42,9 @@ extern "C" {
 /** @defgroup usbd_cdc_Exported_Defines
   * @{
   */
+
+#define CDC_ACM_STR_DESC                            "STM32 CDC ACM%d"
+
 #define NUMBER_OF_CDC 								_USBD_CDC_ACM_COUNT
 #ifndef CDC_HS_BINTERVAL
 #define CDC_HS_BINTERVAL                            0x10U
@@ -140,6 +143,8 @@ extern "C" {
   extern uint8_t CDC_CMD_ITF_NBR[NUMBER_OF_CDC]; /* Command Interface Number */
   extern uint8_t CDC_COM_ITF_NBR[NUMBER_OF_CDC]; /* Communication Interface Number */
 
+  extern uint8_t CDC_STR_DESC_IDX[NUMBER_OF_CDC];
+
   /**
   * @}
   */
@@ -162,7 +167,8 @@ extern "C" {
                                 uint8_t com_itf,
                                 uint8_t in_ep,
                                 uint8_t cmd_ep,
-                                uint8_t out_ep);
+                                uint8_t out_ep,
+                                uint8_t str_idx);
   /**
   * @}
   */

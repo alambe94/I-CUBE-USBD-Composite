@@ -57,7 +57,10 @@ EndBSPDependencies */
 #include "usbd_ctlreq.h"
 
 #define _DFU_ITF_NBR 0x00
+#define _DFU_STR_DESC_IDX 0x01
+
 uint8_t DFU_ITF_NBR = _DFU_ITF_NBR;
+uint8_t DFU_STR_DESC_IDX = _DFU_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{

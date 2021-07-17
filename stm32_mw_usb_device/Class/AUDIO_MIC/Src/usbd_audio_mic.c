@@ -195,7 +195,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_DEVICE_CLASS,          /* bInterfaceClass */
         AUDIO_MIC_SUBCLASS_AUDIOCONTROL, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,    /* bInterfaceProtocol */
-        AUDIO_MIC_AC_STR_DESC_IDX,       /* iInterface */
+		_AUDIO_MIC_AC_STR_DESC_IDX,      /* iInterface */
         /* 18 byte*/
 
         /* USB Microphone Class-specific AC Interface Descriptor */
@@ -296,7 +296,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_DEVICE_CLASS,            /* bInterfaceClass */
         AUDIO_MIC_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
-        0x00,
+        0x00,							   /* iInterface */
         //65 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Operational */
@@ -309,7 +309,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[AUDIO_MIC_CONFIG_DESC_SIZE] __AL
         AUDIO_MIC_DEVICE_CLASS,            /* bInterfaceClass */
         AUDIO_MIC_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_MIC_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
-        AUDIO_MIC_AS_STR_DESC_IDX,         /* iInterface */
+		_AUDIO_MIC_AS_STR_DESC_IDX,        /* iInterface */
         //74 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Audio Streaming Interface Descriptor */

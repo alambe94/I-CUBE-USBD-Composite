@@ -41,6 +41,8 @@ extern "C" {
 /** @defgroup usbd_PRNT_Exported_Defines
   * @{
   */
+#define PRNT_STR_DESC           					 "STM32 USB PRINTER"
+
 #ifndef PRNT_DATA_HS_MAX_PACKET_SIZE
 #define PRNT_DATA_HS_MAX_PACKET_SIZE                 512U  /* Endpoint IN & OUT Packet size */
 #endif /* PRNT_DATA_HS_MAX_PACKET_SIZE */
@@ -124,6 +126,7 @@ extern USBD_ClassTypeDef USBD_PRNT;
 extern uint8_t PRNT_IN_EP;
 extern uint8_t PRNT_OUT_EP;
 extern uint8_t PRNT_ITF_NBR;
+extern uint8_t PRINTER_STR_DESC_IDX;
 
 /**
   * @}

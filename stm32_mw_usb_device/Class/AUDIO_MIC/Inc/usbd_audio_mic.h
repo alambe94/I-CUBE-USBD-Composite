@@ -48,9 +48,6 @@
 
 #include "usbd_ioreq.h"
 
-#define AUDIO_MIC_AC_STR_DESC                             "MICROPHONE CONTROL"
-#define AUDIO_MIC_AS_STR_DESC                             "MICROPHONE STREAM"
-
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
 * @{
 */
@@ -62,6 +59,9 @@
 /** @defgroup USBD_AUDIO_IN_Exported_Defines
 * @{
 */
+
+#define AUDIO_MIC_AC_STR_DESC                             "STM32 MICROPHONE CONTROL"
+#define AUDIO_MIC_AS_STR_DESC                             "STM32 MICROPHONE STREAM"
 
 /* Audio Data in endpoint */
 #define AUDIO_MIC_CHANNELS                                0x01

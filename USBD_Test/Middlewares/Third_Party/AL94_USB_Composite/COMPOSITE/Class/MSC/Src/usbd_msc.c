@@ -44,10 +44,12 @@ EndBSPDependencies */
 #define _MSC_IN_EP 0x81U
 #define _MSC_OUT_EP 0x01U
 #define _MSC_ITF_NBR 0x00
+#define _MSC_BOT_STR_DESC_IDX 0x01U
 
 uint8_t MSC_IN_EP = _MSC_IN_EP;
 uint8_t MSC_OUT_EP = _MSC_OUT_EP;
 uint8_t MSC_ITF_NBR = _MSC_ITF_NBR;
+uint8_t MSC_BOT_STR_DESC_IDX = _MSC_BOT_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{

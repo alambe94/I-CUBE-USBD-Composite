@@ -66,12 +66,16 @@ EndBSPDependencies */
 #define _CDC_CMD_ITF_NBR 0x00U /* Command Interface Number */
 #define _CDC_COM_ITF_NBR 0x01U /* Communication Interface Number */
 
+#define _CDC_STR_DESC_IDX 0x01U
+
 uint8_t CDC_IN_EP[NUMBER_OF_CDC];
 uint8_t CDC_OUT_EP[NUMBER_OF_CDC];
 uint8_t CDC_CMD_EP[NUMBER_OF_CDC];
 
 uint8_t CDC_CMD_ITF_NBR[NUMBER_OF_CDC];
 uint8_t CDC_COM_ITF_NBR[NUMBER_OF_CDC];
+
+uint8_t CDC_STR_DESC_IDX[NUMBER_OF_CDC];
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -2156,7 +2160,8 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
                               uint8_t com_itf,
                               uint8_t in_ep,
                               uint8_t cmd_ep,
-                              uint8_t out_ep)
+                              uint8_t out_ep,
+                              uint8_t str_idx)
 {
   desc += 9;
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
@@ -2177,10 +2182,12 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
     CDC_CMD_EP[i] = cmd_ep;
     CDC_CMD_ITF_NBR[i] = cmd_itf;
     CDC_COM_ITF_NBR[i] = com_itf;
+    CDC_STR_DESC_IDX[i] = str_idx;
 
     in_ep += 2;
     cmd_ep = in_ep + 1;
     out_ep++;
+    str_idx++;
 
     cmd_itf += 2;
     com_itf = cmd_itf + 1;

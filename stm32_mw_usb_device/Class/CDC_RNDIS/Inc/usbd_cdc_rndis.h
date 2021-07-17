@@ -42,6 +42,8 @@ extern "C"
   * @{
   */
 
+#define CDC_RNDIS_STR_DESC                                "STM32 CDC RNDIS"
+
 #ifndef CDC_RNDIS_HS_BINTERVAL
 #define CDC_RNDIS_HS_BINTERVAL                            0x10U
 #endif /* CDC_RNDIS_HS_BINTERVAL */
@@ -477,6 +479,7 @@ extern "C"
 
   extern uint8_t CDC_RNDIS_CMD_ITF_NBR;
   extern uint8_t CDC_RNDIS_COM_ITF_NBR;
+  extern uint8_t CDC_RNDIS_STR_DESC_IDX;
 
   /**
   * @}

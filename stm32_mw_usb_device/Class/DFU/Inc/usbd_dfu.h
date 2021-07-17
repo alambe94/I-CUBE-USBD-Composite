@@ -41,6 +41,9 @@ extern "C" {
 /** @defgroup USBD_DFU_Exported_Defines
   * @{
   */
+
+#define DFU_STR_DESC                    "STM32 USB DFU"
+
 #ifndef USBD_DFU_MAX_ITF_NUM
 #define USBD_DFU_MAX_ITF_NUM            1U
 #endif /* USBD_DFU_MAX_ITF_NUM */
@@ -204,6 +207,7 @@ typedef struct
 extern USBD_ClassTypeDef USBD_DFU;
 
 extern uint8_t DFU_ITF_NBR;
+extern uint8_t DFU_STR_DESC_IDX;
 
 /**
   * @}

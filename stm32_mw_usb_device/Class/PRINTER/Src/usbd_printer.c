@@ -62,10 +62,12 @@ EndBSPDependencies */
 #define _PRNT_IN_EP 0x81U  /* Default: EP1 for data IN */
 #define _PRNT_OUT_EP 0x01U /* Default: EP1 for data OUT */
 #define _PRNT_ITF_NBR 0x00
+#define _PRINTER_STR_DESC_IDX 0x01
 
 uint8_t PRNT_IN_EP = _PRNT_IN_EP;
 uint8_t PRNT_OUT_EP = _PRNT_OUT_EP;
 uint8_t PRNT_ITF_NBR = _PRNT_ITF_NBR;
+uint8_t PRINTER_STR_DESC_IDX = _PRINTER_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{

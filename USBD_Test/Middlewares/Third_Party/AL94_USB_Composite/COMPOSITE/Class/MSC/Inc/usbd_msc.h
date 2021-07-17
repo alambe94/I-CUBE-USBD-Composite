@@ -43,6 +43,8 @@ extern "C" {
 /** @defgroup USBD_BOT_Exported_Defines
   * @{
   */
+#define MSC_BOT_STR_DESC             "STM32 MSC DEVICE"
+
 /* MSC Class Config */
 #ifndef MSC_MEDIA_PACKET
 #define MSC_MEDIA_PACKET             512U
@@ -104,6 +106,7 @@ extern USBD_ClassTypeDef USBD_MSC;
 extern uint8_t MSC_IN_EP;
 extern uint8_t MSC_OUT_EP;
 extern uint8_t MSC_ITF_NBR;
+extern uint8_t MSC_BOT_STR_DESC_IDX;
 
 uint8_t USBD_MSC_RegisterStorage(USBD_HandleTypeDef *pdev,
                                  USBD_StorageTypeDef *fops);

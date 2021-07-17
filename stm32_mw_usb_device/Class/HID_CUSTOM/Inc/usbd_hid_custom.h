@@ -41,6 +41,9 @@ extern "C" {
 /** @defgroup USBD_CUSTOM_HID_Exported_Defines
   * @{
   */
+
+#define CUSTOM_HID_STR_DESC                          "STM32 HID CUSTOM"
+
 #define CUSTOM_HID_EPIN_SIZE                         0x02U
 #define CUSTOM_HID_EPOUT_SIZE                        0x02U
 
@@ -126,6 +129,7 @@ extern USBD_ClassTypeDef USBD_HID_CUSTOM;
 extern uint8_t CUSTOM_HID_IN_EP;
 extern uint8_t CUSTOM_HID_OUT_EP;
 extern uint8_t CUSTOM_HID_ITF_NBR;
+extern uint8_t CUSTOM_HID_STR_DESC_IDX;
 
 /**
   * @}

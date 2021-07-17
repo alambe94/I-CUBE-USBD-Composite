@@ -56,10 +56,14 @@
 #define _UVC_IN_EP 0x81U
 #define _UVC_VC_IF_NUM 0x00U
 #define _UVC_VS_IF_NUM 0x01U
+#define _UVC_VC_STR_DESC_IDX 0x01U
+#define _UVC_VS_STR_DESC_IDX 0x02U
 
 uint8_t UVC_IN_EP = _UVC_IN_EP;
 uint8_t UVC_VC_IF_NUM = _UVC_VC_IF_NUM;
 uint8_t UVC_VS_IF_NUM = _UVC_VS_IF_NUM;
+uint8_t UVC_VC_STR_DESC_IDX = _UVC_VC_STR_DESC_IDX;
+uint8_t UVC_VS_STR_DESC_IDX = _UVC_VS_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
