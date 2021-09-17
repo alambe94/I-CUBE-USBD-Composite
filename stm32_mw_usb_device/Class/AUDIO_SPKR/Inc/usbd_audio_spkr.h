@@ -42,8 +42,8 @@ extern "C" {
   * @{
   */
 
-#define AUDIO_SPKR_AC_STR_DESC                        "STM32 SPEAKER CONTROL"
-#define AUDIO_SPKR_AS_STR_DESC                        "STM32 SPEAKER STREAM"
+#define AUDIO_SPKR_AC_STR_DESC                        "STM32 SPEAKER"
+#define AUDIO_SPKR_AS_STR_DESC                        "STM32 SPEAKER"
 
 #ifndef USBD_AUDIO_FREQ
 /* AUDIO Class Config */

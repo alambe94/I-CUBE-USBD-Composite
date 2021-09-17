@@ -60,8 +60,8 @@
 * @{
 */
 
-#define AUDIO_MIC_AC_STR_DESC                             "STM32 MICROPHONE CONTROL"
-#define AUDIO_MIC_AS_STR_DESC                             "STM32 MICROPHONE STREAM"
+#define AUDIO_MIC_AC_STR_DESC                             "STM32 MICROPHONE"
+#define AUDIO_MIC_AS_STR_DESC                             "STM32 MICROPHONE"
 
 /* Audio Data in endpoint */
 #define AUDIO_MIC_CHANNELS                                0x01

@@ -935,7 +935,7 @@ void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
   AUDIO_MIC_AS_ITF_NBR = as_itf;
 
   AUDIO_MIC_AC_STR_DESC_IDX = ac_str_idx;
-  AUDIO_MIC_AC_STR_DESC_IDX = as_str_idx;
+  AUDIO_MIC_AS_STR_DESC_IDX = as_str_idx;
 
   haudioInstance.paketDimension = (AUDIO_MIC_SMPL_FREQ / 1000 * AUDIO_MIC_CHANNELS * 2);
   haudioInstance.frequency = AUDIO_MIC_SMPL_FREQ;

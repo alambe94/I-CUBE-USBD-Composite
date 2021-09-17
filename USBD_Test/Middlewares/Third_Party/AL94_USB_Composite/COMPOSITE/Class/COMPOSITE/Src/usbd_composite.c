@@ -164,7 +164,7 @@ typedef struct __attribute__((packed)) USBD_COMPOSITE_CFG_DESC_t
 } USBD_COMPOSITE_CFG_DESC_t;
 
 USBD_COMPOSITE_CFG_DESC_t USBD_COMPOSITE_FSCfgDesc, USBD_COMPOSITE_HSCfgDesc;
-uint8_t USBD_Track_String_Index = USBD_IDX_INTERFACE_STR;
+uint8_t USBD_Track_String_Index = (USBD_IDX_INTERFACE_STR + 1);
 
 #if defined(__ICCARM__) /*!< IAR Compiler */
 #pragma data_alignment = 4
