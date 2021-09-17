@@ -144,28 +144,28 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         USBD_MAX_POWER, /* MaxPower (mA) */
 
         /********************  Mass Storage interface ********************/
-        0x09,         /* bLength: Interface Descriptor size */
-        0x04,         /* bDescriptorType: */
-        _MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
-        0x00,         /* bAlternateSetting: Alternate setting */
-        0x02,         /* bNumEndpoints */
-        0x08,         /* bInterfaceClass: MSC Class */
-        0x06,         /* bInterfaceSubClass : SCSI transparent */
-        0x50,         /* nInterfaceProtocol */
-		_MSC_BOT_STR_DESC_IDX,/* iInterface */
+        0x09,                  /* bLength: Interface Descriptor size */
+        0x04,                  /* bDescriptorType: */
+        _MSC_ITF_NBR,          /* bInterfaceNumber: Number of Interface */
+        0x00,                  /* bAlternateSetting: Alternate setting */
+        0x02,                  /* bNumEndpoints */
+        0x08,                  /* bInterfaceClass: MSC Class */
+        0x06,                  /* bInterfaceSubClass : SCSI transparent */
+        0x50,                  /* nInterfaceProtocol */
+        _MSC_BOT_STR_DESC_IDX, /* iInterface */
         /********************  Mass Storage Endpoints ********************/
-        0x07,           /* Endpoint descriptor length = 7 */
-        0x05,           /* Endpoint descriptor type */
+        0x07,       /* Endpoint descriptor length = 7 */
+        0x05,       /* Endpoint descriptor type */
         _MSC_IN_EP, /* Endpoint address (IN, address 1) */
-        0x02,           /* Bulk endpoint type */
+        0x02,       /* Bulk endpoint type */
         LOBYTE(MSC_MAX_HS_PACKET),
         HIBYTE(MSC_MAX_HS_PACKET),
         0x00, /* Polling interval in milliseconds */
 
-        0x07,            /* Endpoint descriptor length = 7 */
-        0x05,            /* Endpoint descriptor type */
+        0x07,        /* Endpoint descriptor length = 7 */
+        0x05,        /* Endpoint descriptor type */
         _MSC_OUT_EP, /* Endpoint address (OUT, address 1) */
-        0x02,            /* Bulk endpoint type */
+        0x02,        /* Bulk endpoint type */
         LOBYTE(MSC_MAX_HS_PACKET),
         HIBYTE(MSC_MAX_HS_PACKET),
         0x00 /* Polling interval in milliseconds */
@@ -191,28 +191,28 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgFSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         USBD_MAX_POWER, /* MaxPower (mA) */
 
         /********************  Mass Storage interface ********************/
-        0x09,         /* bLength: Interface Descriptor size */
-        0x04,         /* bDescriptorType: */
-        _MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
-        0x00,         /* bAlternateSetting: Alternate setting */
-        0x02,         /* bNumEndpoints*/
-        0x08,         /* bInterfaceClass: MSC Class */
-        0x06,         /* bInterfaceSubClass : SCSI transparent*/
-        0x50,         /* nInterfaceProtocol */
-		_MSC_BOT_STR_DESC_IDX,/* iInterface: */
+        0x09,                  /* bLength: Interface Descriptor size */
+        0x04,                  /* bDescriptorType: */
+        _MSC_ITF_NBR,          /* bInterfaceNumber: Number of Interface */
+        0x00,                  /* bAlternateSetting: Alternate setting */
+        0x02,                  /* bNumEndpoints*/
+        0x08,                  /* bInterfaceClass: MSC Class */
+        0x06,                  /* bInterfaceSubClass : SCSI transparent*/
+        0x50,                  /* nInterfaceProtocol */
+        _MSC_BOT_STR_DESC_IDX, /* iInterface: */
         /********************  Mass Storage Endpoints ********************/
-        0x07,           /* Endpoint descriptor length = 7 */
-        0x05,           /* Endpoint descriptor type */
+        0x07,       /* Endpoint descriptor length = 7 */
+        0x05,       /* Endpoint descriptor type */
         _MSC_IN_EP, /* Endpoint address (IN, address 1) */
-        0x02,           /* Bulk endpoint type */
+        0x02,       /* Bulk endpoint type */
         LOBYTE(MSC_MAX_FS_PACKET),
         HIBYTE(MSC_MAX_FS_PACKET),
         0x00, /* Polling interval in milliseconds */
 
-        0x07,            /* Endpoint descriptor length = 7 */
-        0x05,            /* Endpoint descriptor type */
+        0x07,        /* Endpoint descriptor length = 7 */
+        0x05,        /* Endpoint descriptor type */
         _MSC_OUT_EP, /* Endpoint address (OUT, address 1) */
-        0x02,            /* Bulk endpoint type */
+        0x02,        /* Bulk endpoint type */
         LOBYTE(MSC_MAX_FS_PACKET),
         HIBYTE(MSC_MAX_FS_PACKET),
         0x00 /* Polling interval in milliseconds */
@@ -236,28 +236,28 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_OtherSpeedCfgDesc[USB_MSC_CONFIG_DESC_SIZ]
         USBD_MAX_POWER, /* MaxPower (mA) */
 
         /********************  Mass Storage interface ********************/
-        0x09,         /* bLength: Interface Descriptor size */
-        0x04,         /* bDescriptorType: */
-        _MSC_ITF_NBR, /* bInterfaceNumber: Number of Interface */
-        0x00,         /* bAlternateSetting: Alternate setting */
-        0x02,         /* bNumEndpoints */
-        0x08,         /* bInterfaceClass: MSC Class */
-        0x06,         /* bInterfaceSubClass : SCSI transparent command set */
-        0x50,         /* nInterfaceProtocol */
-		_MSC_BOT_STR_DESC_IDX,/* iInterface */
+        0x09,                  /* bLength: Interface Descriptor size */
+        0x04,                  /* bDescriptorType: */
+        _MSC_ITF_NBR,          /* bInterfaceNumber: Number of Interface */
+        0x00,                  /* bAlternateSetting: Alternate setting */
+        0x02,                  /* bNumEndpoints */
+        0x08,                  /* bInterfaceClass: MSC Class */
+        0x06,                  /* bInterfaceSubClass : SCSI transparent command set */
+        0x50,                  /* nInterfaceProtocol */
+        _MSC_BOT_STR_DESC_IDX, /* iInterface */
         /********************  Mass Storage Endpoints ********************/
-        0x07,           /* Endpoint descriptor length = 7 */
-        0x05,           /* Endpoint descriptor type */
+        0x07,       /* Endpoint descriptor length = 7 */
+        0x05,       /* Endpoint descriptor type */
         _MSC_IN_EP, /* Endpoint address (IN, address 1) */
-        0x02,           /* Bulk endpoint type */
+        0x02,       /* Bulk endpoint type */
         0x40,
         0x00,
         0x00, /* Polling interval in milliseconds */
 
-        0x07,            /* Endpoint descriptor length = 7 */
-        0x05,            /* Endpoint descriptor type */
+        0x07,        /* Endpoint descriptor length = 7 */
+        0x05,        /* Endpoint descriptor type */
         _MSC_OUT_EP, /* Endpoint address (OUT, address 1) */
-        0x02,            /* Bulk endpoint type */
+        0x02,        /* Bulk endpoint type */
         0x40,
         0x00,
         0x00 /* Polling interval in milliseconds */

@@ -151,15 +151,15 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         /************** Descriptor of CUSTOM HID interface ****************/
         /* 09 */
-        0x09,                    /* bLength: Interface Descriptor size*/
-        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
+        0x09,                     /* bLength: Interface Descriptor size*/
+        USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: Interface descriptor type */
         _CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
-        0x00,                    /* bAlternateSetting: Alternate setting */
-        0x02,                    /* bNumEndpoints*/
-        0x03,                    /* bInterfaceClass: CUSTOM_HID */
-        0x00,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
-        0x00,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-		_CUSTOM_HID_STR_DESC_IDX,/* iInterface: Index of string descriptor */
+        0x00,                     /* bAlternateSetting: Alternate setting */
+        0x02,                     /* bNumEndpoints*/
+        0x03,                     /* bInterfaceClass: CUSTOM_HID */
+        0x00,                     /* bInterfaceSubClass : 1=BOOT, 0=no boot */
+        0x00,                     /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
+        _CUSTOM_HID_STR_DESC_IDX, /* iInterface: Index of string descriptor */
         /******************** Descriptor of CUSTOM_HID *************************/
         /* 18 */
         0x09,                       /* bLength: CUSTOM_HID Descriptor size */
@@ -175,7 +175,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_IN_EP,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_IN_EP,      /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Byte max */
         0x00,
@@ -184,7 +184,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_OUT_EP,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_OUT_EP,     /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max  */
         0x00,
@@ -211,15 +211,15 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         /************** Descriptor of CUSTOM HID interface ****************/
         /* 09 */
-        0x09,                    /* bLength: Interface Descriptor size */
-        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
+        0x09,                     /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: Interface descriptor type */
         _CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
-        0x00,                    /* bAlternateSetting: Alternate setting */
-        0x02,                    /* bNumEndpoints */
-        0x03,                    /* bInterfaceClass: CUSTOM_HID */
-        0x00,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
-        0x00,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-		_CUSTOM_HID_STR_DESC_IDX,/* iInterface: Index of string descriptor */
+        0x00,                     /* bAlternateSetting: Alternate setting */
+        0x02,                     /* bNumEndpoints */
+        0x03,                     /* bInterfaceClass: CUSTOM_HID */
+        0x00,                     /* bInterfaceSubClass : 1=BOOT, 0=no boot */
+        0x00,                     /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
+        _CUSTOM_HID_STR_DESC_IDX, /* iInterface: Index of string descriptor */
         /******************** Descriptor of CUSTOM_HID *************************/
         /* 18 */
         0x09,                       /* bLength: CUSTOM_HID Descriptor size */
@@ -235,7 +235,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_IN_EP,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_IN_EP,      /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Byte max */
         0x00,
@@ -244,7 +244,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_OUT_EP,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_OUT_EP,     /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max  */
         0x00,
@@ -271,15 +271,15 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
 
         /************** Descriptor of CUSTOM HID interface ****************/
         /* 09 */
-        0x09,                    /* bLength: Interface Descriptor size */
-        USB_DESC_TYPE_INTERFACE, /* bDescriptorType: Interface descriptor type */
+        0x09,                     /* bLength: Interface Descriptor size */
+        USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: Interface descriptor type */
         _CUSTOM_HID_ITF_NBR,      /* bInterfaceNumber: Number of Interface */
-        0x00,                    /* bAlternateSetting: Alternate setting */
-        0x02,                    /* bNumEndpoints */
-        0x03,                    /* bInterfaceClass: CUSTOM_HID */
-        0x00,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
-        0x00,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-		_CUSTOM_HID_STR_DESC_IDX,/* iInterface: Index of string descriptor */
+        0x00,                     /* bAlternateSetting: Alternate setting */
+        0x02,                     /* bNumEndpoints */
+        0x03,                     /* bInterfaceClass: CUSTOM_HID */
+        0x00,                     /* bInterfaceSubClass : 1=BOOT, 0=no boot */
+        0x00,                     /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
+        _CUSTOM_HID_STR_DESC_IDX, /* iInterface: Index of string descriptor */
         /******************** Descriptor of CUSTOM_HID *************************/
         /* 18 */
         0x09,                       /* bLength: CUSTOM_HID Descriptor size */
@@ -295,7 +295,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
         /* 27 */
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_IN_EP,   /* bEndpointAddress: Endpoint Address (IN) */
+        _CUSTOM_HID_IN_EP,      /* bEndpointAddress: Endpoint Address (IN) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPIN_SIZE,   /* wMaxPacketSize: 2 Bytes max */
         0x00,
@@ -304,7 +304,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
 
         0x07,                   /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT, /* bDescriptorType: */
-        _CUSTOM_HID_OUT_EP,  /* bEndpointAddress: Endpoint Address (OUT) */
+        _CUSTOM_HID_OUT_EP,     /* bEndpointAddress: Endpoint Address (OUT) */
         0x03,                   /* bmAttributes: Interrupt endpoint */
         CUSTOM_HID_EPOUT_SIZE,  /* wMaxPacketSize: 2 Bytes max */
         0x00,

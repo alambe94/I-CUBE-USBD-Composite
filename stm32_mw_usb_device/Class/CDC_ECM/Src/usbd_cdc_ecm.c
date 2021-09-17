@@ -175,14 +175,14 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgHSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         /*---------------------------------------------------------------------------*/
 
         /* IAD descriptor */
-        0x08,                 /* bLength */
-        0x0B,                 /* bDescriptorType */
-        _CDC_ECM_CMD_ITF_NBR, /* bFirstInterface */
-        0x02,                 /* bInterfaceCount */
-        0x02,                 /* bFunctionClass (Wireless Controller) */
-        0x06,                 /* bFunctionSubClass */
-        0x00,                 /* bFunctionProtocol */
-		_CDC_ECM_STR_DESC_IDX,/* iFunction */
+        0x08,                  /* bLength */
+        0x0B,                  /* bDescriptorType */
+        _CDC_ECM_CMD_ITF_NBR,  /* bFirstInterface */
+        0x02,                  /* bInterfaceCount */
+        0x02,                  /* bFunctionClass (Wireless Controller) */
+        0x06,                  /* bFunctionSubClass */
+        0x00,                  /* bFunctionProtocol */
+        _CDC_ECM_STR_DESC_IDX, /* iFunction */
 
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
@@ -253,7 +253,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgHSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE),
-  		0xFF,                                     /* bInterval: ignore for Bulk transfer */
+        0xFF, /* bInterval: ignore for Bulk transfer */
 
         /* Endpoint IN Descriptor */
         0x07,                                    /* bLength: Endpoint Descriptor size */
@@ -262,7 +262,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgHSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_HS_MAX_PACKET_SIZE),
-  		0xFF                                      /* bInterval: ignore for Bulk transfer */
+        0xFF /* bInterval: ignore for Bulk transfer */
 };
 
 /* USB CDC_ECM device Configuration Descriptor */
@@ -285,14 +285,14 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgFSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
 
         /*---------------------------------------------------------------------------*/
         /* IAD descriptor */
-        0x08,                 /* bLength */
-        0x0B,                 /* bDescriptorType */
-        _CDC_ECM_CMD_ITF_NBR, /* bFirstInterface */
-        0x02,                 /* bInterfaceCount */
-        0x02,                 /* bFunctionClass (Wireless Controller) */
-        0x06,                 /* bFunctionSubClass */
-        0x00,                 /* bFunctionProtocol */
-		_CDC_ECM_STR_DESC_IDX,/* iFunction */
+        0x08,                  /* bLength */
+        0x0B,                  /* bDescriptorType */
+        _CDC_ECM_CMD_ITF_NBR,  /* bFirstInterface */
+        0x02,                  /* bInterfaceCount */
+        0x02,                  /* bFunctionClass (Wireless Controller) */
+        0x06,                  /* bFunctionSubClass */
+        0x00,                  /* bFunctionProtocol */
+        _CDC_ECM_STR_DESC_IDX, /* iFunction */
 
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
@@ -363,7 +363,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgFSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE),
-  		0xFF,                                     /* bInterval: ignore for Bulk transfer */
+        0xFF, /* bInterval: ignore for Bulk transfer */
 
         /* Endpoint IN Descriptor */
         0x07,                                    /* bLength: Endpoint Descriptor size */
@@ -372,7 +372,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgFSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                                    /* bmAttributes: Bulk */
         LOBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(CDC_ECM_DATA_FS_MAX_PACKET_SIZE),
-  		0xFF                                      /* bInterval: ignore for Bulk transfer */
+        0xFF /* bInterval: ignore for Bulk transfer */
 };
 
 __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_SIZE] __ALIGN_END =
@@ -394,14 +394,14 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_
 
         /*--------------------------------------- ------------------------------------*/
         /* IAD descriptor */
-        0x08,                 /* bLength */
-        0x0B,                 /* bDescriptorType */
-        _CDC_ECM_CMD_ITF_NBR, /* bFirstInterface */
-        0x02,                 /* bInterfaceCount */
-        0x02,                 /* bFunctionClass (Wireless Controller) */
-        0x06,                 /* bFunctionSubClass */
-        0x00,                 /* bFunctionProtocol */
-		_CDC_ECM_STR_DESC_IDX,/* iFunction */
+        0x08,                  /* bLength */
+        0x0B,                  /* bDescriptorType */
+        _CDC_ECM_CMD_ITF_NBR,  /* bFirstInterface */
+        0x02,                  /* bInterfaceCount */
+        0x02,                  /* bFunctionClass (Wireless Controller) */
+        0x06,                  /* bFunctionSubClass */
+        0x00,                  /* bFunctionProtocol */
+        _CDC_ECM_STR_DESC_IDX, /* iFunction */
 
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
@@ -472,7 +472,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_
         0x02,                   /* bmAttributes: Bulk */
         0x40,                   /* wMaxPacketSize */
         0x00,
-  		0xFF,                                     /* bInterval: ignore for Bulk transfer */
+        0xFF, /* bInterval: ignore for Bulk transfer */
 
         /* Endpoint IN Descriptor */
         0x07,                   /* bLength: Endpoint Descriptor size */
@@ -481,7 +481,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_
         0x02,                   /* bmAttributes: Bulk */
         0x40,                   /* wMaxPacketSize */
         0x00,
-  		0xFF                                      /* bInterval: ignore for Bulk transfer */
+        0xFF /* bInterval: ignore for Bulk transfer */
 };
 
 /**
@@ -1125,7 +1125,7 @@ void USBD_Update_CDC_ECM_DESC(uint8_t *desc,
                               uint8_t in_ep,
                               uint8_t cmd_ep,
                               uint8_t out_ep,
-							  uint8_t str_idx)
+                              uint8_t str_idx)
 {
   desc[11] = cmd_itf;
   desc[16] = str_idx;

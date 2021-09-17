@@ -186,12 +186,12 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         0x07,                    /* bInterfaceClass: Communication Interface Class */
         0x01,                    /* bInterfaceSubClass: Abstract Control Model */
         USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
-		_PRINTER_STR_DESC_IDX,   /* iInterface */
+        _PRINTER_STR_DESC_IDX,   /* iInterface */
 
         /* Endpoint IN Descriptor */
         0x07,                                /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-        _PRNT_IN_EP,                          /* bEndpointAddress */
+        _PRNT_IN_EP,                         /* bEndpointAddress */
         0x02,                                /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_HS_IN_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_HS_IN_PACKET_SIZE),
@@ -200,7 +200,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /* Endpoint OUT Descriptor */
         0x07,                                 /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
-        _PRNT_OUT_EP,                          /* bEndpointAddress */
+        _PRNT_OUT_EP,                         /* bEndpointAddress */
         0x02,                                 /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_HS_OUT_PACKET_SIZE),
@@ -234,12 +234,12 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         0x07,                    /* bInterfaceClass: Communication Interface Class */
         0x01,                    /* bInterfaceSubClass: Abstract Control Model */
         USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
-		_PRINTER_STR_DESC_IDX,   /* iInterface */
+        _PRINTER_STR_DESC_IDX,   /* iInterface */
 
         /*Endpoint IN Descriptor*/
         0x07,                                /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-        _PRNT_IN_EP,                          /* bEndpointAddress */
+        _PRNT_IN_EP,                         /* bEndpointAddress */
         0x02,                                /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
@@ -248,7 +248,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         /*Endpoint OUT Descriptor*/
         0x07,                                 /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
-        _PRNT_OUT_EP,                          /* bEndpointAddress */
+        _PRNT_OUT_EP,                         /* bEndpointAddress */
         0x02,                                 /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),
@@ -281,12 +281,12 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[USB_PRNT_CONFIG_DESC_SI
         0x07,                    /* bInterfaceClass: Communication Interface Class */
         0x01,                    /* bInterfaceSubClass: Abstract Control Model */
         USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
-		_PRINTER_STR_DESC_IDX,   /* iInterface */
+        _PRINTER_STR_DESC_IDX,   /* iInterface */
 
         /*Endpoint IN Descriptor*/
         0x07,                                /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,              /* bDescriptorType: Endpoint */
-        _PRNT_IN_EP,                          /* bEndpointAddress */
+        _PRNT_IN_EP,                         /* bEndpointAddress */
         0x02,                                /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_IN_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_IN_PACKET_SIZE),
@@ -295,7 +295,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[USB_PRNT_CONFIG_DESC_SI
         /*Endpoint OUT Descriptor*/
         0x07,                                 /* bLength: Endpoint Descriptor size */
         USB_DESC_TYPE_ENDPOINT,               /* bDescriptorType: Endpoint */
-        _PRNT_OUT_EP,                          /* bEndpointAddress */
+        _PRNT_OUT_EP,                         /* bEndpointAddress */
         0x02,                                 /* bmAttributes: Bulk */
         LOBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE), /* wMaxPacketSize */
         HIBYTE(PRNT_DATA_FS_OUT_PACKET_SIZE),

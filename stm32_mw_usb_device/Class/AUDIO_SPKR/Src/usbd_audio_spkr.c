@@ -188,7 +188,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         USB_DEVICE_CLASS_AUDIO,      /* bInterfaceClass */
         AUDIO_SUBCLASS_AUDIOCONTROL, /* bInterfaceSubClass */
         AUDIO_PROTOCOL_UNDEFINED,    /* bInterfaceProtocol */
-		_AUDIO_SPKR_AC_STR_DESC_IDX, /* iInterface */
+        _AUDIO_SPKR_AC_STR_DESC_IDX, /* iInterface */
         /* 09 byte*/
 
         /* USB Speaker Class-specific AC Interface Descriptor */
@@ -265,7 +265,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         USB_DEVICE_CLASS_AUDIO,        /* bInterfaceClass */
         AUDIO_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
-		_AUDIO_SPKR_AS_STR_DESC_IDX,   /* iInterface */
+        _AUDIO_SPKR_AS_STR_DESC_IDX,   /* iInterface */
         /* 09 byte*/
 
         /* USB Speaker Audio Streaming Interface Descriptor */

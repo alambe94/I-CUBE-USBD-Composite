@@ -211,14 +211,14 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
 
         /*---------------------------------------------------------------------------*/
         /* IAD descriptor */
-        0x08,                   /* bLength */
-        0x0B,                   /* bDescriptorType */
-        _CDC_RNDIS_CMD_ITF_NBR, /* bFirstInterface */
-        0x02,                   /* bInterfaceCount */
-        0xE0,                   /* bFunctionClass (Wireless Controller) */
-        0x01,                   /* bFunctionSubClass */
-        0x03,                   /* bFunctionProtocol */
-		_CDC_RNDIS_STR_DESC_IDX,/* iFunction */
+        0x08,                    /* bLength */
+        0x0B,                    /* bDescriptorType */
+        _CDC_RNDIS_CMD_ITF_NBR,  /* bFirstInterface */
+        0x02,                    /* bInterfaceCount */
+        0xE0,                    /* bFunctionClass (Wireless Controller) */
+        0x01,                    /* bFunctionSubClass */
+        0x03,                    /* bFunctionProtocol */
+        _CDC_RNDIS_STR_DESC_IDX, /* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
@@ -319,14 +319,14 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
 
         /*---------------------------------------------------------------------------*/
         /* IAD descriptor */
-        0x08,                   /* bLength */
-        0x0B,                   /* bDescriptorType */
-        _CDC_RNDIS_CMD_ITF_NBR, /* bFirstInterface */
-        0x02,                   /* bInterfaceCount */
-        0xE0,                   /* bFunctionClass (Wireless Controller) */
-        0x01,                   /* bFunctionSubClass */
-        0x03,                   /* bFunctionProtocol */
-		_CDC_RNDIS_STR_DESC_IDX,/* iFunction */
+        0x08,                    /* bLength */
+        0x0B,                    /* bDescriptorType */
+        _CDC_RNDIS_CMD_ITF_NBR,  /* bFirstInterface */
+        0x02,                    /* bInterfaceCount */
+        0xE0,                    /* bFunctionClass (Wireless Controller) */
+        0x01,                    /* bFunctionSubClass */
+        0x03,                    /* bFunctionProtocol */
+        _CDC_RNDIS_STR_DESC_IDX, /* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
@@ -426,14 +426,14 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
 
         /*---------------------------------------------------------------------------*/
         /* IAD descriptor */
-        0x08, /* bLength */
-        0x0B, /* bDescriptorType */
-        _CDC_RNDIS_CMD_ITF_NBR, /* bFirstInterface */
-        0x02, /* bInterfaceCount */
-        0xE0, /* bFunctionClass (Wireless Controller) */
-        0x01, /* bFunctionSubClass */
-        0x03, /* bFunctionProtocol */
-		_CDC_RNDIS_STR_DESC_IDX,/* iFunction */
+        0x08,                    /* bLength */
+        0x0B,                    /* bDescriptorType */
+        _CDC_RNDIS_CMD_ITF_NBR,  /* bFirstInterface */
+        0x02,                    /* bInterfaceCount */
+        0xE0,                    /* bFunctionClass (Wireless Controller) */
+        0x01,                    /* bFunctionSubClass */
+        0x03,                    /* bFunctionProtocol */
+        _CDC_RNDIS_STR_DESC_IDX, /* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
@@ -1764,7 +1764,7 @@ void USBD_Update_CDC_RNDIS_DESC(uint8_t *desc,
                                 uint8_t in_ep,
                                 uint8_t cmd_ep,
                                 uint8_t out_ep,
-								uint8_t str_idx)
+                                uint8_t str_idx)
 {
   desc[11] = cmd_itf;
   desc[16] = str_idx;

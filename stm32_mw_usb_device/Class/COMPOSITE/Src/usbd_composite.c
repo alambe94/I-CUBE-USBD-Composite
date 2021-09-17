@@ -890,11 +890,11 @@ static uint8_t *USBD_COMPOSITE_GetUsrStringDesc(USBD_HandleTypeDef *pdev, uint8_
 #endif
     return USBD_StrDesc;
   }
-else
-{
-  /* Not supported Interface Descriptor index */
-  return NULL;
-}
+  else
+  {
+    /* Not supported Interface Descriptor index */
+    return NULL;
+  }
 }
 #endif
 
@@ -942,7 +942,7 @@ void USBD_COMPOSITE_Mount_Class(void)
                              in_ep_track,
                              in_ep_track + 1,
                              out_ep_track,
-							 USBD_Track_String_Index);
+                             USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_RNDIS_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_RNDIS.GetHSConfigDescriptor(&len);
@@ -952,7 +952,7 @@ void USBD_COMPOSITE_Mount_Class(void)
                              in_ep_track,
                              in_ep_track + 1,
                              out_ep_track,
-							 USBD_Track_String_Index);
+                             USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_RNDIS_DESC, ptr + 0x09, len - 0x09);
 
   in_ep_track += 2;
@@ -968,7 +968,7 @@ void USBD_COMPOSITE_Mount_Class(void)
                            in_ep_track,
                            in_ep_track + 1,
                            out_ep_track,
-						   USBD_Track_String_Index);
+                           USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ECM_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_ECM.GetHSConfigDescriptor(&len);
@@ -978,7 +978,7 @@ void USBD_COMPOSITE_Mount_Class(void)
                            in_ep_track,
                            in_ep_track + 1,
                            out_ep_track,
-						   USBD_Track_String_Index);
+                           USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ECM_DESC, ptr + 0x09, len - 0x09);
 
   in_ep_track += 2;
@@ -1047,11 +1047,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
   ptr = USBD_AUDIO_SPKR.GetFSConfigDescriptor(&len);
-  USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track,USBD_Track_String_Index, USBD_Track_String_Index+1);
+  USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track, USBD_Track_String_Index, USBD_Track_String_Index + 1);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_AUDIO_SPKR.GetHSConfigDescriptor(&len);
-  USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track, USBD_Track_String_Index, USBD_Track_String_Index+1);
+  USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track, USBD_Track_String_Index, USBD_Track_String_Index + 1);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
   out_ep_track += 1;
   interface_no_track += 2;

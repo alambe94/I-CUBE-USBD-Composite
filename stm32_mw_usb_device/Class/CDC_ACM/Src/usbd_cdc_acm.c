@@ -910,8 +910,8 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
 __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN_END =
     {
         /* Configuration Descriptor */
-        0x09,                        /* bLength: Configuration Descriptor size */
-        USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
+        0x09,                            /* bLength: Configuration Descriptor size */
+        USB_DESC_TYPE_CONFIGURATION,     /* bDescriptorType: Configuration */
         LOBYTE(USB_CDC_CONFIG_DESC_SIZ), /* wTotalLength:no of returned bytes */
         HIBYTE(USB_CDC_CONFIG_DESC_SIZ),
         0x02, /* bNumInterfaces: 2 interface */
@@ -1786,7 +1786,7 @@ static uint8_t USBD_CDC_Setup(USBD_HandleTypeDef *pdev,
   USBD_StatusTypeDef ret = USBD_OK;
 
   uint8_t windex_to_ch = 0;
-  
+
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
     if (LOBYTE(req->wIndex) == CDC_CMD_ITF_NBR[i] || LOBYTE(req->wIndex) == CDC_COM_ITF_NBR[i])

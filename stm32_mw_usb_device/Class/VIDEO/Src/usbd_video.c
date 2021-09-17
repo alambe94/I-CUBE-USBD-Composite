@@ -165,7 +165,7 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         UVC_CC_VIDEO,                  /* bFunctionClass: Video class */
         SC_VIDEO_INTERFACE_COLLECTION, /* bFunctionSubClass: Video Interface Collection */
         PC_PROTOCOL_UNDEFINED,         /* bInterfaceProtocol: protocol undefined */
-		_UVC_STR_DESC_IDX,             /* iFunction */
+        _UVC_STR_DESC_IDX,             /* iFunction */
 
         /* Standard VC (Video Control) Interface Descriptor  = interface 0 */
         USB_IF_DESC_SIZE,        /* bLength: interface descriptor size */
