@@ -48,7 +48,7 @@ EndBSPDependencies */
 
 #define _HID_KEYBOARD_IN_EP 0x81U
 #define _HID_KEYBOARD_ITF_NBR 0x00
-#define _HID_KEYBOARD_STR_DESC_IDX 0x01U
+#define _HID_KEYBOARD_STR_DESC_IDX 0x00U
 
 uint8_t HID_KEYBOARD_IN_EP = _HID_KEYBOARD_IN_EP;
 uint8_t HID_KEYBOARD_ITF_NBR = _HID_KEYBOARD_ITF_NBR;
@@ -154,7 +154,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_KEYBOARD_CfgFSDesc[HID_KEYBOARD_CONFIG_DES
         0x03,                    /* bInterfaceClass: HID */
         0x01,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
         0x01,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-        0,                       /* iInterface: Index of string descriptor */
+		_HID_KEYBOARD_STR_DESC_IDX,/* iInterface: Index of string descriptor */
         /******************** Descriptor of Keyboard HID ********************/
         /* 18 */
         0x09,                         /* bLength: HID Descriptor size */
@@ -205,7 +205,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_KEYBOARD_CfgHSDesc[HID_KEYBOARD_CONFIG_DES
         0x03,                    /* bInterfaceClass: HID */
         0x01,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
         0x01,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-        0,                       /* iInterface: Index of string descriptor */
+		_HID_KEYBOARD_STR_DESC_IDX,/* iInterface: Index of string descriptor */
         /******************** Descriptor of Keyboard HID ********************/
         /* 18 */
         0x09,                         /* bLength: HID Descriptor size */
@@ -687,13 +687,15 @@ uint32_t USBD_HID_Keyboard_GetPollingInterval(USBD_HandleTypeDef *pdev)
   return ((uint32_t)(polling_interval));
 }
 
-void USBD_Update_HID_KBD_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep)
+void USBD_Update_HID_KBD_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t str_idx)
 {
   desc[11] = itf_no;
+  desc[17] = str_idx;
   desc[29] = in_ep;
 
   HID_KEYBOARD_IN_EP = in_ep;
   HID_KEYBOARD_ITF_NBR = itf_no;
+  HID_KEYBOARD_STR_DESC_IDX = str_idx;
 }
 
 /**

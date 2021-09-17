@@ -44,7 +44,7 @@ EndBSPDependencies */
 #define _MSC_IN_EP 0x81U
 #define _MSC_OUT_EP 0x01U
 #define _MSC_ITF_NBR 0x00
-#define _MSC_BOT_STR_DESC_IDX 0x01U
+#define _MSC_BOT_STR_DESC_IDX 0x00U
 
 uint8_t MSC_IN_EP = _MSC_IN_EP;
 uint8_t MSC_OUT_EP = _MSC_OUT_EP;
@@ -152,7 +152,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         0x08,         /* bInterfaceClass: MSC Class */
         0x06,         /* bInterfaceSubClass : SCSI transparent */
         0x50,         /* nInterfaceProtocol */
-        0x05,         /* iInterface */
+		_MSC_BOT_STR_DESC_IDX,/* iInterface */
         /********************  Mass Storage Endpoints ********************/
         0x07,           /* Endpoint descriptor length = 7 */
         0x05,           /* Endpoint descriptor type */
@@ -199,7 +199,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_CfgFSDesc[USB_MSC_CONFIG_DESC_SIZ] __ALIGN
         0x08,         /* bInterfaceClass: MSC Class */
         0x06,         /* bInterfaceSubClass : SCSI transparent*/
         0x50,         /* nInterfaceProtocol */
-        0x05,         /* iInterface: */
+		_MSC_BOT_STR_DESC_IDX,/* iInterface: */
         /********************  Mass Storage Endpoints ********************/
         0x07,           /* Endpoint descriptor length = 7 */
         0x05,           /* Endpoint descriptor type */
@@ -244,7 +244,7 @@ __ALIGN_BEGIN static uint8_t USBD_MSC_OtherSpeedCfgDesc[USB_MSC_CONFIG_DESC_SIZ]
         0x08,         /* bInterfaceClass: MSC Class */
         0x06,         /* bInterfaceSubClass : SCSI transparent command set */
         0x50,         /* nInterfaceProtocol */
-        0x05,         /* iInterface */
+		_MSC_BOT_STR_DESC_IDX,/* iInterface */
         /********************  Mass Storage Endpoints ********************/
         0x07,           /* Endpoint descriptor length = 7 */
         0x05,           /* Endpoint descriptor type */
@@ -589,15 +589,17 @@ uint8_t USBD_MSC_RegisterStorage(USBD_HandleTypeDef *pdev, USBD_StorageTypeDef *
   return (uint8_t)USBD_OK;
 }
 
-void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep)
+void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep, uint8_t str_idx)
 {
   desc[11] = itf_no;
+  desc[17] = str_idx;
   desc[20] = in_ep;
   desc[27] = out_ep;
 
   MSC_IN_EP = in_ep;
   MSC_OUT_EP = out_ep;
   MSC_ITF_NBR = itf_no;
+  MSC_BOT_STR_DESC_IDX = str_idx;
 }
 
 /**

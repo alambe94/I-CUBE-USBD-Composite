@@ -144,7 +144,7 @@ typedef  void (*pFunction)(void);
                                       0xFE,   /* bInterfaceClass: Application Specific Class Code */ \
                                       0x01,   /* bInterfaceSubClass : Device Firmware Upgrade Code */ \
                                       0x02,   /* nInterfaceProtocol: DFU mode protocol */ \
-                                      USBD_IDX_INTERFACE_STR + (n) + 1U /* iInterface: Index of string descriptor */ \
+                                      0x00    /* iInterface: Index of string descriptor */ \
 
 #define TRANSFER_SIZE_BYTES(size)     ((uint8_t)(size)), /* XFERSIZEB0 */\
                                       ((uint8_t)((size) >> 8)) /* XFERSIZEB1 */
@@ -219,7 +219,7 @@ extern uint8_t DFU_STR_DESC_IDX;
 uint8_t USBD_DFU_RegisterMedia(USBD_HandleTypeDef *pdev,
                                USBD_DFU_MediaTypeDef *fops);
 
-void USBD_Update_DFU_DESC(uint8_t *desc, uint8_t itf_no);
+void USBD_Update_DFU_DESC(uint8_t *desc, uint8_t itf_no, uint8_t str_idx);
 /**
   * @}
   */

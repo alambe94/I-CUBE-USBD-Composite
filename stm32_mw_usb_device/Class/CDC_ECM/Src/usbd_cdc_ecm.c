@@ -40,7 +40,7 @@ EndBSPDependencies */
 #define _CDC_ECM_CMD_EP 0x82U      /* EP2 for CDC ECM commands */
 #define _CDC_ECM_CMD_ITF_NBR 0x00U /* Command Interface Number 0 */
 #define _CDC_ECM_COM_ITF_NBR 0x01U /* Communication Interface Number 0 */
-#define _CDC_ECM_STR_DESC_IDX 0x01U 
+#define _CDC_ECM_STR_DESC_IDX 0x00U
 
 uint8_t CDC_ECM_IN_EP = _CDC_ECM_IN_EP;
 uint8_t CDC_ECM_OUT_EP = _CDC_ECM_OUT_EP;
@@ -182,7 +182,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgHSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                 /* bFunctionClass (Wireless Controller) */
         0x06,                 /* bFunctionSubClass */
         0x00,                 /* bFunctionProtocol */
-        0x00,                 /* iFunction */
+		_CDC_ECM_STR_DESC_IDX,/* iFunction */
 
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
@@ -292,7 +292,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_CfgFSDesc[CDC_ECM_CONFIG_DESC_SIZE] __
         0x02,                 /* bFunctionClass (Wireless Controller) */
         0x06,                 /* bFunctionSubClass */
         0x00,                 /* bFunctionProtocol */
-        0x00,                 /* iFunction */
+		_CDC_ECM_STR_DESC_IDX,/* iFunction */
 
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
@@ -401,7 +401,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_ECM_OtherSpeedCfgDesc[CDC_ECM_CONFIG_DESC_
         0x02,                 /* bFunctionClass (Wireless Controller) */
         0x06,                 /* bFunctionSubClass */
         0x00,                 /* bFunctionProtocol */
-        0x00,                 /* iFunction */
+		_CDC_ECM_STR_DESC_IDX,/* iFunction */
 
         /* Interface Descriptor */
         0x09,                    /* bLength: Interface Descriptor size */
@@ -1124,9 +1124,11 @@ void USBD_Update_CDC_ECM_DESC(uint8_t *desc,
                               uint8_t com_itf,
                               uint8_t in_ep,
                               uint8_t cmd_ep,
-                              uint8_t out_ep)
+                              uint8_t out_ep,
+							  uint8_t str_idx)
 {
   desc[11] = cmd_itf;
+  desc[16] = str_idx;
   desc[19] = cmd_itf;
   desc[47] = com_itf;
   desc[48] = cmd_itf;
@@ -1140,6 +1142,7 @@ void USBD_Update_CDC_ECM_DESC(uint8_t *desc,
   CDC_ECM_CMD_EP = cmd_ep;
   CDC_ECM_CMD_ITF_NBR = cmd_itf;
   CDC_ECM_COM_ITF_NBR = com_itf;
+  CDC_ECM_STR_DESC_IDX = str_idx;
 }
 
 /**

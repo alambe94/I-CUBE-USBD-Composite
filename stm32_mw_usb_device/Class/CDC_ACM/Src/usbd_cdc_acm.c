@@ -66,7 +66,7 @@ EndBSPDependencies */
 #define _CDC_CMD_ITF_NBR 0x00U /* Command Interface Number */
 #define _CDC_COM_ITF_NBR 0x01U /* Communication Interface Number */
 
-#define _CDC_STR_DESC_IDX 0x01U
+#define _CDC_STR_DESC_IDX 0x00
 
 uint8_t CDC_IN_EP[NUMBER_OF_CDC];
 uint8_t CDC_OUT_EP[NUMBER_OF_CDC];
@@ -2166,7 +2166,8 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
   desc += 9;
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
-    desc[02] = cmd_itf;
+    desc[2] = cmd_itf;
+    desc[7] = str_idx;
     desc[10] = cmd_itf;
     desc[26] = com_itf;
     desc[34] = cmd_itf;

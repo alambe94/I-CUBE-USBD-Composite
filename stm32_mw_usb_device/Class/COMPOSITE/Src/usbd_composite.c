@@ -865,13 +865,9 @@ static uint8_t *USBD_COMPOSITE_GetUsrStringDesc(USBD_HandleTypeDef *pdev, uint8_
     }
 #endif
 #if (USBD_USE_UVC == 1)
-    if (index == UVC_VC_STR_DESC_IDX)
+    if (index == UVC_STR_DESC_IDX)
     {
-      USBD_GetString((uint8_t *)UVC_VC_STR_DESC, USBD_StrDesc, length);
-    }
-    else if (index == UVC_VS_STR_DESC_IDX)
-    {
-      USBD_GetString((uint8_t *)UVC_VS_STR_DESC, USBD_StrDesc, length);
+      USBD_GetString((uint8_t *)UVC_STR_DESC, USBD_StrDesc, length);
     }
 #endif
 #if (USBD_USE_MSC == 1)
@@ -945,7 +941,8 @@ void USBD_COMPOSITE_Mount_Class(void)
                              interface_no_track + 1,
                              in_ep_track,
                              in_ep_track + 1,
-                             out_ep_track);
+                             out_ep_track,
+							 USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_RNDIS_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_RNDIS.GetHSConfigDescriptor(&len);
@@ -954,7 +951,8 @@ void USBD_COMPOSITE_Mount_Class(void)
                              interface_no_track + 1,
                              in_ep_track,
                              in_ep_track + 1,
-                             out_ep_track);
+                             out_ep_track,
+							 USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_RNDIS_DESC, ptr + 0x09, len - 0x09);
 
   in_ep_track += 2;
@@ -969,7 +967,8 @@ void USBD_COMPOSITE_Mount_Class(void)
                            interface_no_track + 1,
                            in_ep_track,
                            in_ep_track + 1,
-                           out_ep_track);
+                           out_ep_track,
+						   USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_CDC_ECM_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_CDC_ECM.GetHSConfigDescriptor(&len);
@@ -978,7 +977,8 @@ void USBD_COMPOSITE_Mount_Class(void)
                            interface_no_track + 1,
                            in_ep_track,
                            in_ep_track + 1,
-                           out_ep_track);
+                           out_ep_track,
+						   USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_CDC_ECM_DESC, ptr + 0x09, len - 0x09);
 
   in_ep_track += 2;
@@ -988,11 +988,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
   ptr = USBD_HID_MOUSE.GetFSConfigDescriptor(&len);
-  USBD_Update_HID_Mouse_DESC(ptr, interface_no_track, in_ep_track);
+  USBD_Update_HID_Mouse_DESC(ptr, interface_no_track, in_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_HID_MOUSE_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_HID_MOUSE.GetHSConfigDescriptor(&len);
-  USBD_Update_HID_Mouse_DESC(ptr, interface_no_track, in_ep_track);
+  USBD_Update_HID_Mouse_DESC(ptr, interface_no_track, in_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_MOUSE_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   interface_no_track += 1;
@@ -1000,11 +1000,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_HID_KEYBOARD == 1)
   ptr = USBD_HID_KEYBOARD.GetFSConfigDescriptor(&len);
-  USBD_Update_HID_KBD_DESC(ptr, interface_no_track, in_ep_track);
+  USBD_Update_HID_KBD_DESC(ptr, interface_no_track, in_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_HID_KEYBOARD_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_HID_KEYBOARD.GetHSConfigDescriptor(&len);
-  USBD_Update_HID_KBD_DESC(ptr, interface_no_track, in_ep_track);
+  USBD_Update_HID_KBD_DESC(ptr, interface_no_track, in_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_KEYBOARD_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   interface_no_track += 1;
@@ -1012,11 +1012,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_HID_CUSTOM == 1)
   ptr = USBD_HID_CUSTOM.GetFSConfigDescriptor(&len);
-  USBD_Update_HID_Custom_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
+  USBD_Update_HID_Custom_DESC(ptr, interface_no_track, in_ep_track, out_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_HID_CUSTOM_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_HID_CUSTOM.GetHSConfigDescriptor(&len);
-  USBD_Update_HID_Custom_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
+  USBD_Update_HID_Custom_DESC(ptr, interface_no_track, in_ep_track, out_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_HID_CUSTOM_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   out_ep_track += 1;
@@ -1059,11 +1059,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_UVC == 1)
   ptr = USBD_VIDEO.GetFSConfigDescriptor(&len);
-  USBD_Update_UVC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
+  USBD_Update_UVC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UVC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_VIDEO.GetHSConfigDescriptor(&len);
-  USBD_Update_UVC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track);
+  USBD_Update_UVC_DESC(ptr, interface_no_track, interface_no_track + 1, in_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UVC_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   interface_no_track += 2;
@@ -1071,11 +1071,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_MSC == 1)
   ptr = USBD_MSC.GetFSConfigDescriptor(&len);
-  USBD_Update_MSC_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
+  USBD_Update_MSC_DESC(ptr, interface_no_track, in_ep_track, out_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_MSC_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_MSC.GetHSConfigDescriptor(&len);
-  USBD_Update_MSC_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
+  USBD_Update_MSC_DESC(ptr, interface_no_track, in_ep_track, out_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_MSC_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   out_ep_track += 1;
@@ -1084,22 +1084,22 @@ void USBD_COMPOSITE_Mount_Class(void)
 #endif
 #if (USBD_USE_DFU == 1)
   ptr = USBD_DFU.GetFSConfigDescriptor(&len);
-  USBD_Update_DFU_DESC(ptr, interface_no_track);
+  USBD_Update_DFU_DESC(ptr, interface_no_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_DFU.GetHSConfigDescriptor(&len);
-  USBD_Update_DFU_DESC(ptr, interface_no_track);
+  USBD_Update_DFU_DESC(ptr, interface_no_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_DFU_DESC, ptr + 0x09, len - 0x09);
   interface_no_track += USBD_DFU_MAX_ITF_NUM;
   USBD_Track_String_Index += USBD_DFU_MAX_ITF_NUM;
 #endif
 #if (USBD_USE_PRNTR == 1)
   ptr = USBD_PRNT.GetFSConfigDescriptor(&len);
-  USBD_Update_PRNT_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
+  USBD_Update_PRNT_DESC(ptr, interface_no_track, in_ep_track, out_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_PRNT.GetHSConfigDescriptor(&len);
-  USBD_Update_PRNT_DESC(ptr, interface_no_track, in_ep_track, out_ep_track);
+  USBD_Update_PRNT_DESC(ptr, interface_no_track, in_ep_track, out_ep_track, USBD_Track_String_Index);
   memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_PRNTR_DESC, ptr + 0x09, len - 0x09);
   in_ep_track += 1;
   out_ep_track += 1;

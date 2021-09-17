@@ -49,7 +49,7 @@ EndBSPDependencies */
 #define _CUSTOM_HID_IN_EP 0x81U
 #define _CUSTOM_HID_OUT_EP 0x01U
 #define _CUSTOM_HID_ITF_NBR 0x00U
-#define _CUSTOM_HID_STR_DESC_IDX 0x01U
+#define _CUSTOM_HID_STR_DESC_IDX 0x00U
 
 uint8_t CUSTOM_HID_IN_EP = _CUSTOM_HID_IN_EP;
 uint8_t CUSTOM_HID_OUT_EP = _CUSTOM_HID_OUT_EP;
@@ -159,7 +159,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgFSDesc[USB_CUSTOM_HID_CONFIG_DES
         0x03,                    /* bInterfaceClass: CUSTOM_HID */
         0x00,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
         0x00,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-        0x00,                    /* iInterface: Index of string descriptor */
+		_CUSTOM_HID_STR_DESC_IDX,/* iInterface: Index of string descriptor */
         /******************** Descriptor of CUSTOM_HID *************************/
         /* 18 */
         0x09,                       /* bLength: CUSTOM_HID Descriptor size */
@@ -219,7 +219,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_CfgHSDesc[USB_CUSTOM_HID_CONFIG_DES
         0x03,                    /* bInterfaceClass: CUSTOM_HID */
         0x00,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
         0x00,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-        0,                       /* iInterface: Index of string descriptor */
+		_CUSTOM_HID_STR_DESC_IDX,/* iInterface: Index of string descriptor */
         /******************** Descriptor of CUSTOM_HID *************************/
         /* 18 */
         0x09,                       /* bLength: CUSTOM_HID Descriptor size */
@@ -279,7 +279,7 @@ __ALIGN_BEGIN static uint8_t USBD_CUSTOM_HID_OtherSpeedCfgDesc[USB_CUSTOM_HID_CO
         0x03,                    /* bInterfaceClass: CUSTOM_HID */
         0x00,                    /* bInterfaceSubClass : 1=BOOT, 0=no boot */
         0x00,                    /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-        0,                       /* iInterface: Index of string descriptor */
+		_CUSTOM_HID_STR_DESC_IDX,/* iInterface: Index of string descriptor */
         /******************** Descriptor of CUSTOM_HID *************************/
         /* 18 */
         0x09,                       /* bLength: CUSTOM_HID Descriptor size */
@@ -769,15 +769,17 @@ uint8_t USBD_CUSTOM_HID_RegisterInterface(USBD_HandleTypeDef *pdev,
   return (uint8_t)USBD_OK;
 }
 
-void USBD_Update_HID_Custom_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep)
+void USBD_Update_HID_Custom_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep, uint8_t str_idx)
 {
   desc[11] = itf_no;
+  desc[17] = str_idx;
   desc[29] = in_ep;
   desc[36] = out_ep;
 
   CUSTOM_HID_IN_EP = in_ep;
   CUSTOM_HID_OUT_EP = out_ep;
   CUSTOM_HID_ITF_NBR = itf_no;
+  CUSTOM_HID_STR_DESC_IDX = str_idx;
 }
 
 /**

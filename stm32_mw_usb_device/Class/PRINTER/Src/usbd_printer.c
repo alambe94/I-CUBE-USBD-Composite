@@ -186,7 +186,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgHSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         0x07,                    /* bInterfaceClass: Communication Interface Class */
         0x01,                    /* bInterfaceSubClass: Abstract Control Model */
         USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
-        0x00,                    /* iInterface */
+		_PRINTER_STR_DESC_IDX,   /* iInterface */
 
         /* Endpoint IN Descriptor */
         0x07,                                /* bLength: Endpoint Descriptor size */
@@ -234,7 +234,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_CfgFSDesc[USB_PRNT_CONFIG_DESC_SIZE] __AL
         0x07,                    /* bInterfaceClass: Communication Interface Class */
         0x01,                    /* bInterfaceSubClass: Abstract Control Model */
         USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
-        0x00,                    /* iInterface */
+		_PRINTER_STR_DESC_IDX,   /* iInterface */
 
         /*Endpoint IN Descriptor*/
         0x07,                                /* bLength: Endpoint Descriptor size */
@@ -281,7 +281,7 @@ __ALIGN_BEGIN static uint8_t USBD_PRNT_OtherSpeedCfgDesc[USB_PRNT_CONFIG_DESC_SI
         0x07,                    /* bInterfaceClass: Communication Interface Class */
         0x01,                    /* bInterfaceSubClass: Abstract Control Model */
         USB_PRNT_BIDIRECTIONAL,  /* bDeviceProtocol */
-        0x00,                    /* iInterface */
+		_PRINTER_STR_DESC_IDX,   /* iInterface */
 
         /*Endpoint IN Descriptor*/
         0x07,                                /* bLength: Endpoint Descriptor size */
@@ -669,15 +669,17 @@ uint8_t USBD_PRNT_ReceivePacket(USBD_HandleTypeDef *pdev)
   return (uint8_t)USBD_OK;
 }
 
-void USBD_Update_PRNT_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep)
+void USBD_Update_PRNT_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep, uint8_t str_idx)
 {
   desc[11] = itf_no;
+  desc[17] = str_idx;
   desc[20] = in_ep;
   desc[27] = out_ep;
 
   PRNT_IN_EP = in_ep;
   PRNT_OUT_EP = out_ep;
   PRNT_ITF_NBR = itf_no;
+  PRINTER_STR_DESC_IDX = str_idx;
 }
 /**
   * @}

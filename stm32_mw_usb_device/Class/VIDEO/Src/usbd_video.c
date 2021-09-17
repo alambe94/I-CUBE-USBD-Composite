@@ -56,14 +56,12 @@
 #define _UVC_IN_EP 0x81U
 #define _UVC_VC_IF_NUM 0x00U
 #define _UVC_VS_IF_NUM 0x01U
-#define _UVC_VC_STR_DESC_IDX 0x01U
-#define _UVC_VS_STR_DESC_IDX 0x02U
+#define _UVC_STR_DESC_IDX 0x00U
 
 uint8_t UVC_IN_EP = _UVC_IN_EP;
 uint8_t UVC_VC_IF_NUM = _UVC_VC_IF_NUM;
 uint8_t UVC_VS_IF_NUM = _UVC_VS_IF_NUM;
-uint8_t UVC_VC_STR_DESC_IDX = _UVC_VC_STR_DESC_IDX;
-uint8_t UVC_VS_STR_DESC_IDX = _UVC_VS_STR_DESC_IDX;
+uint8_t UVC_STR_DESC_IDX = _UVC_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -167,7 +165,7 @@ __ALIGN_BEGIN static uint8_t USBD_VIDEO_CfgDesc[UVC_CONFIG_DESC_SIZE] __ALIGN_EN
         UVC_CC_VIDEO,                  /* bFunctionClass: Video class */
         SC_VIDEO_INTERFACE_COLLECTION, /* bFunctionSubClass: Video Interface Collection */
         PC_PROTOCOL_UNDEFINED,         /* bInterfaceProtocol: protocol undefined */
-        0x00,                          /* iFunction */
+		_UVC_STR_DESC_IDX,             /* iFunction */
 
         /* Standard VC (Video Control) Interface Descriptor  = interface 0 */
         USB_IF_DESC_SIZE,        /* bLength: interface descriptor size */
@@ -1045,7 +1043,7 @@ uint8_t USBD_VIDEO_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_VIDEO_ItfTyp
   return (uint8_t)USBD_OK;
 }
 
-void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t in_ep)
+void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t in_ep, uint8_t str_idx)
 {
 #ifdef USBD_UVC_FORMAT_UNCOMPRESSED
 #define _OFFSET 44
@@ -1054,6 +1052,7 @@ void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t
 #endif
 
   desc[11] = vc_itf;
+  desc[16] = str_idx;
   desc[19] = vc_itf;
   desc[38] = vs_itf;
   desc[58] = vs_itf;
@@ -1064,6 +1063,7 @@ void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t
   UVC_IN_EP = in_ep;
   UVC_VC_IF_NUM = vc_itf;
   UVC_VS_IF_NUM = vs_itf;
+  UVC_STR_DESC_IDX = str_idx;
 }
 
 /**

@@ -41,8 +41,7 @@ extern "C" {
 /** @defgroup usbd_VIDEO_Exported_Defines
   * @{
   */
-#define UVC_VC_STR_DESC 							 "STM32 UVC CONTROL"
-#define UVC_VS_STR_DESC 							 "STM32 UVC STREAM"
+#define UVC_STR_DESC 							      "STM32 UVC"
 
 /* USB Video device class specification version 1.10 */
 #ifdef UVC_1_0
@@ -438,8 +437,7 @@ extern "C" {
   extern uint8_t UVC_IN_EP;
   extern uint8_t UVC_VC_IF_NUM;
   extern uint8_t UVC_VS_IF_NUM;
-  extern uint8_t UVC_VC_STR_DESC_IDX;
-  extern uint8_t UVC_VS_STR_DESC_IDX;
+  extern uint8_t UVC_STR_DESC_IDX;
 
   /**
   * @}
@@ -451,7 +449,7 @@ extern "C" {
 
   uint8_t USBD_VIDEO_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_VIDEO_ItfTypeDef *fops);
 
-  void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t in_ep);
+  void USBD_Update_UVC_DESC(uint8_t *desc, uint8_t vc_itf, uint8_t vs_itf, uint8_t in_ep, uint8_t str_idx);
 
   /**
   * @}

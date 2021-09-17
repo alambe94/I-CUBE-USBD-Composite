@@ -239,7 +239,8 @@ void USBD_Update_CDC_ECM_DESC(uint8_t *desc,
                               uint8_t com_itf,
                               uint8_t in_ep,
                               uint8_t cmd_ep,
-                              uint8_t out_ep);
+                              uint8_t out_ep,
+							  uint8_t str_idx);
 
 /**
   * @}

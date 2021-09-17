@@ -1099,9 +1099,10 @@ static void DFU_Leave(USBD_HandleTypeDef *pdev)
   }
 }
 
-void USBD_Update_DFU_DESC(uint8_t *desc, uint8_t itf_no)
+void USBD_Update_DFU_DESC(uint8_t *desc, uint8_t itf_no, uint8_t str_idx)
 {
 	desc[11] = itf_no;
+	desc[17] = str_idx;
 
 #if (USBD_DFU_MAX_ITF_NUM > 1U)
 	desc[20] = itf_no;
@@ -1123,7 +1124,8 @@ void USBD_Update_DFU_DESC(uint8_t *desc, uint8_t itf_no)
 	desc[56] = itf_no;
 #endif /* (USBD_DFU_MAX_ITF_NUM > 5) */
 
-      DFU_ITF_NBR = itf_no;
+    DFU_ITF_NBR = itf_no;
+    DFU_STR_DESC_IDX = str_idx;
 }
 
 /**

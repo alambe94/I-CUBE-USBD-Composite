@@ -61,7 +61,7 @@
 #define _CDC_RNDIS_CMD_EP 0x82U      /* EP2 for CDC_RNDIS commands */
 #define _CDC_RNDIS_CMD_ITF_NBR 0x00U /* Command Interface Number 0 */
 #define _CDC_RNDIS_COM_ITF_NBR 0x01U /* Communication Interface Number 0 */
-#define _CDC_RNDIS_STR_DESC_IDX 0x01U
+#define _CDC_RNDIS_STR_DESC_IDX 0x00U
 
 uint8_t CDC_RNDIS_IN_EP = _CDC_RNDIS_IN_EP;
 uint8_t CDC_RNDIS_OUT_EP = _CDC_RNDIS_OUT_EP;
@@ -218,7 +218,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgHSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         0xE0,                   /* bFunctionClass (Wireless Controller) */
         0x01,                   /* bFunctionSubClass */
         0x03,                   /* bFunctionProtocol */
-        0x00,                   /* iFunction */
+		_CDC_RNDIS_STR_DESC_IDX,/* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
@@ -326,7 +326,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_CfgFSDesc[CDC_RNDIS_CONFIG_DESC_SIZE
         0xE0,                   /* bFunctionClass (Wireless Controller) */
         0x01,                   /* bFunctionSubClass */
         0x03,                   /* bFunctionProtocol */
-        0x00,                   /* iFunction */
+		_CDC_RNDIS_STR_DESC_IDX,/* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
@@ -433,7 +433,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_RNDIS_OtherSpeedCfgDesc[] __ALIGN_END =
         0xE0, /* bFunctionClass (Wireless Controller) */
         0x01, /* bFunctionSubClass */
         0x03, /* bFunctionProtocol */
-        0x00, /* iFunction */
+		_CDC_RNDIS_STR_DESC_IDX,/* iFunction */
 
         /*---------------------------------------------------------------------------*/
         /* Interface Descriptor */
@@ -1763,9 +1763,11 @@ void USBD_Update_CDC_RNDIS_DESC(uint8_t *desc,
                                 uint8_t com_itf,
                                 uint8_t in_ep,
                                 uint8_t cmd_ep,
-                                uint8_t out_ep)
+                                uint8_t out_ep,
+								uint8_t str_idx)
 {
   desc[11] = cmd_itf;
+  desc[16] = str_idx;
   desc[19] = cmd_itf;
   desc[35] = com_itf;
   desc[43] = cmd_itf;
@@ -1780,6 +1782,7 @@ void USBD_Update_CDC_RNDIS_DESC(uint8_t *desc,
   CDC_RNDIS_CMD_EP = cmd_ep;
   CDC_RNDIS_CMD_ITF_NBR = cmd_itf;
   CDC_RNDIS_COM_ITF_NBR = com_itf;
+  CDC_RNDIS_STR_DESC_IDX = str_idx;
 }
 
 /**

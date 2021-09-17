@@ -111,7 +111,8 @@ extern uint8_t MSC_BOT_STR_DESC_IDX;
 uint8_t USBD_MSC_RegisterStorage(USBD_HandleTypeDef *pdev,
                                  USBD_StorageTypeDef *fops);
 
-void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep);
+void USBD_Update_MSC_DESC(uint8_t *desc, uint8_t itf_no, uint8_t in_ep, uint8_t out_ep, uint8_t str_idx);
+
 /**
   * @}
   */

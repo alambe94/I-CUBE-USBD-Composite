@@ -868,9 +868,11 @@ void USBD_Update_Audio_SPKR_DESC(uint8_t *desc,
                                  uint8_t as_str_idx)
 {
   desc[11] = ac_itf;
+  desc[17] = ac_str_idx;
   desc[26] = as_itf;
   desc[59] = as_itf;
   desc[68] = as_itf;
+  desc[74] = as_str_idx;
   desc[96] = out_ep;
 
   AUDIO_OUT_EP = out_ep;
@@ -878,7 +880,7 @@ void USBD_Update_Audio_SPKR_DESC(uint8_t *desc,
   AUDIO_OUT_AS_ITF_NBR = as_itf;
 
   AUDIO_SPKR_AC_STR_DESC_IDX = ac_str_idx;
-  AUDIO_SPKR_AC_STR_DESC_IDX = as_str_idx;
+  AUDIO_SPKR_AS_STR_DESC_IDX = as_str_idx;
 }
 
 /**
