@@ -1,4 +1,5 @@
 # I-CUBE-USBD-Composite
+A wrapper class around ST USB stack.
 Create STM32 USB Composite devices with ease.
 ## Modifications
 * CDC supports multiple instance
