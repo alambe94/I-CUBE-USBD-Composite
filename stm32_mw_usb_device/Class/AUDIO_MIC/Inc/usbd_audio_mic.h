@@ -60,8 +60,7 @@
 * @{
 */
 
-#define AUDIO_MIC_AC_STR_DESC                             "STM32 MICROPHONE"
-#define AUDIO_MIC_AS_STR_DESC                             "STM32 MICROPHONE"
+#define AUDIO_MIC_STR_DESC                               "STM32 MICROPHONE"
 
 /* Audio Data in endpoint */
 #define AUDIO_MIC_CHANNELS                                0x01
@@ -206,8 +205,7 @@ extern USBD_ClassTypeDef USBD_AUDIO_MIC;
 extern uint8_t AUDIO_MIC_EP;
 extern uint8_t AUDIO_MIC_AC_ITF_NBR;
 extern uint8_t AUDIO_MIC_AS_ITF_NBR;
-extern uint8_t AUDIO_MIC_AC_STR_DESC_IDX;
-extern uint8_t AUDIO_MIC_AS_STR_DESC_IDX;
+extern uint8_t AUDIO_MIC_STR_DESC_IDX;
 
 /**
 * @}
@@ -224,8 +222,7 @@ void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
                                 uint8_t ac_itf,
                                 uint8_t as_itf,
                                 uint8_t in_ep,
-                                uint8_t ac_str_idx,
-                                uint8_t as_str_idx);
+                                uint8_t str_idx);
 /**
 * @}
 */

@@ -42,8 +42,7 @@ extern "C" {
   * @{
   */
 
-#define AUDIO_SPKR_AC_STR_DESC                        "STM32 SPEAKER"
-#define AUDIO_SPKR_AS_STR_DESC                        "STM32 SPEAKER"
+#define AUDIO_SPKR_STR_DESC                          "STM32 SPEAKER"
 
 #ifndef USBD_AUDIO_FREQ
 /* AUDIO Class Config */
@@ -187,8 +186,7 @@ extern "C" {
   extern uint8_t AUDIO_OUT_EP;
   extern uint8_t AUDIO_OUT_AC_ITF_NBR;
   extern uint8_t AUDIO_OUT_AS_ITF_NBR;
-  extern uint8_t AUDIO_SPKR_AC_STR_DESC_IDX;
-  extern uint8_t AUDIO_SPKR_AS_STR_DESC_IDX;
+  extern uint8_t AUDIO_SPKR_STR_DESC_IDX;
 
   /**
   * @}
@@ -206,8 +204,7 @@ extern "C" {
                                    uint8_t ac_itf,
                                    uint8_t as_itf,
                                    uint8_t out_ep,
-                                   uint8_t ac_str_idx,
-                                   uint8_t as_str_idx);
+                                   uint8_t str_idx);
   /**
   * @}
   */

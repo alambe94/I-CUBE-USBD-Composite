@@ -66,14 +66,12 @@ EndBSPDependencies */
 #define _AUDIO_OUT_EP 0x01U
 #define _AUDIO_OUT_AC_ITF_NBR 0x00U
 #define _AUDIO_OUT_AS_ITF_NBR 0x01U
-#define _AUDIO_SPKR_AC_STR_DESC_IDX 0x00U
-#define _AUDIO_SPKR_AS_STR_DESC_IDX 0x00U
+#define _AUDIO_SPKR_STR_DESC_IDX 0x00U
 
 uint8_t AUDIO_OUT_EP = _AUDIO_OUT_EP;
 uint8_t AUDIO_OUT_AC_ITF_NBR = _AUDIO_OUT_AC_ITF_NBR;
 uint8_t AUDIO_OUT_AS_ITF_NBR = _AUDIO_OUT_AS_ITF_NBR;
-uint8_t AUDIO_SPKR_AC_STR_DESC_IDX = _AUDIO_SPKR_AC_STR_DESC_IDX;
-uint8_t AUDIO_SPKR_AS_STR_DESC_IDX = _AUDIO_SPKR_AS_STR_DESC_IDX;
+uint8_t AUDIO_SPKR_STR_DESC_IDX = _AUDIO_SPKR_STR_DESC_IDX;
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -188,7 +186,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         USB_DEVICE_CLASS_AUDIO,      /* bInterfaceClass */
         AUDIO_SUBCLASS_AUDIOCONTROL, /* bInterfaceSubClass */
         AUDIO_PROTOCOL_UNDEFINED,    /* bInterfaceProtocol */
-        _AUDIO_SPKR_AC_STR_DESC_IDX, /* iInterface */
+        _AUDIO_SPKR_STR_DESC_IDX, /* iInterface */
         /* 09 byte*/
 
         /* USB Speaker Class-specific AC Interface Descriptor */
@@ -265,7 +263,7 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALI
         USB_DEVICE_CLASS_AUDIO,        /* bInterfaceClass */
         AUDIO_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
-        _AUDIO_SPKR_AS_STR_DESC_IDX,   /* iInterface */
+        0x00,                          /* iInterface */
         /* 09 byte*/
 
         /* USB Speaker Audio Streaming Interface Descriptor */
@@ -864,23 +862,20 @@ void USBD_Update_Audio_SPKR_DESC(uint8_t *desc,
                                  uint8_t ac_itf,
                                  uint8_t as_itf,
                                  uint8_t out_ep,
-                                 uint8_t ac_str_idx,
-                                 uint8_t as_str_idx)
+                                 uint8_t str_idx)
 {
   desc[11] = ac_itf;
-  desc[17] = ac_str_idx;
+  desc[17] = str_idx;
   desc[26] = as_itf;
   desc[59] = as_itf;
   desc[68] = as_itf;
-  desc[74] = as_str_idx;
   desc[96] = out_ep;
 
   AUDIO_OUT_EP = out_ep;
   AUDIO_OUT_AC_ITF_NBR = ac_itf;
   AUDIO_OUT_AS_ITF_NBR = as_itf;
 
-  AUDIO_SPKR_AC_STR_DESC_IDX = ac_str_idx;
-  AUDIO_SPKR_AS_STR_DESC_IDX = as_str_idx;
+  AUDIO_SPKR_STR_DESC_IDX = str_idx;
 }
 
 /**
