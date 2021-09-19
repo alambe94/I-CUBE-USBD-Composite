@@ -39,6 +39,8 @@ Add components to project, Selection of Core & COMPOSITE is must
 Enable the classes you want
 ![ENABLE](pics/USE/9.ENABLE.png)
 
+Dont forget!!!
+![ENABLE](pics/USE/10.SELECT2.png)
 ### 4. Generate Code
 
 
