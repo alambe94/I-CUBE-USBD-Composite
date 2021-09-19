@@ -40,23 +40,25 @@ Enable the classes you want
 ![ENABLE](pics/USE/9.ENABLE.png)
 
 Dont forget!!!
-![ENABLE](pics/USE/10.SELECT2.png)
-### 4. Generate Code
+![SELECT2](pics/USE/10.SELECT2.png)
 
+### 4. Generate Code
+Call MX_USB_DEVICE_Init(); manually
+![SELECT2](pics/USE/11.CALL.png)
 
 
 ## Enumerated
 ### 1. USB CDC ACM.
-![CDC](pics/ENUM/CDC_ACM.PNG)
+![CDC_ACM](pics/ENUM/CDC_ACM.PNG)
 
 ### 2. CDC & HID.
-![CDC](pics/ENUM/HID_CDC.PNG)
+![HID_CDC](pics/ENUM/HID_CDC.PNG)
 
 ### 3. RNDIS.
-![CDC](pics/ENUM/RNDIS.PNG)
+![RNDIS](pics/ENUM/RNDIS.PNG)
 
 ### 4. UAC Microphone & Speaker.
-![CDC](pics/ENUM/UAC.PNG)
+![UAC](pics/ENUM/UAC.PNG)
 
 ### 5. UVC Camera & Mass Storage.
-![CDC](pics/ENUM/UVC_MSC.PNG)
+![UVC_MSC](pics/ENUM/UVC_MSC.PNG)
