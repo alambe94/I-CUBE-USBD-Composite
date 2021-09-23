@@ -146,7 +146,7 @@ typedef struct __attribute__((packed)) USBD_COMPOSITE_CFG_DESC_t
   uint8_t USBD_UAC_MIC_DESC[USBD_AUDIO_MIC_CONFIG_DESC_SIZE - 0x09];
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-  uint8_t USBD_UAC_SPKR_DESC[USBD_AUDIO_MIC_CONFIG_DESC_SIZE - 0x09];
+  uint8_t USBD_AUDIO_SPKR_DESC[USBD_AUDIO_SPKR_CONFIG_DESC_SIZE - 0x09];
 #endif
 #if (USBD_USE_UVC == 1)
   uint8_t USBD_UVC_DESC[UVC_CONFIG_DESC_SIZE - 0x09];
@@ -1048,11 +1048,11 @@ void USBD_COMPOSITE_Mount_Class(void)
 #if (USBD_USE_UAC_SPKR == 1)
   ptr = USBD_AUDIO_SPKR.GetFSConfigDescriptor(&len);
   USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track, USBD_Track_String_Index);
-  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
+  memcpy(USBD_COMPOSITE_FSCfgDesc.USBD_AUDIO_SPKR_DESC, ptr + 0x09, len - 0x09);
 
   ptr = USBD_AUDIO_SPKR.GetHSConfigDescriptor(&len);
   USBD_Update_Audio_SPKR_DESC(ptr, interface_no_track, interface_no_track + 1, out_ep_track, USBD_Track_String_Index);
-  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_UAC_SPKR_DESC, ptr + 0x09, len - 0x09);
+  memcpy(USBD_COMPOSITE_HSCfgDesc.USBD_AUDIO_SPKR_DESC, ptr + 0x09, len - 0x09);
 
   out_ep_track += 1;
   interface_no_track += 2;
