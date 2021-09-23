@@ -27,6 +27,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include  "usbd_ioreq.h"
+#include  "usbd_audio.h"
 
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
@@ -44,62 +45,9 @@ extern "C" {
 
 #define AUDIO_SPKR_STR_DESC                          "STM32 SPEAKER"
 
-#ifndef USBD_AUDIO_FREQ
-/* AUDIO Class Config */
-#define USBD_AUDIO_FREQ                               48000U
-#endif /* USBD_AUDIO_FREQ */
+#define USBD_AUDIO_FREQ                               16000U
 
-#ifndef USBD_MAX_NUM_INTERFACES
-#define USBD_MAX_NUM_INTERFACES                       1U
-#endif /* USBD_AUDIO_FREQ */
-
-#ifndef AUDIO_HS_BINTERVAL
-#define AUDIO_HS_BINTERVAL                            0x01U
-#endif /* AUDIO_HS_BINTERVAL */
-
-#ifndef AUDIO_FS_BINTERVAL
-#define AUDIO_FS_BINTERVAL                            0x01U
-#endif /* AUDIO_FS_BINTERVAL */
-
-#define USB_AUDIO_CONFIG_DESC_SIZ                     0x6DU
-#define AUDIO_INTERFACE_DESC_SIZE                     0x09U
-#define USB_AUDIO_DESC_SIZ                            0x09U
-#define AUDIO_STANDARD_ENDPOINT_DESC_SIZE             0x09U
-#define AUDIO_STREAMING_ENDPOINT_DESC_SIZE            0x07U
-
-#define AUDIO_DESCRIPTOR_TYPE                         0x21U
-#define USB_DEVICE_CLASS_AUDIO                        0x01U
-#define AUDIO_SUBCLASS_AUDIOCONTROL                   0x01U
-#define AUDIO_SUBCLASS_AUDIOSTREAMING                 0x02U
-#define AUDIO_PROTOCOL_UNDEFINED                      0x00U
-#define AUDIO_STREAMING_GENERAL                       0x01U
-#define AUDIO_STREAMING_FORMAT_TYPE                   0x02U
-
-/* Audio Descriptor Types */
-#define AUDIO_INTERFACE_DESCRIPTOR_TYPE               0x24U
-#define AUDIO_ENDPOINT_DESCRIPTOR_TYPE                0x25U
-
-/* Audio Control Interface Descriptor Subtypes */
-#define AUDIO_CONTROL_HEADER                          0x01U
-#define AUDIO_CONTROL_INPUT_TERMINAL                  0x02U
-#define AUDIO_CONTROL_OUTPUT_TERMINAL                 0x03U
-#define AUDIO_CONTROL_FEATURE_UNIT                    0x06U
-
-#define AUDIO_INPUT_TERMINAL_DESC_SIZE                0x0CU
-#define AUDIO_OUTPUT_TERMINAL_DESC_SIZE               0x09U
-#define AUDIO_STREAMING_INTERFACE_DESC_SIZE           0x07U
-
-#define AUDIO_CONTROL_MUTE                            0x0001U
-
-#define AUDIO_FORMAT_TYPE_I                           0x01U
-#define AUDIO_FORMAT_TYPE_III                         0x03U
-
-#define AUDIO_ENDPOINT_GENERAL                        0x01U
-
-#define AUDIO_REQ_GET_CUR                             0x81U
-#define AUDIO_REQ_SET_CUR                             0x01U
-
-#define AUDIO_OUT_STREAMING_CTRL                      0x02U
+#define USBD_AUDIO_SPKR_CONFIG_DESC_SIZE              0x6DU
 
 #define AUDIO_OUT_TC                                  0x01U
 #define AUDIO_IN_TC                                   0x02U
@@ -114,45 +62,15 @@ extern "C" {
 /* Total size of the audio transfer buffer */
 #define AUDIO_TOTAL_BUF_SIZE                          ((uint16_t)(AUDIO_OUT_PACKET * AUDIO_OUT_PACKET_NUM))
 
-  /* Audio Commands enumeration */
-  typedef enum
-  {
-    AUDIO_SPKR_CMD_START = 1,
-    AUDIO_SPKR_CMD_PLAY,
-    AUDIO_SPKR_CMD_STOP,
-  } AUDIO_SPKR_CMD_TypeDef;
-
-  typedef enum
-  {
-    AUDIO_SPKR_OFFSET_NONE = 0,
-    AUDIO_SPKR_OFFSET_HALF,
-    AUDIO_SPKR_OFFSET_FULL,
-    AUDIO_SPKR_OFFSET_UNKNOWN,
-  } AUDIO_SPKR_OffsetTypeDef;
-  /**
-  * @}
-  */
-
-  /** @defgroup USBD_CORE_Exported_TypesDefinitions
-  * @{
-  */
-  typedef struct
-  {
-    uint8_t cmd;
-    uint8_t data[USB_MAX_EP0_SIZE];
-    uint8_t len;
-    uint8_t unit;
-  } USBD_AUDIO_SPKR_ControlTypeDef;
-
   typedef struct
   {
     uint32_t alt_setting;
     uint8_t buffer[AUDIO_TOTAL_BUF_SIZE];
-    AUDIO_SPKR_OffsetTypeDef offset;
+    AUDIO_OffsetTypeDef offset;
     uint8_t rd_enable;
     uint16_t rd_ptr;
     uint16_t wr_ptr;
-    USBD_AUDIO_SPKR_ControlTypeDef control;
+    USBD_AUDIO_ControlTypeDef control;
   } USBD_AUDIO_SPKR_HandleTypeDef;
 
   typedef struct
@@ -183,9 +101,9 @@ extern "C" {
 
   extern USBD_ClassTypeDef USBD_AUDIO_SPKR;
 
-  extern uint8_t AUDIO_OUT_EP;
-  extern uint8_t AUDIO_OUT_AC_ITF_NBR;
-  extern uint8_t AUDIO_OUT_AS_ITF_NBR;
+  extern uint8_t AUDIO_SPKR_EP;
+  extern uint8_t AUDIO_SPKR_AC_ITF_NBR;
+  extern uint8_t AUDIO_SPKR_AS_ITF_NBR;
   extern uint8_t AUDIO_SPKR_STR_DESC_IDX;
 
   /**
@@ -198,7 +116,7 @@ extern "C" {
   uint8_t USBD_AUDIO_SPKR_RegisterInterface(USBD_HandleTypeDef *pdev,
                                             USBD_AUDIO_SPKR_ItfTypeDef *fops);
 
-  void USBD_AUDIO_SPKR_Sync(USBD_HandleTypeDef *pdev, AUDIO_SPKR_OffsetTypeDef offset);
+  void USBD_AUDIO_SPKR_Sync(USBD_HandleTypeDef *pdev, AUDIO_OffsetTypeDef offset);
 
   void USBD_Update_Audio_SPKR_DESC(uint8_t *desc,
                                    uint8_t ac_itf,

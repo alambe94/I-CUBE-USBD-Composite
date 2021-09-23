@@ -45,7 +45,7 @@ extern "C" {
 
 #define CDC_ACM_STR_DESC                            "STM32 CDC ACM%d"
 
-#define NUMBER_OF_CDC 								_USBD_CDC_ACM_COUNT
+#define NUMBER_OF_CDC                               _USBD_CDC_ACM_COUNT
 #ifndef CDC_HS_BINTERVAL
 #define CDC_HS_BINTERVAL                            0x10U
 #endif /* CDC_HS_BINTERVAL */
@@ -59,7 +59,7 @@ extern "C" {
 #define CDC_DATA_FS_MAX_PACKET_SIZE                 64U  /* Endpoint IN & OUT Packet size */
 #define CDC_CMD_PACKET_SIZE                         8U  /* Control Endpoint Packet size */
 
-#define USB_CDC_CONFIG_DESC_SIZ 					(9 + 66 * NUMBER_OF_CDC)
+#define USB_CDC_CONFIG_DESC_SIZ                     (9 + 66 * NUMBER_OF_CDC)
 #define CDC_DATA_HS_IN_PACKET_SIZE                  CDC_DATA_HS_MAX_PACKET_SIZE
 #define CDC_DATA_HS_OUT_PACKET_SIZE                 CDC_DATA_HS_MAX_PACKET_SIZE
 

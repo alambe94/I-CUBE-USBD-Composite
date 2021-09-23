@@ -4,102 +4,55 @@
 * @author  Central Labs
 * @version V2.4.2 MOD
 * @date    01-Sep-2016
-* @brief   header file for the usbd_audio_in.c file.
-******************************************************************************
-* @attention
-*
-* <h2><center>&copy; COPYRIGHT(c) 2014 STMicroelectronics</center></h2>
-*
-* Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-* You may not use this file except in compliance with the License.
-* You may obtain a copy of the License at:
-*
-*        http://www.st.com/software_license_agreement_liberty_v2
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*   1. Redistributions of source code must retain the above copyright notice,
-*      this list of conditions and the following disclaimer.
-*   2. Redistributions in binary form must reproduce the above copyright notice,
-*      this list of conditions and the following disclaimer in the documentation
-*      and/or other materials provided with the distribution.
-*   3. Neither the name of STMicroelectronics nor the names of its contributors
-*      may be used to endorse or promote products derived from this software
-*      without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-******************************************************************************
-*/
+  * @brief   header file for the usbd_audio.c file.
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2015 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                      www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
+
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __USBD_AUDIO_MIC_H_
+#define __USBD_AUDIO_MIC_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
+#include  "usbd_ioreq.h"
+#include  "usbd_audio.h"
 
-#ifndef __USBD_AUDIO_IN_H_
-#define __USBD_AUDIO_IN_H_
+/** @addtogroup STM32_USB_DEVICE_LIBRARY
+  * @{
+  */
 
-#include "usbd_ioreq.h"
+/** @defgroup USBD_AUDIO
+  * @brief This file is the Header file for usbd_audio.c
+  * @{
+  */
 
-/** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
-* @{
-*/
 
-/** @defgroup USBD_AUDIO_IN
-* @{
-*/
+/** @defgroup USBD_AUDIO_Exported_Defines
+  * @{
+  */
 
-/** @defgroup USBD_AUDIO_IN_Exported_Defines
-* @{
-*/
+#define AUDIO_MIC_STR_DESC                                "STM32 MICROPHONE"
 
-#define AUDIO_MIC_STR_DESC                               "STM32 MICROPHONE"
-
-/* Audio Data in endpoint */
+/* AUDIO Class Config */
 #define AUDIO_MIC_CHANNELS                                0x01
-#define AUDIO_MIC_SMPL_FREQ                               16000
+#define AUDIO_MIC_SMPL_FREQ                               16000U
+#define USBD_AUDIO_MIC_CONFIG_DESC_SIZE                   (108 + AUDIO_MIC_CHANNELS)
 
-#define AUDIO_MIC_CONFIG_DESC_SIZE                        (109 + AUDIO_MIC_CHANNELS - 1)
 
-#define AUDIO_MIC_INTERFACE_DESC_SIZE                     0x09
-#define AUDIO_MIC_DESC_SIZE                               0x09
-#define AUDIO_MIC_STANDARD_ENDPOINT_DESC_SIZE             0x09
-#define AUDIO_MIC_STREAMING_ENDPOINT_DESC_SIZE            0x07
-#define AUDIO_MIC_DESCRIPTOR_TYPE                         0x21
-#define AUDIO_MIC_DEVICE_CLASS                            0x01
-#define AUDIO_MIC_SUBCLASS_AUDIOCONTROL                   0x01
-#define AUDIO_MIC_SUBCLASS_AUDIOSTREAMING                 0x02
-#define AUDIO_MIC_PROTOCOL_UNDEFINED                      0x00
-#define AUDIO_MIC_STREAMING_GENERAL                       0x01
-#define AUDIO_MIC_STREAMING_FORMAT_TYPE                   0x02
-/* Audio Descriptor Types */
-#define AUDIO_MIC_INTERFACE_DESCRIPTOR_TYPE               0x24
-#define AUDIO_MIC_ENDPOINT_DESCRIPTOR_TYPE                0x25
-/* Audio Control Interface Descriptor Subtypes */
-#define AUDIO_MIC_CONTROL_HEADER                          0x01
-#define AUDIO_MIC_CONTROL_INPUT_TERMINAL                  0x02
-#define AUDIO_MIC_CONTROL_OUTPUT_TERMINAL                 0x03
-#define AUDIO_MIC_CONTROL_FEATURE_UNIT                    0x06
-#define AUDIO_MIC_INPUT_TERMINAL_DESC_SIZE                0x0C
-#define AUDIO_MIC_OUTPUT_TERMINAL_DESC_SIZE               0x09
-#define AUDIO_MIC_STREAMING_INTERFACE_DESC_SIZE           0x07
-#define AUDIO_MIC_CONTROL_MUTE                            0x0002
-#define AUDIO_MIC_FORMAT_TYPE_I                           0x01
-#define AUDIO_MIC_FORMAT_TYPE_III                         0x03
-#define AUDIO_MIC_ENDPOINT_GENERAL                        0x01
-#define AUDIO_MIC_REQ_GET_CUR                             0x81
-#define AUDIO_MIC_REQ_GET_MIN                             0x82
-#define AUDIO_MIC_REQ_GET_MAX                             0x83
-#define AUDIO_MIC_REQ_GET_RES                             0x84
-#define AUDIO_MIC_REQ_SET_CUR                             0x01
-#define AUDIO_MIC_OUT_STREAMING_CTRL                      0x02
 
 #define AUDIO_MIC_VOL_MIN                                 0xDBE0
 #define AUDIO_MIC_VOL_RES                                 0x0023
@@ -123,36 +76,6 @@ typedef enum
 
 #define TIMEOUT_VALUE 200
 
-/* Audio Commands enmueration */
-typedef enum
-{
-  AUDIO_CMD_START = 1,
-  AUDIO_CMD_PLAY,
-  AUDIO_CMD_STOP,
-} AUDIO_MIC_CMD_TypeDef;
-
-typedef enum
-{
-  AUDIO_OFFSET_NONE = 0,
-  AUDIO_OFFSET_HALF,
-  AUDIO_OFFSET_FULL,
-  AUDIO_OFFSET_UNKNOWN,
-} AUDIO_MIC_OffsetTypeDef;
-
-/**
-* @}
-*/
-
-/** @defgroup USBD_AUDIO_IN_Exported_TypesDefinitions
-* @{
-*/
-typedef struct
-{
-  uint8_t cmd;
-  uint8_t data[USB_MAX_EP0_SIZE];
-  uint8_t len;
-  uint8_t unit;
-} USBD_AUDIO_ControlTypeDef;
 
 typedef struct
 {
@@ -214,25 +137,30 @@ extern uint8_t AUDIO_MIC_STR_DESC_IDX;
 /** @defgroup USBD_AUDIO_IN_Exported_Functions
 * @{
 */
-uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev, USBD_AUDIO_MIC_ItfTypeDef *fops);
-void USBD_AUDIO_MICInit_Microphone_Descriptor(USBD_HandleTypeDef *pdev, uint32_t samplingFrequency, uint8_t Channels);
+uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev, 
+                                         USBD_AUDIO_MIC_ItfTypeDef *fops);
 uint8_t USBD_AUDIO_MICData_Transfer(USBD_HandleTypeDef *pdev, int16_t *audioData, uint16_t dataAmount);
 
-void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
-                                uint8_t ac_itf,
-                                uint8_t as_itf,
-                                uint8_t in_ep,
-                                uint8_t str_idx);
-/**
-* @}
-*/
+  void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
+                                  uint8_t ac_itf,
+                                  uint8_t as_itf,
+                                  uint8_t in_ep,
+                                  uint8_t str_idx);
+  /**
+  * @}
+  */
+
+#ifdef __cplusplus
+}
+#endif
+
 
 /**
-* @}
-*/
+  * @}
+  */
 
 /**
-* @}
-*/
-#endif // __USBD_AUDIO_IN_H_
+  * @}
+  */
+#endif // __USBD_AUDIO_MIC_H_
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
