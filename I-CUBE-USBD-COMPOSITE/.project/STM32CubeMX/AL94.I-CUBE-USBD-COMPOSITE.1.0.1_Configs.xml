@@ -94,12 +94,14 @@
             <File Category="source" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/AUDIO_MIC/Src/usbd_audio_mic.c"/>
             <File Category="source" Condition="" Name="Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.c"/>
             <File Category="header" Condition="" Name="Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.h"/>
+            <File Category="header" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/AUDIO_COMMON/usbd_audio.h"/>
         </SubComponent>
         <SubComponent Csub="UACIiSPKR" Cvariant="true" Cversion="1Gg0Gg0">
             <File Category="header" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/AUDIO_SPKR/Inc/usbd_audio_spkr.h"/>
             <File Category="source" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/AUDIO_SPKR/Src/usbd_audio_spkr.c"/>
             <File Category="source" Condition="" Name="Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.c"/>
             <File Category="header" Condition="" Name="Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.h"/>
+            <File Category="header" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/AUDIO_COMMON/usbd_audio.h"/>
         </SubComponent>
         <SubComponent Csub="UVC" Cvariant="true" Cversion="1Gg0Gg0">
             <File Category="header" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/VIDEO/Inc/usbd_video.h"/>

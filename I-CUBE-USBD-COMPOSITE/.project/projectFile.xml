@@ -7,6 +7,7 @@
     <license>C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/LICENSE.txt::I-CUBE-USBD-Composite/LICENSE.txt</license>
     <supportContact>lambealsaad@gmail.com</supportContact>
     <releases>
+        <release date="2021-09-24" version="1.0.1">6.1.1</release>
         <release date="2020-01-29" version="1.0.0">6.1.1</release>
     </releases>
     <keywords>
@@ -144,6 +145,7 @@
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_MIC/Src/usbd_audio_mic.c::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_MIC/Src/usbd_audio_mic.c"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_mic_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.c"/>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_mic_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_mic_if.h"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_COMMON/usbd_audio.h::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_COMMON/usbd_audio.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="UAC_SPKR" maxInstances="1">
@@ -153,6 +155,7 @@
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_SPKR/Src/usbd_audio_spkr.c::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_SPKR/Src/usbd_audio_spkr.c"/>
                     <file category="source" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_spkr_if.c::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.c"/>
                     <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/App/usbd_audio_spkr_if.h::Middlewares/Third_Party/COMPOSITE/App/usbd_audio_spkr_if.h"/>
+                    <file category="header" name="C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/stm32_mw_usb_device/Class/AUDIO_COMMON/usbd_audio.h::Middlewares/Third_Party/COMPOSITE/Class/AUDIO_COMMON/usbd_audio.h"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="UVC" maxInstances="1">
