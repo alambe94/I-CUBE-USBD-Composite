@@ -63,7 +63,7 @@ Call MX_USB_DEVICE_Init(); manually
 ### 5. UVC Camera & Mass Storage.
 ![UVC_MSC](pics/ENUM/UVC_MSC.PNG)
 
-## 6. Troubleshooting
+# Troubleshooting
 1. Cross check number of endpoints in MCU & consumed by application.
 2. Adjust Endpont Size & PMA buffers in "Target/usbd_conf.c" accordingly.
 3. For some classes "SOF" must be enabled!!!
