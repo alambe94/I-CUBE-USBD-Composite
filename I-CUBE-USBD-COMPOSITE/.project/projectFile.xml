@@ -7,7 +7,7 @@
     <license>C:/Users/lambe/STM32CubeIDE/workspace_1.3.0/I-CUBE-USBD-Composite/LICENSE.txt::I-CUBE-USBD-Composite/LICENSE.txt</license>
     <supportContact>lambealsaad@gmail.com</supportContact>
     <releases>
-        <release date="2021-09-24" version="1.0.1">6.1.1</release>
+        <release date="2021-09-24" tag="BETA" version="1.0.1">6.1.1</release>
         <release date="2020-01-29" version="1.0.0">6.1.1</release>
     </releases>
     <keywords>

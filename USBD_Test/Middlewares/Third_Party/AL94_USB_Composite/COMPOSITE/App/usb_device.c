@@ -67,6 +67,7 @@ void MX_USB_DEVICE_Init(void)
 
   /* Init Device Library, add supported class and start the library. */
   USBD_COMPOSITE_Mount_Class();
+
 #if (USBD_USE_HS == 1)
   if (USBD_Init(&hUsbDevice, &USBD_Desc, DEVICE_HS) != USBD_OK)
   {

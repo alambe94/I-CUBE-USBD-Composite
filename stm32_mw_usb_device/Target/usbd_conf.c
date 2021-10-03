@@ -307,13 +307,6 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
 
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, 0, 64); // EP0 IN
 
-#if (USBD_USE_CDC_ACM == 1)
-    for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
-    {
-      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_IN_EP[i] & 0x7F), 128);
-      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_CMD_EP[i] & 0x7F), 64);
-    }
-#endif
 #if (USBD_USE_CDC_RNDIS == 1)
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_RNDIS_IN_EP & 0x7F), 128);
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_RNDIS_CMD_EP & 0x7F), 64);
@@ -347,6 +340,13 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
 #if (USBD_USE_PRNTR == 1)
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (PRNT_IN_EP & 0x7F), 128);
 #endif
+#if (USBD_USE_CDC_ACM == 1)
+    for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
+    {
+      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_IN_EP[i] & 0x7F), 128);
+      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_CMD_EP[i] & 0x7F), 64);
+    }
+#endif
   }
 #else
   /**FULL SPEED USB */
@@ -374,19 +374,7 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
     HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, 0x80, PCD_SNG_BUF, pma_track);
     pma_track += 0x40;
 
-#if (USBD_USE_CDC_ACM == 1)
-    for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
-    {
-      HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_IN_EP[i], PCD_SNG_BUF, pma_track);
-      pma_track += 48;
 
-      HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_OUT_EP[i], PCD_SNG_BUF, pma_track);
-      pma_track += 48;
-
-      HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_CMD_EP[i], PCD_SNG_BUF, pma_track);
-      pma_track += 8;
-    }
-#endif
 #if (USBD_USE_CDC_RNDIS == 1)
     HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_RNDIS_IN_EP[i], PCD_SNG_BUF, pma_track);
     pma_track += 128;
@@ -443,7 +431,19 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
     HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, PRNT_OUT_EP, PCD_SNG_BUF, pma_track);
     pma_track += 128;
 #endif
+#if (USBD_USE_CDC_ACM == 1)
+    for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
+    {
+      HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_IN_EP[i], PCD_SNG_BUF, pma_track);
+      pma_track += 48;
 
+      HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_OUT_EP[i], PCD_SNG_BUF, pma_track);
+      pma_track += 48;
+
+      HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_CMD_EP[i], PCD_SNG_BUF, pma_track);
+      pma_track += 8;
+    }
+#endif
 #else /** if HAL_PCDEx_SetRxFiFo() is used by HAL driver */
 
     HAL_PCDEx_SetRxFiFoInBytes(hpcd_USB_OTG_PTR, 512); // ALL OUT EP Buffer
@@ -454,13 +454,7 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_RNDIS_IN_EP & 0x7F), 128);
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_RNDIS_CMD_EP & 0x7F), 128);
 #endif
-#if (USBD_USE_CDC_ACM == 1)
-    for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
-    {
-      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_IN_EP[i] & 0x7F), 128);
-      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_CMD_EP[i] & 0x7F), 128);
-    }
-#endif
+
 #if (USBD_USE_CDC_ECM == 1)
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_ECM_IN_EP & 0x7F), 128);
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_ECM_CMD_EP & 0x7F), 64);
@@ -489,6 +483,13 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
 #endif
 #if (USBD_USE_PRNTR == 1)
     HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (PRNT_IN_EP & 0x7F), 128);
+#endif
+#if (USBD_USE_CDC_ACM == 1)
+    for (uint8_t i = 0; i < USBD_CDC_ACM_COUNT; i++)
+    {
+      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_IN_EP[i] & 0x7F), 128);
+      HAL_PCDEx_SetTxFiFoInBytes(hpcd_USB_OTG_PTR, (CDC_CMD_EP[i] & 0x7F), 128);
+    }
 #endif
 #endif
   }
