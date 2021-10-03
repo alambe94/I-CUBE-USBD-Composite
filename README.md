@@ -10,8 +10,6 @@ Create STM32 USB Composite devices with ease.
 ## TODO
 * Add CubeMX Templates
 * Fix UAC combination with other classes
-* Add WebUSB
-* Add Candlelight SocketCAN
 
 ## How to use
 ### 1. Download AL94.I-CUBE-USBD-COMPOSITE.1.0.0.pack from repo.
