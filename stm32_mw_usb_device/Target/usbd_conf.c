@@ -59,6 +59,7 @@ HAL_StatusTypeDef HAL_PCDEx_SetRxFiFoInBytes(PCD_HandleTypeDef *hpcd, uint16_t s
 /* Private functions ---------------------------------------------------------*/
 
 /* USER CODE BEGIN 1 */
+#if(!STM32F1_DEVICE)
 HAL_StatusTypeDef HAL_PCDEx_SetTxFiFoInBytes(PCD_HandleTypeDef *hpcd, uint8_t fifo, uint16_t size)
 {
 	return HAL_PCDEx_SetTxFiFo(hpcd, fifo, (size/4));
@@ -68,6 +69,7 @@ HAL_StatusTypeDef HAL_PCDEx_SetRxFiFoInBytes(PCD_HandleTypeDef *hpcd, uint16_t s
 {
 	return HAL_PCDEx_SetRxFiFo(hpcd, (size/4));
 }
+#endif
 /* USER CODE END 1 */
 
 /*******************************************************************************
@@ -374,21 +376,20 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
     HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, 0x80, PCD_SNG_BUF, pma_track);
     pma_track += 0x40;
 
-
 #if (USBD_USE_CDC_RNDIS == 1)
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_RNDIS_IN_EP[i], PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_RNDIS_IN_EP, PCD_SNG_BUF, pma_track);
     pma_track += 128;
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_RNDIS_OUT_EP[i], PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_RNDIS_OUT_EP, PCD_SNG_BUF, pma_track);
     pma_track += 128;
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_RNDIS_CMD_EP[i], PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_RNDIS_CMD_EP, PCD_SNG_BUF, pma_track);
     pma_track += 8;
 #endif
 #if (USBD_USE_CDC_ECM == 1)
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_ECM_IN_EP[i], PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_ECM_IN_EP, PCD_SNG_BUF, pma_track);
     pma_track += 48;
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_ECM_OUT_EP[i], PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_ECM_OUT_EP, PCD_SNG_BUF, pma_track);
     pma_track += 48;
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_ECM_CMD_EP[i], PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, CDC_ECM_CMD_EP, PCD_SNG_BUF, pma_track);
     pma_track += 8;
 #endif
 #if (USBD_USE_HID_MOUSE == 1)
@@ -410,7 +411,7 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
     pma_track += 128;
 #endif
 #if (USBD_USE_UAC_SPKR == 1)
-    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, AUDIO_OUT_EP, PCD_SNG_BUF, pma_track);
+    HAL_PCDEx_PMAConfig((PCD_HandleTypeDef *)pdev->pData, AUDIO_SPKR_EP, PCD_SNG_BUF, pma_track);
     pma_track += 128;
 #endif
 #if (USBD_USE_UVC == 1)

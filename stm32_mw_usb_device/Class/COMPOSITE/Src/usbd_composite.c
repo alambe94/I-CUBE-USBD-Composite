@@ -1115,6 +1115,7 @@ void USBD_COMPOSITE_Mount_Class(void)
   interface_no_track += 2 * USBD_CDC_ACM_COUNT;
   USBD_Track_String_Index += USBD_CDC_ACM_COUNT;
 #endif
+
   uint16_t CFG_SIZE = sizeof(USBD_COMPOSITE_CFG_DESC_t);
   ptr = USBD_COMPOSITE_HSCfgDesc.CONFIG_DESC;
   /* Configuration Descriptor */

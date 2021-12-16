@@ -7,7 +7,8 @@
     <license>I-CUBE-USBD-Composite/LICENSE.txt</license>
     <supportContact>lambealsaad@gmail.com</supportContact>
     <releases>
-        <release date="2021-09-24" tag="BETA" version="1.0.1">6.1.1</release>
+        <release date="2021-12-16" version="1.0.2">V6 cubeMX</release>
+        <release date="2021-12-16" tag="BETA" version="1.0.1">6.1.1</release>
         <release date="2020-01-29" version="1.0.0">6.1.1</release>
     </releases>
     <keywords>
