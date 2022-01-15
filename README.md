@@ -65,3 +65,4 @@ Call MX_USB_DEVICE_Init(); manually
 2. Adjust Endpont Size & PMA buffers in "Target/usbd_conf.c" accordingly.
 3. For some classes "SOF" must be enabled!!!
 4. Make sure MCU clock is configured properly & USB Interrupt is enabled.
+5. For L5 HAL_PWREx_EnableVddUSB() needs to be called before enabling USB operation.
