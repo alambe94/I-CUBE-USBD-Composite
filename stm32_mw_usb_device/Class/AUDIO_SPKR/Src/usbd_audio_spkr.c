@@ -168,6 +168,16 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_SPKR_CfgDesc[USBD_AUDIO_SPKR_CONFIG_DESC
         USBD_MAX_POWER, /* bMaxPower = 100 mA */
         /* 09 byte*/
 
+        /******** IAD to associate the two SPKR interfaces */
+        0x08,                        /* bLength */
+        0x0B,                        /* bDescriptorType */
+        _AUDIO_SPKR_AC_ITF_NBR,      /* bFirstInterface */
+        0x02,                        /* bInterfaceCount */
+        USB_DEVICE_CLASS_AUDIO,      /* bFunctionClass */
+        AUDIO_SUBCLASS_AUDIOCONTROL, /* bFunctionSubClass */
+        AUDIO_PROTOCOL_UNDEFINED,    /* bFunctionProtocol */
+        0x00,                        /* iFunction (Index of string descriptor describing this function) */
+
         /* USB Speaker Standard interface descriptor */
         AUDIO_INTERFACE_DESC_SIZE,   /* bLength */
         USB_DESC_TYPE_INTERFACE,     /* bDescriptorType */
@@ -856,11 +866,12 @@ void USBD_Update_Audio_SPKR_DESC(uint8_t *desc,
                                  uint8_t str_idx)
 {
   desc[11] = ac_itf;
-  desc[17] = str_idx;
-  desc[26] = as_itf;
-  desc[59] = as_itf;
-  desc[68] = as_itf;
-  desc[95] = out_ep;
+  desc[19] = ac_itf;
+  desc[25] = str_idx;
+  desc[34] = as_itf;
+  desc[67] = as_itf;
+  desc[76] = as_itf;
+  desc[103] = out_ep;
 
   AUDIO_SPKR_EP = out_ep;
   AUDIO_SPKR_AC_ITF_NBR = ac_itf;

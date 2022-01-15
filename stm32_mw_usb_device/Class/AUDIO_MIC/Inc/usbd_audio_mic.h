@@ -50,7 +50,7 @@ extern "C" {
 /* AUDIO Class Config */
 #define AUDIO_MIC_CHANNELS                                0x01
 #define AUDIO_MIC_SMPL_FREQ                               16000U
-#define USBD_AUDIO_MIC_CONFIG_DESC_SIZE                   (108 + AUDIO_MIC_CHANNELS)
+#define USBD_AUDIO_MIC_CONFIG_DESC_SIZE                   (116 + AUDIO_MIC_CHANNELS)
 
 
 
@@ -139,7 +139,7 @@ extern uint8_t AUDIO_MIC_STR_DESC_IDX;
 */
 uint8_t USBD_AUDIO_MIC_RegisterInterface(USBD_HandleTypeDef *pdev, 
                                          USBD_AUDIO_MIC_ItfTypeDef *fops);
-uint8_t USBD_AUDIO_MICData_Transfer(USBD_HandleTypeDef *pdev, int16_t *audioData, uint16_t dataAmount);
+uint8_t USBD_AUDIO_MIC_Data_Transfer(USBD_HandleTypeDef *pdev, int16_t *audioData, uint16_t dataAmount);
 
   void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
                                   uint8_t ac_itf,

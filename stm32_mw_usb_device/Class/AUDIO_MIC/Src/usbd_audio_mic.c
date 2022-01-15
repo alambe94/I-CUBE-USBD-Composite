@@ -155,8 +155,8 @@ USBD_ClassTypeDef USBD_AUDIO_MIC =
 __ALIGN_BEGIN static uint8_t USBD_AUDIO_MIC_CfgDesc[USBD_AUDIO_MIC_CONFIG_DESC_SIZE] __ALIGN_END =
     {
         /* Configuration 1 */
-        0x09,                              /* bLength */
-        USB_DESC_TYPE_CONFIGURATION,       /* bDescriptorType */
+        0x09,                                    /* bLength */
+        USB_DESC_TYPE_CONFIGURATION,             /* bDescriptorType */
         LOBYTE(USBD_AUDIO_MIC_CONFIG_DESC_SIZE), /* wTotalLength: Total size of the Config descriptor */
         HIBYTE(USBD_AUDIO_MIC_CONFIG_DESC_SIZE),
         0x02, /* bNumInterfaces */
@@ -170,17 +170,28 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_MIC_CfgDesc[USBD_AUDIO_MIC_CONFIG_DESC_S
         USBD_MAX_POWER, /* bMaxPower = 100 mA */
         /* 09 byte*/
 
+        /******** IAD to associate the two MIC interfaces */
+        0x08,                        /* bLength */
+        0x0B,                        /* bDescriptorType */
+        _AUDIO_MIC_AC_ITF_NBR,       /* bFirstInterface */
+        0x02,                        /* bInterfaceCount */
+        USB_DEVICE_CLASS_AUDIO,      /* bFunctionClass */
+        AUDIO_SUBCLASS_AUDIOCONTROL, /* bFunctionSubClass */
+        AUDIO_PROTOCOL_UNDEFINED,    /* bFunctionProtocol */
+        0x00,                        /* iFunction (Index of string descriptor describing this function) */
+        /* 17 byte*/
+
         /* USB Microphone Standard interface descriptor */
-        AUDIO_INTERFACE_DESC_SIZE,       /* bLength */
-        USB_DESC_TYPE_INTERFACE,         /* bDescriptorType */
-        _AUDIO_MIC_AC_ITF_NBR,           /* bInterfaceNumber */
-        0x00,                            /* bAlternateSetting */
-        0x00,                            /* bNumEndpoints */
+        AUDIO_INTERFACE_DESC_SIZE,   /* bLength */
+        USB_DESC_TYPE_INTERFACE,     /* bDescriptorType */
+        _AUDIO_MIC_AC_ITF_NBR,       /* bInterfaceNumber */
+        0x00,                        /* bAlternateSetting */
+        0x00,                        /* bNumEndpoints */
         USB_DEVICE_CLASS_AUDIO,      /* bInterfaceClass */
         AUDIO_SUBCLASS_AUDIOCONTROL, /* bInterfaceSubClass */
         AUDIO_PROTOCOL_UNDEFINED,    /* bInterfaceProtocol */
-        _AUDIO_MIC_STR_DESC_IDX,         /* iInterface */
-        /* 18 byte*/
+        _AUDIO_MIC_STR_DESC_IDX,     /* iInterface */
+        /* 26 byte*/
 
         /* USB Microphone Class-specific AC Interface Descriptor */
         AUDIO_INTERFACE_DESC_SIZE,       /* bLength */
@@ -192,14 +203,14 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_MIC_CfgDesc[USBD_AUDIO_MIC_CONFIG_DESC_S
         0x00,
         0x01,                  /* bInCollection */
         _AUDIO_MIC_AS_ITF_NBR, /* baInterfaceNr */
-        /* 27 byte*/
+        /* 35 byte*/
 
         /* USB Microphone Input Terminal Descriptor */
         AUDIO_INPUT_TERMINAL_DESC_SIZE,  /* bLength */
         AUDIO_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
         AUDIO_CONTROL_INPUT_TERMINAL,    /* bDescriptorSubtype */
-        0x01,                            /* bTerminalID */
-        0x01,                                /* wTerminalType AUDIO_TERMINAL_USB_MICROPHONE   0x0201 */
+        AUDIO_MIC_TERMINAL_ID,           /* bTerminalID */
+        0x01,                            /* wTerminalType AUDIO_TERMINAL_USB_MICROPHONE   0x0201 */
         0x02,
         0x00,               /* bAssocTerminal */
         AUDIO_MIC_CHANNELS, /* bNrChannels */
@@ -212,15 +223,15 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_MIC_CfgDesc[USBD_AUDIO_MIC_CONFIG_DESC_S
 #endif
         0x00, /* iChannelNames */
         0x00, /* iTerminal */
-        /* 39 byte*/
+        /* 47 byte*/
 
         /* USB Microphone Audio Feature Unit Descriptor */
-        0x07 + AUDIO_MIC_CHANNELS + 1,       /* bLength */
+        0x07 + AUDIO_MIC_CHANNELS + 1,   /* bLength */
         AUDIO_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
         AUDIO_CONTROL_FEATURE_UNIT,      /* bDescriptorSubtype */
-        0x02,                                /* bUnitID */
-        0x01,                                /* bSourceID */
-        0x01,                                /* bControlSize */
+        AUDIO_MIC_FU_ID,                 /* bUnitID */
+        0x01,                            /* bSourceID */
+        0x01,                            /* bControlSize */
 
 #if (AUDIO_MIC_CHANNELS == 1)
         0x02,
@@ -255,72 +266,72 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_MIC_CfgDesc[USBD_AUDIO_MIC_CONFIG_DESC_S
         0x02,
 #endif
         0x00, /* iTerminal */
-        //47 + AUDIO_MIC_CHANNELS byte
+        //55 + AUDIO_MIC_CHANNELS byte
 
         /*USB Microphone Output Terminal Descriptor */
-        0x09,                                /* bLength */
+        0x09,                            /* bLength */
         AUDIO_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
         AUDIO_CONTROL_OUTPUT_TERMINAL,   /* bDescriptorSubtype */
-        0x03,                                /* bTerminalID */
-        0x01,                                /* wTerminalType AUDIO_TERMINAL_USB_STREAMING 0x0101*/
+        AUDIO_MIC_OUT_TERMINAL_ID,       /* bTerminalID */
+        0x01,                            /* wTerminalType AUDIO_TERMINAL_USB_STREAMING 0x0101*/
         0x01,
         0x00,
         0x02,
         0x00,
-        //56 + AUDIO_MIC_CHANNELS byte
+        //64 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Zero Bandwith */
         /* Interface 1, Alternate Setting 0                                             */
-        0x09,                              /* bLength */
-        USB_DESC_TYPE_INTERFACE,           /* bDescriptorType */
-        _AUDIO_MIC_AS_ITF_NBR,             /* bInterfaceNumber */
-        0x00,                              /* bAlternateSetting */
-        0x00,                              /* bNumEndpoints */
-		USB_DEVICE_CLASS_AUDIO,            /* bInterfaceClass */
+        0x09,                          /* bLength */
+        USB_DESC_TYPE_INTERFACE,       /* bDescriptorType */
+        _AUDIO_MIC_AS_ITF_NBR,         /* bInterfaceNumber */
+        0x00,                          /* bAlternateSetting */
+        0x00,                          /* bNumEndpoints */
+        USB_DEVICE_CLASS_AUDIO,        /* bInterfaceClass */
         AUDIO_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
-        0x00,                              /* iInterface */
-        //65 + AUDIO_MIC_CHANNELS byte
+        0x00,                          /* iInterface */
+        //73 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Standard AS Interface Descriptor - Audio Streaming Operational */
         /* Interface 1, Alternate Setting 1                                           */
-        0x09,                              /* bLength */
-        USB_DESC_TYPE_INTERFACE,           /* bDescriptorType */
-        _AUDIO_MIC_AS_ITF_NBR,             /* bInterfaceNumber */
-        0x01,                              /* bAlternateSetting */
-        0x01,                              /* bNumEndpoints */
-		USB_DEVICE_CLASS_AUDIO,            /* bInterfaceClass */
+        0x09,                          /* bLength */
+        USB_DESC_TYPE_INTERFACE,       /* bDescriptorType */
+        _AUDIO_MIC_AS_ITF_NBR,         /* bInterfaceNumber */
+        0x01,                          /* bAlternateSetting */
+        0x01,                          /* bNumEndpoints */
+        USB_DEVICE_CLASS_AUDIO,        /* bInterfaceClass */
         AUDIO_SUBCLASS_AUDIOSTREAMING, /* bInterfaceSubClass */
         AUDIO_PROTOCOL_UNDEFINED,      /* bInterfaceProtocol */
-        0x00,                              /* iInterface */
-        //74 + AUDIO_MIC_CHANNELS byte
+        0x00,                          /* iInterface */
+        //82 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Audio Streaming Interface Descriptor */
         AUDIO_STREAMING_INTERFACE_DESC_SIZE, /* bLength */
         AUDIO_INTERFACE_DESCRIPTOR_TYPE,     /* bDescriptorType */
         AUDIO_STREAMING_GENERAL,             /* bDescriptorSubtype */
-        0x03,                                    /* bTerminalLink */
-        0x01,                                    /* bDelay */
-        0x01,                                    /* wFormatTag AUDIO_FORMAT_PCM  0x0001*/
+        0x03,                                /* bTerminalLink */
+        0x01,                                /* bDelay */
+        0x01,                                /* wFormatTag AUDIO_FORMAT_PCM  0x0001*/
         0x00,
-        //81 + AUDIO_MIC_CHANNELS byte
+        //89 + AUDIO_MIC_CHANNELS byte
 
         /* USB Microphone Audio Type I Format Interface Descriptor */
-        0x0B,                                /* bLength */
+        0x0B,                            /* bLength */
         AUDIO_INTERFACE_DESCRIPTOR_TYPE, /* bDescriptorType */
         AUDIO_STREAMING_FORMAT_TYPE,     /* bDescriptorSubtype */
         AUDIO_FORMAT_TYPE_I,             /* bFormatType */
-        AUDIO_MIC_CHANNELS,                  /* bNrChannels */
-        0x02,                                /* bSubFrameSize */
-        16,                                  /* bBitResolution */
-        0x01,                                /* bSamFreqType */
-        AUDIO_MIC_SMPL_FREQ & 0xff,          /* tSamFreq 8000 = 0x1F40 */
+        AUDIO_MIC_CHANNELS,              /* bNrChannels */
+        0x02,                            /* bSubFrameSize */
+        16,                              /* bBitResolution */
+        0x01,                            /* bSamFreqType */
+        AUDIO_MIC_SMPL_FREQ & 0xff,      /* tSamFreq 8000 = 0x1F40 */
         (AUDIO_MIC_SMPL_FREQ >> 8) & 0xff,
         AUDIO_MIC_SMPL_FREQ >> 16,
-        //92 + AUDIO_MIC_CHANNELS byte
+        //100 + AUDIO_MIC_CHANNELS byte
 
         /* Endpoint 1 - Standard Descriptor */
-        AUDIO_STANDARD_ENDPOINT_DESC_SIZE,                              /* bLength */
+        AUDIO_STANDARD_ENDPOINT_DESC_SIZE,                                  /* bLength */
         0x05,                                                               /* bDescriptorType */
         _AUDIO_MIC_EP,                                                      /* bEndpointAddress 1 in endpoint*/
         0x05,                                                               /* bmAttributes */
@@ -329,17 +340,17 @@ __ALIGN_BEGIN static uint8_t USBD_AUDIO_MIC_CfgDesc[USBD_AUDIO_MIC_CONFIG_DESC_S
         0x01, /* bInterval */
         0x00, /* bRefresh */
         0x00, /* bSynchAddress */
-              //101 + AUDIO_MIC_CHANNELS byte
+        //109 + AUDIO_MIC_CHANNELS byte
 
         /* Endpoint - Audio Streaming Descriptor*/
         AUDIO_STREAMING_ENDPOINT_DESC_SIZE, /* bLength */
         AUDIO_ENDPOINT_DESCRIPTOR_TYPE,     /* bDescriptorType */
         AUDIO_ENDPOINT_GENERAL,             /* bDescriptor */
-        0x00,                                   /* bmAttributes */
-        0x00,                                   /* bLockDelayUnits */
-        0x00,                                   /* wLockDelay */
+        0x00,                               /* bmAttributes */
+        0x00,                               /* bLockDelayUnits */
+        0x00,                               /* wLockDelay */
         0x00,
-        //108 + AUDIO_MIC_CHANNELS byte
+        //116 + AUDIO_MIC_CHANNELS byte
 };
 
 /* USB Standard Device Descriptor */
@@ -779,7 +790,7 @@ static void USBD_AUDIO_MIC_REQ_GetMaximum(USBD_HandleTypeDef *pdev, USBD_SetupRe
 * @param  req: setup class request
 * @retval status
 */
-static void  USBD_AUDIO_MIC_REQ_GetMinimum(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
+static void USBD_AUDIO_MIC_REQ_GetMinimum(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
   USBD_AUDIO_MIC_HandleTypeDef *haudio;
   haudio = pdev->pClassData_UAC_MIC;
@@ -798,7 +809,7 @@ static void  USBD_AUDIO_MIC_REQ_GetMinimum(USBD_HandleTypeDef *pdev, USBD_SetupR
 * @param  req: setup class request
 * @retval status
 */
-static void  USBD_AUDIO_MIC_REQ_GetResolution(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
+static void USBD_AUDIO_MIC_REQ_GetResolution(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
   USBD_AUDIO_MIC_HandleTypeDef *haudio;
   haudio = pdev->pClassData_UAC_MIC;
@@ -816,7 +827,7 @@ static void  USBD_AUDIO_MIC_REQ_GetResolution(USBD_HandleTypeDef *pdev, USBD_Set
 * @param  req: setup class request
 * @retval status
 */
-static void  USBD_AUDIO_MIC_REQ_GetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
+static void USBD_AUDIO_MIC_REQ_GetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
   USBD_AUDIO_MIC_HandleTypeDef *haudio;
   haudio = pdev->pClassData_UAC_MIC;
@@ -836,7 +847,7 @@ static void  USBD_AUDIO_MIC_REQ_GetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupR
 * @param  req: setup class request
 * @retval status
 */
-static void  USBD_AUDIO_MIC_REQ_SetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
+static void USBD_AUDIO_MIC_REQ_SetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
   USBD_AUDIO_MIC_HandleTypeDef *haudio;
   haudio = pdev->pClassData_UAC_MIC;
@@ -847,9 +858,9 @@ static void  USBD_AUDIO_MIC_REQ_SetCurrent(USBD_HandleTypeDef *pdev, USBD_SetupR
                       (uint8_t *)&VOL_CUR,
                       req->wLength);
 
-    haudio->control.cmd = AUDIO_REQ_SET_CUR; /* Set the request value */
-    haudio->control.len = req->wLength;          /* Set the request data length */
-    haudio->control.unit = HIBYTE(req->wIndex);  /* Set the request target unit */
+    haudio->control.cmd = AUDIO_REQ_SET_CUR;    /* Set the request value */
+    haudio->control.len = req->wLength;         /* Set the request data length */
+    haudio->control.unit = HIBYTE(req->wIndex); /* Set the request target unit */
   }
 }
 
@@ -956,11 +967,12 @@ void USBD_Update_Audio_MIC_DESC(uint8_t *desc,
                                 uint8_t str_idx)
 {
   desc[11] = ac_itf;
-  desc[17] = str_idx;
-  desc[26] = as_itf;
-  desc[58 + AUDIO_MIC_CHANNELS] = as_itf;
-  desc[67 + AUDIO_MIC_CHANNELS] = as_itf;
-  desc[94 + AUDIO_MIC_CHANNELS] = in_ep;
+  desc[19] = ac_itf;
+  desc[25] = str_idx;
+  desc[34] = as_itf;
+  desc[66 + AUDIO_MIC_CHANNELS] = as_itf;
+  desc[75 + AUDIO_MIC_CHANNELS] = as_itf;
+  desc[102 + AUDIO_MIC_CHANNELS] = in_ep;
 
   AUDIO_MIC_EP = in_ep;
   AUDIO_MIC_AC_ITF_NBR = ac_itf;

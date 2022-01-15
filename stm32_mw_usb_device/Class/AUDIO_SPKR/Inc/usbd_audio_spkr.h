@@ -47,7 +47,7 @@ extern "C" {
 
 #define USBD_AUDIO_FREQ                               16000U
 
-#define USBD_AUDIO_SPKR_CONFIG_DESC_SIZE              0x6DU
+#define USBD_AUDIO_SPKR_CONFIG_DESC_SIZE              117
 
 #define AUDIO_OUT_TC                                  0x01U
 #define AUDIO_IN_TC                                   0x02U

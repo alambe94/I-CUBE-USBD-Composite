@@ -207,7 +207,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -296,7 +296,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -386,7 +386,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -476,7 +476,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -566,7 +566,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -656,7 +656,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -746,7 +746,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -836,7 +836,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,                    /* bInterfaceClass: Communication Interface Class */
         0x02,                    /* bInterfaceSubClass: Abstract Control Model */
         0x01,                    /* bInterfaceProtocol: Common AT commands */
-        0x00,                    /* iInterface: */
+        _CDC_STR_DESC_IDX,       /* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -946,7 +946,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -1036,7 +1036,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -1127,7 +1127,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -1218,7 +1218,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -1309,7 +1309,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -1400,7 +1400,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -1491,7 +1491,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -1582,7 +1582,7 @@ __ALIGN_BEGIN static uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN
         0x02,             /* bInterfaceClass: Communication Interface Class */
         0x02,             /* bInterfaceSubClass: Abstract Control Model */
         0x01,             /* bInterfaceProtocol: Common AT commands */
-        0x00,             /* iInterface: */
+        _CDC_STR_DESC_IDX,/* iInterface: */
 
         /* Header Functional Descriptor */
         0x05, /* bLength: Endpoint Descriptor size */
@@ -2167,7 +2167,7 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
     desc[2] = cmd_itf;
-    desc[7] = str_idx;
+    desc[15] = str_idx;
     desc[10] = cmd_itf;
     desc[26] = com_itf;
     desc[34] = cmd_itf;
