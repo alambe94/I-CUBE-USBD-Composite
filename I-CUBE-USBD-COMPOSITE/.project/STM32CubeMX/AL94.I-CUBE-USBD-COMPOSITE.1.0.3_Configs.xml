@@ -69,7 +69,7 @@
         </SubComponent>
         <SubComponent Csub="HIDIiKEYBOARD" Cvariant="true" Cversion="1Gg0Gg0">
             <File Category="header" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/HID_KEYBOARD/Inc/usbd_hid_keyboard.h"/>
-            <File Category="source" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/HID_KEYBOARD/Src/usbd_hid_kayboard.c"/>
+            <File Category="source" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/HID_KEYBOARD/Src/usbd_hid_keyboard.c"/>
         </SubComponent>
         <SubComponent Csub="HIDIiCUSTOM" Cvariant="true" Cversion="1Gg0Gg0">
             <File Category="source" Condition="" Name="Middlewares/Third_Party/COMPOSITE/Class/HID_CUSTOM/Src/usbd_hid_custom.c"/>

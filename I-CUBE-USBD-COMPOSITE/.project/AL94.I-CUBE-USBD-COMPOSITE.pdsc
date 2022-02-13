@@ -113,7 +113,7 @@
                 <description>USB Keyboard</description>
                 <files>
                     <file category="header" name="Middlewares/Third_Party/COMPOSITE/Class/HID_KEYBOARD/Inc/usbd_hid_keyboard.h"/>
-                    <file category="source" name="Middlewares/Third_Party/COMPOSITE/Class/HID_KEYBOARD/Src/usbd_hid_kayboard.c"/>
+                    <file category="source" name="Middlewares/Third_Party/COMPOSITE/Class/HID_KEYBOARD/Src/usbd_hid_keyboard.c"/>
                 </files>
             </component>
             <component Cgroup="COMPOSITE" Csub="HID_CUSTOM" maxInstances="1">

@@ -2167,7 +2167,7 @@ void USBD_Update_CDC_ACM_DESC(uint8_t *desc,
   for (uint8_t i = 0; i < NUMBER_OF_CDC; i++)
   {
     desc[2] = cmd_itf;
-    desc[15] = str_idx;
+    desc[16] = str_idx;
     desc[10] = cmd_itf;
     desc[26] = com_itf;
     desc[34] = cmd_itf;
