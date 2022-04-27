@@ -64,7 +64,7 @@ uint8_t MSC_Storage[32*1024];
   */
 
 #define STORAGE_LUN_NBR                  1
-#define STORAGE_BLK_NBR                  100*1024/512
+#define STORAGE_BLK_NBR                  32*1024/512
 #define STORAGE_BLK_SIZ                  512
 
 /* USER CODE BEGIN PRIVATE_DEFINES */

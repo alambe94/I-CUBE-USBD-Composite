@@ -51,8 +51,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-USBD_Test/
-Test/
 Files/
 Debug/
 debug/
