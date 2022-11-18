@@ -686,6 +686,10 @@ static uint8_t USBD_CUSTOM_HID_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
   NAKed till the end of the application processing */
   ((USBD_CUSTOM_HID_ItfTypeDef *)pdev->pUserData_HID_Custom)->OutEvent(hhid->Report_buf[0], hhid->Report_buf[1]);
 
+  /* Prepare for next msg */
+  (void)USBD_LL_PrepareReceive(pdev, CUSTOM_HID_OUT_EP, hhid->Report_buf,
+                               USBD_CUSTOMHID_OUTREPORT_BUF_SIZE);
+
   return (uint8_t)USBD_OK;
 }
 

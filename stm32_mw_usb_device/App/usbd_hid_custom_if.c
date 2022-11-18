@@ -60,7 +60,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-uint8_t buffer[0x40];
+uint8_t buffer[USBD_CUSTOMHID_OUTREPORT_BUF_SIZE];
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -217,8 +217,13 @@ static int8_t CUSTOM_HID_DeInit(void)
 static int8_t CUSTOM_HID_OutEvent(uint8_t event_idx, uint8_t state)
 {
   /* USER CODE BEGIN 6 */
-  //memcpy(buffer, state, 0x40);
-  //USBD_CUSTOM_HID_SendReport(&hUsbDevice, (uint8_t *)buffer, 0x40);
+  USBD_CUSTOM_HID_HandleTypeDef *hhid = (USBD_CUSTOM_HID_HandleTypeDef *)hUsbDevice.pClassData_HID_Custom;
+  
+  for(uint8_t i = 0; i < USBD_CUSTOMHID_OUTREPORT_BUF_SIZE; i++)
+    buffer[i] = hhid->Report_buf[i];
+
+  USBD_CUSTOM_HID_SendReport(&hUsbDevice, (uint8_t *)buffer, USBD_CUSTOMHID_OUTREPORT_BUF_SIZE);
+  
   return (USBD_OK);
   /* USER CODE END 6 */
 }
